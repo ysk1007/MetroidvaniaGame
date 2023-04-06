@@ -31,62 +31,36 @@ public class Player : MonoBehaviour
         anim = GetComponent<Animator>();
         trans = GetComponent<Transform>();
         JumpCnt = JumpCount;    //시작시 점프 가능 횟수 적용
+        maxSpeed = 4;
     }
     void Update()
     {
         Player_Move();  //Player의 이동, 점프, 속도 함수
         Player_Attack();    //Player의 공격 함수
-
-    }
-
-    private void FixedUpdate()
-    {
-        slidingFalse();
-        TFslide();
     }
 
     void Player_Move()
     {
-        //Move Speed
+        //Move
         float h = Input.GetAxisRaw("Horizontal");
-        rigid.velocity = new Vector2(maxSpeed * h, rigid.velocity.y);
-        maxSpeed = 4;
-            
-
-        //Max Speed 좌,우로 갈때의 속도
-        if (rigid.velocity.x > maxSpeed) //Right Max Speed
-            rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
-
-        if (rigid.velocity.x < maxSpeed * (-1)) //Left Max Speed
-            rigid.velocity = new Vector2(maxSpeed * (-1), rigid.velocity.y);
         
-
         //Player 방향전환
         if (h < 0) //왼쪽 바라보기
         {
-            //trans.localPosition = new Vector3(-1, 1, 1);
             spriteRenderer.flipX = false;
+            anim.SetBool("Player_Walk", true);
+            transform.Translate(new Vector2(h, 0) * maxSpeed * Time.deltaTime);
             filp = -1;
-            //transform.eulerAngles = new Vector3(0, 180, 0);
         }
         else if (h > 0) //오른쪽 바라보기
         {
-           // trans.localPosition = new Vector3(1, 1, 1);
             spriteRenderer.flipX = true;
-            filp = 1;
-            //transform.eulerAngles = new Vector3(0, 0, 0);
-        }
-        
-
-        //Walk Animation Stop
-        if (Mathf.Abs(rigid.velocity.x) < 0.3)  //이동속도가 조건에 맞을시 Walk애니메이션 중지
-        {
-            anim.SetBool("Player_Walk", false);
-        } 
-        else
-        {
             anim.SetBool("Player_Walk", true);
+            transform.Translate(new Vector2(h, 0) * maxSpeed * Time.deltaTime);
+            filp = 1;
         }
+        else
+            anim.SetBool("Player_Walk", false);
 
         //Jump
         if (Input.GetButtonDown("Jump") && !anim.GetBool("Player_Jump") && JumpCnt > 0 )
@@ -108,37 +82,36 @@ public class Player : MonoBehaviour
             isGround = false;
         }
 
-        
-        //Slied
-        if (Input.GetKeyDown(KeyCode.K) && isGround && isSlide)
+        //Slide
+        if (Input.GetKeyDown(KeyCode.K) && isGround && isSlide && h != 0)
         {
-            maxSpeed = 5;
-            if (filp == 1)
-            {
-                trans.Translate(new Vector2(1, 0) * maxSpeed);
-            }
-            else
-                trans.Translate(new Vector2(-1, 0) * maxSpeed);
-            //Vector2 pos = trans.position;
-            Debug.Log(rigid.velocity);
-            
-            //pos.x += h * Time.deltaTime * maxSpeed;
-            Debug.Log(rigid.velocity);
-            //spriteRenderer.flipX = true;
-            anim.SetBool("Sliding",true);
-                isSlide = false;
-                gameObject.layer = 6;
-                Invoke("SlidingFalse", 0.5f);
 
-                Invoke("TFslide", 1f);
+            Debug.Log(transform.position);
+            Debug.Log(maxSpeed);
+            maxSpeed = 25;
+            isSlide = false;
+
+            if (filp == 1 && !isSlide) //오른쪽
+            {
+                transform.Translate(new Vector2(1, 0) * maxSpeed * Time.deltaTime);
+            }
+            if(filp == -1 && !isSlide) //왼쪽
+                transform.Translate(new Vector2(-1, 0) * maxSpeed * Time.deltaTime);
+
+
+            Debug.Log(transform.position);
+            Debug.Log(maxSpeed);
+
+            anim.SetBool("Sliding", true);
+            gameObject.layer = 6;
+            StartCoroutine(slide_delay());
         }
 
-
+        RaycastHit2D rayHitDown = Physics2D.Raycast(rigid.position, Vector3.down, 3, LayerMask.GetMask("Tilemap"));
+        Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
         //Landing Platform, 스프라이트 밑에 Tilemap이 닿을시 Jumping값 false
         if (rigid.velocity.y < 0)
         {
-            RaycastHit2D rayHitDown = Physics2D.Raycast(rigid.position, Vector3.down, 2, LayerMask.GetMask("Tilemap"));
-            Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
             if (rayHitDown.collider != null)
             {
                 isGround = true;
@@ -150,8 +123,6 @@ public class Player : MonoBehaviour
             }
             Debug.Log(rayHitDown.collider);
         }
-        
-       
     }
 
     void Player_Attack()
@@ -175,15 +146,22 @@ public class Player : MonoBehaviour
                     SwdCnt = 0;
 
                 StartCoroutine(sword_delay());    //공격후 다음 공격까지 딜레이
+                maxSpeed = 4;
             }
+            else
+                
+
             curTime = coolTime;
+            
         }
         else
             curTime -= Time.deltaTime;
+           
 
 
         if (Input.GetKeyDown(KeyCode.M))    //임시 Axe공격
         {
+            maxSpeed = 0;
             if (!isdelay)   //딜레이가 false일때 공격 가능
             {
                 if (curTime2 > 0)    //첫번째 공격후 쿨타임 내에 공격시 강공격 발동
@@ -200,29 +178,13 @@ public class Player : MonoBehaviour
 
                 StartCoroutine(axe_delay());    //공격후 다음 공격까지 딜레이
             }
+            else
+                maxSpeed = 4;
+
             curTime2 = coolTime2;
         }
         else
             curTime2 -= Time.deltaTime;
-    }
-
-    void slidingFalse()
-    {
-        maxSpeed = 4;
-        anim.SetBool("Sliding", false);
-        if (gameObject.layer == 6)
-        {
-
-        }
-        else
-        {
-            gameObject.layer = 0;          // invincible time end
-        }
-    }
-    void TFslide()
-    {
-        if (!isSlide)
-            isSlide = true;
     }
 
     IEnumerator sword_delay() //Sword 연속공격 딜레이
@@ -235,5 +197,21 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(delayTime+0.5f);
         isdelay = false;
+    }
+
+    IEnumerator slide_delay()
+    {
+        Debug.Log("fuck");
+        yield return new WaitForSeconds(0.15f);
+        maxSpeed = 4;
+        anim.SetBool("Sliding", false);
+        if (gameObject.layer == 6)
+        {
+            gameObject.layer = 7;
+        }
+        Debug.Log("you");
+        yield return new WaitForSeconds(2f);
+        if (!isSlide)
+            isSlide = true;
     }
 }
