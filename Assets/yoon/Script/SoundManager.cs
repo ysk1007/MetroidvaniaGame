@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public class SoundManager : MonoBehaviour
 {
-    public AudioSource bgm;
+    public AudioMixer mixer;
+    public AudioSource bgSound;
     public static SoundManager instance;
-
+    public AudioClip[] bglist;
     private void Awake()
     {
         if(instance == null)
@@ -24,13 +26,25 @@ public class SoundManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
+        for (int i = 0; i < bglist.Length; i++)
+        {
+            if (arg0.name == bglist[i].name)
+            BgmPlay(bglist[i]);
+        }
 
+        
+    }
+
+    public void BGM_Volume(float val)
+    {
+        mixer.SetFloat("BGM", Mathf.Log10(val) * 20);
     }
 
     public void SFXPlay(string sfxName, AudioClip clip)
     {
         GameObject go =new GameObject(sfxName + "Sound");
         AudioSource audioSource = go.AddComponent<AudioSource>();
+        audioSource.outputAudioMixerGroup = mixer.FindMatchingGroups("SFX")[0];
         audioSource.clip = clip;
         audioSource.Play();
 
@@ -39,10 +53,11 @@ public class SoundManager : MonoBehaviour
 
     public void BgmPlay(AudioClip clip)
     {
-        bgm.clip = clip;
-        bgm.loop = true;
-        bgm.volume = 0.1f;
-        bgm.Play();
+        bgSound.outputAudioMixerGroup = mixer.FindMatchingGroups("BGM")[0];
+        bgSound.clip = clip;
+        bgSound.loop = true;
+        bgSound.volume = 0.1f;
+        bgSound.Play();
     }
 
 }

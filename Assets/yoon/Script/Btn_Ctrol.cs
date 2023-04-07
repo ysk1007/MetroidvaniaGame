@@ -6,13 +6,15 @@ using TMPro; //TextMeshProUGUI 사용하려 참조
 public class Btn_Ctrol : MonoBehaviour
 {
     public Button[] buttons;
-
+    public GameObject OptionCanvas;
     public AudioClip clip;
+    Scene_Move Scene_Move;
 
     public int[] index = { };
     public int currentIndex;
     private void Start()
     {
+        Scene_Move = GetComponent<Scene_Move>();
         buttons = GetComponentsInChildren<Button>();
         index = new int[buttons.Length];
         for (int i = 0; i < buttons.Length; i++)
@@ -25,25 +27,23 @@ public class Btn_Ctrol : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.DownArrow))
+        if (Input.GetKeyUp(KeyCode.DownArrow)&& !OptionCanvas.activeSelf)
         {
-            SoundManager.instance.SFXPlay("Seleect",clip);
             if (currentIndex == buttons.Length - 1)
             {
                 GetBtnImpo(0);
             }
             else { GetBtnImpo(currentIndex + 1); }
         }
-        else if (Input.GetKeyUp(KeyCode.UpArrow))
+        else if (Input.GetKeyUp(KeyCode.UpArrow) && !OptionCanvas.activeSelf)
         {
-            SoundManager.instance.SFXPlay("Seleect",clip);
             if (currentIndex == 0)
             {
                 GetBtnImpo(buttons.Length - 1);
             }
             else { GetBtnImpo(currentIndex - 1); }
         }
-        else if (Input.GetKeyUp(KeyCode.Return))
+        else if (Input.GetKeyUp(KeyCode.Return) && !OptionCanvas.activeSelf)
         {
             BtnFunction(currentIndex);
         }
@@ -65,6 +65,7 @@ public class Btn_Ctrol : MonoBehaviour
         }
         else
         {
+            SoundManager.instance.SFXPlay("Seleect", clip);
             TextMeshProUGUI text = buttons[currentIndex].GetComponentInChildren<TextMeshProUGUI>();
             text.fontSize = 40;
             text.color = new Color32(255, 255, 255, 255);
@@ -79,12 +80,13 @@ public class Btn_Ctrol : MonoBehaviour
         {
             case 0:
                 Debug.Log("새 이야기 시작");
+                Scene_Move.SceneLoader("ingame");
                 break;
             case 1:
                 Debug.Log("이어서 시작");
                 break;
             case 2:
-                Debug.Log("옵션창");
+                OptionCanvas.SetActive(true);
                 break;
             case 3:
                 Debug.Log("게임 종료");

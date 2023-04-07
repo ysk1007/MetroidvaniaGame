@@ -9,14 +9,28 @@ public class FadeEffect_Text : MonoBehaviour
 {
     public float fadeSpeed = 2f; //Fade in/out 속도
     public float startDelay = 0.5f; //효과 시작전 딜레이
-
+    Scene_Move scene_Move;
+    public AudioClip clip;
     public TextMeshProUGUI Text; //텍스트 컴포넌트를 담을 변수
-
+    bool SceneChange = false; //현재 씬을 전환중인가? 변수
     void Start()
     {
+        scene_Move = GetComponent<Scene_Move>();
         StartCoroutine(FadeInOut()); //코루틴 시작
     }
 
+    void Update()
+    {
+        if (Input.anyKeyDown && !SceneChange) //아무키나입력 받았을때, 현재 타이틀 화면일때, 씬 전환중이 아닐때
+        {
+            SceneChange = true; //씬 전환중 (중복으로 호출하는것을 방지)
+            Fade_img fade = gameObject.GetComponent<Fade_img>(); //코드가 담긴 오브젝트의 Fade_img 스크립트를 참조
+            fade.CallFadeIn(); //Fade_img 스크립트의 CallFadeIn()함수를 호출함
+
+            FastEffect();
+
+        }
+    }
     IEnumerator FadeInOut()
     {
         //딜레이
@@ -61,6 +75,8 @@ public class FadeEffect_Text : MonoBehaviour
 
     public void FastEffect() //이펙트 속도를 빠르게 하려고 만듬
     {
+        scene_Move.Wait_And_SceneLoader("Main_Scene");
+        SoundManager.instance.SFXPlay("PTB", clip);
         fadeSpeed = 6f;
         startDelay = 0.05f;
     }
