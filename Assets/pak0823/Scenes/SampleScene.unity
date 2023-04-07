@@ -664,9 +664,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae6323850da5c794484e652c1f9c4988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpPower: 15
-  maxSpeed: 4
-  SliedSpeed: 5
+  jumpPower: 0
+  maxSpeed: 0
   curTime: 0
   coolTime: 2
   curTime2: 0
@@ -675,11 +674,11 @@ MonoBehaviour:
   JumpCount: 2
   SwdCnt: 0
   AxeCnt: 0
-  filp: 0
   isdelay: 0
+  isSlide: 0
   isGround: 1
-  isSlide: 1
   delayTime: 1
+  filp: 0
 --- !u!1 &1345915197
 GameObject:
   m_ObjectHideFlags: 0
