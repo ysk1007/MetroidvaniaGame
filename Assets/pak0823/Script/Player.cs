@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     public int WeaponChage = 1;     //무기 변경 저장 변수
     public int JumpCnt, JumpCount = 2;  //2단점프의 수를 카운터 해주는 변수
     public int SwdCnt, AxeCnt;  //공격모션의 순서
+    public float h; // 방향값
 
     Rigidbody2D rigid;
     CapsuleCollider2D capsuleCollider;
@@ -41,8 +42,8 @@ public class Player : MonoBehaviour
     void Player_Move()
     {
         //Move
-        float h = Input.GetAxisRaw("Horizontal");   // 좌우 방향값을 정수로 가져오기
-        if(!isdelay && h != 0)    //공격 딜레이중일시 이동 불가능
+        h = Input.GetAxisRaw("Horizontal");   // 좌우 방향값을 정수로 가져오기
+        if(!isdelay && h != 0 && gameObject.layer != 6)    //공격 딜레이중일시 이동 불가능
         {
             transform.Translate(new Vector2(h, 0) * maxSpeed * Time.deltaTime);
             anim.SetBool("Player_Walk", true);
@@ -56,31 +57,27 @@ public class Player : MonoBehaviour
             anim.SetBool("Player_Walk", false);
 
         //Jump
-        if (Input.GetButtonDown("Jump") && !anim.GetBool("Player_Jump") && JumpCnt > 0 && !anim.GetBool("Sliding"))
+        if (Input.GetKeyDown(KeyCode.Space) && JumpCnt > 0 && !anim.GetBool("Sliding") && !anim.GetBool("Wall_slide"))
         {
             rigid.velocity = Vector2.up * jumpPower;
             anim.SetBool("Player_Jump", true);
         }
-        if (Input.GetButtonDown("Jump") && anim.GetBool("Player_Jump") && JumpCnt > 0)
-        {
-            rigid.velocity = Vector2.up * jumpPower;
-            anim.SetBool("Player_Jump", true);
-        }
-        if(Input.GetButtonDown("Jump"))
+        if(Input.GetKeyDown(KeyCode.Space))
         {
             JumpCnt--;
             isGround = false;
         }
+        /*if (Input.GetKeyDown(KeyCode.Space) && anim.GetBool("Player_Jump") && !anim.GetBool("Wall_slide") && JumpCnt > 0) //2단점프
+        {
+            rigid.velocity = Vector2.up * jumpPower;
+            anim.SetBool("Player_Jump", true);
+        }*/
 
-
-        //점프 및 벽 슬라이드 Raycast 체크
+        //점프 Raycast 체크
         if (rigid.velocity.y < 0)   //Player 밑에 Tilemap이 닿을시 Jumping값 false
         {
-            Vector2 frontVec = new Vector2(rigid.position.x + h * 0.5f, rigid.position.y);
             RaycastHit2D rayHitDown = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("Tilemap"));
-            RaycastHit2D rayHitforward = Physics2D.Raycast(frontVec, Vector3.up, 0.5f, LayerMask.GetMask("Tilemap"));
             //Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
-            //Debug.DrawRay(frontVec, Vector3.up, new Color(0, 1, 0));
 
             if (rayHitDown.collider != null)
             {
@@ -92,33 +89,11 @@ public class Player : MonoBehaviour
                 }
             }
             //Debug.Log(rayHitDown.collider);
-
-            if (rayHitforward.collider != null && rayHitDown.collider == null)  //땅이 아니고 Player 앞에 Tilemap이 있을시 wall_slide 실행
-            {
-                anim.SetBool("Wall_slide", true);
-                rigid.velocity = Vector2.down * 4f;
-            }
-            else
-                anim.SetBool("Wall_slide", false);
         }
 
         //Sliding 미완성
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !isSlide && isGround)
-        {
-            isSlide = true;
-            anim.SetBool("Sliding", true);
-            gameObject.layer = 6;
-            maxSpeed *= 6;
-            if (h == 0)
-            {
-                //transform.Translate(new Vector2(flip, 0) * maxSpeed * Time.deltaTime);
-            }
-            else
-            {
-                //transform.Translate(new Vector2(h, 0) * maxSpeed * Time.deltaTime);
-            }
-            StartCoroutine(slide_delay());
-        }
+        
+           
     }
 
     void Player_Attack() //Player 공격
@@ -186,6 +161,38 @@ public class Player : MonoBehaviour
         else
             curTime -= Time.deltaTime;
     }
+    
+    //Wall_Slide
+    void OnCollisionStay2D(Collision2D collision)   // 벽 콜라이젼이 Player에 닿고 있으면 실행
+    {
+        if (collision.gameObject.tag == "Wall" && !isGround)
+        {
+            anim.SetBool("Wall_slide", true);
+            rigid.drag = 10;
+        }
+    }
+    private void OnCollisionExit2D(Collision2D collision)   //Player가 벽에 닿지 않을때
+    {
+        if (collision.gameObject.tag == "Wall" && spriteRenderer.flipX == false) //왼쪽벽에 붙어서 떨어질때
+        {
+            anim.SetBool("Wall_slide", false);
+            rigid.drag = 0;
+        }
+        else if (collision.gameObject.tag == "Wall" && spriteRenderer.flipX == true) //오른쪽벽에 붙어서 떨어질때
+        {
+            anim.SetBool("Wall_slide", false);
+            rigid.drag = 0;
+        }
+
+        if(collision.gameObject.tag == "Wall" && Input.GetKey(KeyCode.Space)) //벽에서 점프시 반대로 팅겨감
+        {
+            if(spriteRenderer.flipX == false)
+                rigid.velocity = new Vector2(-1, 1) * 8f;
+            if(spriteRenderer.flipX == true)
+            rigid.velocity = new Vector2(1, 1) * 8f;
+        }
+            
+    }
 
     IEnumerator attack_delay() //연속공격 딜레이
     {
@@ -195,11 +202,20 @@ public class Player : MonoBehaviour
         isdelay = false;
     }
 
-    IEnumerator slide_delay()
+    IEnumerator Sliding() //슬라이딩 실행
+    {
+        yield return null;
+        isSlide = true;
+        anim.SetBool("Sliding", true);
+        transform.Translate(new Vector2(-1, 0) * maxSpeed * Time.deltaTime);
+        gameObject.layer = 6;
+        maxSpeed = 6;
+    }
+
+    IEnumerator slide_delay() //슬라이딩 딜레이
     {
         yield return new WaitForSeconds(0.2f);
         maxSpeed = 4;
-        //Debug.Log(maxSpeed);
         anim.SetBool("Sliding", false);
         gameObject.layer = 7;
 
