@@ -16,11 +16,13 @@ public class Player : MonoBehaviour
     public int SwdCnt, AxeCnt;  //공격모션의 순서
     public float h; // 방향값
 
+    public GameObject arrow;
+    public Transform pos;
+    public SpriteRenderer spriteRenderer;
+
     Rigidbody2D rigid;
     CapsuleCollider2D capsuleCollider;
-    SpriteRenderer spriteRenderer;
     Animator anim;
-    Transform trans;
 
     void Awake()
     {
@@ -28,7 +30,6 @@ public class Player : MonoBehaviour
         capsuleCollider = GetComponent<CapsuleCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-        trans = GetComponent<Transform>();
         JumpCnt = JumpCount;    //시작시 점프 가능 횟수 적용
         maxSpeed = 4;  //시작시 기본 이동속도
         jumpPower = 17; //기본 점프높이
@@ -45,13 +46,13 @@ public class Player : MonoBehaviour
         h = Input.GetAxisRaw("Horizontal");   // 좌우 방향값을 정수로 가져오기
         if(!isdelay && h != 0 && gameObject.layer != 6)    //공격 딜레이중일시 이동 불가능
         {
-            transform.Translate(new Vector2(h, 0) * maxSpeed * Time.deltaTime);
+            transform.Translate(new Vector2(1, 0) * maxSpeed * Time.deltaTime);
             anim.SetBool("Player_Walk", true);
 
             if (h < 0) //왼쪽 바라보기
-                spriteRenderer.flipX = false;
+                transform.eulerAngles = new Vector2(0, 180); //spriteRenderer.flipX = false;
             else if (h > 0) //오른쪽 바라보기
-                spriteRenderer.flipX = true;    
+                transform.eulerAngles = new Vector2(0, 0); //spriteRenderer.flipX = true;    
         }
         else
             anim.SetBool("Player_Walk", false);
@@ -149,9 +150,10 @@ public class Player : MonoBehaviour
 
                     curTime = coolTime+0.5f;
                 }
-                if(WeaponChage == 3)    //Arrow 공격
+                if(WeaponChage == 3)    //Bow 공격
                 {
                     isdelay = true;
+                    StartCoroutine(arrow_delay());
                     anim.SetTrigger("arrow_atk");
                 }
                 StartCoroutine(attack_delay());    //공격후 다음 공격까지 딜레이
@@ -173,12 +175,12 @@ public class Player : MonoBehaviour
     }
     private void OnCollisionExit2D(Collision2D collision)   //Player가 벽에 닿지 않을때
     {
-        if (collision.gameObject.tag == "Wall" && spriteRenderer.flipX == false) //왼쪽벽에 붙어서 떨어질때
+        if (collision.gameObject.tag == "Wall" && h > 0) //왼쪽벽에 붙어서 떨어질때
         {
             anim.SetBool("Wall_slide", false);
             rigid.drag = 0;
         }
-        else if (collision.gameObject.tag == "Wall" && spriteRenderer.flipX == true) //오른쪽벽에 붙어서 떨어질때
+        else if (collision.gameObject.tag == "Wall" && h < 0) //오른쪽벽에 붙어서 떨어질때
         {
             anim.SetBool("Wall_slide", false);
             rigid.drag = 0;
@@ -186,10 +188,10 @@ public class Player : MonoBehaviour
 
         if(collision.gameObject.tag == "Wall" && Input.GetKey(KeyCode.Space)) //벽에서 점프시 반대로 팅겨감
         {
-            if(spriteRenderer.flipX == false)
+            if(h > 0)
+                rigid.velocity = new Vector2(1, 1) * 8f;
+            if(h < 0)
                 rigid.velocity = new Vector2(-1, 1) * 8f;
-            if(spriteRenderer.flipX == true)
-            rigid.velocity = new Vector2(1, 1) * 8f;
         }
             
     }
@@ -221,5 +223,11 @@ public class Player : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
         isSlide = false;
+    }
+
+    IEnumerator arrow_delay() //화살공격시 나가는 시간 조절
+    {
+        yield return new WaitForSeconds(0.5f);
+        Instantiate(arrow, pos.position, transform.rotation);
     }
 }
