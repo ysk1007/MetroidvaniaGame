@@ -165,11 +165,10 @@ public class Fat_Boss : MonoBehaviour
         {
             Fat_Left = false;
         }
-        Fat_speed = 15f;        // Fat_Boss 속도 10 설정.
+        Fat_speed = 30f;        // Fat_Boss 속도 10 설정.
         animator.SetBool("Running", true);
         yield return new WaitForSeconds(2f);
         Debug.Log("뛰는 중");
-        
     }
 
     IEnumerator StopRunning()
