@@ -661,7 +661,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 3
+  m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 4
   m_Material: {fileID: 0}
@@ -797,12 +797,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpPower: 1
-  maxSpeed: 0
+  Speed: 0
   curTime: 0
   coolTime: 2
   isdelay: 0
   isSlide: 0
   isGround: 1
+  isjump: 0
   delayTime: 1
   WeaponChage: 1
   JumpCnt: 0
@@ -810,6 +811,9 @@ MonoBehaviour:
   SwdCnt: 0
   AxeCnt: 0
   h: 0
+  attackDash: 5
+  slideSpeed: 12
+  slideDir: 0
   arrow: {fileID: 6371477986873845597, guid: 8004db967f8b04a42a482e4f52827cd9, type: 3}
   pos: {fileID: 2016537534}
   spriteRenderer: {fileID: 0}

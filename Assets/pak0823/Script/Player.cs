@@ -5,16 +5,21 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public float jumpPower; //Jump 높이 저장 변수
-    public float maxSpeed; //Move 최고속도 저장 변수
+    public float Speed; //Move 속도 저장 변수
     public float curTime,coolTime = 2;  // 연속공격이 가능한 시간
     public bool isdelay = false;    //공격 딜레이 체크
     public bool isSlide = false;     //슬라이딩 체크
     public bool isGround = true;    //Player가 땅인지 아닌지 체크
+    public bool isjump = false;     //점프중인지 체크
     public float delayTime = 1f;    //공격 딜레이 기본 시간
     public int WeaponChage = 1;     //무기 변경 저장 변수
     public int JumpCnt, JumpCount = 2;  //2단점프의 수를 카운터 해주는 변수
     public int SwdCnt, AxeCnt;  //공격모션의 순서
-    public float h; // 방향값
+    public float h; //방향값
+    public float attackDash = 5f; //큰 공격시 앞으로 이동하는 값
+
+    public float slideSpeed = 13;   //슬라이딩 속도
+    public int slideDir;    //슬라이딩 방향값
 
     public GameObject arrow;
     public Transform pos;
@@ -31,37 +36,53 @@ public class Player : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         JumpCnt = JumpCount;    //시작시 점프 가능 횟수 적용
-        maxSpeed = 4;  //시작시 기본 이동속도
+        Speed = 4;  //시작시 기본 이동속도
         jumpPower = 17; //기본 점프높이
     }
+
     void Update()
     {
         Player_Move();  //Player의 이동, 점프, 속도 함수
         Player_Attack();    //Player의 공격 함수
+
     }
 
-    void Player_Move()
+    void Player_Move() //Player 이동, 점프
     {
         //Move
         h = Input.GetAxisRaw("Horizontal");   // 좌우 방향값을 정수로 가져오기
-        if(!isdelay && h != 0 && gameObject.layer != 6)    //공격 딜레이중일시 이동 불가능
+        if(!isdelay && h != 0 && gameObject.layer == 7)    //공격 딜레이중일시 이동 불가능
         {
-            transform.Translate(new Vector2(1, 0) * maxSpeed * Time.deltaTime);
+            transform.Translate(new Vector2(1, 0) * Speed * Time.deltaTime);
             anim.SetBool("Player_Walk", true);
 
             if (h < 0) //왼쪽 바라보기
-                transform.eulerAngles = new Vector2(0, 180); //spriteRenderer.flipX = false;
+            {
+                transform.eulerAngles = new Vector2(0, 180);
+                slideDir = -1;
+            }
             else if (h > 0) //오른쪽 바라보기
-                transform.eulerAngles = new Vector2(0, 0); //spriteRenderer.flipX = true;    
+            {
+                transform.eulerAngles = new Vector2(0, 0);
+                slideDir = 1;
+            }
         }
         else
             anim.SetBool("Player_Walk", false);
+
+        //Sliding
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !isSlide && !isjump)
+        {
+            StartCoroutine(Sliding());
+        }
+
 
         //Jump
         if (Input.GetKeyDown(KeyCode.Space) && JumpCnt > 0 && !anim.GetBool("Sliding") && !anim.GetBool("Wall_slide"))
         {
             rigid.velocity = Vector2.up * jumpPower;
             anim.SetBool("Player_Jump", true);
+            isjump = true;
         }
         if(Input.GetKeyDown(KeyCode.Space))
         {
@@ -87,14 +108,11 @@ public class Player : MonoBehaviour
                 {
                     anim.SetBool("Player_Jump", false);
                     JumpCnt = JumpCount;
+                    isjump = false;
                 }
             }
             //Debug.Log(rayHitDown.collider);
-        }
-
-        //Sliding 미완성
-        
-           
+        } 
     }
 
     void Player_Attack() //Player 공격
@@ -109,7 +127,7 @@ public class Player : MonoBehaviour
         }
             
         //Sword 공격
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A) && !anim.GetBool("Sliding"))
         {
             if (!isdelay)   //딜레이가 false일때 공격 가능
             {
@@ -125,8 +143,11 @@ public class Player : MonoBehaviour
                     anim.SetTrigger("sword_atk");
 
                     if (SwdCnt > 1)     //연속공격이 끝난후 다시 첫번째 공격값으로 변경
+                    {
+                        StartCoroutine(Dash_delay());
                         SwdCnt = 0;
-
+                    }
+                   
                     curTime = coolTime;
                 }
                 if(WeaponChage == 2)    //Axe 공격
@@ -141,10 +162,16 @@ public class Player : MonoBehaviour
                     anim.SetTrigger("axe_atk");
 
                     if (AxeCnt == 2)    //동작별 딜레이타임 추가
+                    {
                         delayTime += 0.2f;
-                    if (AxeCnt == 3)
+                        StartCoroutine(Dash_delay());
+                    }   
+                    else if (AxeCnt == 3)
+                    {
                         delayTime += 0.55f;
-
+                        StartCoroutine(Dash_delay());
+                    }
+                   
                     if (AxeCnt > 2)     //연속공격이 끝난후 다시 첫번째 공격값으로 변경
                         AxeCnt = 0;
 
@@ -158,7 +185,6 @@ public class Player : MonoBehaviour
                 }
                 StartCoroutine(attack_delay());    //공격후 다음 공격까지 딜레이
             }
-            
         }
         else
             curTime -= Time.deltaTime;
@@ -198,36 +224,51 @@ public class Player : MonoBehaviour
 
     IEnumerator attack_delay() //연속공격 딜레이
     {
-        //Debug.Log(delayTime);
         yield return new WaitForSeconds(delayTime);
         delayTime = 1f;
         isdelay = false;
     }
 
-    IEnumerator Sliding() //슬라이딩 실행
+    private IEnumerator Sliding() //슬라이딩 실행
     {
         yield return null;
+        Speed = 0;
         isSlide = true;
-        anim.SetBool("Sliding", true);
-        transform.Translate(new Vector2(-1, 0) * maxSpeed * Time.deltaTime);
         gameObject.layer = 6;
-        maxSpeed = 6;
-    }
-
-    IEnumerator slide_delay() //슬라이딩 딜레이
-    {
-        yield return new WaitForSeconds(0.2f);
-        maxSpeed = 4;
+        anim.SetBool("Sliding", true);
+        if(slideDir == 1) //오른쪽으로 슬라이딩
+           rigid.velocity = new Vector2(transform.localScale.x * slideSpeed, Time.deltaTime);
+        if(slideDir == -1) //왼쪽으로 슬라이딩
+           rigid.velocity = new Vector2((transform.localScale.x * -1 * slideSpeed), Time.deltaTime);
+        yield return new WaitForSeconds(0.5f); //무적 시간
         anim.SetBool("Sliding", false);
         gameObject.layer = 7;
-
-        yield return new WaitForSeconds(2f);
+        Speed = 4;
+        yield return new WaitForSeconds(2f); //슬라이딩 쿨타임
         isSlide = false;
-    }
 
-    IEnumerator arrow_delay() //화살공격시 나가는 시간 조절
+    }
+    IEnumerator arrow_delay() //화살공격시 나가는 시간 조절 - 애니메이션과 맞춰주기 위해
     {
         yield return new WaitForSeconds(0.5f);
+        if (slideDir == 1)
+            rigid.velocity = new Vector2(transform.localScale.x - 5f, Time.deltaTime);
+        else
+            rigid.velocity = new Vector2(transform.localScale.x + 5f, Time.deltaTime);
         Instantiate(arrow, pos.position, transform.rotation);
+    }
+
+    IEnumerator Dash_delay() //큰 공격시 약간의 딜레이후 앞으로 조금 이동
+    {
+        if (SwdCnt == 2)
+            yield return new WaitForSeconds(0.5f);
+        else if(AxeCnt == 2)
+            yield return new WaitForSeconds(0.8f);
+        else
+            yield return new WaitForSeconds(1f);
+        if (slideDir == -1)
+            rigid.velocity = new Vector2(transform.localScale.x - attackDash, Time.deltaTime);
+        else
+            rigid.velocity = new Vector2(transform.localScale.x + attackDash, Time.deltaTime);
     }
 }
