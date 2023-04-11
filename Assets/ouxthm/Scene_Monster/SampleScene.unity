@@ -216,7 +216,7 @@ TilemapRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
+  m_ChunkCullingBounds: {x: 1.21875, y: 1.9375, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
@@ -235,8 +235,8 @@ Tilemap:
   - first: {x: -90, y: 3, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 4294967295
+      m_TileIndex: 1
+      m_TileSpriteIndex: 1
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -245,8 +245,8 @@ Tilemap:
   - first: {x: -24, y: 4, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 4294967295
+      m_TileIndex: 1
+      m_TileSpriteIndex: 1
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -254,9 +254,15 @@ Tilemap:
       m_AllTileFlags: 1073741825
   m_AnimatedTiles: {}
   m_TileAssetArray:
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: 3b42b7aef52c52f49a30861a5b870c32, type: 2}
-  m_TileSpriteArray: []
+  m_TileSpriteArray:
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 2
+    m_Data: {fileID: 905590810, guid: 5f09703d0d1d49e41b3fcb4cd10966a7, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 2
     m_Data:
@@ -279,6 +285,8 @@ Tilemap:
   m_TileColorArray:
   - m_RefCount: 2
     m_Data: {r: 1, g: 1, b: 1, a: 1}
+  - m_RefCount: 0
+    m_Data: {r: 3.3331e-41, g: 3.3331e-41, b: 3.3331e-41, a: 3.3331e-41}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -420,13 +428,14 @@ GameObject:
   - component: {fileID: 313152075}
   - component: {fileID: 313152074}
   - component: {fileID: 313152073}
+  - component: {fileID: 313152076}
   m_Layer: 8
   m_Name: Fat_Boss
   m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &313152072
 Transform:
   m_ObjectHideFlags: 0
@@ -435,7 +444,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 313152070}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -81.91, y: 4.86, z: 0}
+  m_LocalPosition: {x: -37.3, y: 4.86, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -510,6 +519,26 @@ MonoBehaviour:
   Fat_HP: 100
   Fat_Left: 0
   Attacking: 0
+--- !u!114 &313152076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 313152070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05e405305395f0347bc9b94149abab95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Fat_speed: 2
+  Fat_pattern: 0
+  Gap_Distance: 99
+  AtkDistance: 5
+  RushDistance: 10
+  Fat_HP: 100
+  Fat_Left: 1
+  Attacking: 0
 --- !u!1 &445373075
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,6 +550,7 @@ GameObject:
   - component: {fileID: 445373078}
   - component: {fileID: 445373077}
   - component: {fileID: 445373076}
+  - component: {fileID: 445373079}
   m_Layer: 0
   m_Name: Boar
   m_TagString: Untagged
@@ -583,7 +613,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 445373075}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.51, y: -0.06, z: 0}
+  m_LocalPosition: {x: -52.41, y: 5.54, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -591,6 +621,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &445373079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 445373075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 106fabfde4e87594fbdea1886eec5916, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemy_HP: 50
+  Enemy_Speed: 1
+  Enemy_Left: 1
+  Attacking: 0
+  Hit_Set: 0
+  Gap_Distance: 99
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -668,7 +716,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -53.9, y: 4.64, z: -10}
+  m_LocalPosition: {x: -25.2, y: 4.64, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1199,7 +1247,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1141444176}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -78.5, y: 3.1, z: 0}
+  m_LocalPosition: {x: -46.7, y: 19.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1266,7 +1314,7 @@ GameObject:
   - component: {fileID: 1433252756}
   - component: {fileID: 1433252758}
   - component: {fileID: 1433252757}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2655,7 +2703,7 @@ SpriteRenderer:
   m_SortingOrder: 5
   m_Sprite: {fileID: -1777496586, guid: 4820ee1794c1cc04ea4cf82fa2a120e1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
