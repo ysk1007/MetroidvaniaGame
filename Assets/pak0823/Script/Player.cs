@@ -15,24 +15,24 @@ public class Player : MonoBehaviour
     public int WeaponChage = 1;     //무기 변경 저장 변수
     public int JumpCnt, JumpCount = 2;  //2단점프의 수를 카운터 해주는 변수
     public int SwdCnt, AxeCnt;  //공격모션의 순서
-    public float h; //방향값
+    public float Direction; //방향값
     public float attackDash = 5f; //큰 공격시 앞으로 이동하는 값
-
     public float slideSpeed = 13;   //슬라이딩 속도
     public int slideDir;    //슬라이딩 방향값
+    public float Hp;
+    public bool ishurt=false;
+    public bool isknockback=false;
 
-    public GameObject arrow;
+    public Vector2 boxSize; //공격 범위
+    public GameObject arrow; //화살 오브젝트
     public Transform pos;
     public SpriteRenderer spriteRenderer;
-
     Rigidbody2D rigid;
-    CapsuleCollider2D capsuleCollider;
     Animator anim;
 
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
-        capsuleCollider = GetComponent<CapsuleCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         JumpCnt = JumpCount;    //시작시 점프 가능 횟수 적용
@@ -50,18 +50,18 @@ public class Player : MonoBehaviour
     void Player_Move() //Player 이동, 점프
     {
         //Move
-        h = Input.GetAxisRaw("Horizontal");   // 좌우 방향값을 정수로 가져오기
-        if(!isdelay && h != 0 && gameObject.layer == 7)    //공격 딜레이중일시 이동 불가능
+        Direction = Input.GetAxisRaw("Horizontal");   // 좌우 방향값을 정수로 가져오기
+        if(!isdelay && Direction != 0 && gameObject.layer == 7)    //공격 딜레이중일시 이동 불가능
         {
             transform.Translate(new Vector2(1, 0) * Speed * Time.deltaTime);
             anim.SetBool("Player_Walk", true);
 
-            if (h < 0) //왼쪽 바라보기
+            if (Direction < 0) //왼쪽 바라보기
             {
                 transform.eulerAngles = new Vector2(0, 180);
                 slideDir = -1;
             }
-            else if (h > 0) //오른쪽 바라보기
+            else if (Direction > 0) //오른쪽 바라보기
             {
                 transform.eulerAngles = new Vector2(0, 0);
                 slideDir = 1;
@@ -122,8 +122,6 @@ public class Player : MonoBehaviour
             WeaponChage += 1;
             if (WeaponChage > 3)
                 WeaponChage = 1;
-
-            //Debug.Log(WeaponChage);
         }
             
         //Sword 공격
@@ -131,7 +129,8 @@ public class Player : MonoBehaviour
         {
             if (!isdelay)   //딜레이가 false일때 공격 가능
             {
-                if(WeaponChage == 1)    //Sword 공격
+                
+                if (WeaponChage == 1)    //Sword 공격
                 {
                     if (curTime > 0)    //첫번째 공격후 쿨타임 내에 공격시 강공격 발동
                         SwdCnt++;
@@ -144,6 +143,7 @@ public class Player : MonoBehaviour
 
                     if (SwdCnt > 1)     //연속공격이 끝난후 다시 첫번째 공격값으로 변경
                     {
+                        //boxSize.x = 1.5f;
                         StartCoroutine(Dash_delay());
                         SwdCnt = 0;
                     }
@@ -165,11 +165,13 @@ public class Player : MonoBehaviour
                     {
                         delayTime += 0.2f;
                         StartCoroutine(Dash_delay());
+                        
                     }   
                     else if (AxeCnt == 3)
                     {
                         delayTime += 0.55f;
                         StartCoroutine(Dash_delay());
+                        
                     }
                    
                     if (AxeCnt > 2)     //연속공격이 끝난후 다시 첫번째 공격값으로 변경
@@ -185,6 +187,7 @@ public class Player : MonoBehaviour
                 }
                 StartCoroutine(attack_delay());    //공격후 다음 공격까지 딜레이
             }
+                AttackDamage();
         }
         else
             curTime -= Time.deltaTime;
@@ -201,12 +204,12 @@ public class Player : MonoBehaviour
     }
     private void OnCollisionExit2D(Collision2D collision)   //Player가 벽에 닿지 않을때
     {
-        if (collision.gameObject.tag == "Wall" && h > 0) //왼쪽벽에 붙어서 떨어질때
+        if (collision.gameObject.tag == "Wall" && Direction > 0) //왼쪽벽에 붙어서 떨어질때
         {
             anim.SetBool("Wall_slide", false);
             rigid.drag = 0;
         }
-        else if (collision.gameObject.tag == "Wall" && h < 0) //오른쪽벽에 붙어서 떨어질때
+        else if (collision.gameObject.tag == "Wall" && Direction < 0) //오른쪽벽에 붙어서 떨어질때
         {
             anim.SetBool("Wall_slide", false);
             rigid.drag = 0;
@@ -214,12 +217,41 @@ public class Player : MonoBehaviour
 
         if(collision.gameObject.tag == "Wall" && Input.GetKey(KeyCode.Space)) //벽에서 점프시 반대로 팅겨감
         {
-            if(h > 0)
+            if(Direction > 0)
                 rigid.velocity = new Vector2(1, 1) * 8f;
-            if(h < 0)
+            if(Direction < 0)
                 rigid.velocity = new Vector2(-1, 1) * 8f;
         }
             
+    }
+
+    void AttackDamage()
+    {
+        Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(pos.position, boxSize, 0);
+        foreach (Collider2D collider in collider2Ds)
+        {
+            if (collider.tag == "Enemy")
+                    collider.GetComponent<Enemy>().EnemyHurt(1, pos.position);
+        }
+    }
+
+    void hurt(int Damage)
+    {
+        if(!ishurt)
+        {
+            if (Hp <= 0)
+            {
+                Invoke("Die", 3f);
+            }
+            else
+            {
+                ishurt = true;
+                Hp = Hp - Damage;
+
+                StartCoroutine(knockback());
+            }
+        }
+        
     }
 
     IEnumerator attack_delay() //연속공격 딜레이
@@ -261,14 +293,48 @@ public class Player : MonoBehaviour
     IEnumerator Dash_delay() //큰 공격시 약간의 딜레이후 앞으로 조금 이동
     {
         if (SwdCnt == 2)
+        {
             yield return new WaitForSeconds(0.5f);
+            boxSize.x = 2.3f;
+        }
+            
         else if(AxeCnt == 2)
+        {
             yield return new WaitForSeconds(0.8f);
+            boxSize.x = 2.4f;
+        }
+            
         else
+        {
             yield return new WaitForSeconds(1f);
+            boxSize.x = 3.2f;
+        }
+        AttackDamage();
+        boxSize.x = 1.3f;
+
         if (slideDir == -1)
+        {
             rigid.velocity = new Vector2(transform.localScale.x - attackDash, Time.deltaTime);
+        }    
         else
+        {
             rigid.velocity = new Vector2(transform.localScale.x + attackDash, Time.deltaTime);
+        }
+    }
+
+    IEnumerator knockback()
+    {
+        yield return null;
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
+    }
+
+    private void OnDrawGizmos()//공격 범위 박스 표시
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(pos.position, boxSize);
     }
 }

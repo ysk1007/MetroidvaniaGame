@@ -7,6 +7,7 @@ public class arrow : MonoBehaviour
     public float speed;
     public float distance;
     public LayerMask islayer;
+    public Transform pos;
 
     private void Start()
     {
@@ -22,6 +23,7 @@ public class arrow : MonoBehaviour
             if(rayHit.collider.tag == "Enemy")
             {
                 Debug.Log("Hit!");
+                rayHit.collider.GetComponent<Enemy>().EnemyHurt(1, transform.position);
             }
             DestroyArrow();
         }
