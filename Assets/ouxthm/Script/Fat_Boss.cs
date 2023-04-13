@@ -8,6 +8,7 @@ public class Fat_Boss : MonoBehaviour
     SpriteRenderer spriteRenderer;
     Animator animator;
     Transform target;
+
     public float Fat_speed = 2f; // Fat_Boss의 속도.
     public int Fat_pattern;   // Fat_Boss의 패턴을 저장할 변수.
     public float Gap_Distance = 99;  // Fat_Boss와 Player 사이 거리.

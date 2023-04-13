@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -12,22 +13,24 @@ public abstract class Enemy : MonoBehaviour
     public bool Enemy_Left; // 적의 방향
     public bool Attacking;
     public bool Hit_Set;    // 몬스터를 깨우는 변수
-    public float Gap_Distance;  // Fat_Boss와 Player 사이 거리.
-    public float RushDistance;    // Fat_Boss의 돌진 사거리
-    public float NextMove;  // 방향을 숫자로 표현
+    public float Gap_Distance;  // 적과 Player 사이 거리.
+    public int NextMove;  // 방향을 숫자로 표현
+    public float Enemy_Attack_Range = 10f;  // 적의 공격 사거리
 
 
-    Rigidbody rigid;
+    Rigidbody2D rigid;
     Animator animator;
     Transform target;
     SpriteRenderer spriteRenderer;
     public abstract void InitSetting(); // 적의 기본 정보를 설정하는 함수
 
-    public virtual void Short_Monster()
+    public virtual void Short_Monster(Transform target)
     {
-        // 애니메이션 구현하면 됨.
-        //virtual로 썻기 때문에 하위 스크립트들은 상속만 받으면 돌아감
-        Debug.Log("Short_Monster");
+        Think();
+        Move(target);
+        Sensing(target);       
+        Turn();
+        Sensor();
     }
 
     public virtual void Long_Monster()
@@ -40,4 +43,146 @@ public abstract class Enemy : MonoBehaviour
         Debug.Log("Fly_Monster");
     }
 
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        animator = this.GetComponentInChildren<Animator>();
+        if (collision.gameObject.tag == "Wall")    // collicoin = 닿았다는 뜻, 닿은 오브젝트의 태그가 Enemy일 때
+        {
+            Debug.Log(collision.gameObject.tag);
+        }
+        if (collision.gameObject.tag == "Player")    // 체력 깎이는 것 추가.
+        {
+
+            Debug.Log(collision.gameObject.tag);
+            animator.SetTrigger("Hit");
+            Hit_Set = true;
+        }
+        else if (collision.gameObject.tag == "Sword")
+        {
+            Debug.Log(collision.gameObject.tag);
+            animator.SetTrigger("Hit");
+            Hit_Set = true;
+        }
+        else if (collision.gameObject.tag == "Axe")
+        {
+            Debug.Log(collision.gameObject.tag);
+            animator.SetTrigger("Hit");
+            Hit_Set = true;
+        }
+        else if (collision.gameObject.tag == "Arrow")
+        {
+            Debug.Log(collision.gameObject.tag);
+            animator.SetTrigger("Hit");
+            Hit_Set = true;
+        }
+    }
+    void Move(Transform target)
+    {
+        if (Hit_Set == true)    // 플레이어에게 맞았다면
+        {
+
+            if (target.transform.position.x < transform.position.x)       // 뛰는 애니메이션이 실행 중이고, Fat_Left의 값이 true라면
+            {
+                gameObject.transform.Translate(new Vector2(-1, 0) * Time.deltaTime * Enemy_Speed);   // 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴.
+                spriteRenderer.flipX = false;
+            }
+            else if (target.transform.position.x > transform.position.x)  // Running 애니메이션이 실행 중이고 Fat_Left의 값이 false라면
+            {
+                gameObject.transform.Translate(new Vector2(1, 0) * Time.deltaTime * Enemy_Speed);   // 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴.           
+                spriteRenderer.flipX = true;
+            }
+        }
+    }
+
+    public void Sensing(Transform target)
+    {
+        rigid = this.GetComponent<Rigidbody2D>();
+
+        if (Mathf.Abs(transform.position.x - target.position.x) < Enemy_Attack_Range)      // Mathf.Abs는 절대값으로 바꿈, Enemy_Cop의 x값 - Player의 x 값 뺀 값이 distance에 저장된 값 보다 작을 때
+        {
+            // Enemy_Cop의 한 칸 앞의 값을 얻기 위해 자기 자신의 위치 값에 (x)에 + NextMove값을 더하고 0.3f를 곱한다.
+            Vector2 frontVec = new Vector2(rigid.position.x + NextMove * 1.2f, rigid.position.y);
+
+            Debug.DrawRay(frontVec, Vector3.down * 1.2f, new Color(0, 1, 0));  //레이저를 그림
+
+            // 레이저를 아래로 쏘아서 실질적인 레이저 생성(물리기반), LayMask.GetMask("")는 해당하는 레이어만 스캔함
+            RaycastHit2D rayHit = Physics2D.Raycast(frontVec, Vector3.down, 2, LayerMask.GetMask("Platform"));
+
+            if (transform.position.x < target.position.x)            // Enemy_Cop의 x값 < Player의 x 값 (오른쪽 방향)
+            {
+                NextMove = 1;      // NextMove의 값에 1 저장
+
+                if (NextMove == 1 && rayHit.collider != null)  // NextMove가 1일 때
+                {
+                    spriteRenderer.flipX = true;    // X축 플립
+                    //animator.SetInteger("Speed", NextMove);
+                    transform.Translate(new Vector2(1, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy_Cop의 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
+                }
+                else if (NextMove == 1 && rayHit.collider == null)
+                {
+                    transform.Translate(new Vector2(0, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy_Cop의 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
+                }
+            }
+            else if (transform.position.x > target.position.x)      // Enemy_Cop의 x값 > Player의 x 값
+            {
+                NextMove = -1;      // NextMove가 -1일 때
+                if (NextMove == -1 && rayHit.collider != null) // NextMove가 -1일 때
+                {
+                    spriteRenderer.flipX = false;   // X축 플립하지 않음
+                    //animator.SetInteger("Speed", NextMove);
+                    transform.Translate(new Vector2(-1, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy_Cop의 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
+                }
+                else if (NextMove == -1 && rayHit.collider == null)
+                {
+                    transform.Translate(new Vector2(0, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy_Cop의 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
+                }
+            }
+        }
+        else
+        {
+            Move(target);     // Move 함수 실행
+            Invoke("Sensing", 5);
+        }
+    }
+
+    public void Think()     // 재귀함수 // enemy의 능동적 움직임
+    {
+        spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
+        NextMove = Random.Range(-1, 2);     // -1 ~ 1까지의 랜덤한 수 저장
+        if (NextMove != 0 && NextMove == 1)
+        {
+            spriteRenderer.flipX = true;       // NextMove의 값이 1이면 x축을 flip함
+        }
+        // 재귀
+        float nextThinkTime = Random.Range(2f, 4f);
+        Invoke("Think", nextThinkTime);     //Think()함수를 nextThinkTime에 저장된 값의 초 뒤에 실행
+    }
+
+    public void Turn()
+    {
+        spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
+
+        NextMove *= -1;   // NextMove에 -1을 곱해 방향전환
+        if(NextMove == 1)
+        {
+            spriteRenderer.flipX = true; // NextMove 값이 1이면 x축을 flip함
+        }      
+        CancelInvoke();
+        Invoke("Think", 2);
+    }
+
+    public void Sensor()
+    {
+        rigid = this.GetComponent<Rigidbody2D>();
+        
+        // Enemy의 한 칸 앞의 값을 얻기 위해 자기 자신의 위치 값에 (x)에 + NextMove값을 더하고 1.2f를 곱한다.
+        Vector2 frontVec = new Vector2(rigid.position.x + NextMove * 1.2f, rigid.position.y);
+        Debug.DrawRay(frontVec, Vector3.down * 1.2f, new Color(0, 1, 0)); 
+        // 레이저를 아래로 쏘아서 실질적인 레이저 생성(물리기반), LayMask.GetMask("")는 해당하는 레이어만 스캔함
+        RaycastHit2D rayHit = Physics2D.Raycast(frontVec, Vector3.down, 2, LayerMask.GetMask("Platform"));
+        if (rayHit.collider == null)  
+        {
+           Turn();     
+        }
+    }
 }

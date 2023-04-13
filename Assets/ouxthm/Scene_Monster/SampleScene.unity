@@ -557,7 +557,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &445373076
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1100,6 +1100,8 @@ GameObject:
   - component: {fileID: 983054107}
   - component: {fileID: 983054109}
   - component: {fileID: 983054108}
+  - component: {fileID: 983054110}
+  - component: {fileID: 983054111}
   m_Layer: 0
   m_Name: Snail
   m_TagString: Untagged
@@ -1170,6 +1172,41 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &983054110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983054106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ead661ec44538f45ad169810974e7f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monster: {fileID: 983054111}
+  target: {fileID: 1141444178}
+--- !u!114 &983054111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983054106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 127f5443a4ba2514c86cdc9271c3885b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemy_HP: 0
+  Enemy_Speed: 0
+  Enemy_Attack_Speed: 0
+  Enemy_Left: 0
+  Attacking: 0
+  Hit_Set: 0
+  Gap_Distance: 0
+  NextMove: 0
+  Enemy_Attack_Range: 10
 --- !u!1 &1141444176
 GameObject:
   m_ObjectHideFlags: 0
@@ -1247,7 +1284,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1141444176}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -46.7, y: 19.1, z: 0}
+  m_LocalPosition: {x: -48.62, y: 3.22, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2703,7 +2740,7 @@ SpriteRenderer:
   m_SortingOrder: 5
   m_Sprite: {fileID: -1777496586, guid: 4820ee1794c1cc04ea4cf82fa2a120e1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
