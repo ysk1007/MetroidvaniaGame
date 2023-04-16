@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class itemController : MonoBehaviour
 {
     public itemStatus itemStatus;
+    public itemStatus[] itemStatus_list;
 
     // Start is called before the first frame update
     void Start()

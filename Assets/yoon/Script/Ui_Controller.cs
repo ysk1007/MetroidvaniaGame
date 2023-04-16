@@ -13,6 +13,9 @@ public class Ui_Controller : MonoBehaviour
     public TextMeshProUGUI PlayerMaxHpText;
     public TextMeshProUGUI PlayerCurrentHpText;
 
+    public GameObject inven_ui;
+    private bool openinven = false;
+
     public float duration = 1f; //애니메이션 시간 (1초)
     public float elapsedTime = 0f; //경과 시간
     public float CurrentHpValue; //시작 값
@@ -39,7 +42,19 @@ public class Ui_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            if (!openinven)
+            {
+                inven_ui.SetActive(true);
+                openinven = true;
+            }
+            else
+            {
+                inven_ui.SetActive(false);
+                openinven = false;
+            }
+        }
     }
 
     public void GetExp(float value)
