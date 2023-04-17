@@ -5,23 +5,23 @@ using UnityEngine.UI;
 
 public class WeaponSwap : MonoBehaviour
 {
-    public GameObject WeaponUi;
-    public Image[] images;
-    public int currentWeaponIndex = 0;
-    public float swapCool = 2f;
+    public GameObject WeaponUi; //무기 이미지들의 상위 오브젝트
+    public Image[] images; //무기 이미지들을 담을 변수
+    public int currentWeaponIndex = 0; //현재 무기 인덱스
+    public float swapCool = 2f; //무기 변경 쿨타임
 
-    public bool swaping = false;
+    public bool swaping = false; //현재 무기 변경중인가?
 
-    public bool ableExe = false;
-    public bool ableBow = false;
+    public bool ableExe = false; //도끼 사용 가능?
+    public bool ableBow = false; //활 사용 가능?
 
-    public Image img_coolTime;
-    public Image Tab_key;
+    public Image img_coolTime; //쿨타임 이미지
+    public Image Tab_key; //변경 키 이미지
     private void Awake()
     {
-        if (!ableExe && !ableBow) Tab_key.enabled = false;
-        images = WeaponUi.GetComponentsInChildren<Image>();
-        images[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = true;
+        if (!ableExe && !ableBow) Tab_key.enabled = false; //교체할 무기가 아직 없으면 탭 키 이미지 안 보임
+        images = WeaponUi.GetComponentsInChildren<Image>(); //무기 이미지들 배열에 할당
+        images[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = true; //현재 인덱스 무기만 이미지 활성화
     }
 
     // Start is called before the first frame update
@@ -33,7 +33,7 @@ public class WeaponSwap : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (ableExe || ableBow) 
+        if (ableExe || ableBow) //교체할 무기가 아직 없으면 탭 키 이미지 안 보임
             Tab_key.enabled = true;
         if (!ableExe && !ableBow)
         {
@@ -50,13 +50,13 @@ public class WeaponSwap : MonoBehaviour
             {
                 currentWeaponIndex = 0;
             }
-            // 인덱스 값이 이미지 개수를 초과하면 처음 이미지로 돌아갑니다.
+            // 인덱스 값이 이미지 개수를 초과하면 처음 이미지로 돌아감
             if (currentWeaponIndex >= images.Length)
             {
                 currentWeaponIndex = 0;
             }
 
-            // 모든 이미지를 비활성화하고, 선택한 이미지만 활성화합니다.
+            // 모든 이미지를 비활성화하고, 선택한 이미지만 활성화
             for (int i = 0; i < images.Length; i++)
             {
                 if (i == currentWeaponIndex)
