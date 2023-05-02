@@ -13,12 +13,6 @@ public class Enemy : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    void Update()
-    {
-        
-    }
-
-
     public void EnemyHurt(int damage, Vector2 pos) //Enemy_OnDamaged º¯¼ö
     {
         if (!isHurt)
