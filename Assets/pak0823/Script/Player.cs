@@ -44,7 +44,6 @@ public class Player : MonoBehaviour
     {
         Player_Move();  //Player의 이동, 점프, 속도 함수
         Player_Attack();    //Player의 공격 함수
-
     }
 
     void Player_Move() //Player 이동, 점프
@@ -127,7 +126,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S))
         {
             isSkill = true;
-            Skill();
+            StartCoroutine(Skill());
         }
 
             if (Input.GetKeyDown(KeyCode.A) && !anim.GetBool("Sliding"))
@@ -198,8 +197,9 @@ public class Player : MonoBehaviour
             curTime -= Time.deltaTime;
     }
 
-    void Skill()
+    IEnumerator Skill()
     {
+        yield return null;
         if (WeaponChage == 1) //sword 스킬
         {
 
@@ -210,8 +210,10 @@ public class Player : MonoBehaviour
         }
         if (WeaponChage == 3) //Arrow 스킬
         {
+            isSkill = true;
             StartCoroutine(arrow_delay());
             anim.SetTrigger("arrow_atk");
+            Debug.Log(isSkill);
         }
         
     }
@@ -277,8 +279,7 @@ public class Player : MonoBehaviour
             {
                 collider.GetComponent<Enemy>().EnemyHurt(1, pos.position);
                 Debug.Log("1");
-            }
-                
+            } 
         }
     }
 
@@ -313,7 +314,10 @@ public class Player : MonoBehaviour
 
     IEnumerator arrow_delay() //화살공격시 나가는 시간 조절 - 애니메이션과 맞춰주기 위해
     {
-        yield return new WaitForSeconds(0.5f);
+        if(isSkill)
+            yield return new WaitForSeconds(0.7f);
+        else
+            yield return new WaitForSeconds(0.5f);
         if (slideDir == 1)
         {
             if(!isSkill)
