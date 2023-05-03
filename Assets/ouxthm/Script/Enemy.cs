@@ -95,7 +95,7 @@ public abstract class Enemy : MonoBehaviour
     }
 
     IEnumerator Sensing(Transform target, RaycastHit2D rayHit)
-    {       
+    {
         rigid = this.GetComponent<Rigidbody2D>();
         
         if (Gap_Distance <= Enemy_Attack_Range)      // Enemy의 사정거리에 있을 때
@@ -129,40 +129,40 @@ public abstract class Enemy : MonoBehaviour
                 }
             }
         }
-        else
+        else if(Gap_Distance > Enemy_Attack_Range)
         {
             Move();     // Move 함수 실행
-            yield return new WaitForSeconds(5f);
-            StartCoroutine(Sensing(target, rayHit));
+            yield return null;
         }
+       // else if(Gap_Distance > Enemy_Attack_Range && )
     }
 
-    public void Think()     // 재귀함수 // enemy의 능동적 움직임
+    IEnumerator Think()     // 재귀함수 
     {
-        Debug.Log("생각");
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
         NextMove = Random.Range(-1, 2);     // -1 ~ 1까지의 랜덤한 수 저장
-        if (NextMove != 0 && NextMove == 1)
+        if (NextMove != 0 && NextMove == 1 && Gap_Distance > Enemy_Attack_Range)    // Gap_Distance > Enemy_Attack_Range를 추가하지 않으면 플레이어가 사거리 내에 있고 rayHit=null이라면 제자리 돌기함
         {
             spriteRenderer.flipX = true;       // NextMove의 값이 1이면 x축을 flip함
         }
         // 재귀
-        //float nextThinkTime = Random.Range(2f, 4f);
-        Invoke("Think", 2f);     //Think()함수를 nextThinkTime에 저장된 값의 초 뒤에 실행
+        float nextThinkTime = Random.Range(2f, 5f);
+        yield return new WaitForSeconds(nextThinkTime);
+        StartCoroutine(Think());
     }
 
-    public void Turn()
+    IEnumerator Turn()
     {
-        Debug.Log("돌기");
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
 
         NextMove *= -1;   // NextMove에 -1을 곱해 방향전환
-        if(NextMove == 1)
+        if(NextMove == 1 && Gap_Distance > Enemy_Attack_Range)  // Gap_Distance > Enemy_Attack_Range를 추가하지 않으면 플레이어가 사거리 내에 있고 rayHit=null이라면 제자리 돌기함
         {
             spriteRenderer.flipX = true; // NextMove 값이 1이면 x축을 flip함
-        }      
-        CancelInvoke();
-        Invoke("Think", 2f);
+        }    
+        StopAllCoroutines();
+        StartCoroutine(Think());
+        yield return null;
     }
 
     public void Sensor()
@@ -173,10 +173,11 @@ public abstract class Enemy : MonoBehaviour
         Vector2 frontVec = new Vector2(rigid.position.x + NextMove * 1.2f, rigid.position.y);
         Debug.DrawRay(frontVec, Vector3.down * 1.2f, new Color(0, 1, 0)); 
         // 레이저를 아래로 쏘아서 실질적인 레이저 생성(물리기반), LayMask.GetMask("")는 해당하는 레이어만 스캔함
-        RaycastHit2D rayHit = Physics2D.Raycast(frontVec, Vector3.down, 2, LayerMask.GetMask("Platform"));
+        rayHit = Physics2D.Raycast(frontVec, Vector3.down, 2, LayerMask.GetMask("Platform"));
+       // Debug.Log(rayHit.collider);
         if (rayHit.collider == null)  
         {
-           Turn();     
+           StartCoroutine(Turn());     
         }
     }
 }
