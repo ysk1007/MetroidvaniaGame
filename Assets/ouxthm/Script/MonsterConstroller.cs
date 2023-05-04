@@ -15,10 +15,10 @@ public class MonsterConstroller : MonoBehaviour
         monster.InitSetting();
     }
 
-    // Update is called once per frame
     void Update()
     {
         monster.Short_Monster(target);
+        
     }
         
 }

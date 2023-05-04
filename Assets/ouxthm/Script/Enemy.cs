@@ -13,9 +13,12 @@ public abstract class Enemy : MonoBehaviour
     public bool Enemy_Left; // 적의 방향
     public bool Attacking;
     public bool Hit_Set;    // 몬스터를 깨우는 변수
-    public float Gap_Distance ;  // 적과 Player 사이 거리.
+    public float Gap_Distance_X ;  // 적과 Player X 거리차이
+    public float Gap_Distance_Y ;  // 적과 Player Y 거리차이
     public int NextMove;  // 방향을 숫자로 표현
-    public float Enemy_Attack_Range = 10f;  // 적의 공격 사거리
+    public float Enemy_Attack_Range;  // 적의 공격 사거리
+
+    public float Enemy_Dying_anim_Time;     // 죽는 애니메이션 시간 변수
 
 
     Rigidbody2D rigid;
@@ -23,63 +26,56 @@ public abstract class Enemy : MonoBehaviour
     Transform target;
     SpriteRenderer spriteRenderer;
     RaycastHit2D rayHit;
-    public abstract void InitSetting(); // 적의 기본 정보를 설정하는 함수
+    public abstract void InitSetting(); // 적의 기본 정보를 설정하는 함수(추상 클래스)
 
-    public virtual void Short_Monster(Transform target)
+    public virtual void Short_Monster(Transform target) // 근거리 공격 몬스터
     {
-        Gap_Distance = Mathf.Abs(target.transform.position.x - transform.position.x);
+        Gap_Distance_X = Mathf.Abs(target.transform.position.x - transform.position.x);
+        Gap_Distance_Y = Mathf.Abs(target.transform.position.y - transform.position.y);
         StartCoroutine(Sensing(target, rayHit));
         Sensor();
     }
-
-    public virtual void Long_Monster()
+    public virtual void Long_Monster()  // 원거리 공격 몬스터
     {
         Debug.Log("Long_Monster");
     }
 
-    public virtual void Fly_Monster()
+    public virtual void Fly_Monster()   // 비행 몬스터
     {
         Debug.Log("Fly_Monster");
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    IEnumerator OnCollisionEnter2D(Collision2D collision)
     {
+        yield return null;
+
         animator = this.GetComponentInChildren<Animator>();
-        if (collision.gameObject.tag == "Wall")    // collicoin = 닿았다는 뜻, 닿은 오브젝트의 태그가 Enemy일 때
+        if (collision.gameObject.tag == "Wall")    
         {
             Debug.Log(collision.gameObject.tag);
         }
-        if (collision.gameObject.tag == "Player")    // 체력 깎이는 것 추가.
+        if (collision.gameObject.tag == "Player")   // 임시로 무기 대신 사용 중
         {
-
-            Debug.Log(collision.gameObject.tag);
-            animator.SetTrigger("Hit");
-            Hit_Set = true;
+            StartCoroutine(Hit());
         }
         else if (collision.gameObject.tag == "Sword")
         {
-            Debug.Log(collision.gameObject.tag);
-            animator.SetTrigger("Hit");
-            Hit_Set = true;
+            StartCoroutine(Hit());
         }
         else if (collision.gameObject.tag == "Axe")
         {
-            Debug.Log(collision.gameObject.tag);
-            animator.SetTrigger("Hit");
-            Hit_Set = true;
+            StartCoroutine(Hit());
         }
         else if (collision.gameObject.tag == "Arrow")
         {
-            Debug.Log(collision.gameObject.tag);
-            animator.SetTrigger("Hit");
-            Hit_Set = true;
+            StartCoroutine(Hit());
         }
     }
     void Move() // 플레이어 감지 전 move
     {
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
 
-        if (Enemy_Attack_Range < Gap_Distance)    // 사정거리 밖에 있을 때 
+        if (Enemy_Attack_Range < Gap_Distance_X && 5f < Gap_Distance_Y)    // 사정거리 밖에 있을 때 
         {
             if (NextMove == -1)       // Enemy의 값이 true라면
             {
@@ -94,11 +90,11 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    IEnumerator Sensing(Transform target, RaycastHit2D rayHit)
+    IEnumerator Sensing(Transform target, RaycastHit2D rayHit)  // 플레이어 추적 
     {
         rigid = this.GetComponent<Rigidbody2D>();
         
-        if (Gap_Distance <= Enemy_Attack_Range)      // Enemy의 사정거리에 있을 때
+        if (Gap_Distance_X <= Enemy_Attack_Range && Gap_Distance_Y <= 5f)      // Enemy의 사정거리에 있을 때
         {
             if (transform.position.x < target.position.x)            // 오른쪽 방향
             {
@@ -129,19 +125,18 @@ public abstract class Enemy : MonoBehaviour
                 }
             }
         }
-        else if(Gap_Distance > Enemy_Attack_Range)
+        else if(Gap_Distance_X > Enemy_Attack_Range && Gap_Distance_Y > 5f)
         {
             Move();     // Move 함수 실행
             yield return null;
         }
-       // else if(Gap_Distance > Enemy_Attack_Range && )
     }
 
     IEnumerator Think()     // 재귀함수 
     {
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
         NextMove = Random.Range(-1, 2);     // -1 ~ 1까지의 랜덤한 수 저장
-        if (NextMove != 0 && NextMove == 1 && Gap_Distance > Enemy_Attack_Range)    // Gap_Distance > Enemy_Attack_Range를 추가하지 않으면 플레이어가 사거리 내에 있고 rayHit=null이라면 제자리 돌기함
+        if (NextMove != 0 && NextMove == 1 && Gap_Distance_X > Enemy_Attack_Range && Gap_Distance_Y > 5f)    // Gap_Distance > Enemy_Attack_Range를 추가하지 않으면 플레이어가 사거리 내에 있고 rayHit=null이라면 제자리 돌기함
         {
             spriteRenderer.flipX = true;       // NextMove의 값이 1이면 x축을 flip함
         }
@@ -156,7 +151,7 @@ public abstract class Enemy : MonoBehaviour
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
 
         NextMove *= -1;   // NextMove에 -1을 곱해 방향전환
-        if(NextMove == 1 && Gap_Distance > Enemy_Attack_Range)  // Gap_Distance > Enemy_Attack_Range를 추가하지 않으면 플레이어가 사거리 내에 있고 rayHit=null이라면 제자리 돌기함
+        if(NextMove == 1 && Gap_Distance_X > Enemy_Attack_Range)  // Gap_Distance > Enemy_Attack_Range를 추가하지 않으면 플레이어가 사거리 내에 있고 rayHit=null이라면 제자리 돌기함
         {
             spriteRenderer.flipX = true; // NextMove 값이 1이면 x축을 flip함
         }    
@@ -174,10 +169,29 @@ public abstract class Enemy : MonoBehaviour
         Debug.DrawRay(frontVec, Vector3.down * 1.2f, new Color(0, 1, 0)); 
         // 레이저를 아래로 쏘아서 실질적인 레이저 생성(물리기반), LayMask.GetMask("")는 해당하는 레이어만 스캔함
         rayHit = Physics2D.Raycast(frontVec, Vector3.down, 2, LayerMask.GetMask("Platform"));
-       // Debug.Log(rayHit.collider);
         if (rayHit.collider == null)  
         {
            StartCoroutine(Turn());     
         }
     }
+    
+    IEnumerator Hit()
+    {
+        Enemy_HP -= 5;
+        if (Enemy_HP > 0) // Enemy의 체력이 0 이상일 때
+        {
+            animator.SetTrigger("Hit");
+            Enemy_Speed = 0;
+            yield return new WaitForSeconds(0.5f);
+            Enemy_Speed = 1.5f;
+        }
+        else if (Enemy_HP <= 0) // Enemy의 체력이 0과 같거나 이하일 때
+        {
+            animator.SetTrigger("Die");
+            Enemy_Speed = 0;
+            yield return new WaitForSeconds(Enemy_Dying_anim_Time);
+            this.gameObject.SetActive(false);   // 오브젝트 사라지게 함
+        }
+    }
+
 }
