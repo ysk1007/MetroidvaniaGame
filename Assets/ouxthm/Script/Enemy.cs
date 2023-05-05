@@ -6,21 +6,24 @@ using static UnityEngine.GraphicsBuffer;
 
 public abstract class Enemy : MonoBehaviour
 {
-
+    public int Enemy_Mod;   // 1: 달팽이, 2: 근접공격 가능 몬스터, 3:비행몬스터, 4:원거리 몬스터
     public float Enemy_HP;  // 적의 체력
     public float Enemy_Speed;   // 적의 이동속도
-    public float Enemy_Attack_Speed;    // 적의 공격속도
+    public float Enemy_Atk_Speed;    // 적의 공격속도
     public bool Enemy_Left; // 적의 방향
     public bool Attacking;
     public bool Hit_Set;    // 몬스터를 깨우는 변수
     public float Gap_Distance_X ;  // 적과 Player X 거리차이
     public float Gap_Distance_Y ;  // 적과 Player Y 거리차이
     public int NextMove;  // 방향을 숫자로 표현
-    public float Enemy_Attack_Range;  // 적의 공격 사거리
+    public float Enemy_Sensing_X;  // 적의 X축 감지 사거리
+    public float Enemy_Sensing_Y;  // 적의 Y축 감지 사거리
+    public float Enemy_Range_X = 2f; //적의 X축 공격 사거리
+    public float Enemy_Range_Y = 2f; //적의 Y축 공격 사거리
 
     public float Enemy_Dying_anim_Time;     // 죽는 애니메이션 시간 변수
 
-
+    public GameObject gmobj;
     Rigidbody2D rigid;
     Animator animator;
     Transform target;
@@ -32,7 +35,8 @@ public abstract class Enemy : MonoBehaviour
     {
         Gap_Distance_X = Mathf.Abs(target.transform.position.x - transform.position.x);
         Gap_Distance_Y = Mathf.Abs(target.transform.position.y - transform.position.y);
-        StartCoroutine(Sensing(target, rayHit));
+        //StartCoroutine(Sensing(target, rayHit));
+        StartCoroutine(Attack(target, rayHit));
         Sensor();
     }
     public virtual void Long_Monster()  // 원거리 공격 몬스터
@@ -75,7 +79,20 @@ public abstract class Enemy : MonoBehaviour
     {
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
 
-        if (Enemy_Attack_Range < Gap_Distance_X && 5f < Gap_Distance_Y)    // 사정거리 밖에 있을 때 
+        if (Enemy_Sensing_X < Gap_Distance_X)    // 사정거리 밖에 있을 때 
+        {
+            if (NextMove == -1)       // Enemy의 값이 true라면
+            {
+                gameObject.transform.Translate(new Vector2(-1, 0) * Time.deltaTime * Enemy_Speed);   // 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴.
+                spriteRenderer.flipX = false;
+            }
+            else if (NextMove == 1)  // Running 애니메이션이 실행 중이고 Fat_Left의 값이 false라면
+            {
+                gameObject.transform.Translate(new Vector2(1, 0) * Time.deltaTime * Enemy_Speed);   // 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴.           
+                spriteRenderer.flipX = true;
+            }
+        }
+        else if(Enemy_Sensing_X > Gap_Distance_X && Enemy_Sensing_Y < Gap_Distance_Y)
         {
             if (NextMove == -1)       // Enemy의 값이 true라면
             {
@@ -93,39 +110,48 @@ public abstract class Enemy : MonoBehaviour
     IEnumerator Sensing(Transform target, RaycastHit2D rayHit)  // 플레이어 추적 
     {
         rigid = this.GetComponent<Rigidbody2D>();
-        
-        if (Gap_Distance_X <= Enemy_Attack_Range && Gap_Distance_Y <= 5f)      // Enemy의 사정거리에 있을 때
-        {
-            if (transform.position.x < target.position.x)            // 오른쪽 방향
-            {
-                NextMove = 1;      
+        spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
 
-                if (NextMove == 1 && rayHit.collider != null)  // NextMove가 1일 때 그리고 레이캐스트 값이 null이 아닐 때
-                {
-                    spriteRenderer.flipX = true;   
-                    
-                    transform.Translate(new Vector2(1, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
-                }
-                else if (NextMove == 1 && rayHit.collider == null)
-                {
-                    transform.Translate(new Vector2(0, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (0,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
-                }
-            }
-            else if (transform.position.x > target.position.x)      // 왼쪽 방향
+        if (Gap_Distance_X <= Enemy_Sensing_X)      // Enemy의 X축 사거리에 있을 때
+        {
+            if(Gap_Distance_Y < Enemy_Sensing_Y)    // Enemy의 Y축 사러기에 있을 때
             {
-                NextMove = -1;     
-                if (NextMove == -1 && rayHit.collider != null) // NextMove가 -1일 때 그리고 레이캐스트 값이 null이 아닐 때
+                if (transform.position.x < target.position.x)            // 오른쪽 방향
                 {
-                    spriteRenderer.flipX = false;  
-                    transform.Translate(new Vector2(-1, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
+                    NextMove = 1;
+
+                    if (NextMove == 1 && rayHit.collider != null)  // NextMove가 1일 때 그리고 레이캐스트 값이 null이 아닐 때
+                    {
+                        spriteRenderer.flipX = true;
+
+                        transform.Translate(new Vector2(1, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
+                    }
+                    else if (NextMove == 1 && rayHit.collider == null)
+                    {
+                        transform.Translate(new Vector2(0, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (0,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
+                    }
                 }
-                else if (NextMove == -1 && rayHit.collider == null)
+                else if (transform.position.x > target.position.x)      // 왼쪽 방향
                 {
-                    transform.Translate(new Vector2(0, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
+                    NextMove = -1;
+                    if (NextMove == -1 && rayHit.collider != null) // NextMove가 -1일 때 그리고 레이캐스트 값이 null이 아닐 때
+                    {
+                        spriteRenderer.flipX = false;
+                        transform.Translate(new Vector2(-1, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
+                    }
+                    else if (NextMove == -1 && rayHit.collider == null)
+                    {
+                        transform.Translate(new Vector2(0, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
+                    }
                 }
             }
+            else if (Gap_Distance_Y > Enemy_Sensing_Y)
+            {
+                Move();
+            }
+            
         }
-        else if(Gap_Distance_X > Enemy_Attack_Range && Gap_Distance_Y > 5f)
+        else if(Gap_Distance_X > Enemy_Sensing_X && Gap_Distance_Y > Enemy_Sensing_Y)
         {
             Move();     // Move 함수 실행
             yield return null;
@@ -136,7 +162,7 @@ public abstract class Enemy : MonoBehaviour
     {
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
         NextMove = Random.Range(-1, 2);     // -1 ~ 1까지의 랜덤한 수 저장
-        if (NextMove != 0 && NextMove == 1 && Gap_Distance_X > Enemy_Attack_Range && Gap_Distance_Y > 5f)    // Gap_Distance > Enemy_Attack_Range를 추가하지 않으면 플레이어가 사거리 내에 있고 rayHit=null이라면 제자리 돌기함
+        if (NextMove != 0 && NextMove == 1 && Gap_Distance_X > Enemy_Sensing_X)    // Gap_Distance > Enemy_Attack_Range를 추가하지 않으면 플레이어가 사거리 내에 있고 rayHit=null이라면 제자리 돌기함
         {
             spriteRenderer.flipX = true;       // NextMove의 값이 1이면 x축을 flip함
         }
@@ -151,7 +177,7 @@ public abstract class Enemy : MonoBehaviour
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
 
         NextMove *= -1;   // NextMove에 -1을 곱해 방향전환
-        if(NextMove == 1 && Gap_Distance_X > Enemy_Attack_Range)  // Gap_Distance > Enemy_Attack_Range를 추가하지 않으면 플레이어가 사거리 내에 있고 rayHit=null이라면 제자리 돌기함
+        if(NextMove == 1 && Gap_Distance_X > Enemy_Sensing_X)  // Gap_Distance > Enemy_Attack_Range를 추가하지 않으면 플레이어가 사거리 내에 있고 rayHit=null이라면 제자리 돌기함
         {
             spriteRenderer.flipX = true; // NextMove 값이 1이면 x축을 flip함
         }    
@@ -192,6 +218,88 @@ public abstract class Enemy : MonoBehaviour
             yield return new WaitForSeconds(Enemy_Dying_anim_Time);
             this.gameObject.SetActive(false);   // 오브젝트 사라지게 함
         }
+    }
+
+
+    IEnumerator Attack(Transform target, RaycastHit2D rayHit)  // 플레이어 추적   // 테스트용 제작 코루틴이며 Sensing 코루틴에 덧씌울 예정
+    {
+        rigid = this.GetComponent<Rigidbody2D>();
+        spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
+
+        if (Gap_Distance_X <= Enemy_Sensing_X)      // Enemy의 X축 사거리에 있을 때
+        {
+            if (Gap_Distance_Y < Enemy_Sensing_Y)
+            {
+                if (transform.position.x < target.position.x)            // 오른쪽 방향
+                {
+                    NextMove = 1;
+
+                    if (NextMove == 1 && rayHit.collider != null)  // NextMove가 1일 때 그리고 레이캐스트 값이 null이 아닐 때
+                    {
+                        spriteRenderer.flipX = true;
+
+                        transform.Translate(new Vector2(1, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
+                        if(Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && (Enemy_Mod == 2 || Enemy_Mod == 3 || Enemy_Mod == 4))
+                        {
+                            StartCoroutine(Atking());
+                            Debug.Log("공격했음");
+                        }
+                    }
+                    else if (NextMove == 1 && rayHit.collider == null)
+                    {
+                        transform.Translate(new Vector2(0, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (0,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
+                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && (Enemy_Mod == 2 || Enemy_Mod == 3 || Enemy_Mod == 4))
+                        {
+                            StartCoroutine(Atking());
+                            Debug.Log("공격했음");
+                        }
+                    }
+                }
+                else if (transform.position.x > target.position.x)      // 왼쪽 방향
+                {
+                    NextMove = -1;
+                    if (NextMove == -1 && rayHit.collider != null) // NextMove가 -1일 때 그리고 레이캐스트 값이 null이 아닐 때
+                    {
+                        spriteRenderer.flipX = false;
+                        transform.Translate(new Vector2(-1, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
+
+                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && (Enemy_Mod == 2 || Enemy_Mod == 3 || Enemy_Mod == 4))
+                        {
+                            StartCoroutine(Atking());
+                            Debug.Log("공격했음");
+                        }
+                    }
+                    else if (NextMove == -1 && rayHit.collider == null)
+                    {
+                        transform.Translate(new Vector2(0, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
+
+                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && (Enemy_Mod == 2 || Enemy_Mod == 3 || Enemy_Mod == 4))
+                        {
+                            StartCoroutine(Atking());
+                            Debug.Log("공격했음");
+                        }
+                    }
+                }
+            }
+            else if (Gap_Distance_Y > Enemy_Sensing_Y)
+            {
+                Move();
+            }
+
+        }
+        else if (Gap_Distance_X > Enemy_Sensing_X && Gap_Distance_Y > Enemy_Sensing_Y)
+        {
+            Move();     // Move 함수 실행
+            yield return null;
+        }
+    }
+
+    IEnumerator Atking()
+    {
+        gmobj.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        gmobj.SetActive(false);
+        Debug.Log("공격코루틴실행");
     }
 
 }
