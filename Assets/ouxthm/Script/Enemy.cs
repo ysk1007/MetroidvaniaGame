@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -20,6 +21,9 @@ public abstract class Enemy : MonoBehaviour
     public float Enemy_Sensing_Y;  // 적의 Y축 감지 사거리
     public float Enemy_Range_X = 2f; //적의 X축 공격 사거리
     public float Enemy_Range_Y = 2f; //적의 Y축 공격 사거리
+    public float Cooltime;  // 공격 쿨타임
+
+    public int Atkmode;
 
     public float Enemy_Dying_anim_Time;     // 죽는 애니메이션 시간 변수
 
@@ -296,10 +300,21 @@ public abstract class Enemy : MonoBehaviour
 
     IEnumerator Atking()
     {
-        gmobj.SetActive(true);
-        yield return new WaitForSeconds(1f);
-        gmobj.SetActive(false);
-        Debug.Log("공격코루틴실행");
+        animator = this.GetComponentInChildren<Animator>();
+        animator.SetTrigger("Attack");
+        Enemy_Speed = 0;
+        this.gmobj.SetActive(true);
+        Debug.Log("오브젝트 켰어");
+       if(gmobj.activeSelf == true)
+        {
+            yield return new WaitForSeconds(0.5f);
+            Enemy_Speed = 3f;
+            Debug.Log("오브젝트 끌게");
+            this.gmobj.SetActive(false);
+        }
+
+        
     }
 
+    // 몬스터 공격에 쿨타임을 넣어줘야함
 }
