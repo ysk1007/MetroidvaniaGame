@@ -305,15 +305,19 @@ public abstract class Enemy : MonoBehaviour
         Enemy_Speed = 0;
         this.gmobj.SetActive(true);
         Debug.Log("오브젝트 켰어");
-       if(gmobj.activeSelf == true)
+        if (gmobj.activeSelf == true)
         {
-            yield return new WaitForSeconds(0.5f);
+            StartCoroutine(Delay());
             Enemy_Speed = 3f;
             Debug.Log("오브젝트 끌게");
             this.gmobj.SetActive(false);
         }
-
+        yield return null;
         
+    }
+    IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(0.5f);
     }
 
     // 몬스터 공격에 쿨타임을 넣어줘야함
