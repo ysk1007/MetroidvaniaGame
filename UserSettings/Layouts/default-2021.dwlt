@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Console
+  m_Title: Game
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 200}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 84
+  controlID: 126
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -146,7 +146,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 85
+  controlID: 65
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -224,7 +224,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 64
+  controlID: 105
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -850,9 +850,9 @@ MonoBehaviour:
       e32: 0
       e33: 1
   m_PreviewAnimator: {fileID: 0}
-  m_AnimatorController: {fileID: 9100000, guid: fcdd9696438a8e144bc5935b476e0b72, type: 2}
+  m_AnimatorController: {fileID: 9100000, guid: bfa2cca9a4605a64cb518493a219d59f, type: 2}
   m_BreadCrumbs:
-  - m_Target: {fileID: -6047014324567080597, guid: fcdd9696438a8e144bc5935b476e0b72, type: 2}
+  - m_Target: {fileID: 7350543761347666445, guid: bfa2cca9a4605a64cb518493a219d59f, type: 2}
     m_ScrollPosition: {x: 0, y: 0}
   stateMachineGraph: {fileID: 0}
   stateMachineGraphGUI: {fileID: 0}
@@ -938,18 +938,18 @@ MonoBehaviour:
       y: 21
       width: 906
       height: 418
-    m_Scale: {x: 1.2194332, y: 1.2194332}
-    m_Translation: {x: 393.01285, y: 209.96716}
+    m_Scale: {x: 1.0471689, y: 1.0471689}
+    m_Translation: {x: 431.63254, y: 218.85829}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -322.2914
-      y: -172.18423
-      width: 742.96814
-      height: 342.7822
+      x: -412.19
+      y: -209
+      width: 865.19
+      height: 399.17154
     m_MinimalGUI: 1
   m_defaultScale: 1
   m_LastWindowPixelSize: {x: 906, y: 439}
@@ -990,8 +990,8 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 20230000
-      m_LastClickedID: 0
+      m_SelectedIDs: 105d0000
+      m_LastClickedID: 23824
       m_ExpandedIDs: 26fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
@@ -1087,7 +1087,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/pak0823/Script
+    - Assets
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
@@ -1100,8 +1100,8 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 05ca9a3b
-    m_LastClickedID: 1000000005
+    m_SelectedIDs: 325f0000
+    m_LastClickedID: 24370
     m_ExpandedIDs: 00000000185f00001a5f00001c5f00001e5f0000205f0000225f000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0

@@ -114,13 +114,30 @@ public class Player : MonoBehaviour
         }
     }
 
-    void Player_Attack() //Player 공격
+    void Player_Attack() //Player 공격모음
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             WeaponChage += 1;
-            if (WeaponChage > 3)
+
+            
+            if(WeaponChage == 2)
+            {
+                gameObject.tag = "Axe";
+            }
+            else if(WeaponChage == 3)
+            {
+                gameObject.tag = "Arrow";
+            }
+            else
+            {
+                gameObject.tag = "Sword";
                 WeaponChage = 1;
+            }
+               
+
+
+
         }
 
         if (Input.GetKeyDown(KeyCode.S))
@@ -136,6 +153,7 @@ public class Player : MonoBehaviour
 
                 if (WeaponChage == 1)    //Sword 공격
                 {
+                    
                     if (curTime > 0)    //첫번째 공격후 쿨타임 내에 공격시 강공격 발동
                         SwdCnt++;
                     else
@@ -157,6 +175,7 @@ public class Player : MonoBehaviour
                 }
                 if (WeaponChage == 2)    //Axe 공격
                 {
+                    gameObject.tag = "Axe";
                     if (curTime > 0)    //첫번째 공격후 쿨타임 내에 공격시 강공격 발동
                         AxeCnt++;
                     else
@@ -186,6 +205,7 @@ public class Player : MonoBehaviour
                 }
                 if (WeaponChage == 3)    //Bow 공격
                 {
+                    gameObject.tag = "Arrow";
                     isdelay = true;
                     StartCoroutine(arrow_delay());
                     anim.SetTrigger("arrow_atk");

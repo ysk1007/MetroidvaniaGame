@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     public int hp;
     bool isHurt = false;
     Animator anim;
+    Rigidbody2D rigid;
 
     private void Awake()
     {
