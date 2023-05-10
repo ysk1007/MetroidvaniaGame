@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4302471786182819084}
   - component: {fileID: 9191525023929005868}
   - component: {fileID: 7735491052138583322}
+  - component: {fileID: -16084950158399979}
   m_Layer: 0
   m_Name: arrow 1
   m_TagString: Untagged
@@ -102,3 +103,20 @@ MonoBehaviour:
   islayer:
     serializedVersion: 2
     m_Bits: 264
+  pos: {fileID: 0}
+  SetSkill: 0
+--- !u!114 &-16084950158399979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6371477986873845597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8506fc06a20c7df4289a806f279dddc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arrowPrefab: {fileID: 0}
+  arrowPosition: {fileID: 0}
+  shootForce: 0

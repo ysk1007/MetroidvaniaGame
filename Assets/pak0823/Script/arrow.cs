@@ -2,18 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class arrow : MonoBehaviour
+public class Arrow : MonoBehaviour
 {
     public float speed;
     public float distance;
     public LayerMask islayer;
     public Transform pos;
+    public bool SetSkill = false;
 
     private void Start()
     {
         Invoke("DestroyArrow", 0.7f);
     }
-    
+
     void Update()
     {
         RaycastHit2D rayHit = Physics2D.Raycast(transform.position, transform.right, distance, islayer);
@@ -21,17 +22,24 @@ public class arrow : MonoBehaviour
         {
             if (rayHit.collider.tag == "Enemy")
             {
+                Debug.Log(SetSkill);
                 Debug.Log("Hit!");
                 rayHit.collider.GetComponent<Enemy>().EnemyHurt(1, transform.position);
-                //DestroyArrow();
+                if (SetSkill == false)
+                {
+                    DestroyArrow();
+                }
             }
-            
+           
         }
-        if(transform.rotation.y == 0)
+        
+        if (transform.rotation.y == 0)
             transform.Translate(transform.right * speed * Time.deltaTime);
         else
             transform.Translate(transform.right * -1 * speed * Time.deltaTime);
     }
+
+    
 
     void DestroyArrow()
     {

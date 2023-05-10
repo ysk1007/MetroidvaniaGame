@@ -679,7 +679,7 @@ GameObject:
   - component: {fileID: 860553417}
   m_Layer: 7
   m_Name: Player
-  m_TagString: Player
+  m_TagString: Sword
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -856,7 +856,7 @@ MonoBehaviour:
   ishurt: 0
   isknockback: 0
   boxSize: {x: 1.5, y: 2}
-  arrow: {fileID: 6371477986873845597, guid: 8004db967f8b04a42a482e4f52827cd9, type: 3}
+  Arrow: {fileID: 6371477986873845597, guid: 8004db967f8b04a42a482e4f52827cd9, type: 3}
   pos: {fileID: 2016537534}
   spriteRenderer: {fileID: 0}
 --- !u!1 &1109146444

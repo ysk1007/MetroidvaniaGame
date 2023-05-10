@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
     public bool isknockback = false;
 
     public Vector2 boxSize; //공격 범위
-    public GameObject arrow; //화살 오브젝트
+    public GameObject Arrow; //화살 오브젝트
     public Transform pos;
     public SpriteRenderer spriteRenderer;
     Rigidbody2D rigid;
@@ -134,10 +134,6 @@ public class Player : MonoBehaviour
                 gameObject.tag = "Sword";
                 WeaponChage = 1;
             }
-               
-
-
-
         }
 
         if (Input.GetKeyDown(KeyCode.S))
@@ -175,7 +171,6 @@ public class Player : MonoBehaviour
                 }
                 if (WeaponChage == 2)    //Axe 공격
                 {
-                    gameObject.tag = "Axe";
                     if (curTime > 0)    //첫번째 공격후 쿨타임 내에 공격시 강공격 발동
                         AxeCnt++;
                     else
@@ -205,10 +200,8 @@ public class Player : MonoBehaviour
                 }
                 if (WeaponChage == 3)    //Bow 공격
                 {
-                    gameObject.tag = "Arrow";
                     isdelay = true;
                     StartCoroutine(arrow_delay());
-                    anim.SetTrigger("arrow_atk");
                 }
                 StartCoroutine(attack_delay());    //공격후 다음 공격까지 딜레이
             }
@@ -230,10 +223,8 @@ public class Player : MonoBehaviour
         }
         if (WeaponChage == 3) //Arrow 스킬
         {
-            isSkill = true;
             StartCoroutine(arrow_delay());
             anim.SetTrigger("arrow_atk");
-            Debug.Log(isSkill);
         }
         
     }
@@ -332,16 +323,23 @@ public class Player : MonoBehaviour
         isdelay = false;
     }
 
+    void FireArrow(bool setSkill)
+    {
+        GameObject arrow = Instantiate(Arrow, pos.position, transform.rotation);
+        Arrow arrowScript = arrow.GetComponent<Arrow>();
+        arrowScript.SetSkill = setSkill;
+    }
     IEnumerator arrow_delay() //화살공격시 나가는 시간 조절 - 애니메이션과 맞춰주기 위해
     {
-        if(isSkill)
+        anim.SetTrigger("arrow_atk");
+        if (isSkill)
             yield return new WaitForSeconds(0.7f);
         else
             yield return new WaitForSeconds(0.5f);
-        if (slideDir == 1)
+        if (slideDir == 1)  //플레이어가 바라보는 방향 왼쪽
         {
             if(!isSkill)
-                rigid.velocity = new Vector2(transform.localScale.x - 5f, Time.deltaTime);
+                rigid.velocity = new Vector2(transform.localScale.x - 5f, Time.deltaTime); // 활 공격시 약간의 뒤로 밀림
             else
                 rigid.velocity = new Vector2(transform.localScale.x - 10f, Time.deltaTime);
         }     
@@ -352,7 +350,7 @@ public class Player : MonoBehaviour
             else
                 rigid.velocity = new Vector2(transform.localScale.x + 10f, Time.deltaTime);
         }
-        Instantiate(arrow, pos.position, transform.rotation);
+        Instantiate(Arrow, pos.position, transform.rotation);
         isSkill = false;
     }
 
