@@ -37,13 +37,6 @@ public class Boar : MonoBehaviour
             Debug.Log(collision.gameObject.tag);           
             StartCoroutine(StopRush());
         }
-        if(collision.gameObject.tag == "Player")    // 체력 깎이는 것 추가.
-        {           
-            StartCoroutine(Rush());
-            Debug.Log(collision.gameObject.tag);
-            animator.SetTrigger("Hit");
-            Hit_Set=true;
-        }
         else if(collision.gameObject.tag == "Sword")
         {
             StartCoroutine(Rush());

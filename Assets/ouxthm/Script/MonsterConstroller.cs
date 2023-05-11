@@ -10,9 +10,11 @@ public class MonsterConstroller : MonoBehaviour
     public Enemy monster;
     public Transform target;
 
+    
     void Start()
     {
         monster.InitSetting();
+        monster.onetime();
     }
 
     void Update()
