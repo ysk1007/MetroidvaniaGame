@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     public float jumpPower; //Jump 높이 저장 변수
     public float Speed; //Move 속도 저장 변수
     public float curTime, coolTime = 2;  // 연속공격이 가능한 시간
+    public float skcurTime, skcoolTime = 5;  // 스킬 쿨타임
     public bool isdelay = false;    //공격 딜레이 체크
     public bool isSlide = false;     //슬라이딩 체크
     public bool isGround = true;    //Player가 땅인지 아닌지 체크
@@ -20,9 +21,9 @@ public class Player : MonoBehaviour
     public float attackDash = 5f; //큰 공격시 앞으로 이동하는 값
     public float slideSpeed = 13;   //슬라이딩 속도
     public int slideDir;    //슬라이딩 방향값
-    public float Hp;
-    public bool ishurt = false;
-    public bool isknockback = false;
+    public float Hp;    //플레이어 HP
+    public bool ishurt = false; //피격 확인
+    public bool isknockback = false;    //넉백 확인
 
     public Vector2 boxSize; //공격 범위
     public GameObject Arrow; //화살 오브젝트
@@ -50,7 +51,7 @@ public class Player : MonoBehaviour
     {
         //Move
         Direction = Input.GetAxisRaw("Horizontal");   // 좌우 방향값을 정수로 가져오기
-        if (!isdelay && Direction != 0 && gameObject.layer == 7)    //공격 딜레이중일시 이동 불가능
+        if (!isdelay && Direction != 0 && gameObject.layer == 7 && !isSkill)    //공격 딜레이중일시 이동 불가능
         {
             transform.Translate(new Vector2(1, 0) * Speed * Time.deltaTime);
             anim.SetBool("Player_Walk", true);
@@ -70,7 +71,7 @@ public class Player : MonoBehaviour
             anim.SetBool("Player_Walk", false);
 
         //Sliding
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !isSlide && !isjump)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !isSlide && !isjump && !isdelay && !isSkill)
         {
             StartCoroutine(Sliding());
         }
@@ -136,13 +137,16 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.S) && skcurTime <= 0 && !anim.GetBool("Sliding"))
         {
+            skcurTime = skcoolTime;
             isSkill = true;
             StartCoroutine(Skill());
         }
+        else
+            skcurTime -= Time.deltaTime;
 
-            if (Input.GetKeyDown(KeyCode.A) && !anim.GetBool("Sliding"))
+        if (Input.GetKeyDown(KeyCode.A) && !anim.GetBool("Sliding") && !isSkill)
         {
             if (!isdelay)   //딜레이가 false일때 공격 가능
             {
@@ -225,6 +229,7 @@ public class Player : MonoBehaviour
         {
             StartCoroutine(arrow_delay());
             anim.SetTrigger("arrow_atk");
+            StartCoroutine(SkillTime());
         }
         
     }
@@ -323,12 +328,6 @@ public class Player : MonoBehaviour
         isdelay = false;
     }
 
-    void FireArrow(bool setSkill)
-    {
-        GameObject arrow = Instantiate(Arrow, pos.position, transform.rotation);
-        Arrow arrowScript = arrow.GetComponent<Arrow>();
-        arrowScript.SetSkill = setSkill;
-    }
     IEnumerator arrow_delay() //화살공격시 나가는 시간 조절 - 애니메이션과 맞춰주기 위해
     {
         anim.SetTrigger("arrow_atk");
@@ -351,6 +350,12 @@ public class Player : MonoBehaviour
                 rigid.velocity = new Vector2(transform.localScale.x + 10f, Time.deltaTime);
         }
         Instantiate(Arrow, pos.position, transform.rotation);
+        
+    }
+
+    IEnumerator SkillTime() //스킬 종료 시간
+    {
+        yield return new WaitForSeconds(1.3f);
         isSkill = false;
     }
 

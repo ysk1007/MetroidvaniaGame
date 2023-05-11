@@ -229,7 +229,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 309899001}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.44, y: -1.42, z: 0}
+  m_LocalPosition: {x: 4.68, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -248,7 +248,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3aa15dc403f2bd45916b12699b91119, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 5
+  hp: 3
+  isknockback: 0
+  Speed: 5
 --- !u!95 &309899007
 Animator:
   serializedVersion: 5
@@ -837,6 +839,8 @@ MonoBehaviour:
   Speed: 0
   curTime: 0
   coolTime: 2
+  skcurTime: 0
+  skcoolTime: 5
   isdelay: 0
   isSlide: 0
   isGround: 1
@@ -1220,6 +1224,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 5
+  isknockback: 0
+  Speed: 5
 --- !u!61 &1707017042
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1306,7 +1312,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1707017039}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.37, y: -1.45, z: 0}
+  m_LocalPosition: {x: 1.28, y: 0.26, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
