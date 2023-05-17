@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -120,13 +120,13 @@ TextureImporter:
       name: SET1_Mainlev_build_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 394
-        width: 224
-        height: 86
+        x: 2
+        y: 398
+        width: 29
+        height: 49
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 3, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -146,10 +146,17 @@ TextureImporter:
         width: 64
         height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: 17, y: -16}
+        - {x: 30, y: -1}
+        - {x: 32, y: 24}
+        - {x: -32, y: 24}
+        - {x: -32, y: 5}
+        - {x: -20, y: -13}
+        - {x: -1, y: -24}
       tessellationDetail: 0
       bones: []
       spriteID: 742459cb8d4f4444cb0f1d778a6823f9
@@ -167,10 +174,20 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: 26, y: -14}
+        - {x: 22, y: -24}
+        - {x: 11, y: -28}
+        - {x: 0, y: -32}
+        - {x: -9, y: -29}
+        - {x: -17, y: -23}
+        - {x: -32, y: -2}
+        - {x: -32, y: 32}
+        - {x: 32, y: 32}
+        - {x: 32, y: -1}
       tessellationDetail: 0
       bones: []
       spriteID: 5c077f91258844d4a9767b324c118d22
@@ -183,16 +200,33 @@ TextureImporter:
       name: SET1_Mainlev_build_3
       rect:
         serializedVersion: 2
-        x: 400
-        y: 400
-        width: 128
-        height: 80
+        x: 463
+        y: 0
+        width: 81
+        height: 52
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
-      tessellationDetail: 0
+      physicsShape:
+      - - {x: 34.5, y: 11}
+        - {x: 34.5, y: 13}
+        - {x: 38.5, y: 17}
+        - {x: 37.5, y: 18}
+        - {x: 37.5, y: 20}
+        - {x: 34.5, y: 21}
+        - {x: 30.5, y: 25}
+        - {x: -31.5, y: 26}
+        - {x: -34.5, y: 20}
+        - {x: -34.5, y: 19}
+        - {x: -35.5, y: 11}
+        - {x: -37.5, y: 10}
+        - {x: -39.5, y: 9}
+        - {x: -40.5, y: -26}
+        - {x: 40.5, y: -26}
+        - {x: 40.5, y: 10}
+        - {x: 38.5, y: 10}
+      tessellationDetail: 1
       bones: []
       spriteID: 80a03f24dfb8e0046aa521b5ac4dda1c
       internalID: -234901247
@@ -209,7 +243,7 @@ TextureImporter:
         width: 66
         height: 52
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -225,12 +259,12 @@ TextureImporter:
       name: SET1_Mainlev_build_5
       rect:
         serializedVersion: 2
-        x: 307
-        y: 387
-        width: 4
-        height: 13
+        x: 304
+        y: 336
+        width: 33
+        height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -246,15 +280,27 @@ TextureImporter:
       name: SET1_Mainlev_build_6
       rect:
         serializedVersion: 2
-        x: 313
-        y: 384
-        width: 5
-        height: 16
+        x: 314
+        y: 368
+        width: 16
+        height: 15
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -8, y: 3.5}
+        - {x: -8, y: 6.5}
+        - {x: 5, y: 6.5}
+        - {x: 5, y: 3.5}
+      - - {x: -8, y: 0.5}
+        - {x: -8, y: 2.5}
+        - {x: 4, y: 2.5}
+        - {x: 4, y: 0.5}
+      - - {x: -8, y: -5.5}
+        - {x: -8, y: -3.5}
+        - {x: 8, y: -3.5}
+        - {x: 8, y: -5.5}
       tessellationDetail: 0
       bones: []
       spriteID: b8eebea776ec3924da31791db1f1863e
@@ -267,12 +313,12 @@ TextureImporter:
       name: SET1_Mainlev_build_7
       rect:
         serializedVersion: 2
-        x: 322
-        y: 389
-        width: 4
-        height: 11
+        x: 316
+        y: 353
+        width: 12
+        height: 14
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -288,15 +334,21 @@ TextureImporter:
       name: SET1_Mainlev_build_8
       rect:
         serializedVersion: 2
-        x: 328
-        y: 392
-        width: 8
-        height: 8
+        x: 393
+        y: 377
+        width: 46
+        height: 9
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 2}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -22, y: -4.5}
+        - {x: -22, y: 0.5}
+        - {x: -22, y: 3.5}
+        - {x: 22, y: 3.5}
+        - {x: 22, y: -0.5}
+        - {x: 22, y: -4.5}
       tessellationDetail: 0
       bones: []
       spriteID: 0eb93530969479c499379b72220e3c95
@@ -309,15 +361,20 @@ TextureImporter:
       name: SET1_Mainlev_build_9
       rect:
         serializedVersion: 2
-        x: 336
-        y: 384
-        width: 13
-        height: 16
+        x: 457
+        y: 332
+        width: 79
+        height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 3}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: 0.5, y: -19.5}
+        - {x: -26.5, y: -13.5}
+        - {x: -39.5, y: 19.5}
+        - {x: 39.5, y: 19.5}
+        - {x: 25.5, y: -14.5}
       tessellationDetail: 0
       bones: []
       spriteID: 72c9671e970e88c44a1199c7f9a042ab
@@ -327,81 +384,22 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SET1_Mainlev_build_10
-      rect:
-        serializedVersion: 2
-        x: 347
-        y: 391
-        width: 4
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 45c4ad88323d19d448205f66fab31bc0
-      internalID: 1156913180
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SET1_Mainlev_build_11
-      rect:
-        serializedVersion: 2
-        x: 353
-        y: 384
-        width: 14
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: eef5830e780c0314a8374b6fca713247
-      internalID: -916957625
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SET1_Mainlev_build_12
-      rect:
-        serializedVersion: 2
-        x: 363
-        y: 392
-        width: 5
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d5d6d5aaa906bc34b824172c61c521f2
-      internalID: 8167626
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: SET1_Mainlev_build_13
       rect:
         serializedVersion: 2
-        x: 0
-        y: 154
-        width: 544
-        height: 234
+        x: 90
+        y: 337
+        width: 38
+        height: 17
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 3}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -19, y: -8.5}
+        - {x: -19, y: 8.5}
+        - {x: 19, y: 8.5}
+        - {x: 19, y: -8.5}
       tessellationDetail: 0
       bones: []
       spriteID: 91c6176af96194845b128eab2a7341b1
@@ -411,58 +409,16 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SET1_Mainlev_build_14
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 128
-        width: 64
-        height: 52
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6d3f321483885b343a73a2baabb5912b
-      internalID: -83998061
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SET1_Mainlev_build_15
-      rect:
-        serializedVersion: 2
-        x: 320
-        y: 96
-        width: 112
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f2f53b4bf8cca7c4eab9d964a63a3a4a
-      internalID: -1087202880
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: SET1_Mainlev_build_16
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 448
-        height: 148
+        y: 209
+        width: 162
+        height: 63
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 4}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -477,12 +433,12 @@ TextureImporter:
       name: SET1_Mainlev_build_17
       rect:
         serializedVersion: 2
-        x: 456
-        y: 92
-        width: 80
-        height: 40
+        x: 160
+        y: 26
+        width: 63
+        height: 100
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -495,22 +451,322 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SET1_Mainlev_build_18
+      name: SET1_Mainlev_build_20
       rect:
         serializedVersion: 2
-        x: 464
-        y: 0
-        width: 80
-        height: 55
+        x: 33
+        y: 415
+        width: 30
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 3, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81bad790c32a6df42bbcc6cee21c649e
+      internalID: 748852192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SET1_Mainlev_build_21
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 429
+        width: 31
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 2, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 296e68bf76b75204f974cec7174b4407
+      internalID: 1377548879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SET1_Mainlev_build_22
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 447
+        width: 161
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 5, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f84c98dbacbe7564ab9fee7edcdfd87d
+      internalID: 2029991246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SET1_Mainlev_build_23
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 413
+        width: 63
+        height: 67
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b8d7555e257769b48b34ca90d05cef69
+      spriteID: 11bc5f101d2b7f24eb248e8d4364e59a
+      internalID: 1994402574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SET1_Mainlev_build_24
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 337
+        width: 38
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 3}
+      outline: []
+      physicsShape:
+      - - {x: -19, y: -8.5}
+        - {x: -19, y: 8.5}
+        - {x: 19, y: 8.5}
+        - {x: 19, y: 8.5}
+        - {x: 19, y: -8.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: b80932bdded39e3469d5bfd735050ae7
+      internalID: 404265775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SET1_Mainlev_build_25
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 271
+        width: 62
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 861c1acee2f69df49b65f75a487abf72
+      internalID: -1152326481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SET1_Mainlev_build_10
+      rect:
+        serializedVersion: 2
+        x: 368
+        y: 336
+        width: 80
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 7, z: 0, w: 3}
+      outline: []
+      physicsShape:
+      - - {x: -40, y: -1.5}
+        - {x: -40, y: 4.5}
+        - {x: 40, y: 4.5}
+        - {x: 40, y: -1.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21f81cee9cc0d414fa1866feea4ff8a6
+      internalID: 1156913180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SET1_Mainlev_build_11
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 240
+        width: 143
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 7}
+      outline: []
+      physicsShape:
+      - - {x: -112, y: -41}
+        - {x: -112, y: -9}
+        - {x: 20, y: -8}
+        - {x: 32, y: 4}
+        - {x: 36, y: 16}
+        - {x: 27, y: 39}
+        - {x: 104, y: 39}
+        - {x: 95, y: 5}
+        - {x: 111, y: -5}
+        - {x: 112, y: -41}
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8ceac1802ae1984e8f9f3d8bd9304c4
+      internalID: -916957625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SET1_Mainlev_build_12
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 288
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 324c83ab7fc5a6144adb5a548368221a
+      internalID: 8167626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SET1_Mainlev_build_14
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 203
+        width: 62
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1317f85a51f44c48ab3fe1a112575d8
+      internalID: -83998061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SET1_Mainlev_build_15
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 241
+        width: 91
+        height: 82
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -45.5, y: -41}
+        - {x: -45.5, y: -9}
+        - {x: -31.5, y: 10}
+        - {x: -42.5, y: 40}
+        - {x: 37.5, y: 41}
+        - {x: 26.5, y: 7}
+        - {x: 44.5, y: -9}
+        - {x: 45.5, y: -41}
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2b167860207d4f4b941534db160dfa2
+      internalID: -1087202880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SET1_Mainlev_build_18
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 362
+        width: 66
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c61ce3f01841ca2408ebef75cfcdc9dd
       internalID: -1588015488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SET1_Mainlev_build_19
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 126
+        width: 63
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d3bc02fe0a8b0d4a95bdd8164562782
+      internalID: -183363053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SET1_Mainlev_build_26
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 177
+        width: 63
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 3, y: 0, z: 3, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b407c596df90264e959ea6d91937cd4
+      internalID: 942414200
       vertices: []
       indices: 
       edges: []
@@ -537,7 +793,15 @@ TextureImporter:
       SET1_Mainlev_build_16: -1305965697
       SET1_Mainlev_build_17: -1660329225
       SET1_Mainlev_build_18: -1588015488
+      SET1_Mainlev_build_19: -183363053
       SET1_Mainlev_build_2: 458873485
+      SET1_Mainlev_build_20: 1261467088
+      SET1_Mainlev_build_21: 748852192
+      SET1_Mainlev_build_22: 1377548879
+      SET1_Mainlev_build_23: 2029991246
+      SET1_Mainlev_build_24: 1994402574
+      SET1_Mainlev_build_25: 404265775
+      SET1_Mainlev_build_26: 942414200
       SET1_Mainlev_build_3: -234901247
       SET1_Mainlev_build_4: -908152976
       SET1_Mainlev_build_5: -181216504

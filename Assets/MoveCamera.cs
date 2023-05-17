@@ -19,7 +19,6 @@ public class MoveCamera : MonoBehaviour
 
     void LateUpdate()
     {
-        //transform.position = new Vector3(target.position.x, target.position.y, -10f);
         transform.position = Vector3.Lerp(transform.position, target.position, Time.deltaTime * speed);
 
         float lx = size.x * 0.5f - width;
