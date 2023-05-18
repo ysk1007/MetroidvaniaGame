@@ -7,7 +7,6 @@ public class Enemy : MonoBehaviour
     public int hp;
     bool isHurt = false;
     Animator anim;
-    Rigidbody2D rigid;
     public bool isknockback = false;
     public int Speed = 5;
 

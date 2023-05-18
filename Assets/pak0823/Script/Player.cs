@@ -76,43 +76,30 @@ public class Player : MonoBehaviour
             StartCoroutine(Sliding());
         }
 
-
         //Jump
-        if (Input.GetKeyDown(KeyCode.Space) && JumpCnt > 0 && !anim.GetBool("Sliding") && !anim.GetBool("Wall_slide"))
+        if (Input.GetKey(KeyCode.DownArrow) && !anim.GetBool("Sliding") && !anim.GetBool("Wall_slide")) //발판에서 밑으로 점프시 내려가기
+        {
+            if(Input.GetKeyDown(KeyCode.Space))
+                StartCoroutine(DownJump());
+        }
+        else if (Input.GetKeyDown(KeyCode.Space) && !anim.GetBool("Sliding") && !anim.GetBool("Wall_slide") && JumpCnt > 0)
         {
             rigid.velocity = Vector2.up * jumpPower;
             anim.SetBool("Player_Jump", true);
-            isjump = true;
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+
+        if (Input.GetKeyUp(KeyCode.Space))
         {
             JumpCnt--;
             isGround = false;
         }
-        /*if (Input.GetKeyDown(KeyCode.Space) && anim.GetBool("Player_Jump") && !anim.GetBool("Wall_slide") && JumpCnt > 0) //2단점프
-        {
-            rigid.velocity = Vector2.up * jumpPower;
-            anim.SetBool("Player_Jump", true);
-        }*/
 
-        //점프 Raycast 체크
-        if (rigid.velocity.y < 0)   //Player 밑에 Tilemap이 닿을시 Jumping값 false
+        if (transform.position.y < -10)
         {
-            RaycastHit2D rayHitDown = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("Tilemap"));
-            //Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
-
-            if (rayHitDown.collider != null)
-            {
-                isGround = true;
-                if (rayHitDown.distance > 0.5)
-                {
-                    anim.SetBool("Player_Jump", false);
-                    JumpCnt = JumpCount;
-                    isjump = false;
-                }
-            }
-            //Debug.Log(rayHitDown.collider);
+            Playerhurt(1);
+            PlayerReposition();
         }
+            
     }
 
     void Player_Attack() //Player 공격모음
@@ -235,33 +222,41 @@ public class Player : MonoBehaviour
     }
 
     //Wall_Slide
-    void OnCollisionStay2D(Collision2D collision)   // 벽 콜라이젼이 Player에 닿고 있으면 실행
+    void OnCollisionStay2D(Collision2D collision)   // 벽 콜라이젼이 Player에 닿고 있으면 실행, 점프착지 시 콜라이젼 닿을 시 점프 해제
     {
+        RaycastHit2D rayHitDown = Physics2D.Raycast(rigid.position, Vector3.down, 10, LayerMask.GetMask("Tilemap","Pad"));
+
         if (collision.gameObject.tag == "Wall" && !isGround)
         {
             anim.SetBool("Wall_slide", true);
             rigid.drag = 10;
         }
+        if(collision.gameObject.tag == "Pad" || collision.gameObject.tag == "Tilemap" && !isGround)
+        {
+            anim.SetBool("Player_Jump", false);
+            isjump = false;
+            isGround = true;
+            if (rayHitDown.collider != null)
+            {
+                JumpCnt = JumpCount;
+            }
+        }
     }
     private void OnCollisionExit2D(Collision2D collision)   //Player가 벽에 닿지 않을때
     {
-        if (collision.gameObject.tag == "Wall" && Direction > 0) //왼쪽벽에 붙어서 떨어질때
+        if (collision.gameObject.tag == "Wall") //왼쪽벽에 붙어서 떨어질때
         {
             anim.SetBool("Wall_slide", false);
             rigid.drag = 0;
         }
-        else if (collision.gameObject.tag == "Wall" && Direction < 0) //오른쪽벽에 붙어서 떨어질때
-        {
-            anim.SetBool("Wall_slide", false);
-            rigid.drag = 0;
-        }
+       
 
         if (collision.gameObject.tag == "Wall" && Input.GetKey(KeyCode.Space)) //벽에서 점프시 반대로 팅겨감
         {
             if (Direction > 0)
-                rigid.velocity = new Vector2(1, 1) * 8f;
+                rigid.velocity = new Vector2(1, 1) * 10f;
             if (Direction < 0)
-                rigid.velocity = new Vector2(-1, 1) * 8f;
+                rigid.velocity = new Vector2(-1, 1) * 10f;
         }
 
     }
@@ -424,6 +419,14 @@ public class Player : MonoBehaviour
         spriteRenderer.color = new Color(1, 1, 1, 1f);
     }
 
+    IEnumerator DownJump()
+    {
+        anim.SetBool("Player_Jump", true);
+        gameObject.layer = 9;
+        yield return new WaitForSeconds(0.3f);
+        gameObject.layer = 7;
+    } //블록 아래로 내려가기
+
     void Die() //Player 사망시 스프라이트 삭제
     {
         Destroy(gameObject);
@@ -433,5 +436,10 @@ public class Player : MonoBehaviour
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(pos.position, boxSize);
+    }
+
+    void PlayerReposition()
+    {
+        transform.position = new Vector3(-30, -7.5f, 0);
     }
 }
