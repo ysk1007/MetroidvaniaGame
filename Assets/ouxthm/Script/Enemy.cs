@@ -55,25 +55,25 @@ public abstract class Enemy : MonoBehaviour
         Debug.Log("Fly_Monster");
     }
 
-    IEnumerator OnCollisionEnter2D(Collision2D collision)
+    IEnumerator OnTriggerEnter2D(Collider2D collider2D)
     {
         yield return null;
 
         animator = this.GetComponentInChildren<Animator>();
-        if (collision.gameObject.tag == "Wall")    
+        if (collider2D.gameObject.tag == "Wall")    
         {
-            Debug.Log(collision.gameObject.tag);
+            Debug.Log(collider2D.gameObject.tag);
         }
-        else if (collision.gameObject.tag == "Sword")
+        else if (collider2D.gameObject.tag == "Sword")
         {
-            Debug.Log(collision.gameObject.tag);
+            Debug.Log(collider2D.gameObject.tag);
             StartCoroutine(Hit());
         }
-        else if (collision.gameObject.tag == "Axe")
+        else if (collider2D.gameObject.tag == "Axe")
         {
             StartCoroutine(Hit());
         }
-        else if (collision.gameObject.tag == "Arrow")
+        else if (collider2D.gameObject.tag == "Arrow")
         {
             StartCoroutine(Hit());
         }

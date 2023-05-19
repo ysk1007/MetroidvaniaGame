@@ -13,7 +13,7 @@ public class WeaponSwap : MonoBehaviour
 
     public int currentWeaponIndex = 0;
     public float swapCool = 2f;
-    public float skillcool = 9f;
+    public float skillcool = 6.3f;
 
     public bool swaping = false;
     public bool skilling = false;
@@ -24,6 +24,8 @@ public class WeaponSwap : MonoBehaviour
     public Image img_Swap_coolTime;
     public Image img_Skill_coolTime;
     public Image Tab_key;
+
+    public Player player;
 
     float time = 0;
     float _size = 1.5f;

@@ -21,9 +21,11 @@ public class Player : MonoBehaviour
     public float attackDash = 5f; //큰 공격시 앞으로 이동하는 값
     public float slideSpeed = 13;   //슬라이딩 속도
     public int slideDir;    //슬라이딩 방향값
-    public float Hp;    //플레이어 HP
+    public float MaxHp;    //플레이어 최대 HP
+    public float CurrentHp;    //플레이어 현재 HP
     public bool ishurt = false; //피격 확인
     public bool isknockback = false;    //넉백 확인
+    public GameObject GameManager;
 
     public Vector2 boxSize; //공격 범위
     public GameObject Arrow; //화살 오브젝트
@@ -94,17 +96,16 @@ public class Player : MonoBehaviour
             isGround = false;
         }
 
-        if (transform.position.y < -10)
+/*        if (transform.position.y < -10)
         {
-            Playerhurt(1);
             PlayerReposition();
-        }
+        }*/
             
     }
 
     void Player_Attack() //Player 공격모음
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab) && GameManager.GetComponent<WeaponSwap>().swaping != true)
         {
             WeaponChage += 1;
 
@@ -225,7 +226,7 @@ public class Player : MonoBehaviour
     void OnCollisionStay2D(Collision2D collision)   // 벽 콜라이젼이 Player에 닿고 있으면 실행, 점프착지 시 콜라이젼 닿을 시 점프 해제
     {
         RaycastHit2D rayHitDown = Physics2D.Raycast(rigid.position, Vector3.down, 10, LayerMask.GetMask("Tilemap","Pad"));
-
+        Debug.DrawRay(rigid.position, Vector3.down * 10, Color.red);
         if (collision.gameObject.tag == "Wall" && !isGround)
         {
             anim.SetBool("Wall_slide", true);
@@ -263,7 +264,7 @@ public class Player : MonoBehaviour
 
     private IEnumerator Sliding() //슬라이딩 실행
     {
-        yield return null;
+        GameManager.GetComponent<Ui_Controller>().Sliding();
         Speed = 0;
         isSlide = true;
         gameObject.layer = 6;
@@ -288,7 +289,7 @@ public class Player : MonoBehaviour
         {
             if (collider.tag == "Enemy")
             {
-                collider.GetComponent<Enemy>().EnemyHurt(1, pos.position);
+                /*collider.GetComponent<Enemy>().EnemyHurt(1, pos.position);*/
                 Debug.Log("1");
             } 
         }
@@ -299,15 +300,16 @@ public class Player : MonoBehaviour
         if (!ishurt)
         {
             ishurt = true;
-            Hp = Hp - Damage;
+            CurrentHp = CurrentHp - Damage;
 
-            if (Hp <= 0)
+            if (CurrentHp <= 0)
             {
                 Invoke("Die", 3f);
             }
             else
             {
                 anim.SetTrigger("hurt");
+                GameManager.GetComponent<Ui_Controller>().Damage(Damage);
                 StartCoroutine(Knockback());
                 StartCoroutine(Routine());
                 StartCoroutine(Blink());

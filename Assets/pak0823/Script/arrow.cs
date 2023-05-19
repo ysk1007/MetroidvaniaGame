@@ -50,7 +50,7 @@ public class Arrow : MonoBehaviour
                 if (!hitDict.ContainsKey(rayHit.collider)) // 이미 적에게 대미지를 입힌 경우, Dictionary 체크
                 {
                     Debug.Log("Hit!");
-                    rayHit.collider.GetComponent<Enemy>().EnemyHurt(Dmg, transform.position); // Enemy 스크립트의 EnemyHurt 함수를 호출해 적에게 대미지
+                    /*rayHit.collider.GetComponent<Enemy>().EnemyHurt(Dmg, transform.position); // Enemy 스크립트의 EnemyHurt 함수를 호출해 적에게 대미지*/
                     hitDict.Add(rayHit.collider, true); // 적 정보를 Dictionary에 추가
                 }
 

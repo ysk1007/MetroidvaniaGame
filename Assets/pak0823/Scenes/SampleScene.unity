@@ -439,7 +439,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!61 &309899003
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -545,9 +545,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3aa15dc403f2bd45916b12699b91119, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 3
-  isknockback: 0
-  Speed: 5
 --- !u!95 &309899007
 Animator:
   serializedVersion: 5
@@ -2475,7 +2472,7 @@ GameObject:
   - component: {fileID: 1246792020}
   - component: {fileID: 1246792019}
   - component: {fileID: 1246792018}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Pad
   m_TagString: Pad
   m_Icon: {fileID: 0}
@@ -3378,7 +3375,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!95 &1707017040
 Animator:
   serializedVersion: 5
@@ -3412,9 +3409,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3aa15dc403f2bd45916b12699b91119, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 5
-  isknockback: 0
-  Speed: 5
 --- !u!61 &1707017042
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3520,7 +3514,7 @@ GameObject:
   - component: {fileID: 1719984613}
   - component: {fileID: 1719984612}
   - component: {fileID: 1719984614}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Tilemap
   m_TagString: Tilemap
   m_Icon: {fileID: 0}
@@ -5753,7 +5747,7 @@ GameObject:
   - component: {fileID: 2146881868}
   - component: {fileID: 2146881867}
   - component: {fileID: 2146881869}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: wall
   m_TagString: Wall
   m_Icon: {fileID: 0}

@@ -13,6 +13,7 @@ public class Ui_Controller : MonoBehaviour
     public TextMeshProUGUI PlayerMaxHpText;
     public TextMeshProUGUI PlayerCurrentHpText;
     public Image BloodScreen;
+    public Player player;
 
     public GameObject inven_ui;
     private bool openinven = false;
@@ -33,8 +34,8 @@ public class Ui_Controller : MonoBehaviour
     private void Awake()
     {
         PlayerHp = PlayerHpBar.GetComponent<HpBar>();
-        PlayerHp.maxHp = 100f;
-        PlayerHp.currentHp = 100f;
+        PlayerHp.maxHp = player.MaxHp;
+        PlayerHp.currentHp = player.CurrentHp;
         PlayerMaxHpText.text = PlayerHp.maxHp.ToString("F0");
         PlayerCurrentHpText.text = PlayerHp.currentHp.ToString("F0");
         Icons = iconObject.GetComponentsInChildren<Image>();
@@ -140,7 +141,7 @@ public class Ui_Controller : MonoBehaviour
 
     IEnumerator SlidingUP()
     {
-        float duration = 1f; //애니메이션 시간 (1초)
+        float duration = 2.5f; //애니메이션 시간 (1초)
         float elapsedTime = 0f; //경과 시간
 
         while (elapsedTime < duration)

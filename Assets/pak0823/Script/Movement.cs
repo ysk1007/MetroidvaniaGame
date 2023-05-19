@@ -10,7 +10,7 @@ public class Movement : MonoBehaviour
     public float parallaxFactor = 0.1f; //¿ø±Ù°ª
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Sword").transform;
+        player = GameObject.FindGameObjectWithTag("Player").transform;
         origin = transform.position;
     }
 
