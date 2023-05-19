@@ -12,7 +12,9 @@ public class SoundSlider : MonoBehaviour
     public Slider master_slider;
     void Start()
     {
-
+        master_slider.value = PlayerPrefs.GetFloat("Master");
+        bgm_slider.value = PlayerPrefs.GetFloat("BGM");
+        sfx_slider.value = PlayerPrefs.GetFloat("SFX");
     }
 
     private void FixedUpdate()

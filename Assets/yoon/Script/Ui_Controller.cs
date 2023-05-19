@@ -12,9 +12,15 @@ public class Ui_Controller : MonoBehaviour
     public HpBar PlayerHp;
     public TextMeshProUGUI PlayerMaxHpText;
     public TextMeshProUGUI PlayerCurrentHpText;
+    public Image BloodScreen;
 
     public GameObject inven_ui;
     private bool openinven = false;
+    public GameObject iconObject;
+    private Image[] Icons;
+
+    public GameObject pro_ui;
+    private bool openpro = false;
 
     public float duration = 1f; //애니메이션 시간 (1초)
     public float elapsedTime = 0f; //경과 시간
@@ -31,6 +37,7 @@ public class Ui_Controller : MonoBehaviour
         PlayerHp.currentHp = 100f;
         PlayerMaxHpText.text = PlayerHp.maxHp.ToString("F0");
         PlayerCurrentHpText.text = PlayerHp.currentHp.ToString("F0");
+        Icons = iconObject.GetComponentsInChildren<Image>();
     }
 
     // Start is called before the first frame update
@@ -44,15 +51,47 @@ public class Ui_Controller : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
+            if (openpro)
+            {
+                pro_ui.SetActive(false);
+                openpro = false;
+            }
+
             if (!openinven)
             {
                 inven_ui.SetActive(true);
                 openinven = true;
+                Icons[0].gameObject.GetComponent<Image>().enabled = true;
+                Icons[1].gameObject.GetComponent<Image>().enabled = false;
             }
             else
             {
                 inven_ui.SetActive(false);
                 openinven = false;
+                Icons[0].gameObject.GetComponent<Image>().enabled = false;
+                Icons[1].gameObject.GetComponent<Image>().enabled = true;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            if (openinven)
+            {
+                inven_ui.SetActive(false);
+                openinven = false;
+                Icons[0].gameObject.GetComponent<Image>().enabled = false;
+                Icons[1].gameObject.GetComponent<Image>().enabled = true;
+            }
+
+            if (!openpro)
+            {
+                pro_ui.SetActive(true);
+                openpro = true;
+            }
+            else
+            {
+                pro_ui.SetActive(false);
+                openpro = false;
             }
         }
     }
@@ -78,6 +117,7 @@ public class Ui_Controller : MonoBehaviour
 
     public void Damage(float damage)
     {
+        StartCoroutine("ShowBloodScreen"); //피격 화면효과 코루틴
         PlayerHp.Dmg(damage);
         if (PlayerHp.currentHp <= 0)
         {
@@ -113,4 +153,14 @@ public class Ui_Controller : MonoBehaviour
 
         SlidingBar.value = 1f; //목표 값으로 설정
     }
+
+    IEnumerator ShowBloodScreen() //피격시 화면 테두리 붉은 효과
+    {
+        //붉은 화면 투명도 값을 조정
+        BloodScreen.color = new Color(1, 0, 0, UnityEngine.Random.Range(0.3f, 0.4f));
+        yield return new WaitForSeconds(0.15f);
+        BloodScreen.color = Color.clear;    //지연 후 원래 색으로 
+    }
+
+
 }

@@ -49,7 +49,6 @@ public class inven : MonoBehaviour
     {
         if (select_slot_index == i)
         {
-            SoundManager.instance.SFXPlay("Equip_", Equip_clip);
             select_item();
         }
         else
@@ -112,6 +111,7 @@ public class inven : MonoBehaviour
             {
                 if (equip_slots[i].GetComponentInChildren<itemStatus>() == null)
                 {
+                    SoundManager.instance.SFXPlay("Equip_", Equip_clip);
                     Instantiate(item, equip_slots[i].transform);
                     Destroy(item.transform.gameObject);
                     equip_slots[i].GetComponentInChildren<Image>().color = Color.green;

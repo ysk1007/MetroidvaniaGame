@@ -7,7 +7,6 @@ public class OptionScript : MonoBehaviour
 {
     public TextMeshProUGUI ScreenText;
     public TextMeshProUGUI ResolutionText;
-    public GameObject OptionCanvas;
     enum ScreenState
     {
         FullScreen,
@@ -18,7 +17,7 @@ public class OptionScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -34,11 +33,11 @@ public class OptionScript : MonoBehaviour
 
     public void OptionClose()
     {
-        OptionCanvas.SetActive(false);
+        this.gameObject.SetActive(false);
     }
 
     public void OptionOpen()
     {
-        OptionCanvas.SetActive(true);
+        this.gameObject.SetActive(true);
     }
 }

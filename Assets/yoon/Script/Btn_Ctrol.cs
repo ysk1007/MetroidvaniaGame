@@ -6,7 +6,7 @@ using TMPro; //TextMeshProUGUI 사용하려 참조
 public class Btn_Ctrol : MonoBehaviour
 {
     public Button[] buttons;
-    public GameObject OptionCanvas;
+    public GameObject OptionPanel;
     public AudioClip clip;
     Scene_Move Scene_Move;
 
@@ -27,7 +27,7 @@ public class Btn_Ctrol : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.DownArrow)&& !OptionCanvas.activeSelf)
+        if (Input.GetKeyUp(KeyCode.DownArrow)&& !OptionPanel.activeSelf)
         {
             if (currentIndex == buttons.Length - 1)
             {
@@ -35,7 +35,7 @@ public class Btn_Ctrol : MonoBehaviour
             }
             else { GetBtnImpo(currentIndex + 1); }
         }
-        else if (Input.GetKeyUp(KeyCode.UpArrow) && !OptionCanvas.activeSelf)
+        else if (Input.GetKeyUp(KeyCode.UpArrow) && !OptionPanel.activeSelf)
         {
             if (currentIndex == 0)
             {
@@ -43,7 +43,7 @@ public class Btn_Ctrol : MonoBehaviour
             }
             else { GetBtnImpo(currentIndex - 1); }
         }
-        else if (Input.GetKeyUp(KeyCode.Return) && !OptionCanvas.activeSelf)
+        else if (Input.GetKeyUp(KeyCode.Return) && !OptionPanel.activeSelf)
         {
             BtnFunction(currentIndex);
         }
@@ -86,7 +86,7 @@ public class Btn_Ctrol : MonoBehaviour
                 Debug.Log("이어서 시작");
                 break;
             case 2:
-                OptionCanvas.SetActive(true);
+                OptionPanel.SetActive(true);
                 break;
             case 3:
                 Debug.Log("게임 종료");

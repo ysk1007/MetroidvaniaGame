@@ -7,21 +7,34 @@ public class WeaponSwap : MonoBehaviour
 {
     public GameObject WeaponUi;
     public Image[] images;
+
+    public GameObject SkillUi;
+    public Image[] skills;
+
     public int currentWeaponIndex = 0;
     public float swapCool = 2f;
+    public float skillcool = 9f;
 
     public bool swaping = false;
+    public bool skilling = false;
 
     public bool ableExe = false;
     public bool ableBow = false;
 
-    public Image img_coolTime;
+    public Image img_Swap_coolTime;
+    public Image img_Skill_coolTime;
     public Image Tab_key;
+
+    float time = 0;
+    float _size = 1.5f;
+    float _upSizeTime = 0.1f;
     private void Awake()
     {
         if (!ableExe && !ableBow) Tab_key.enabled = false;
         images = WeaponUi.GetComponentsInChildren<Image>();
         images[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = true;
+        skills = SkillUi.GetComponentsInChildren<Image>();
+        skills[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = true;
     }
 
     // Start is called before the first frame update
@@ -39,8 +52,10 @@ public class WeaponSwap : MonoBehaviour
         {
             Tab_key.enabled = false;
             images[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = false;
+            skills[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = false;
             currentWeaponIndex = 0;
             images[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = true;
+            skills[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = true;
         }
         if (Input.GetKeyDown(KeyCode.Tab) && !swaping && ableExe)
         {
@@ -62,41 +77,88 @@ public class WeaponSwap : MonoBehaviour
                 if (i == currentWeaponIndex)
                 {
                     images[i].gameObject.GetComponent<Image>().enabled = true;
+                    skills[i].gameObject.GetComponent<Image>().enabled = true;
                 }
                 else
                 {
                     images[i].gameObject.GetComponent<Image>().enabled = false;
+                    skills[i].gameObject.GetComponent<Image>().enabled = false;
                 }
             }
-            StartCoroutine(FillSliderOverTime());
+            StartCoroutine(FillSliderOverTime(img_Swap_coolTime, swapCool, "swap"));
+        }
+        if (Input.GetKeyDown(KeyCode.S) && !skilling)
+        {
+            StartCoroutine(FillSliderOverTime(img_Skill_coolTime, skillcool, "skill"));
         }
     }
 
-    IEnumerator Ready()
+    IEnumerator Ready(Image img, string type)
     {
-        Color color = img_coolTime.color;
-        img_coolTime.color = new Color32 (255,255,255,200);
+        Color color = img.color;
+        img.color = new Color32 (255,255,255,200);
         yield return null;
-        img_coolTime.color = color;
-        img_coolTime.fillAmount = 1f;
+        img.color = color;
+        img.fillAmount = 1f;
 
-        img_coolTime.enabled = false;
-        swaping = false;
+        img.enabled = false;
+        if (type == "swap")
+        {
+            swaping = false;
+        }
+        else if (type == "skill")
+        {
+            skilling = false;
+            StartCoroutine(ReadyAnim(skills[currentWeaponIndex].gameObject.GetComponent<Image>()));
+        }
     }
 
-    IEnumerator FillSliderOverTime()
+    IEnumerator ReadyAnim(Image img)
     {
-        swaping = true;
-        img_coolTime.enabled = true;
-        float time = swapCool;
+        while (time < 1f)
+        {
+        Debug.Log("½ÃÀÛ");
+        if (time <= _upSizeTime)
+            {
+                img.rectTransform.localScale = Vector3.one * (1 + _size * time);
+            }
+        else if (time <= _upSizeTime * 2)
+            {
+                img.rectTransform.localScale = Vector3.one * (2 * _size * _upSizeTime + 1 - time * _size);
+            }
+        else
+            {
+                img.rectTransform.localScale = Vector3.one;
+                break;
+            }
+        time += Time.deltaTime;
+        Debug.Log(time);
+        yield return null;
+        }
+        time = 0;
+
+    }
+
+    IEnumerator FillSliderOverTime(Image img, float coolTime, string type)
+    {
+        if (type == "swap")
+        {
+            swaping = true;
+        }
+        else if (type == "skill")
+        {
+            skilling = true;
+        }
+        img.enabled = true;
+        float time = coolTime;
         while (time >= 0f)
         {
             time -= Time.deltaTime;
-            img_coolTime.fillAmount = time / swapCool;
+            img.fillAmount = time / coolTime;
             yield return null;
         }
-        img_coolTime.fillAmount = 0f;
-        StartCoroutine(Ready());
+        img.fillAmount = 0f;
+        StartCoroutine(Ready(img, type));
         
     }
 }

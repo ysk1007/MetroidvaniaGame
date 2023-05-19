@@ -4,9 +4,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System; //튜플 위함
+using Random = UnityEngine.Random;
 
 public class BossHpController : MonoBehaviour
 {
+    public GameObject ShakeObject;
+    Vector3 ShakeObjectPos;
+    [SerializeField] [Range(1f, 5f)] float shakeRange = 2.5f;
+    [SerializeField] [Range(0.1f, 1f)] float duration = 0.5f;
+
+    public float Animduration = 1f; // 애니메이션 시간 (초)
+    float targetHeight = 150f; // 목표로 하는 높이
+
+    private Vector3 startPosition;
+    private Vector3 targetPosition;
+
     public GameObject TotalBar;
     public List<GameObject> BarObject;
     public HpBar[] HpSliders = { };
@@ -20,6 +32,10 @@ public class BossHpController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        startPosition = ShakeObject.transform.position;
+        targetPosition = startPosition + new Vector3(0f, targetHeight, 0f);
+
+        ShakeObjectPos = targetPosition; //흔들릴 오브젝트 현재 위치 저장
         HpSliders = TotalBar.GetComponentsInChildren<HpBar>();
         /*BarObject = TotalBar.transform.GetChildCount();*/
         DivisionHp = BossTotalHp / BossHpLine;
@@ -49,8 +65,19 @@ public class BossHpController : MonoBehaviour
         }
     }
 
+    public void BossSpawn()
+    {
+        StartCoroutine(BossHpUi_Up());
+    }
+
+    void BossDead()
+    {
+        StartCoroutine(BossHpUi_Down());
+    }
+
     public void BossHit(float damage)
     {
+        Shake();
         HpSliders[currentHpLine - 1].Dmg(damage);
         if (HpSliders[currentHpLine - 1].currentHp < 0 && currentHpLine != 1)
         {
@@ -59,6 +86,75 @@ public class BossHpController : MonoBehaviour
             LineCount.text = "X " + currentHpLine.ToString();
             HpSliders[currentHpLine - 1].Dmg(overdmg);
         }
-        
+        if (HpSliders[0].currentHp <= 0)
+        {
+            Invoke("BossDead", 2f);
+            Time.timeScale = 0.5f;
+        }
+    }
+
+    public void Shake()
+    {
+        InvokeRepeating("StartShake", 0f, 0.005f); //InvokeRepeating 일정 간격 호출
+        Invoke("StopShake", duration); //지연 시간 후 멈추는 함수 호출
+    }
+
+    public void StartShake() //흔들림 효과
+    {
+        float ObjectPosX = Random.value * shakeRange * 2 - shakeRange;
+        float ObjectPosY = Random.value * shakeRange * 2 - shakeRange;
+        Vector3 ShakeObjectPos = ShakeObject.transform.position;
+        ShakeObjectPos.x += ObjectPosX;
+        ShakeObjectPos.y += ObjectPosY;
+        ShakeObject.transform.position = ShakeObjectPos; //바뀐 위치 적용
+    }
+
+    public void StopShake() //흔들림 멈추는 함수
+    {
+        CancelInvoke("StartShake"); //현재 Invoke 실행되는 함수 있으면 취소
+        ShakeObject.transform.position = ShakeObjectPos; //처음 지정했던 곳으로 ui 원위치
+    }
+
+    public IEnumerator BossHpUi_Up()
+    {
+        float elapsedTime = 0f;
+
+        while (elapsedTime < Animduration)
+        {
+            elapsedTime += Time.deltaTime;
+
+            // t는 0부터 1까지 점진적으로 증가하는 값으로, 0일 때 시작 위치, 1일 때 목표 위치에 해당합니다.
+            float t = elapsedTime / Animduration;
+
+            // 보간된 위치 계산
+            Vector3 newPosition = Vector3.Lerp(startPosition, targetPosition, t);
+
+            // 오브젝트 이동
+            ShakeObject.transform.position = newPosition;
+
+            yield return null;
+        }
+    }
+
+    IEnumerator BossHpUi_Down()
+    {
+        Time.timeScale = 1f;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < Animduration)
+        {
+            elapsedTime += Time.deltaTime;
+
+            // t는 0부터 1까지 점진적으로 증가하는 값으로, 0일 때 목표 위치, 1일 때 시작 위치에 해당합니다.
+            float t = elapsedTime / Animduration;
+
+            // 보간된 위치 계산
+            Vector3 newPosition = Vector3.Lerp(targetPosition, startPosition, t);
+
+            // 오브젝트 이동
+            ShakeObject.transform.position = newPosition;
+
+            yield return null;
+        }
     }
 }
