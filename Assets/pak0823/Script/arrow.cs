@@ -35,12 +35,12 @@ public class Arrow : MonoBehaviour
         if (player != null && player.isSkill == true)
         {
             SetSkill = true; // 스킬 사용 중이면 SetSkill 변수를 true로 설정
-            Dmg = 3;
+            Dmg = 10;
         }
         else
         {
             SetSkill = false; // 스킬 사용 중이 아니면 SetSkill 변수를 false로 설정
-            Dmg = 1;
+            Dmg = 5;
         }
         RaycastHit2D rayHit = Physics2D.Raycast(transform.position, transform.right, distance, islayer); // 화살이 감지할 수 있는 거리 내에서 충돌하는 물체를 감지
         if (rayHit.collider != null)
@@ -50,7 +50,7 @@ public class Arrow : MonoBehaviour
                 if (!hitDict.ContainsKey(rayHit.collider)) // 이미 적에게 대미지를 입힌 경우, Dictionary 체크
                 {
                     Debug.Log("Hit!");
-                    /*rayHit.collider.GetComponent<Enemy>().EnemyHurt(Dmg, transform.position); // Enemy 스크립트의 EnemyHurt 함수를 호출해 적에게 대미지*/
+                    rayHit.collider.GetComponent<Enemy>().Hit(Dmg); // Enemy 스크립트의 EnemyHurt 함수를 호출해 적에게 대미지
                     hitDict.Add(rayHit.collider, true); // 적 정보를 Dictionary에 추가
                 }
 
@@ -58,6 +58,10 @@ public class Arrow : MonoBehaviour
                 {
                     DestroyArrow(); // 스킬을 사용하지 않았다면 화살을 제거
                 }
+            }
+            if (rayHit.collider.tag == "Wall")
+            {
+                DestroyArrow();
             }
         }
         if(SetSkill == true)
