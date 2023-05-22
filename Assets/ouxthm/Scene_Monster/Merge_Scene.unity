@@ -2268,7 +2268,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &171890770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2290,7 +2290,6 @@ MonoBehaviour:
   Hit_Set: 0
   Gap_Distance_X: 0
   Gap_Distance_Y: 0
-  NextMove: 0
   Enemy_Sensing_X: 0
   Enemy_Sensing_Y: 0
   Enemy_Range_X: 2
@@ -2298,8 +2297,12 @@ MonoBehaviour:
   Pdamage: 0
   Bump_Power: 0
   atkDelay: 0
+  nextDirX: 0
+  nextDirY: 0
   Dying: 0
   Enemy_Dying_anim_Time: 0
+  atkX: 0
+  atkY: 0
 --- !u!114 &171890771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9602,7 +9605,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &823629031
 Transform:
   m_ObjectHideFlags: 0
@@ -9679,7 +9682,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 1
   m_Sprite: {fileID: -1686723038, guid: 4e9520137dcc4774f9235b9440d200a4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -10237,7 +10240,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 860553411}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 84.74, y: -2.32, z: 0}
+  m_LocalPosition: {x: 124.52, y: 4.27, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11211,7 +11214,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 1
   m_Sprite: {fileID: -1686723038, guid: 4e9520137dcc4774f9235b9440d200a4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -14688,7 +14691,6 @@ MonoBehaviour:
   Hit_Set: 0
   Gap_Distance_X: 0
   Gap_Distance_Y: 0
-  NextMove: 0
   Enemy_Sensing_X: 0
   Enemy_Sensing_Y: 0
   Enemy_Range_X: 0
@@ -14696,8 +14698,12 @@ MonoBehaviour:
   Pdamage: 0
   Bump_Power: 0
   atkDelay: 0
+  nextDirX: 0
+  nextDirY: 0
   Dying: 0
   Enemy_Dying_anim_Time: 0
+  atkX: 0
+  atkY: 0
 --- !u!114 &1265608979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14767,7 +14773,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1265608977}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 85.14, y: -0.37, z: 0}
+  m_LocalPosition: {x: 117.57, y: 4.64, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -19287,7 +19293,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 1
   m_Sprite: {fileID: -1462710061, guid: 36031ce220291a64593f64499d147eea, type: 3}
   m_Color: {r: 0.9647059, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -23374,7 +23380,6 @@ MonoBehaviour:
   Hit_Set: 0
   Gap_Distance_X: 0
   Gap_Distance_Y: 0
-  NextMove: 0
   Enemy_Sensing_X: 0
   Enemy_Sensing_Y: 0
   Enemy_Range_X: 2
@@ -23382,8 +23387,12 @@ MonoBehaviour:
   Pdamage: 0
   Bump_Power: 0
   atkDelay: 0
+  nextDirX: 0
+  nextDirY: 0
   Dying: 0
   Enemy_Dying_anim_Time: 0
+  atkX: 0
+  atkY: 0
 --- !u!114 &1845722144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23478,7 +23487,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1846698427
 Transform:
   m_ObjectHideFlags: 0
@@ -23555,7 +23564,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 1
   m_Sprite: {fileID: -1686723038, guid: 4e9520137dcc4774f9235b9440d200a4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -26474,7 +26483,6 @@ MonoBehaviour:
   Hit_Set: 0
   Gap_Distance_X: 0
   Gap_Distance_Y: 0
-  NextMove: 0
   Enemy_Sensing_X: 0
   Enemy_Sensing_Y: 0
   Enemy_Range_X: 2
@@ -26482,8 +26490,12 @@ MonoBehaviour:
   Pdamage: 0
   Bump_Power: 0
   atkDelay: 0
+  nextDirX: 0
+  nextDirY: 0
   Dying: 0
   Enemy_Dying_anim_Time: 0
+  atkX: 0
+  atkY: 0
 --- !u!114 &2136804885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26553,7 +26565,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2136804883}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 74.76, y: -7.43, z: 1.6506131}
+  m_LocalPosition: {x: 106.3, y: -2.4, z: 1.6506131}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
