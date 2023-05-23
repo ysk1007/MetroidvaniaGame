@@ -10,12 +10,16 @@ public class Arrow : MonoBehaviour
     public LayerMask islayer; // 충돌 감지를 할 레이어
     public Transform pos; // 화살 위치 정보
     public bool SetSkill = false; // 스킬 사용 여부
-    public int Dmg; //대미지 변수
+    public int Dmg = 1; //대미지 변수
     public float turnSpeed = 1f; // 화살의 유도 속도
     public float maxTrackingDistance = 10f; // 유도 가능한 최대 거리
     public float maxTrackingAngle = 80f; // 유도 가능한 최대 각도
-    public int level;
+    private Vector3 moveDirection;
 
+
+    public Enemy enemy;
+    public bool Running = false;
+    public SpriteRenderer spriteRenderer;
     private Collider2D coll; // Arrow 오브젝트의 콜라이더
     private Transform target; // 유도 대상
     private bool isTracking; // 화살이 유도 중인지 여부
@@ -27,42 +31,75 @@ public class Arrow : MonoBehaviour
         player = GameObject.FindObjectOfType<Player>(); // Player 스크립트를 가진 게임 오브젝트를 찾아서 할당
         coll = GetComponent<Collider2D>(); // Arrow 오브젝트의 콜라이더를 가져옴
         Invoke("DestroyArrow", 2f); // 일정 시간이 지난 후 화살을 제거하는 Invoke 함수를 호출
+        pos = transform;
+
+        if (player != null)
+        {
+            if (player.GetComponent<SpriteRenderer>().flipX)
+            {
+                // 플레이어가 오른쪽을 바라보면 화살을 오른쪽으로 발사
+                moveDirection = Vector3.right;
+                spriteRenderer.flipX = false;
+            }
+            else
+            {
+                // 플레이어가 왼쪽을 바라보면 화살을 왼쪽으로 발사
+                moveDirection = Vector3.left;
+                spriteRenderer.flipX = true;
+            }
+        }
     }
 
     private void Update()
     {
-        
         if (player != null && player.isSkill == true)
         {
             SetSkill = true; // 스킬 사용 중이면 SetSkill 변수를 true로 설정
-            Dmg = 3;
+            Dmg = 10;
         }
         else
         {
             SetSkill = false; // 스킬 사용 중이 아니면 SetSkill 변수를 false로 설정
-            Dmg = 1;
+            Dmg = 5;
         }
-        RaycastHit2D rayHit = Physics2D.Raycast(transform.position, transform.right, distance, islayer); // 화살이 감지할 수 있는 거리 내에서 충돌하는 물체를 감지
+        /*RaycastHit2D rayHit = Physics2D.Raycast(transform.position, transform.right, distance, islayer); // 화살이 감지할 수 있는 거리 내에서 충돌하는 물체를 감지
         if (rayHit.collider != null)
         {
+            Enemy enemy = rayHit.transform.GetComponent<Enemy>();
             if (rayHit.collider.tag == "Enemy")
             {
                 if (!hitDict.ContainsKey(rayHit.collider)) // 이미 적에게 대미지를 입힌 경우, Dictionary 체크
                 {
                     Debug.Log("Hit!");
-                    /*rayHit.collider.GetComponent<Enemy>().EnemyHurt(Dmg, transform.position); // Enemy 스크립트의 EnemyHurt 함수를 호출해 적에게 대미지*/
+                    if(!Running)
+                    {
+                        Running = true;
+                        StartCoroutine(enemy.Hit(Dmg)); // Enemy 스크립트의 Hit 함수를 호출해 적에게 대미지
+                        Debug.Log("Hit코루틴 실행중");
+                        Running = false;
+                    }
+                    if (Running)
+                    {
+                        Running = false;
+                        Debug.Log("Hit코루틴끌게");
+                        StopCoroutine(enemy.Hit(Dmg));
+                        Running = true;
+                    }
                     hitDict.Add(rayHit.collider, true); // 적 정보를 Dictionary에 추가
                 }
-
                 if (SetSkill == false)
                 {
                     DestroyArrow(); // 스킬을 사용하지 않았다면 화살을 제거
                 }
             }
-        }
-        if(SetSkill == true)
+            if (rayHit.collider.tag == "Wall")
+            {
+                DestroyArrow();
+            }
+        }*/
+        if (SetSkill == true)
         {
-            if (transform.rotation.y == 0)
+            if (player.isSkill == true)
             {
                 transform.Translate(transform.right * speed * Time.deltaTime); // 화살을 오른쪽으로 이동
             }
@@ -70,8 +107,8 @@ public class Arrow : MonoBehaviour
             {
                 transform.Translate(transform.right * -1 * speed * Time.deltaTime); // 화살을 왼쪽으로 이동
             }
-        } 
-        else if (level == 1 && SetSkill == false)
+        }
+        else if (SetSkill == false)
         {
             // 유도 중일 때
             if (isTracking)
@@ -80,6 +117,7 @@ public class Arrow : MonoBehaviour
                 {
                     // 적 캐릭터를 향하는 방향 벡터 계산
                     Vector2 direction = target.position - transform.position;
+                    moveDirection = direction;
                     direction.Normalize(); // 방향 벡터를 정규화하여 길이가 1인 단위 벡터로 만듦
 
                     // 화살을 해당 방향으로 이동 및 회전
@@ -92,6 +130,7 @@ public class Arrow : MonoBehaviour
                     {
                         isTracking = false;
                     }
+                    pos.position += moveDirection * speed * Time.deltaTime;
                 }
                 else
                 {
@@ -99,17 +138,10 @@ public class Arrow : MonoBehaviour
                     isTracking = false;
                 }
             }
-            else
+            else //유도중이 아닐 때
             {
-                // 유도 중이 아니면 일반 이동
-                if (transform.rotation.y == 0)
-                {
-                    transform.Translate(transform.right * speed * Time.deltaTime); // 화살을 오른쪽으로 이동
-                }
-                else
-                {
-                    transform.Translate(transform.right * -1 * speed * Time.deltaTime); // 화살을 왼쪽으로 이동
-                }
+
+                pos.position += moveDirection * speed * Time.deltaTime; //화살 기본 이동
 
                 // 유도 대상 탐색
                 RaycastHit2D rayHittargetX = Physics2D.Raycast(transform.position, transform.right, maxTrackingDistance, islayer);  //정면에 있는 대상 탐색
@@ -151,9 +183,22 @@ public class Arrow : MonoBehaviour
                     }
                 }
             }
-        }  
+        }
     }
-    private void DestroyArrow() //Arrow 오브젝트 제거
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "Enemy")
+        {
+            Debug.Log("인지했음");
+            Enemy enemy = collision.transform.GetComponent<Enemy>();
+            StartCoroutine(enemy.Hit(Dmg)); // Enemy 스크립트의 Hit 함수를 호출해 적에게 대미지
+            //DestroyArrow();
+        }
+    }
+
+    public void DestroyArrow()
     {
         Destroy(gameObject);
     }

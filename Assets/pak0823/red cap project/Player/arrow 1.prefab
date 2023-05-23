@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 9191525023929005868}
   - component: {fileID: 7735491052138583322}
   - component: {fileID: -8604415927066986594}
+  - component: {fileID: 2374244993340766800}
   m_Layer: 0
   m_Name: arrow 1
-  m_TagString: Untagged
+  m_TagString: Arrow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -103,14 +104,15 @@ MonoBehaviour:
   distance: 0.5
   islayer:
     serializedVersion: 2
-    m_Bits: 264
+    m_Bits: 1224
   pos: {fileID: 0}
   SetSkill: 0
   Dmg: 0
   turnSpeed: 1
   maxTrackingDistance: 10
   maxTrackingAngle: 80
-  level: 1
+  Running: 0
+  spriteRenderer: {fileID: 9191525023929005868}
 --- !u!61 &-8604415927066986594
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -121,7 +123,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -137,3 +139,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.08, y: 2.08}
   m_EdgeRadius: 0
+--- !u!50 &2374244993340766800
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6371477986873845597}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 1
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

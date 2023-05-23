@@ -30,6 +30,8 @@ public abstract class Enemy : MonoBehaviour
     public float Enemy_Dying_anim_Time;     // 죽는 애니메이션 시간 변수
     public float atkX;  // 공격 콜라이더의 x값
     public float atkY;  // 공격 콜라이더의 y값
+    public static bool enemyHit = false;   // 적이 피해입은 상태인지 확인하는 변수
+    public float old_Speed;
 
 
     Rigidbody2D rigid;
@@ -41,7 +43,7 @@ public abstract class Enemy : MonoBehaviour
     BoxCollider2D Box;
     Transform posi;
     BoxCollider2D Boxs;
-    Transform Pos;
+    public Transform Pos;
 
 
     public abstract void InitSetting(); // 적의 기본 정보를 설정하는 함수(추상 클래스)
@@ -55,6 +57,8 @@ public abstract class Enemy : MonoBehaviour
     }
     public virtual void onetime()   // Awake에 적용
     {
+        Pos = GetComponent<Transform>();
+
         StartCoroutine(Think());
     }
     
@@ -62,7 +66,6 @@ public abstract class Enemy : MonoBehaviour
     {
         if (collision.gameObject.name == "Player")
         {
-            Pos = GetComponent<Transform>();
             Boxs = GetComponent<BoxCollider2D>();
             Bump();
         }
@@ -102,7 +105,7 @@ public abstract class Enemy : MonoBehaviour
         StartCoroutine(Think());
     }
 
-    IEnumerator Turn() // 이미지를 뒤집는 코루틴
+   void Turn() // 이미지를 뒤집는 코루틴
     {
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
 
@@ -113,35 +116,46 @@ public abstract class Enemy : MonoBehaviour
         }
         StopAllCoroutines();
         StartCoroutine(Think());
-        yield return null;
     }
 
     public IEnumerator Hit(float damage) // 피해 함수
     {
+        
         animator = this.GetComponentInChildren<Animator>();
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
         rigid = this.GetComponent<Rigidbody2D>();
 
+
         Enemy_HP -= damage;
         Debug.Log(damage + "Enemy");
 
-        if (Enemy_HP > 0) // Enemy의 체력이 0 이상일 때
+        if (Enemy_HP > 0 && enemyHit == false) // Enemy의 체력이 0 이상일 때
         {
-            float old_Speed = Enemy_Speed;  // 이전 속도 값으로 돌리기 위해 다른 변수에 속도 값을 저장
+            enemyHit = true;
+
+            old_Speed = Enemy_Speed;  // 이전 속도 값으로 돌리기 위해 다른 변수에 속도 값을 저장
             animator.SetTrigger("Hit");
             Enemy_Speed = 0;
-            yield return new WaitForSeconds(0.5f);
-            Enemy_Speed = old_Speed;    // 이전 속도 값으로 복구
+            Debug.Log("속도 되돌리기 전");
+            if(enemyHit == true)
+            {
+                yield return new WaitForSeconds(0.5f);
+                Enemy_Speed = old_Speed;    // 이전 속도 값으로 복구
+                Debug.Log("데미지");
+                enemyHit = false;
 
+            }
         }
         else if (Enemy_HP <= 0 && Enemy_Mod == 1) // Enemy의 체력이 0과 같거나 이하일 때(죽음)
         {
             Dying = true;
+            enemyHit = false;
             animator.SetTrigger("Die");
             this.gameObject.layer = LayerMask.NameToLayer("Dieenemy");
             Enemy_Speed = 0;
             yield return new WaitForSeconds(Enemy_Dying_anim_Time);
             this.gameObject.SetActive(false);   // 오브젝트 사라지게 함
+            StopCoroutine(Hit(damage));
         }
         else if (Enemy_HP <= 0 && Enemy_Mod == 3)// 비행 몬스터 죽음)
         {
@@ -160,6 +174,7 @@ public abstract class Enemy : MonoBehaviour
             spriteRenderer.color = new Color(1, 1, 1, 0.4f);
             yield return new WaitForSeconds(Enemy_Dying_anim_Time);
             this.gameObject.gameObject.SetActive(false);
+            StopCoroutine(Hit(damage));
         }
     }
 
@@ -279,7 +294,7 @@ public abstract class Enemy : MonoBehaviour
             rayHit = Physics2D.Raycast(frontVec, Vector3.down, 2, LayerMask.GetMask("Tilemap", "Pad"));
             if (rayHit.collider == null)
             {
-                StartCoroutine(Turn());
+                Turn();
             }
         }
 
@@ -337,7 +352,7 @@ public abstract class Enemy : MonoBehaviour
         foreach (Collider2D collider in collider2D)
         {
             if (collider.tag == "Player" && collider != null)
-                collider.GetComponent<Player>().Playerhurt(Enemy_Power/*, Pos.position*/);  // 머지 후 변경
+                collider.GetComponent<Player>().Playerhurt(Enemy_Power, Pos.position);  // 머지 후 변경
         }
     }
 
@@ -348,7 +363,7 @@ public abstract class Enemy : MonoBehaviour
         foreach (Collider2D collider in collider2D)
         {
             if (collider.tag == "Player" && collider != null)
-                collider.GetComponent<Player>().Playerhurt(Bump_Power/*, Pos.position*/);   // 주석처리 머지 후 적용
+                collider.GetComponent<Player>().Playerhurt(Bump_Power, Pos.position);   
         }
     }
 }

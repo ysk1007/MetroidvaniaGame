@@ -19,9 +19,9 @@ public class Player : MonoBehaviour
     public int JumpCnt, JumpCount = 2;  //2단점프의 수를 카운터 해주는 변수
     public int SwdCnt, AxeCnt;  //공격모션의 순서
     public float Direction; //방향값
-    public float attackDash = 5f; //큰 공격시 앞으로 이동하는 값
+    public float attackDash = 4f; //큰 공격시 앞으로 이동하는 값
     public float slideSpeed = 13;   //슬라이딩 속도
-    public int slideDir;    //슬라이딩 방향값
+    public int slideDir = 1;    //슬라이딩 방향값
     public float MaxHp;    //플레이어 최대 HP
     public float CurrentHp;    //플레이어 현재 HP
     public bool ishurt = false; //피격 확인
@@ -45,7 +45,7 @@ public class Player : MonoBehaviour
         JumpCnt = JumpCount;    //시작시 점프 가능 횟수 적용
         Speed = 4;  //시작시 기본 이동속도
         jumpPower = 17; //기본 점프높이
-        pos = GetComponent<Transform>(); // pos 변수에 Transform 컴포넌트 할당
+        pos = transform.GetChild(1).GetComponentInChildren<Transform>(); //attackRange의 위치값을 pos에 저장
     }
     void Update()
     {
@@ -59,17 +59,20 @@ public class Player : MonoBehaviour
         Direction = Input.GetAxisRaw("Horizontal");   // 좌우 방향값을 정수로 가져오기
         if (!isdelay && Direction != 0 && gameObject.CompareTag("Player") && !isSkill)    //공격 딜레이중일시 이동 불가능
         {
-            transform.Translate(new Vector2(1, 0) * Speed * Time.deltaTime);
-            anim.SetBool("Player_Walk", true);
 
+            anim.SetBool("Player_Walk", true);
             if (Direction < 0) //왼쪽 바라보기
             {
-                transform.eulerAngles = new Vector2(0, 180);
+                spriteRenderer.flipX = false;
+                transform.Translate(new Vector2(-1, 0) * Speed * Time.deltaTime);
+                //transform.eulerAngles = new Vector2(0, 180);
                 slideDir = -1;
             }
             else if (Direction > 0) //오른쪽 바라보기
             {
-                transform.eulerAngles = new Vector2(0, 0);
+                spriteRenderer.flipX = true;
+                transform.Translate(new Vector2(1, 0) * Speed * Time.deltaTime);
+                //transform.eulerAngles = new Vector2(0, 0);
                 slideDir = 1;
             }
         }
@@ -92,7 +95,7 @@ public class Player : MonoBehaviour
         {
             rigid.velocity = Vector2.up * jumpPower;
             anim.SetBool("Player_Jump", true);
-            gameObject.layer = LayerMask.NameToLayer("Jump");
+            //gameObject.layer = LayerMask.NameToLayer("Jump");
         }
 
         if (Input.GetKeyUp(KeyCode.Space))
@@ -110,10 +113,10 @@ public class Player : MonoBehaviour
 
     public void Player_Attack() //Player 공격모음
     {
-
         if (Input.GetKeyDown(KeyCode.Tab) && GameManager.GetComponent<WeaponSwap>().swaping != true)
         {
             WeaponChage += 1;
+            // Sword Dmg = 7, Axe Dmg = 10, Arrow Dmg = 5
             if (WeaponChage == 2)
             {
                 attackRange.tag = "Axe";
@@ -142,91 +145,27 @@ public class Player : MonoBehaviour
 
         if (Input.GetKey(KeyCode.A) && !anim.GetBool("Sliding") && !isSkill)
         {
-
             if (!isdelay)   //딜레이가 false일때 공격 가능
             {
-                //this.attackRange.gameObject.SetActive(true);
                 if (WeaponChage == 1)    //Sword 공격
                 {
-
-                    if (curTime > 0)    //첫번째 공격후 쿨타임 내에 공격시 강공격 발동
-                        SwdCnt++;
-                    else
-                        SwdCnt = 1;
-
-                    isdelay = true;
-                    anim.SetFloat("Sword", SwdCnt); //Blend를 이용해 연속공격의 애니메이션 순차적 실행
-                    anim.SetTrigger("sword_atk");
-
-                    if (SwdCnt > 1)     //연속공격이 끝난후 다시 첫번째 공격값으로 변경
-                    {
-                        StartCoroutine(Dash_delay());
-                        SwdCnt = 0;
-                    }
-                    else
-                        AttackDamage();
-
-                    curTime = coolTime;
+                    Sword_attack();
                 }
                 if (WeaponChage == 2)    //Axe 공격
                 {
-                    if (curTime > 0)    //첫번째 공격후 쿨타임 내에 공격시 강공격 발동
-                        AxeCnt++;
-                    else
-                        AxeCnt = 1;
-
-                    if (AxeCnt == 2)    //동작별 딜레이타임 추가
-                    {
-                        delayTime += 0.2f;
-                        StartCoroutine(Dash_delay());
-                    }
-                    else if (AxeCnt == 3)
-                    {
-                        delayTime += 0.55f;
-                        StartCoroutine(Dash_delay());
-                    }
-                    else
-                        AttackDamage();
-
-                    isdelay = true;
-                    anim.SetFloat("Axe", AxeCnt); //Blend를 이용해 연속공격의 애니메이션 순차적 실행
-                    anim.SetTrigger("axe_atk");
-
-                    if (AxeCnt > 2)     //연속공격이 끝난후 다시 첫번째 공격값으로 변경
-                        AxeCnt = 0;
-
-                    curTime = coolTime + 0.5f;
+                    Axe_attack();
                 }
                 if (WeaponChage == 3)    //Bow 공격
                 {
                     isdelay = true;
-                    StartCoroutine(arrow_delay());
+                    anim.SetTrigger("arrow_atk");
                 }
-                StartCoroutine(attack_delay());    //공격후 다음 공격까지 딜레이
+
+                StartCoroutine(Attack_delay());    //공격후 다음 공격까지 딜레이
             }
         }
         else
             curTime -= Time.deltaTime;
-    }
-
-    IEnumerator Skill()
-    {
-        yield return null;
-        if (WeaponChage == 1) //sword 스킬
-        {
-
-        }
-        if (WeaponChage == 2) //Axe 스킬
-        {
-
-        }
-        if (WeaponChage == 3) //Arrow 스킬
-        {
-            StartCoroutine(arrow_delay());
-            anim.SetTrigger("arrow_atk");
-            StartCoroutine(SkillTime());
-        }
-
     }
 
     public void AttackDamage()
@@ -242,20 +181,42 @@ public class Player : MonoBehaviour
                     enemy = collider.GetComponent<Enemy>();
                     if (enemy != null)
                     {
-                        StartCoroutine(enemy.Hit(Dmg));
-                        Debug.Log(Dmg + "Player");
+                        if(Enemy.enemyHit == false)
+                        {
+                            //StartCoroutine(enemy.Hit(Dmg));
+                            enemy.Hit(Dmg);
+                            Debug.Log(Dmg + "Player");
+                        }
+                        
                     }
                 }
             }
         }
     }
+    IEnumerator Skill()
+    {
+        yield return null;
+        if (WeaponChage == 1) //sword 스킬
+        {
 
+        }
+        if (WeaponChage == 2) //Axe 스킬
+        {
+
+        }
+        if (WeaponChage == 3) //Arrow 스킬
+        {
+            anim.SetTrigger("arrow_atk");
+            StartCoroutine(SkillTime());
+        }
+
+    }
 
     //Wall_Slide
     void OnCollisionStay2D(Collision2D collision)   // 벽 콜라이젼이 Player에 닿고 있으면 실행, 점프착지 시 콜라이젼 닿을 시 점프 해제
     {
         RaycastHit2D rayHitDown = Physics2D.Raycast(rigid.position, Vector3.down, 1f, LayerMask.GetMask("Tilemap", "Pad"));
-        Debug.DrawRay(rigid.position, Vector3.down * 1f, Color.red);
+        //Debug.DrawRay(rigid.position, Vector3.down * 1f, Color.red);
 
         if (collision.gameObject.tag == "Wall" && !isGround)
         {
@@ -268,10 +229,10 @@ public class Player : MonoBehaviour
             isjump = false;
             isGround = true;
         }
-        if (rayHitDown.collider != null)
+        if (rayHitDown.collider != null && !isSlide)
         {
             JumpCnt = JumpCount;
-            gameObject.layer = LayerMask.NameToLayer("Player");
+            //gameObject.layer = LayerMask.NameToLayer("Player");
         }
     }
     private void OnCollisionExit2D(Collision2D collision)   //Player가 벽에 닿지 않을때
@@ -299,6 +260,7 @@ public class Player : MonoBehaviour
         Speed = 0;
         isSlide = true;
         gameObject.tag = "Sliding";
+        gameObject.layer = LayerMask.NameToLayer("Sliding");
         anim.SetBool("Sliding", true);
         if (slideDir == 1) //오른쪽으로 슬라이딩
             rigid.velocity = new Vector2(transform.localScale.x * slideSpeed, Time.deltaTime);
@@ -307,14 +269,13 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(0.5f); //무적 시간
         anim.SetBool("Sliding", false);
         gameObject.tag = "Player";
+        gameObject.layer = LayerMask.NameToLayer("Player");
         Speed = 4;
         yield return new WaitForSeconds(2f); //슬라이딩 쿨타임
         isSlide = false;
-
     }
 
-
-    public void Playerhurt(float Damage) // Player가 공격받을 시
+    public void Playerhurt(float Damage, Vector2 pos) // Player가 공격받을 시
     {
         if (!ishurt)
         {
@@ -329,7 +290,12 @@ public class Player : MonoBehaviour
             {
                 anim.SetTrigger("hurt");
                 GameManager.GetComponent<Ui_Controller>().Damage(Damage);
-                StartCoroutine(Knockback());
+                float x = transform.position.x - pos.x;
+                if (transform.position.x > pos.x)
+                    x = 1;
+                else
+                    x = -1;
+                StartCoroutine(Knockback(x));
                 StartCoroutine(Routine());
                 StartCoroutine(Blink());
             }
@@ -337,21 +303,88 @@ public class Player : MonoBehaviour
 
     }
 
-    IEnumerator attack_delay() //연속공격 딜레이
+    IEnumerator Attack_delay() //연속공격 딜레이
     {
         yield return new WaitForSeconds(delayTime);
         delayTime = 1f;
         isdelay = false;
-        //this.attackRange.gameObject.SetActive(false);
     }
 
-    IEnumerator arrow_delay() //화살공격시 나가는 시간 조절 - 애니메이션과 맞춰주기 위해
+    void Sword_attack()
     {
-        anim.SetTrigger("arrow_atk");
-        if (isSkill)
-            yield return new WaitForSeconds(0.7f);
+        if (SwdCnt == 0)
+        {
+            box.size = new Vector2(3.5f, 2.5f);
+            box.offset = new Vector2(1.5f, 0);
+        }
         else
-            yield return new WaitForSeconds(0.5f);
+        {
+            box.size = new Vector2(4f, 2.5f);
+            box.offset = new Vector2(2, 0);
+        }
+
+        if (curTime > 0)    //첫번째 공격후 쿨타임 내에 공격시 강공격 발동
+        {
+            SwdCnt++;
+            Dmg = 10;
+        }
+        else
+        {
+            SwdCnt = 1;
+            Dmg = 7;
+        }
+
+        //첫번째 공격 대미지 함수 실행은 애니메이션 부분에 들어있음
+        isdelay = true;
+        anim.SetFloat("Sword", SwdCnt); //Blend를 이용해 연속공격의 애니메이션 순차적 실행
+        anim.SetTrigger("sword_atk");
+
+        if (SwdCnt > 1)     //연속공격이 끝난후 다시 첫번째 공격값으로 변경
+            SwdCnt = 0;
+        curTime = coolTime; // 콤보 공격 제한시간
+    }
+
+    void Axe_attack()
+    {
+        if (curTime > 0)    //첫번째 공격후 쿨타임 내에 공격시 강공격 발동
+            AxeCnt++;
+        else
+            AxeCnt = 1;
+
+        if (AxeCnt == 1) // 동작별 대미지 변경
+        {
+            Dmg = 10;
+            box.size = new Vector2(5f, 2.5f);
+            box.offset = new Vector2(2, 0);
+        }
+        else if (AxeCnt == 2)
+        {
+            Dmg = 15;
+            box.size = new Vector2(4.5f, 2.5f);
+            box.offset = new Vector2(2.5f, 0);
+        }
+        else if (AxeCnt == 3)
+        {
+            Dmg = 20;
+            attackDash = 6;
+            box.size = new Vector2(5.5f, 2.5f);
+            box.offset = new Vector2(3.5f, 0);
+        }
+
+        isdelay = true;
+        anim.SetFloat("Axe", AxeCnt); //Blend를 이용해 연속공격의 애니메이션 순차적 실행
+        anim.SetTrigger("axe_atk");
+
+        if (AxeCnt > 2)     //연속공격이 끝난후 다시 첫번째 공격값으로 변경
+            AxeCnt = 0;
+
+        curTime = coolTime + 0.5f;  // 콤보 공격 제한시간
+    }
+
+    IEnumerator Arrow_attack() //화살 일반공격 및 스킬 - 애니메이션 특정 부분에서 실행되게 유니티에서 설정함
+    {
+        yield return null;
+        Instantiate(Arrow, pos.position, transform.rotation);
         if (slideDir == 1)  //플레이어가 바라보는 방향 왼쪽
         {
             if (!isSkill)
@@ -359,15 +392,13 @@ public class Player : MonoBehaviour
             else
                 rigid.velocity = new Vector2(transform.localScale.x - 10f, Time.deltaTime);
         }
-        else
+        else  //플레이어가 바라보는 방향 오른쪽
         {
             if (!isSkill)
                 rigid.velocity = new Vector2(transform.localScale.x + 5f, Time.deltaTime);
             else
                 rigid.velocity = new Vector2(transform.localScale.x + 10f, Time.deltaTime);
         }
-        Instantiate(Arrow, pos.position, transform.rotation);
-
     }
 
     IEnumerator SkillTime() //스킬 종료 시간
@@ -376,24 +407,9 @@ public class Player : MonoBehaviour
         isSkill = false;
     }
 
-    IEnumerator Dash_delay() //공격시 약간의 딜레이후 앞으로 조금 이동
+    IEnumerator Dash() //일부 공격시 앞으로 대쉬 이동 - 애니메이션 특정 부분에서 실행되게 유니티에서 설정함
     {
-        if (SwdCnt == 2)
-        {
-            yield return new WaitForSeconds(0.5f);
-            box.size = new Vector2(3, 2);
-        }
-        else if (AxeCnt == 2)
-        {
-            yield return new WaitForSeconds(0.8f);
-            box.size = new Vector2(3, 2);
-        }
-        else
-        {
-            yield return new WaitForSeconds(1f);
-            box.size = new Vector2(4, 2);
-        }
-
+        yield return null;
         if (slideDir == -1)
         {
             rigid.velocity = new Vector2(transform.localScale.x - attackDash, Time.deltaTime);
@@ -402,23 +418,17 @@ public class Player : MonoBehaviour
         {
             rigid.velocity = new Vector2(transform.localScale.x + attackDash, Time.deltaTime);
         }
-
-        AttackDamage();
-        box.size = new Vector2(2, 2);
     }
 
-    IEnumerator Knockback() //피해입을시 넉백
+    IEnumerator Knockback(float dir) //피해입을시 넉백
     {
         isknockback = true;
         float ctime = 0;
 
-        while (ctime < 0.2f) //넉백 지속시간
+        while (ctime < 0.4f) //넉백 지속시간
         {
-            if (slideDir == -1)
-                transform.Translate(Vector2.left * Speed * 2 * Time.deltaTime);
-            else
-                transform.Translate(Vector2.right * Speed * 2 * Time.deltaTime * -1);
-
+            Vector2 vector2 = new Vector2(dir, 1);
+            transform.Translate(vector2.normalized * Speed * 3 * Time.deltaTime);
             ctime += Time.deltaTime;
             yield return null;
         }
@@ -427,8 +437,10 @@ public class Player : MonoBehaviour
 
     IEnumerator Routine() // 피해입을시 잠깐동안 무적
     {
+        gameObject.layer = LayerMask.NameToLayer("Invincible");
         yield return new WaitForSeconds(2f);
         ishurt = false;
+        gameObject.layer = LayerMask.NameToLayer("Player");
     }
 
     IEnumerator Blink() // 무적시간동안 투명 효과
