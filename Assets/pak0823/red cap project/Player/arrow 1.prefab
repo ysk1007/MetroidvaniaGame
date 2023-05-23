@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9191525023929005868}
   - component: {fileID: 7735491052138583322}
   - component: {fileID: -8604415927066986594}
+  - component: {fileID: 962107606914083660}
   m_Layer: 0
   m_Name: arrow 1
   m_TagString: Arrow
@@ -74,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 24ca15584c071ed4bb8626f52c76828b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -98,19 +99,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f60866ebae9e29d4dbd25fbd914bff28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 6371477986873845597}
   speed: 15
   distance: 0.5
   islayer:
     serializedVersion: 2
-    m_Bits: 264
+    m_Bits: 3264
   pos: {fileID: 0}
   SetSkill: 0
-  Dmg: 0
+  Dmg: 1
   turnSpeed: 1
-  maxTrackingDistance: 10
-  maxTrackingAngle: 80
-  level: 1
+  maxTrackingDistance: 8
+  maxTrackingAngle: 70
+  spriteRenderer: {fileID: 9191525023929005868}
 --- !u!61 &-8604415927066986594
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -137,3 +138,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.08, y: 2.08}
   m_EdgeRadius: 0
+--- !u!50 &962107606914083660
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6371477986873845597}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 1
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
