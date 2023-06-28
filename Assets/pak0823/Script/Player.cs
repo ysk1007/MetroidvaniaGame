@@ -181,13 +181,8 @@ public class Player : MonoBehaviour
                     enemy = collider.GetComponent<Enemy>();
                     if (enemy != null)
                     {
-                        if(Enemy.enemyHit == false)
-                        {
-                            //StartCoroutine(enemy.Hit(Dmg));
-                            enemy.Hit(Dmg);
-                            Debug.Log(Dmg + "Player");
-                        }
-                        
+                        enemy.Hit(Dmg);
+                        Debug.Log(Dmg + "Player");
                     }
                 }
             }
