@@ -159,21 +159,28 @@ public abstract class Enemy : MonoBehaviour
         rigid = this.GetComponent<Rigidbody2D>();
 
         Enemy_HP -= damage;
-        Debug.Log(damage + "Enemy");
-
 
         if (Enemy_HP > 0) // Enemy의 체력이 0 이상일 때
         {
             if (!animator.GetBool("Hit"))
             {
-                old_Speed = Enemy_Speed;  // 이전 속도 값으로 돌리기 위해 다른 변수에 속도 값을 저장
+                /*한 사이클 돌고 
+                  0 디버그 두 번째 찍힐 때 처음 히트 애니메이션 나옴
+                  애니메이션 끝나고 1.5 올드 스피드 디버그와 1.5 디버그 나옴*/
+
+                if(Enemy_Speed > 0)
+                {
+                    old_Speed = Enemy_Speed;  // 이전 속도 값으로 돌리기 위해 다른 변수에 속도 값을 저장
+                }
                 animator.SetTrigger("Hit");
                 Enemy_Speed = 0;
-                Debug.Log("속도 되돌리기 전");
+                Debug.Log("속도");
+                Debug.Log(Enemy_Speed);
                 yield return new WaitForSeconds(0.5f);
+                Debug.Log(old_Speed + "oldspeed");
                 Enemy_Speed = old_Speed;    // 이전 속도 값으로 복구
                 enemyHit = true;
-                Debug.Log("데미지");
+                Debug.Log(Enemy_Speed);
             }
         }
         else if (Enemy_HP <= 0 && (Enemy_Mod == 1 || Enemy_Mod == 5)) // Enemy의 체력이 0과 같거나 이하일 때(죽음)
@@ -181,7 +188,6 @@ public abstract class Enemy : MonoBehaviour
             Dying = true;
             Enemy_Speed = 0;
             old_Speed = Enemy_Speed;
-            Debug.Log("죽을 때 속도 0");
             animator.SetTrigger("Die");
             this.gameObject.layer = LayerMask.NameToLayer("Dieenemy");
             yield return new WaitForSeconds(Enemy_Dying_anim_Time);
