@@ -1,11 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     public float jumpPower; //Jump 높이 저장 변수
     public float Speed; //Move 속도 저장 변수
+    public float SpeedChange; // Move 속도변경 저장 변수
     public float curTime, coolTime = 2;  // 연속공격이 가능한 시간
     public float skcurTime, skcoolTime = 5;  // 스킬 쿨타임
     public bool isdelay = false;    //공격 딜레이 체크
@@ -26,14 +26,21 @@ public class Player : MonoBehaviour
     public float CurrentHp;    //플레이어 현재 HP
     public bool ishurt = false; //피격 확인
     public bool isknockback = false;    //넉백 확인
-    public float Dmg = 7;
+    public float Dmg;  // 대미지 적용 변수
+    public float DmgChange; // 대미지 변경 저장 변수
     public GameObject GameManager;
     public GameObject attackRange;
 
+    public GameObject Arrow2; //화살 증가 오브젝트
+    public Transform Arrowpos2; //증가된 화살  오브젝트
+    public int Addarrow = -1;
+
     public BoxCollider2D box; //공격 범위
-    public GameObject Arrow; //화살 오브젝트
     public Transform pos;   //공격박스 위치
+    public GameObject Arrow; //화살 오브젝트
+    public Transform Arrowpos; //화살 생성 오브젝트
     public SpriteRenderer spriteRenderer;
+    //private SpriteRenderer AttackRennderer;
     Rigidbody2D rigid;
     Animator anim;
     public Enemy enemy;
@@ -43,9 +50,12 @@ public class Player : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         JumpCnt = JumpCount;    //시작시 점프 가능 횟수 적용
-        Speed = 4;  //시작시 기본 이동속도
+        SpeedChange = 4;  //시작시 기본 이동속도
         jumpPower = 17; //기본 점프높이
-        pos = transform.GetChild(1).GetComponentInChildren<Transform>(); //attackRange의 위치값을 pos에 저장
+        DmgChange = 7; // 기본 공격 대미지
+        pos = transform.GetChild(0).GetComponentInChildren<Transform>(); //attackRange의 위치값을 pos에 저장
+        Arrowpos = transform.GetChild(1).GetComponentInChildren<Transform>(); //Arrowpos의 위치값을 pos에 저장
+        Arrowpos2 = transform.GetChild(2).GetComponentInChildren<Transform>(); //Arrowpos2의 위치값을 pos에 저장
     }
     void Update()
     {
@@ -59,21 +69,22 @@ public class Player : MonoBehaviour
         Direction = Input.GetAxisRaw("Horizontal");   // 좌우 방향값을 정수로 가져오기
         if (!isdelay && Direction != 0 && gameObject.CompareTag("Player") && !isSkill)    //공격 딜레이중일시 이동 불가능
         {
-
+            Speed = SpeedChange;
+            Transform AtkRangeTransform = transform.GetChild(1);   // AttackRange 위치값 변경을 위해 자식오브젝트 위치값 불러옴
             anim.SetBool("Player_Walk", true);
             if (Direction < 0) //왼쪽 바라보기
             {
                 spriteRenderer.flipX = false;
                 transform.Translate(new Vector2(-1, 0) * Speed * Time.deltaTime);
-                //transform.eulerAngles = new Vector2(0, 180);
                 slideDir = -1;
+                AtkRangeTransform.localPosition = new Vector3(-3, 0); // AttackRange 위치값 변경
             }
             else if (Direction > 0) //오른쪽 바라보기
             {
                 spriteRenderer.flipX = true;
                 transform.Translate(new Vector2(1, 0) * Speed * Time.deltaTime);
-                //transform.eulerAngles = new Vector2(0, 0);
                 slideDir = 1;
+                AtkRangeTransform.localPosition = new Vector3(0, 0);
             }
         }
         else
@@ -89,52 +100,50 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.DownArrow) && !anim.GetBool("Sliding") && !anim.GetBool("Wall_slide")) //발판에서 밑으로 점프시 내려가기
         {
             if (Input.GetKeyDown(KeyCode.Space))
-                StartCoroutine(DownJump());
+                StartCoroutine(PadJump());
         }
         else if (Input.GetKeyDown(KeyCode.Space) && !anim.GetBool("Sliding") && !anim.GetBool("Wall_slide") && JumpCnt > 0)
         {
             rigid.velocity = Vector2.up * jumpPower;
+            StartCoroutine(PadJump());
             anim.SetBool("Player_Jump", true);
-            //gameObject.layer = LayerMask.NameToLayer("Jump");
         }
-
         if (Input.GetKeyUp(KeyCode.Space))
         {
             JumpCnt--;
             isGround = false;
         }
 
-        /*if (transform.position.y < -10)
-         {
-            PlayerReposition();
-         }*/
-
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Addarrow *= -1;
+            print(Addarrow);
+        }
     }
 
     public void Player_Attack() //Player 공격모음
     {
-        if (Input.GetKeyDown(KeyCode.Tab) && GameManager.GetComponent<WeaponSwap>().swaping != true)
+        if (Input.GetKeyDown(KeyCode.Tab) && GameManager.GetComponent<WeaponSwap>().swaping != true)    // 무기 변경
         {
             WeaponChage += 1;
-            // Sword Dmg = 7, Axe Dmg = 10, Arrow Dmg = 5
             if (WeaponChage == 2)
             {
                 attackRange.tag = "Axe";
-                Dmg = 10;
             }
             else if (WeaponChage == 3)
             {
                 attackRange.tag = "Arrow";
+                this.transform.GetChild(0).gameObject.SetActive(false);
             }
             else
             {
-                Dmg = 7;
                 attackRange.tag = "Sword";
                 WeaponChage = 1;
+                this.transform.GetChild(0).gameObject.SetActive(true);
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.S) && skcurTime <= 0 && !anim.GetBool("Sliding"))
+        if (Input.GetKeyDown(KeyCode.S) && skcurTime <= 0 && !anim.GetBool("Sliding"))  //스킬 실행
         {
             skcurTime = skcoolTime;
             isSkill = true;
@@ -143,7 +152,7 @@ public class Player : MonoBehaviour
         else
             skcurTime -= Time.deltaTime;
 
-        if (Input.GetKey(KeyCode.A) && !anim.GetBool("Sliding") && !isSkill)
+        if (Input.GetKey(KeyCode.A) && !anim.GetBool("Sliding") && !isSkill)    //기본 공격
         {
             if (!isdelay)   //딜레이가 false일때 공격 가능
             {
@@ -166,14 +175,16 @@ public class Player : MonoBehaviour
         }
         else
             curTime -= Time.deltaTime;
+
     }
 
-    public void AttackDamage()
+    public void AttackDamage()// Player 공격시 적에게 대미지값 넘겨주기
     {
-        box = transform.GetChild(1).GetComponentInChildren<BoxCollider2D>();
-        if (box != null)
+        Dmg = DmgChange;
+        box = transform.GetChild(0).GetComponentInChildren<BoxCollider2D>();
+        if (box != null)    //공격 범위 안에 null값이 아닐때만
         {
-            Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(pos.position, box.size, 0);
+            Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(pos.position, box.size, 0); //공격 범위 안에 콜라이더를 
             foreach (Collider2D collider in collider2Ds)
             {
                 if (collider != null && collider.tag == "Enemy")
@@ -181,14 +192,16 @@ public class Player : MonoBehaviour
                     enemy = collider.GetComponent<Enemy>();
                     if (enemy != null)
                     {
-                        enemy.Hit(Dmg);
+                        //StopCoroutine(enemy.Hit(Dmg));
+                        StartCoroutine(enemy.Hit(Dmg));
+                        //enemy.Hit(Dmg);
                         Debug.Log(Dmg + "Player");
                     }
                 }
             }
         }
     }
-    IEnumerator Skill()
+    IEnumerator Skill()//스킬 작동시 실행(아직 수정중)
     {
         yield return null;
         if (WeaponChage == 1) //sword 스킬
@@ -204,7 +217,6 @@ public class Player : MonoBehaviour
             anim.SetTrigger("arrow_atk");
             StartCoroutine(SkillTime());
         }
-
     }
 
     //Wall_Slide
@@ -224,7 +236,7 @@ public class Player : MonoBehaviour
             isjump = false;
             isGround = true;
         }
-        if (rayHitDown.collider != null && !isSlide)
+        if (rayHitDown.collider != null && !anim.GetBool("Sliding"))
         {
             JumpCnt = JumpCount;
             //gameObject.layer = LayerMask.NameToLayer("Player");
@@ -232,12 +244,11 @@ public class Player : MonoBehaviour
     }
     private void OnCollisionExit2D(Collision2D collision)   //Player가 벽에 닿지 않을때
     {
-        if (collision.gameObject.tag == "Wall") //왼쪽벽에 붙어서 떨어질때
+        if (collision.gameObject.tag == "Wall") //벽에 붙어서 내려갈 때
         {
             anim.SetBool("Wall_slide", false);
             rigid.drag = 0;
         }
-
 
         if (collision.gameObject.tag == "Wall" && Input.GetKey(KeyCode.Space)) //벽에서 점프시 반대로 팅겨감
         {
@@ -246,7 +257,15 @@ public class Player : MonoBehaviour
             if (Direction < 0)
                 rigid.velocity = new Vector2(-1, 1) * 10f;
         }
+    }
 
+    private void OnTriggerEnter2D(Collider2D collision)  // 함정 구멍에 떨어졌을 경우 다시 리스폰(임시)
+    {
+        if (collision.gameObject.tag == "Respawn")
+        {
+            Playerhurt(10, pos.position);
+            PlayerReposition();
+        }
     }
 
     private IEnumerator Sliding() //슬라이딩 실행
@@ -265,9 +284,10 @@ public class Player : MonoBehaviour
         anim.SetBool("Sliding", false);
         gameObject.tag = "Player";
         gameObject.layer = LayerMask.NameToLayer("Player");
-        Speed = 4;
+        Speed = SpeedChange;
         yield return new WaitForSeconds(2f); //슬라이딩 쿨타임
         isSlide = false;
+
     }
 
     public void Playerhurt(float Damage, Vector2 pos) // Player가 공격받을 시
@@ -279,7 +299,7 @@ public class Player : MonoBehaviour
 
             if (CurrentHp <= 0)
             {
-                Invoke("Die", 3f);
+                //Invoke("Die", 3f);
             }
             else
             {
@@ -305,28 +325,31 @@ public class Player : MonoBehaviour
         isdelay = false;
     }
 
-    void Sword_attack()
+    void Sword_attack() //Sword 공격 관련 정보
     {
-        if (SwdCnt == 0)
+        if (curTime > 0)    //첫번째 공격후 쿨타임 내에 공격시 강공격 발동
         {
+            SwdCnt++;
+        }
+        else
+        {
+            SwdCnt = 1;
+        }
+
+        if (SwdCnt == 1)
+        {
+            DmgChange = 7;
             box.size = new Vector2(3.5f, 2.5f);
             box.offset = new Vector2(1.5f, 0);
         }
         else
         {
+            DmgChange = 10;
             box.size = new Vector2(4f, 2.5f);
-            box.offset = new Vector2(2, 0);
-        }
-
-        if (curTime > 0)    //첫번째 공격후 쿨타임 내에 공격시 강공격 발동
-        {
-            SwdCnt++;
-            Dmg = 10;
-        }
-        else
-        {
-            SwdCnt = 1;
-            Dmg = 7;
+            if (slideDir == 1)  //공격 방향별 box.offset값을 다르게 적용
+                box.offset = new Vector2(2, 0);
+            else
+                box.offset = new Vector2(1, 0);
         }
 
         //첫번째 공격 대미지 함수 실행은 애니메이션 부분에 들어있음
@@ -339,32 +362,44 @@ public class Player : MonoBehaviour
         curTime = coolTime; // 콤보 공격 제한시간
     }
 
-    void Axe_attack()
+    void Axe_attack()   //Axe 공격 관련 정보
     {
         if (curTime > 0)    //첫번째 공격후 쿨타임 내에 공격시 강공격 발동
             AxeCnt++;
         else
             AxeCnt = 1;
 
+
         if (AxeCnt == 1) // 동작별 대미지 변경
         {
-            Dmg = 10;
+            DmgChange = 10;
             box.size = new Vector2(5f, 2.5f);
-            box.offset = new Vector2(2, 0);
+            if (slideDir == 1)   //공격 방향별 box.offset값을 다르게 적용
+                box.offset = new Vector2(2, 0);
+            else
+                box.offset = new Vector2(1, 0);
         }
         else if (AxeCnt == 2)
         {
-            Dmg = 15;
+            DmgChange = 15;
             box.size = new Vector2(4.5f, 2.5f);
-            box.offset = new Vector2(2.5f, 0);
+            if (slideDir == 1)
+                box.offset = new Vector2(2.5f, 0);
+            else
+                box.offset = new Vector2(0.5f, 0);
+
         }
         else if (AxeCnt == 3)
         {
-            Dmg = 20;
+            DmgChange = 20;
             attackDash = 6;
             box.size = new Vector2(5.5f, 2.5f);
-            box.offset = new Vector2(3.5f, 0);
+            if (slideDir == 1)
+                box.offset = new Vector2(3.5f, 0);
+            else
+                box.offset = new Vector2(-0.5f, 0);
         }
+
 
         isdelay = true;
         anim.SetFloat("Axe", AxeCnt); //Blend를 이용해 연속공격의 애니메이션 순차적 실행
@@ -379,7 +414,22 @@ public class Player : MonoBehaviour
     IEnumerator Arrow_attack() //화살 일반공격 및 스킬 - 애니메이션 특정 부분에서 실행되게 유니티에서 설정함
     {
         yield return null;
-        Instantiate(Arrow, pos.position, transform.rotation);
+        Transform ArrowposTransform = transform.GetChild(1);  // 기본 화살
+        Transform Arrowpos2Transform = transform.GetChild(2); // 증가 화살
+        if (slideDir == 1)   //공격 방향별 Arrowpos 위치값 변경
+        {
+            ArrowposTransform.localPosition = new Vector3(1, 0.2f);
+            Arrowpos2Transform.localPosition = new Vector3(1, -0.5f);
+        }
+        else
+        {
+            ArrowposTransform.localPosition = new Vector3(-1, 0.2f);
+            Arrowpos2Transform.localPosition = new Vector3(-1, -0.5f);
+        }
+
+        Instantiate(Arrow, Arrowpos.position, transform.rotation); // 기본 화살 복사 생성
+        Instantiate(Arrow2, Arrowpos2.position, transform.rotation);  // 증가된 화살 복사 생성
+
         if (slideDir == 1)  //플레이어가 바라보는 방향 왼쪽
         {
             if (!isSkill)
@@ -448,20 +498,20 @@ public class Player : MonoBehaviour
         spriteRenderer.color = new Color(1, 1, 1, 1f);
     }
 
-    IEnumerator DownJump()
+    IEnumerator PadJump()
     {
         anim.SetBool("Player_Jump", true);
         gameObject.layer = LayerMask.NameToLayer("Jump");
         yield return new WaitForSeconds(0.3f);
         gameObject.layer = LayerMask.NameToLayer("Player");
-    } //블록 아래로 내려가기
+    } //발판 무시 관련
 
     void Die() //Player 사망시 스프라이트 삭제
     {
         Destroy(gameObject);
     }
 
-    void PlayerReposition()
+    void PlayerReposition() // 리스폰 위치 지정(임시)
     {
         transform.position = new Vector3(-30, -7.5f, 0);
     }

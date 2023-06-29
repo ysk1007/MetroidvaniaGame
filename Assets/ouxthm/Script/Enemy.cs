@@ -153,7 +153,7 @@ public abstract class Enemy : MonoBehaviour
 
     public IEnumerator Hit(float damage) // 피해 함수
     {
-        enemyHit = false;
+        enemyHit = true;
         animator = this.GetComponentInChildren<Animator>();
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
         rigid = this.GetComponent<Rigidbody2D>();
@@ -164,32 +164,38 @@ public abstract class Enemy : MonoBehaviour
 
         if (Enemy_HP > 0) // Enemy의 체력이 0 이상일 때
         {
-            old_Speed = Enemy_Speed;  // 이전 속도 값으로 돌리기 위해 다른 변수에 속도 값을 저장
-            animator.SetTrigger("Hit");
-            Enemy_Speed = 0;
-            Debug.Log("속도 되돌리기 전");
-            yield return new WaitForSeconds(0.5f);
-            Enemy_Speed = old_Speed;    // 이전 속도 값으로 복구
-            Debug.Log("데미지");
-            enemyHit = true;
+            if (!animator.GetBool("Hit"))
+            {
+                old_Speed = Enemy_Speed;  // 이전 속도 값으로 돌리기 위해 다른 변수에 속도 값을 저장
+                animator.SetTrigger("Hit");
+                Enemy_Speed = 0;
+                Debug.Log("속도 되돌리기 전");
+                yield return new WaitForSeconds(0.5f);
+                Enemy_Speed = old_Speed;    // 이전 속도 값으로 복구
+                enemyHit = true;
+                Debug.Log("데미지");
+            }
         }
         else if (Enemy_HP <= 0 && (Enemy_Mod == 1 || Enemy_Mod == 5)) // Enemy의 체력이 0과 같거나 이하일 때(죽음)
         {
             Dying = true;
+            Enemy_Speed = 0;
+            old_Speed = Enemy_Speed;
+            Debug.Log("죽을 때 속도 0");
             animator.SetTrigger("Die");
             this.gameObject.layer = LayerMask.NameToLayer("Dieenemy");
-            Enemy_Speed = 0;
             yield return new WaitForSeconds(Enemy_Dying_anim_Time);
             this.gameObject.SetActive(false);   // 오브젝트 사라지게 함
-            enemyHit = true;
+            enemyHit = false;
         }
         else if (Enemy_HP <= 0 && Enemy_Mod == 3) // 비행 몬스터 죽음)
         {
             Dying = true;
             this.gameObject.layer = LayerMask.NameToLayer("Dieenemy");
             Enemy_Speed = 0;
+            old_Speed = Enemy_Speed;
             nextDirX = 0;
-            for (int i = 0; i < 4; i++)  // 3번 반복
+            for (int i = 0; i < 4; i++) 
             {
                 // 스프라이트 블링크
                 spriteRenderer.color = new Color(1, 1, 1, 0.4f);
@@ -208,7 +214,6 @@ public abstract class Enemy : MonoBehaviour
     {
         rigid = this.GetComponent<Rigidbody2D>();
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
-
         if (Gap_Distance_X <= Enemy_Sensing_X && Gap_Distance_Y <= Enemy_Sensing_Y)      // Enemy의 X축 사거리에 있을 때, Y축 사거리에 있을 때
         {
             if (transform.position.x < target.position.x)            // 오른쪽 방향
