@@ -1,33 +1,23 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
     public Player player; // Player 스크립트를 가지고 있는 GameObject
-    public float speed = 10f; // 화살 이동 속도
-    public float distance; // 화살이 감지하는 거리
     public LayerMask islayer; // 충돌 감지를 할 레이어
     public Transform pos; // 화살 위치 정보
-    public bool SetSkill = false; // 스킬 사용 여부
-    public int Dmg = 5; //대미지 변수
-    public float turnSpeed = 1f; // 화살의 유도 속도
-    public float maxTrackingDistance = 8f; // 유도 가능한 최대 거리
-    public float maxTrackingAngle = 70f; // 유도 가능한 최대 각도
-    private Vector3 moveDirection;
+    public int Dmg = 5; //대미지 변수, 몬스터가 피격시 화살 데미지값을 받기 위해
+    private float speed = 15f; // 화살 이동 속도
+    private bool SetSkill = false; // 스킬 사용 여부
+    private Vector3 moveDirection = Vector3.right; // 화살이 나가는 방향
+    private float detectRadius = 1.2f; // 화살이 감지할 수 있는 반경 (적이 있는지 없는지 확인)
 
     public SpriteRenderer spriteRenderer;
-    private Collider2D coll; // Arrow 오브젝트의 콜라이더
-    private Transform target; // 유도 대상
-    private bool isTracking; // 화살이 유도 중인지 여부
-    private float trackingDistance = 5f; // 유도 가능한 거리
     private Dictionary<Collider2D, bool> hitDict = new Dictionary<Collider2D, bool>(); // 이미 적에게 대미지를 입혔는지 여부를 기록하는 Dictionary 변수
 
     private void Start()
     {
-        Player player = GetComponent<Player>();
-        player = GameObject.FindObjectOfType<Player>(); // Player 스크립트를 가진 게임 오브젝트를 찾아서 할당
-        coll = GetComponent<Collider2D>(); // Arrow 오브젝트의 콜라이더를 가져옴
+        player = FindObjectOfType<Player>(); // Player 스크립트를 가진 게임 오브젝트를 찾아서 할당
         Invoke("DestroyArrow", 2f); // 일정 시간이 지난 후 화살을 제거하는 Invoke 함수를 호출
         pos = transform;
 
@@ -45,144 +35,97 @@ public class Arrow : MonoBehaviour
                 moveDirection = Vector3.left;
                 spriteRenderer.flipX = true;
             }
+            if (player.isSkill == true)
+            {
+                SetSkill = true; // 스킬 사용 중이면 SetSkill 변수를 true로 설정
+            }
+            else
+            {
+                SetSkill = false; // 스킬 사용 중이 아니면 SetSkill 변수를 false로 설정
+            }
         }
+    }
+
+    
+    Collider2D FindCollider(Collider2D[] colliders)// 가장 가까운 적 찾기
+    {
+        Collider2D closestCollider = null;
+        float distance = float.MaxValue;
+        foreach (Collider2D coll in colliders)
+        {
+            if (LayerMask.LayerToName(coll.gameObject.layer) != "Pad" || LayerMask.LayerToName(coll.gameObject.layer) != "Tilemap")
+            {
+                float tempDist = Vector2.Distance(transform.position, coll.transform.position);
+                if (tempDist < distance)
+                {
+                    closestCollider = coll;
+                    distance = tempDist;
+                }
+            }
+        }
+            return closestCollider;
     }
 
     private void Update()
     {
-        if (player != null && player.isSkill == true)
-        {
-            SetSkill = true; // 스킬 사용 중이면 SetSkill 변수를 true로 설정
-        }
-        else
-        {
-            SetSkill = false; // 스킬 사용 중이 아니면 SetSkill 변수를 false로 설정
-        }
+        // 화살 탐지 기능 추가
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, detectRadius, islayer);
+        Collider2D closestCollider = FindCollider(hitColliders);
 
-
-        if (SetSkill == true) // 스킬실행중일때
+        if(SetSkill == true) // 스킬일 때
         {
-            pos.position += moveDirection * speed * Time.deltaTime;
             Dmg = 10;
+            pos.position += moveDirection * speed * Time.deltaTime; // 화살 직진 이동
         }
         else
         {
-            pos.position += moveDirection * speed * Time.deltaTime; //화살 기본 이동
             Dmg = 5;
+            if (closestCollider != null && closestCollider.tag != "Wall" && closestCollider.tag != "Pad" && closestCollider.tag != "Tilemap") // 일정 거리 내에 적이 있으면 가장 가까운 적으로 이동
+            {
+                if (hitColliders.Length > 0)
+                {
+                    //print("적 찾았음");
+                    //print(closestCollider);
+                    Vector2 direction = (closestCollider.transform.position - transform.position).normalized;
+                    Quaternion rotation = Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg); // 화살 각도 변경
+                    Vector2 pos2D = new Vector2(pos.position.x, pos.position.y);
+                    pos.rotation = rotation;
+                    pos2D += speed * Time.deltaTime * direction;
+                    pos.position = new Vector3(pos2D.x, pos2D.y, pos.rotation.z);
+                }
+                
+            }
+            else
+            {
+                //print("적 찾는중");
+                pos.position += moveDirection * speed * Time.deltaTime; // 화살 직진 이동
+            }
         }
-            
-        /*else  //기본공격 일때
-        {
-            
-            if (isTracking)  // 유도중일때
-            {
-                if (target != null)
-                {
-                    // 적 캐릭터를 향하는 방향 벡터 계산
-                    Vector2 direction = target.position - transform.position;
-                    direction.Normalize(); // 방향 벡터를 정규화하여 길이가 1인 단위 벡터로 만듦
-
-                    // 화살을 해당 방향으로 이동 및 회전
-                    transform.Translate(direction * speed * Time.deltaTime);
-                    float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                    transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
-
-                    // 대상과의 거리가 유도 가능한 거리보다 작아지면 유도 중지
-                    if (Vector3.Distance(transform.position, target.position) <= trackingDistance)
-                    {
-                        isTracking = false;
-                    }
-                }
-                else
-                {
-                    // 대상이 없으면 유도 중지
-                    isTracking = false;
-                }
-            }
-            else //유도중이 아닐 때
-            {
-
-                pos.position += moveDirection * speed * Time.deltaTime; //화살 기본 이동
-
-                // 유도 대상 탐색
-                RaycastHit2D rayHittargetX = Physics2D.Raycast(transform.position, transform.right, maxTrackingDistance, islayer);  //정면에 있는 대상 탐색
-                RaycastHit2D rayHittargetU = Physics2D.Raycast(transform.position, Vector2.up, maxTrackingDistance, islayer);   //위쪽에 있는 대상 탐색
-                RaycastHit2D rayHittargetD = Physics2D.Raycast(transform.position, Vector2.down, maxTrackingDistance, islayer); //아래쪽에 있는 대상 탐색
-
-                if (rayHittargetX.collider != null && rayHittargetX.collider.tag == "Enemy")
-                {
-                    // 유도 가능한 최대 각도 안에 있으면 유도 시작
-                    Vector3 dir = rayHittargetX.collider.transform.position - transform.position;
-                    float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-                    if (Mathf.Abs(angle) <= maxTrackingAngle)
-                    {
-                        target = rayHittargetX.collider.transform;
-                        trackingDistance = Vector3.Distance(transform.position, target.position);
-                        isTracking = true;
-                    }
-                }
-                if (rayHittargetU.collider != null && rayHittargetU.collider.tag == "Enemy")
-                {
-                    Vector3 dir = rayHittargetU.collider.transform.position - transform.position;
-                    float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-                    if (Mathf.Abs(angle) <= maxTrackingAngle)
-                    {
-                        target = rayHittargetU.collider.transform;
-                        trackingDistance = Vector3.Distance(transform.position, target.position);
-                        isTracking = true;
-                    }
-                }
-                if (rayHittargetD.collider != null && rayHittargetD.collider.tag == "Enemy")
-                {
-                    Vector3 dir = rayHittargetD.collider.transform.position - transform.position;
-                    float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-                    if (Mathf.Abs(angle) <= maxTrackingAngle)
-                    {
-                        target = rayHittargetD.collider.transform;
-                        trackingDistance = Vector3.Distance(transform.position, target.position);
-                        isTracking = true;
-                    }
-                }
-            }
-        }*/
     }
-
 
     private void OnTriggerEnter2D(Collider2D collision) //화살이 충돌시 확인후 공격 및 사라지게함
     {
-        RaycastHit2D rayHit = Physics2D.Raycast(transform.position, transform.right, distance); // 화살이 감지할 수 있는 거리 내에서 충돌하는 물체를 감지
-        if (SetSkill)
+        if (collision.tag == "Enemy")
         {
-            Enemy enemy = collision.transform.GetComponent<Enemy>();
-            if (collision.tag == "Enemy")
+            if (SetSkill == true && !hitDict.ContainsKey(collision)) // 스킬 사용 중이고, 이미 적에게 대미지를 입힌 경우가 아닐 때
             {
-                if (!hitDict.ContainsKey(rayHit.collider)) // 이미 적에게 대미지를 입힌 경우, Dictionary 체크
-                {
-                   //enemy.Hit(Dmg); // Enemy 스크립트의 Hit 함수를 호출해 적에게 대미지
-                    //enemy.Hit(Dmg);
-                    hitDict.Add(rayHit.collider, true); // 적 정보를 Dictionary에 추가
-                }
+                hitDict.Add(collision, true); // 적 정보를 Dictionary에 추가
             }
-        }
-        else
-        {
-            if (collision.tag == "Enemy")
+            else if (SetSkill == false)
             {
-                Debug.Log("Emeny맞춤");
-                //Enemy enemy = collision.transform.GetComponent<Enemy>();
-                //StartCoroutine(enemy.Hit(Dmg)); // Enemy 스크립트의 Hit 함수를 호출해 적에게 대미지
-                //enemy.Hit(Dmg);   
                 DestroyArrow();
             }
         }
-        if(collision.tag == "Wall")
+        if (collision.tag == "Wall" || collision.tag == "Tilemap") // 벽이나 땅에 맞으면 화살 사라짐 패드는 없는게 나은것 같아서 뺐음
         {
             DestroyArrow();
         }
     }
 
-    public void DestroyArrow()
+    public void DestroyArrow()  // 화살 제거 함수
     {
         Destroy(gameObject);
     }
 }
+
+

@@ -31,7 +31,7 @@ public abstract class Enemy : MonoBehaviour
     public float atkX;  // 공격 콜라이더의 x값
     public float atkY;  // 공격 콜라이더의 y값
     public bool enemyHit = false;   // 적이 피해입은 상태인지 확인하는 변수
-    public float old_Speed;
+    public float old_Speed;     // 속도 값 변하기 전 속도 값
     public float dTime;
 
 
@@ -74,7 +74,7 @@ public abstract class Enemy : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision != null)
+        if (collision != null)
         {
             if (collision.tag == "Arrow")
             {
@@ -85,11 +85,11 @@ public abstract class Enemy : MonoBehaviour
                     StartCoroutine(Hit(Pdamage));
                 }
                 else
-                    Debug.Log("좆버그");
+                    Debug.Log("좆버그");               // 가끔 일어남 해결해야 함 예외처리 실행하면 됨
 
             }
         }
-       
+
     }
 
     void Move() // 플레이어 감지 전 move
@@ -160,34 +160,40 @@ public abstract class Enemy : MonoBehaviour
 
         Enemy_HP -= damage;
         Debug.Log(damage + "Enemy");
-        
+
 
         if (Enemy_HP > 0) // Enemy의 체력이 0 이상일 때
         {
-            old_Speed = Enemy_Speed;  // 이전 속도 값으로 돌리기 위해 다른 변수에 속도 값을 저장
-            animator.SetTrigger("Hit");
-            Enemy_Speed = 0;
-            Debug.Log("속도 되돌리기 전");
-            yield return new WaitForSeconds(0.5f);
-            Enemy_Speed = old_Speed;    // 이전 속도 값으로 복구
-            Debug.Log("데미지");
-            enemyHit = true;
+            if(!animator.GetBool("Hit"))
+            {
+                old_Speed = Enemy_Speed;  // 이전 속도 값으로 돌리기 위해 다른 변수에 속도 값을 저장
+                animator.SetTrigger("Hit");
+                Enemy_Speed = 0;
+                Debug.Log("속도 되돌리기 전");
+                yield return new WaitForSeconds(0.5f);
+                Enemy_Speed = old_Speed;    // 이전 속도 값으로 복구
+                enemyHit = true;
+                Debug.Log("데미지");
+            }
         }
-        else if (Enemy_HP <= 0 && Enemy_Mod == 1) // Enemy의 체력이 0과 같거나 이하일 때(죽음)
+        else if (Enemy_HP <= 0 && (Enemy_Mod == 1 || Enemy_Mod == 5)) // Enemy의 체력이 0과 같거나 이하일 때(죽음)
         {
             Dying = true;
+            Enemy_Speed = 0;
+            old_Speed = Enemy_Speed;
+            Debug.Log("죽을 때 속도 0");
             animator.SetTrigger("Die");
             this.gameObject.layer = LayerMask.NameToLayer("Dieenemy");
-            Enemy_Speed = 0;
             yield return new WaitForSeconds(Enemy_Dying_anim_Time);
             this.gameObject.SetActive(false);   // 오브젝트 사라지게 함
-            enemyHit = true;
+            enemyHit = false;
         }
-        else if (Enemy_HP <= 0 && Enemy_Mod == 3)// 비행 몬스터 죽음)
+        else if (Enemy_HP <= 0 && Enemy_Mod == 3) // 비행 몬스터 죽음)
         {
             Dying = true;
             this.gameObject.layer = LayerMask.NameToLayer("Dieenemy");
             Enemy_Speed = 0;
+            old_Speed = Enemy_Speed;
             nextDirX = 0;
             for (int i = 0; i < 4; i++)  // 3번 반복
             {
@@ -221,7 +227,7 @@ public abstract class Enemy : MonoBehaviour
                         spriteRenderer.flipX = true;
 
                         transform.Translate(new Vector2(1, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
-                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && (Enemy_Mod == 2 || Enemy_Mod == 4))
+                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && (Enemy_Mod == 2 || Enemy_Mod == 4 || Enemy_Mod == 5))
                         {
                             Attacking = true;
                             Invoke("Attack", atkDelay); // 공격 쿨타임 적용
@@ -231,7 +237,7 @@ public abstract class Enemy : MonoBehaviour
                     else if (nextDirX == 1 && rayHit.collider == null)
                     {
                         transform.Translate(new Vector2(0, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (0,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
-                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && (Enemy_Mod == 2 || Enemy_Mod == 4))
+                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && (Enemy_Mod == 2 || Enemy_Mod == 4 || Enemy_Mod == 5))
                         {
                             Attacking = true;
                             Invoke("Attack", atkDelay); // 공격 쿨타임 적용
@@ -263,7 +269,7 @@ public abstract class Enemy : MonoBehaviour
                     {
                         spriteRenderer.flipX = false;
                         transform.Translate(new Vector2(-1, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
-                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && (Enemy_Mod == 2 || Enemy_Mod == 3 || Enemy_Mod == 4))
+                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && (Enemy_Mod == 2 || Enemy_Mod == 4 || Enemy_Mod == 5))
                         {
                             Attacking = true;
                             Invoke("Attack", atkDelay); // 공격 쿨타임 적용
@@ -274,7 +280,7 @@ public abstract class Enemy : MonoBehaviour
                     {
                         transform.Translate(new Vector2(0, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
 
-                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && (Enemy_Mod == 2 || Enemy_Mod == 3 || Enemy_Mod == 4))
+                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && (Enemy_Mod == 2 || Enemy_Mod == 4 || Enemy_Mod == 5))
                         {
                             Attacking = true;
                             Invoke("Attack", atkDelay); // 공격 쿨타임 적용
@@ -332,7 +338,7 @@ public abstract class Enemy : MonoBehaviour
         Bcollider = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();    // 본인 오브젝트의 첫번째 자식 오브젝트에 포함된 BoxCollider2D를 가져옴.
         spriteRenderer = this.gameObject.transform.GetChild(1).GetComponent<SpriteRenderer>();
 
-        if (!Dying && Enemy_Mod != 1)
+        if (!Dying && (Enemy_Mod != 1 || Enemy_Mod != 5))
         {
             Bcollider.enabled = true;   // 공격 박스 콜라이더 생성
 
@@ -357,7 +363,6 @@ public abstract class Enemy : MonoBehaviour
             }
 
         }
-
     }
     public void offAttkack() // 공격 종료 함수
     {
