@@ -8,7 +8,7 @@ public class Mushroom : Enemy
     {
         Enemy_Mod = 5;  // 자폭
         Enemy_HP = 30f;  // 적의 체력
-        Enemy_Power = 100f; //적의 공격력
+        Enemy_Power = 50f; //적의 공격력
         Enemy_Speed = 2f;    // 적의 이동속도
         Gap_Distance_X = 99f;  // Enemy와 Player의 X 거리차이
         Gap_Distance_Y = 99f;  // Enemy와 Player의 Y 거리차이
@@ -16,6 +16,9 @@ public class Mushroom : Enemy
         Enemy_Dying_anim_Time = 1.1f;   // 죽는 애니메이션 실행 시간
         Enemy_Sensing_X = 10f; // 플레이어 인지 X값
         Enemy_Sensing_Y = 5f;  // 플레이어 인지 Y값
+        Enemy_Range_X = 2f; //적의 X축 공격 사거리
+        Enemy_Range_Y = 1.5f; //적의 Y축 공격 사거리
+        atkDelay = 1f; // 공격 딜레이
     }
 
     public override void Short_Monster(Transform target)

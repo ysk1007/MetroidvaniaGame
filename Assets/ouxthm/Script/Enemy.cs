@@ -230,12 +230,27 @@ public abstract class Enemy : MonoBehaviour
                     if (nextDirX == 1 && rayHit.collider != null)  // nextDirX가 1일 때 그리고 레이캐스트 값이 null이 아닐 때
                     {
                         spriteRenderer.flipX = true;
-
+                        if(Enemy_Mod == 5)
+                        {
+                            Enemy_Speed = 5f;
+                            if (Attacking == true)
+                            {
+                                Enemy_Speed = 0f;
+                            }
+                        }
                         transform.Translate(new Vector2(1, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
                         if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && (Enemy_Mod == 2 || Enemy_Mod == 4 || Enemy_Mod == 5))
                         {
                             Attacking = true;
-                            Invoke("Attack", atkDelay); // 공격 쿨타임 적용
+                            if (Enemy_Mod == 5)
+                            {
+                                Attack();
+                            }
+                            else
+                            {
+                                Invoke("Attack", atkDelay); // 공격 쿨타임 적용
+                            }
+                            
 
                         }
                     }
@@ -273,11 +288,26 @@ public abstract class Enemy : MonoBehaviour
                     if (nextDirX == -1 && rayHit.collider != null) // nextDirX가 -1일 때 그리고 레이캐스트 값이 null이 아닐 때
                     {
                         spriteRenderer.flipX = false;
+                        if (Enemy_Mod == 5)
+                        {
+                            Enemy_Speed = 5f;
+                            if (Attacking == true)
+                            {
+                                Enemy_Speed = 0f;
+                            }
+                        }
                         transform.Translate(new Vector2(-1, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
                         if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && (Enemy_Mod == 2 || Enemy_Mod == 4 || Enemy_Mod == 5))
                         {
                             Attacking = true;
-                            Invoke("Attack", atkDelay); // 공격 쿨타임 적용
+                            if (Enemy_Mod == 5)
+                            {
+                                Attack();
+                            }
+                            else
+                            {
+                                Invoke("Attack", atkDelay); // 공격 쿨타임 적용
+                            }
 
                         }
                     }
@@ -287,6 +317,7 @@ public abstract class Enemy : MonoBehaviour
 
                         if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && (Enemy_Mod == 2 || Enemy_Mod == 4 || Enemy_Mod == 5))
                         {
+                            Debug.Log("공격");
                             Attacking = true;
                             Invoke("Attack", atkDelay); // 공격 쿨타임 적용
                         }
@@ -300,6 +331,7 @@ public abstract class Enemy : MonoBehaviour
                     transform.position = Vector2.MoveTowards(transform.position, playerPoint, Enemy_Speed * Time.deltaTime);
                     if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && target.position.y + 1 <= transform.position.y) // 타겟의 위치에 2.5f를 더해서 Bee가 플레이어의 아래쪽에서 공격하는 것을 방지
                     {
+                        Debug.Log("공격");
                         Attacking = true;
                         Invoke("Attack", atkDelay); // 공격 쿨타임 적용
 
@@ -343,7 +375,7 @@ public abstract class Enemy : MonoBehaviour
         Bcollider = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();    // 본인 오브젝트의 첫번째 자식 오브젝트에 포함된 BoxCollider2D를 가져옴.
         spriteRenderer = this.gameObject.transform.GetChild(1).GetComponent<SpriteRenderer>();
 
-        if (!Dying && (Enemy_Mod != 1 || Enemy_Mod != 5))
+        if (!Dying && Enemy_Mod != 1 && Enemy_Mod != 5)
         {
             Bcollider.enabled = true;   // 공격 박스 콜라이더 생성
 
@@ -382,17 +414,25 @@ public abstract class Enemy : MonoBehaviour
         Enemy_Speed = 3f;
         Bcollider.enabled = false;
     }
-
+    
     public void GiveDamage()    // 플레이어에게 데미지를 주는 함수
     {
         posi = this.gameObject.transform.GetChild(0).GetComponent<Transform>();
         Box = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();
         Collider2D[] collider2D = Physics2D.OverlapBoxAll(posi.position, Box.size, 0);
+        Debug.Log(posi.position +"생성");
         Player player = GetComponent<Player>();
         foreach (Collider2D collider in collider2D)
         {
             if (collider.tag == "Player" && collider != null)
-                collider.GetComponent<Player>().Playerhurt(Enemy_Power, Pos.position);  // 머지 후 변경
+            {
+                
+                collider.GetComponent<Player>().Playerhurt(Enemy_Power, Pos.position);
+                Debug.Log(Pos.position + "  if문 안 쪽");
+                Debug.Log(collider.tag);
+
+            }
+            Debug.Log("데미지 못 줌");
         }
     }
 
@@ -410,13 +450,14 @@ public abstract class Enemy : MonoBehaviour
     public IEnumerator Boom()  // 폭발 함수
     {
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
-        Enemy_Speed = 0f;
-        animator.SetTrigger("Boom");
+
+        animator.SetTrigger("Attack");
+        Attacking = true;
+        yield return new WaitForSeconds(0.5f);
         GiveDamage();
         this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
-        yield return new WaitForSeconds(Enemy_Dying_anim_Time);
-        this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-        this.gameObject.transform.GetChild(1).gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.6f);
+        this.gameObject.SetActive(false);
     }
 
 }
