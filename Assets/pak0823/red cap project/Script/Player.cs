@@ -35,10 +35,12 @@ public class Player : MonoBehaviour
     public GameObject attackRange;  //근접공격 위치
     public GameObject Arrow; //화살 오브젝트
     public GameObject Arrow2; //화살 증가 오브젝트
+    public GameObject Slash;  // 검기 오브젝트
 
     public Transform Arrowpos; //화살 생성 오브젝트
     public Transform Arrowpos2; //증가된 화살  오브젝트
-    public Transform pos;   //공격박스 위치
+    public Transform Attackpos;   //공격박스 위치
+    public Transform Skillpos;  // 스킬 생성 오브젝트
 
     public BoxCollider2D box; //근접 공격 범위
     public SpriteRenderer spriteRenderer;
@@ -55,9 +57,10 @@ public class Player : MonoBehaviour
         SpeedChange = 4;  //시작시 기본 이동속도
         jumpPower = 17; //기본 점프높이
         DmgChange = 7; // 기본 공격 대미지
-        pos = transform.GetChild(0).GetComponentInChildren<Transform>(); //attackRange의 위치값을 pos에 저장
+        Attackpos = transform.GetChild(0).GetComponentInChildren<Transform>(); //attackRange의 위치값을 pos에 저장
         Arrowpos = transform.GetChild(1).GetComponentInChildren<Transform>(); //Arrowpos의 위치값을 pos에 저장
         Arrowpos2 = transform.GetChild(2).GetComponentInChildren<Transform>(); //Arrowpos2의 위치값을 pos에 저장
+        Skillpos = transform.GetChild(3).GetComponentInChildren<Transform>(); //Skillpos의 위치값을 pos에 저장
     }
     void Update()
     {
@@ -141,23 +144,28 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.S) && !anim.GetBool("Sliding"))  //스킬 실행
         {
-            if (WeaponChage == 1 && Sword_SkTime <= 0)    //Sword 공격
+            if (WeaponChage == 1 && Sword_SkTime <= 0)    //Sword 스킬 실행
             {
                 skcoolTime = 10f;
                 Sword_SkTime = skcoolTime;
+                isSkill = true;
+                SwdCnt = 2;
+                anim.SetTrigger("sword_atk");
+                anim.SetFloat("Sword", SwdCnt); // 애니메이션에 스킬 실행함수를 넣어뒀음
             }
-            if (WeaponChage == 2 && Axe_SkTime <= 0)    //Axe 공격
+            if (WeaponChage == 2 && Axe_SkTime <= 0)    //Axe 스킬 실행
             {
+                StartCoroutine(Skill());
                 skcoolTime = 20f;
                 Axe_SkTime = skcoolTime;
             }
-            if (WeaponChage == 3 && Bow_SkTime <= 0)    //Bow 공격
+            if (WeaponChage == 3 && Bow_SkTime <= 0)    //Bow 스킬 실행
             {
+                StartCoroutine(Skill());
                 skcoolTime = 10f;
                 Bow_SkTime = skcoolTime;
                 isSkill = true;
             }
-            StartCoroutine(Skill());
         }
         else
         {
@@ -187,7 +195,6 @@ public class Player : MonoBehaviour
                     isdelay = true;
                     anim.SetTrigger("arrow_atk");
                 }
-
                 StartCoroutine(Attack_delay());    //공격후 다음 공격까지 딜레이
             }
         }
@@ -208,7 +215,7 @@ public class Player : MonoBehaviour
         box = transform.GetChild(0).GetComponentInChildren<BoxCollider2D>();
         if (box != null)    //공격 범위 안에 null값이 아닐때만
         {
-            Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(pos.position, box.size, 0); //공격 범위 안에 콜라이더를 
+            Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(Attackpos.position, box.size, 0); //공격 범위 안에 콜라이더를 
             foreach (Collider2D collider in collider2Ds)
             {
                 if (collider != null && collider.tag == "Enemy")
@@ -230,7 +237,18 @@ public class Player : MonoBehaviour
         yield return null;
         if (WeaponChage == 1) //sword 스킬
         {
-
+            StartCoroutine(SkillTime());
+            Transform SkillTransform = transform.GetChild(3);
+            if (slideDir == 1)   //공격 방향별 Arrowpos 위치값 변경
+            {
+                SkillTransform.localPosition = new Vector3(2, 0.2f);
+            }
+            else
+            {
+                SkillTransform.localPosition = new Vector3(-2, 0.2f);
+            }
+            Instantiate(Slash, Skillpos.position, transform.rotation); // 검기 복사 생성
+            SwdCnt = 1;
         }
         if (WeaponChage == 2) //Axe 스킬
         {
@@ -287,7 +305,7 @@ public class Player : MonoBehaviour
     {
         if(collision.gameObject.tag == "Respawn")
         {
-            Playerhurt(10,pos.position);
+            Playerhurt(10, Attackpos.position);
             PlayerReposition();
         }
     }
@@ -362,39 +380,14 @@ public class Player : MonoBehaviour
 
     void Sword_attack() //Sword 공격 관련 정보
     {
-        if (curTime > 0)    //첫번째 공격후 쿨타임 내에 공격시 강공격 발동
-        {
-            SwdCnt++;
-        }
-        else
-        {
-            SwdCnt = 1;
-        }
+        DmgChange = 7;
+        box.size = new Vector2(3.5f, 2.5f);
+        box.offset = new Vector2(1.5f, 0);
 
-        if (SwdCnt == 1)
-        {
-            DmgChange = 7;
-            box.size = new Vector2(3.5f, 2.5f);
-            box.offset = new Vector2(1.5f, 0);
-        }
-        else
-        {
-            DmgChange = 10;
-            box.size = new Vector2(4f, 2.5f);
-            if (slideDir == 1)  //공격 방향별 box.offset값을 다르게 적용
-                box.offset = new Vector2(2, 0);
-            else
-                box.offset = new Vector2(1, 0);
-        }
-
-        //첫번째 공격 대미지 함수 실행은 애니메이션 부분에 들어있음
+        //공격 대미지 함수 실행은 애니메이션 부분에 들어있음
         isdelay = true;
-        anim.SetFloat("Sword", SwdCnt); //Blend를 이용해 연속공격의 애니메이션 순차적 실행
+        anim.SetFloat("Sword", SwdCnt); //Blend를 이용해 일반공격과 스킬 애니메이션 구분 실행
         anim.SetTrigger("sword_atk");
-
-        if (SwdCnt > 1)     //연속공격이 끝난후 다시 첫번째 공격값으로 변경
-            SwdCnt = 0;
-        curTime = coolTime; // 콤보 공격 제한시간
     }   
 
     void Axe_attack()   //Axe 공격 관련 정보
@@ -484,7 +477,11 @@ public class Player : MonoBehaviour
 
     IEnumerator SkillTime() //스킬 종료 시간
     {
-        yield return new WaitForSeconds(1.3f);
+        if(WeaponChage == 1)
+            yield return new WaitForSeconds(0.6f);
+        if(WeaponChage == 3)
+            yield return new WaitForSeconds(1.3f);
+
         isSkill = false;
     }
 

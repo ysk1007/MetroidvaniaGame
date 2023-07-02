@@ -46,6 +46,7 @@ public abstract class Enemy : MonoBehaviour
     BoxCollider2D Boxs;
     public Transform Pos;
     public Arrow arrow;
+    public Effect effect;
 
     public abstract void InitSetting(); // 적의 기본 정보를 설정하는 함수(추상 클래스)
 
@@ -82,6 +83,18 @@ public abstract class Enemy : MonoBehaviour
                 if (arrow != null)
                 {
                     Pdamage = arrow.Dmg;
+                    StartCoroutine(Hit(Pdamage));
+                }
+                else
+                    Debug.Log("좆버그");               // 가끔 일어남 해결해야 함 예외처리 실행하면 됨
+
+            }
+            if (collision.tag == "Slash")
+            {
+                effect = collision.GetComponent<Effect>();
+                if (effect != null)
+                {
+                    Pdamage = effect.Dmg;
                     StartCoroutine(Hit(Pdamage));
                 }
                 else
