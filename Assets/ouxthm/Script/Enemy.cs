@@ -34,6 +34,8 @@ public abstract class Enemy : MonoBehaviour
     public float old_Speed;     // 속도 값 변하기 전 속도 값
     public float dTime;
 
+    public GameObject Split_Slime;
+    Transform spawn;
 
     Rigidbody2D rigid;
     Animator animator;
@@ -47,9 +49,9 @@ public abstract class Enemy : MonoBehaviour
     public Transform Pos;
     public Arrow arrow;
 
-    public abstract void InitSetting(); // 적의 기본 정보를 설정하는 함수(추상 클래스)
+    public abstract void InitSetting(); // 적의 기본 정보를 설정하는 함수(추상)
 
-    public virtual void Short_Monster(Transform target) // 근거리 공격 몬스터
+    public virtual void Short_Monster(Transform target) 
     {
         Gap_Distance_X = Mathf.Abs(target.transform.position.x - transform.position.x);
         Gap_Distance_Y = Mathf.Abs(target.transform.position.y - transform.position.y);
@@ -59,7 +61,6 @@ public abstract class Enemy : MonoBehaviour
     public virtual void onetime()   // Awake에 적용
     {
         Pos = GetComponent<Transform>();
-
         StartCoroutine(Think());
     }
 
@@ -86,17 +87,15 @@ public abstract class Enemy : MonoBehaviour
                 }
                 else
                     Debug.Log("좆버그");               // 가끔 일어남 해결해야 함 예외처리 실행하면 됨
-
             }
         }
-
     }
 
-    void Move() // 플레이어 감지 전 move
+    void Move() // 이동
     {
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
-
         gameObject.transform.Translate(new Vector2(nextDirX, 0) * Time.deltaTime * Enemy_Speed);
+        animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
 
         if (nextDirX == -1)
         {
@@ -106,6 +105,14 @@ public abstract class Enemy : MonoBehaviour
         {
             spriteRenderer.flipX = true;
         }
+        if (nextDirX == 1 || nextDirX == -1)
+        {
+            animator.SetBool("Run", true);
+        }
+        else if (nextDirX == 0)
+        {
+            animator.SetBool("Run", false);
+        }
     }
 
     IEnumerator Think() // 자동으로 다음 방향을 정하는 코루틴
@@ -113,9 +120,12 @@ public abstract class Enemy : MonoBehaviour
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
 
         nextDirX = Random.Range(-1, 2);     // 적의 X방향 랜덤( -1 ~ 1)
+        if(Enemy_Mod == 3)
+        {
         nextDirY = Random.Range(-1, 2);     // 적의 Y방향 랜덤( -1 ~ 1)
-
-        if (nextDirX != 0 && nextDirX == 1 && Gap_Distance_X > Enemy_Sensing_X)    // Gap_Distance > Enemy_Attack_Range를 추가하지 않으면 플레이어가 사거리 내에 있고 rayHit=null이라면 제자리 돌기함
+        }
+        
+        if (nextDirX == 1 && Gap_Distance_X > Enemy_Sensing_X)    // Gap_Distance > Enemy_Attack_Range를 추가하지 않으면 플레이어가 사거리 내에 있고 rayHit=null이라면 제자리 돌기함
         {
             spriteRenderer.flipX = true;       // nextDirX의 값이 1이면 x축을 flip함
         }
@@ -174,16 +184,12 @@ public abstract class Enemy : MonoBehaviour
                 }
                 animator.SetTrigger("Hit");
                 Enemy_Speed = 0;
-                Debug.Log("속도");
-                Debug.Log(Enemy_Speed);
                 yield return new WaitForSeconds(0.5f);
-                Debug.Log(old_Speed + "oldspeed");
                 Enemy_Speed = old_Speed;    // 이전 속도 값으로 복구
                 enemyHit = true;
-                Debug.Log(Enemy_Speed);
             }
         }
-        else if (Enemy_HP <= 0 && (Enemy_Mod == 1 || Enemy_Mod == 5)) // Enemy의 체력이 0과 같거나 이하일 때(죽음)
+        else if (Enemy_HP <= 0 && Enemy_Mod != 3) // Enemy의 체력이 0과 같거나 이하일 때(죽음)
         {
             Dying = true;
             Enemy_Speed = 0;
@@ -218,6 +224,7 @@ public abstract class Enemy : MonoBehaviour
 
     void Sensing(Transform target, RaycastHit2D rayHit)  // 플레이어 추적
     {
+        animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
         rigid = this.GetComponent<Rigidbody2D>();
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
         if (Gap_Distance_X <= Enemy_Sensing_X && Gap_Distance_Y <= Enemy_Sensing_Y)      // Enemy의 X축 사거리에 있을 때, Y축 사거리에 있을 때
@@ -250,8 +257,6 @@ public abstract class Enemy : MonoBehaviour
                             {
                                 Invoke("Attack", atkDelay); // 공격 쿨타임 적용
                             }
-                            
-
                         }
                     }
                     else if (nextDirX == 1 && rayHit.collider == null)
@@ -261,7 +266,6 @@ public abstract class Enemy : MonoBehaviour
                         {
                             Attacking = true;
                             Invoke("Attack", atkDelay); // 공격 쿨타임 적용
-
                         }
                     }
                 }
@@ -308,7 +312,6 @@ public abstract class Enemy : MonoBehaviour
                             {
                                 Invoke("Attack", atkDelay); // 공격 쿨타임 적용
                             }
-
                         }
                     }
                     else if (nextDirX == -1 && rayHit.collider == null)
@@ -317,7 +320,6 @@ public abstract class Enemy : MonoBehaviour
 
                         if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && (Enemy_Mod == 2 || Enemy_Mod == 4 || Enemy_Mod == 5))
                         {
-                            Debug.Log("공격");
                             Attacking = true;
                             Invoke("Attack", atkDelay); // 공격 쿨타임 적용
                         }
@@ -331,7 +333,6 @@ public abstract class Enemy : MonoBehaviour
                     transform.position = Vector2.MoveTowards(transform.position, playerPoint, Enemy_Speed * Time.deltaTime);
                     if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && target.position.y + 1 <= transform.position.y) // 타겟의 위치에 2.5f를 더해서 Bee가 플레이어의 아래쪽에서 공격하는 것을 방지
                     {
-                        Debug.Log("공격");
                         Attacking = true;
                         Invoke("Attack", atkDelay); // 공격 쿨타임 적용
 
@@ -359,13 +360,12 @@ public abstract class Enemy : MonoBehaviour
             Debug.DrawRay(frontVec, Vector3.down * 1.2f, new Color(0, 1, 0));
 
             // 레이저를 아래로 쏘아서 실질적인 레이저 생성(물리기반), LayMask.GetMask("")는 해당하는 레이어만 스캔함
-            rayHit = Physics2D.Raycast(frontVec, Vector3.down, 2, LayerMask.GetMask("Tilemap", "Pad"));
+            rayHit = Physics2D.Raycast(frontVec, Vector3.down, 2, LayerMask.GetMask("Tilemap", "Pad", "wall"));
             if (rayHit.collider == null)
             {
                 Turn();
             }
         }
-
     }
 
     public void Attack() //공격 함수
@@ -386,12 +386,11 @@ public abstract class Enemy : MonoBehaviour
             else if (spriteRenderer.flipX == false) // 왼쪽을 볼 때
             {
                 AtkTransform.localPosition = new Vector3(-atkX, atkY);  // 몬스터의 공격 콜라이더 박스의 -x좌표와 y좌표
-
             }
 
             GiveDamage();       // 플레이어에게 데미지 주는 함수 실행
-            animator.SetTrigger("Attack");
-            animator.SetBool("Attacking", true);
+            animator.SetTrigger("Attack");  // 벌 공격용
+            animator.SetBool("Attacking", true);    // 벌 공격 확인하는 용인 듯(너무 오래되서 기억 안 남)
             Enemy_Speed = 0;
 
             if (Attacking == true)
@@ -420,20 +419,20 @@ public abstract class Enemy : MonoBehaviour
         posi = this.gameObject.transform.GetChild(0).GetComponent<Transform>();
         Box = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();
         Collider2D[] collider2D = Physics2D.OverlapBoxAll(posi.position, Box.size, 0);
-        Debug.Log(posi.position +"생성");
-        Player player = GetComponent<Player>();
+
+        //Player player = GetComponent<Player>();   // 필요없었음 23/07/03
+        
         foreach (Collider2D collider in collider2D)
         {
             if (collider.tag == "Player" && collider != null)
             {
-                
                 collider.GetComponent<Player>().Playerhurt(Enemy_Power, Pos.position);
-                Debug.Log(Pos.position + "  if문 안 쪽");
-                Debug.Log(collider.tag);
+                Debug.Log("데미지 줌");
 
             }
             Debug.Log("데미지 못 줌");
         }
+
     }
 
     public void Bump()      // 충돌 데미지 함수
@@ -451,7 +450,7 @@ public abstract class Enemy : MonoBehaviour
     {
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
 
-        animator.SetTrigger("Attack");
+        animator.SetBool("Attacking", true);
         Attacking = true;
         yield return new WaitForSeconds(0.5f);
         GiveDamage();
@@ -460,4 +459,11 @@ public abstract class Enemy : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
+    public IEnumerator Split()  // 슬라임 분열 함수
+    {
+        yield return null;
+        GameObject splitSlime = Instantiate(Split_Slime, spawn.position, spawn.rotation);
+
+
+    }
 }

@@ -1,0 +1,377 @@
+fileFormatVersion: 2
+guid: ac0542fab724b4e418b852f66b515a93
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Slime_Spiked_Jump_2
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 80
+        width: 13
+        height: 23
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -5.5, y: 11.5}
+        - {x: -6.5, y: 9.5}
+        - {x: -6.5, y: -11.5}
+        - {x: 6.5, y: -11.5}
+        - {x: 6.5, y: 9.5}
+        - {x: 4.5, y: 11.5}
+      tessellationDetail: 0.6
+      bones: []
+      spriteID: c9b761e32f864f842a2d8c54389a43c1
+      internalID: 444740183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Slime_Spiked_Jump_3
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 92
+        width: 18
+        height: 13
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -9, y: 6.5}
+        - {x: -9, y: -6.5}
+        - {x: 9, y: -6.5}
+        - {x: 9, y: 6.5}
+      tessellationDetail: 0.42
+      bones: []
+      spriteID: 7bc0b586b0147624a920abad79dd3941
+      internalID: -899501819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Slime_Spiked_Jump_0
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 80
+        width: 27
+        height: 10
+      alignment: 9
+      pivot: {x: 0.5, y: 0.91}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -8.5, y: 5}
+        - {x: -13.5, y: 1}
+        - {x: -13.5, y: -5}
+        - {x: 13.5, y: -5}
+        - {x: 13.5, y: 1}
+        - {x: 9.5, y: 5}
+      tessellationDetail: 0.24
+      bones: []
+      spriteID: 26541284570830a4f83458eaac4d334c
+      internalID: 1136002838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Slime_Spiked_Jump_1
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 80
+        width: 25
+        height: 12
+      alignment: 9
+      pivot: {x: 0.5, y: 0.76}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -7.5, y: 6}
+        - {x: -12.5, y: -1}
+        - {x: -12.5, y: -6}
+        - {x: 12.5, y: -6}
+        - {x: 12.5, y: -2}
+        - {x: 7.5, y: 6}
+      tessellationDetail: 0.36
+      bones: []
+      spriteID: 58fe8cb4eefdd1447b112f9b61e93e36
+      internalID: -600689966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Slime_Spiked_Jump_4
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 30
+        width: 18
+        height: 13
+      alignment: 9
+      pivot: {x: 0.5, y: -0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e4e154cd85b1d34eb8564df76aad79f
+      internalID: 1152956226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Slime_Spiked_Jump_5
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 21
+        width: 13
+        height: 21
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -4.5, y: 10.5}
+        - {x: -6.5, y: 6.5}
+        - {x: -6.5, y: -10.5}
+        - {x: 6.5, y: -10.5}
+        - {x: 6.5, y: 10.5}
+      tessellationDetail: 0.36
+      bones: []
+      spriteID: f354ee660bbf467428aa56c7ecb3866a
+      internalID: -517506129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Slime_Spiked_Jump_6
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 16
+        width: 17
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: 4.5, y: 10}
+        - {x: -6.5, y: 10}
+        - {x: -6.5, y: 4}
+        - {x: -8.5, y: 2}
+        - {x: -8.5, y: -10}
+        - {x: 6.5, y: -10}
+        - {x: 8.5, y: -8}
+        - {x: 8.5, y: 2}
+        - {x: 5.5, y: 9}
+      tessellationDetail: 0.66
+      bones: []
+      spriteID: fe1f0c1108b56bc4ea028d04e590a52c
+      internalID: 830099979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Slime_Spiked_Jump_7
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 16
+        width: 26
+        height: 10
+      alignment: 9
+      pivot: {x: 0.5, y: 0.9}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: 9, y: 5}
+        - {x: -5, y: 5}
+        - {x: -13, y: -1}
+        - {x: -13, y: -5}
+        - {x: 13, y: -5}
+        - {x: 13, y: 0}
+      tessellationDetail: 0.44
+      bones: []
+      spriteID: bfb193c4c9db00d41b0b665aa08ac7ed
+      internalID: 177937396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Slime_Spiked_Jump_0: 444740183
+      Slime_Spiked_Jump_1: 1152956226
+      Slime_Spiked_Jump_2: -600689966
+      Slime_Spiked_Jump_3: -899501819
+      Slime_Spiked_Jump_4: -600689966
+      Slime_Spiked_Jump_5: 830099979
+      Slime_Spiked_Jump_6: 177937396
+      Slime_Spiked_Jump_7: 1622016639
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
