@@ -47,7 +47,7 @@ public abstract class Enemy : MonoBehaviour
     BoxCollider2D Box;
     Transform posi;
     BoxCollider2D Boxs;
-    Rigidbody2D upjump; // 슬라임이 공격할 때 위로 점프
+   
     public Transform Pos;
     public Arrow arrow;
 
@@ -97,7 +97,12 @@ public abstract class Enemy : MonoBehaviour
     {
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
         gameObject.transform.Translate(new Vector2(nextDirX, 0) * Time.deltaTime * Enemy_Speed);
+
+        if(Enemy_Mod == 9)
+        {
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
+        }
+
         if (nextDirX == -1)
         {
             spriteRenderer.flipX = false;
@@ -164,6 +169,7 @@ public abstract class Enemy : MonoBehaviour
 
     public IEnumerator Hit(float damage) // 피해 함수
     {
+        posi = this.gameObject.GetComponent<Transform>();
         enemyHit = true;
         animator = this.GetComponentInChildren<Animator>();
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
@@ -197,18 +203,24 @@ public abstract class Enemy : MonoBehaviour
             old_Speed = Enemy_Speed;
             animator.SetTrigger("Die");
             this.gameObject.layer = LayerMask.NameToLayer("Dieenemy");
-            yield return new WaitForSeconds(Enemy_Dying_anim_Time);
-            //this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-            //this.gameObject.transform.GetChild(1).gameObject.SetActive(false);
+            yield return new WaitForSeconds(Enemy_Dying_anim_Time );
             enemyHit = false;
-            if(Enemy_HP <= 0 && Enemy_Mod == 9)
+            if(Enemy_Mod == 9 && posi.localScale.y > 1f)   // 분열 몬스터일 경우
             {
-
                 Debug.Log("분열 시작");
                 StartCoroutine(Split());
-                yield return new WaitForSeconds(1f);
                 this.gameObject.SetActive(false);
-            }        
+            }       
+            else if (Enemy_Mod == 9 && posi.localScale.y <= 1f)
+            {
+                Debug.Log("이제 없앨게");
+                this.gameObject.SetActive(false);   // clone slime 제거
+                //Destroy();
+            }
+            else if(Enemy_Mod != 9)
+            {
+                this.gameObject.SetActive(false);
+            }
         }
         else if (Enemy_HP <= 0 && Enemy_Mod == 3) // 비행 몬스터 죽음)
         {
@@ -476,6 +488,7 @@ public abstract class Enemy : MonoBehaviour
 
     public IEnumerator Split()  // 슬라임 분열 함수
     {
+        //posi = this.gameObject.GetComponent<Transform>();
         spawn = this.gameObject.transform.GetChild(2).GetComponent<Transform>();
         spawn2 = this.gameObject.transform.GetChild(3).GetComponent<Transform>();
         Debug.Log("분열 할게");
@@ -488,8 +501,14 @@ public abstract class Enemy : MonoBehaviour
     {
         yield return null;
         Debug.Log("점프 공격");
-        upjump = this.gameObject.GetComponent<Rigidbody2D>();
 
     }
-    
+
+    /*public void Destroy()
+    {
+        Debug.Log("아예 삭제");
+        Destroy(Split_Slime); 
+
+    }*/
+
 }
