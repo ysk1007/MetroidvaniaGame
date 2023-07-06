@@ -13,6 +13,7 @@ public class MonsterConstroller : MonoBehaviour
     
     void Start()
     {
+        target = Player.instance.gameObject.transform;
         monster.InitSetting();
         monster.onetime();
     }

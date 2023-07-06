@@ -35,8 +35,9 @@ public abstract class Enemy : MonoBehaviour
     public float dTime;
 
     public GameObject Split_Slime;
-    Transform spawn;
 
+    Transform spawn;    // 분열된 슬라임 생성될 위치 1
+    Transform spawn2;   // 분열된 슬라임 생성될 위치 2
     Rigidbody2D rigid;
     Animator animator;
     Transform target;
@@ -46,6 +47,7 @@ public abstract class Enemy : MonoBehaviour
     BoxCollider2D Box;
     Transform posi;
     BoxCollider2D Boxs;
+    Rigidbody2D upjump; // 슬라임이 공격할 때 위로 점프
     public Transform Pos;
     public Arrow arrow;
 
@@ -96,7 +98,6 @@ public abstract class Enemy : MonoBehaviour
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
         gameObject.transform.Translate(new Vector2(nextDirX, 0) * Time.deltaTime * Enemy_Speed);
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
-
         if (nextDirX == -1)
         {
             spriteRenderer.flipX = false;
@@ -105,11 +106,11 @@ public abstract class Enemy : MonoBehaviour
         {
             spriteRenderer.flipX = true;
         }
-        if (nextDirX == 1 || nextDirX == -1)
+        if (Enemy_Mod == 5 && (nextDirX == 1 || nextDirX == -1))
         {
             animator.SetBool("Run", true);
         }
-        else if (nextDirX == 0)
+        else if (Enemy_Mod == 5 && (nextDirX == 0))
         {
             animator.SetBool("Run", false);
         }
@@ -169,7 +170,7 @@ public abstract class Enemy : MonoBehaviour
         rigid = this.GetComponent<Rigidbody2D>();
 
         Enemy_HP -= damage;
-
+        Debug.Log("데미지 받음");
         if (Enemy_HP > 0) // Enemy의 체력이 0 이상일 때
         {
             if (!animator.GetBool("Hit"))
@@ -197,8 +198,17 @@ public abstract class Enemy : MonoBehaviour
             animator.SetTrigger("Die");
             this.gameObject.layer = LayerMask.NameToLayer("Dieenemy");
             yield return new WaitForSeconds(Enemy_Dying_anim_Time);
-            this.gameObject.SetActive(false);   // 오브젝트 사라지게 함
+            //this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+            //this.gameObject.transform.GetChild(1).gameObject.SetActive(false);
             enemyHit = false;
+            if(Enemy_HP <= 0 && Enemy_Mod == 9)
+            {
+
+                Debug.Log("분열 시작");
+                StartCoroutine(Split());
+                yield return new WaitForSeconds(1f);
+                this.gameObject.SetActive(false);
+            }        
         }
         else if (Enemy_HP <= 0 && Enemy_Mod == 3) // 비행 몬스터 죽음)
         {
@@ -219,12 +229,12 @@ public abstract class Enemy : MonoBehaviour
             yield return new WaitForSeconds(Enemy_Dying_anim_Time);
             this.gameObject.gameObject.SetActive(false);
         }
+        
     }
 
 
     void Sensing(Transform target, RaycastHit2D rayHit)  // 플레이어 추적
     {
-        animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
         rigid = this.GetComponent<Rigidbody2D>();
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
         if (Gap_Distance_X <= Enemy_Sensing_X && Gap_Distance_Y <= Enemy_Sensing_Y)      // Enemy의 X축 사거리에 있을 때, Y축 사거리에 있을 때
@@ -237,7 +247,7 @@ public abstract class Enemy : MonoBehaviour
                     if (nextDirX == 1 && rayHit.collider != null)  // nextDirX가 1일 때 그리고 레이캐스트 값이 null이 아닐 때
                     {
                         spriteRenderer.flipX = true;
-                        if(Enemy_Mod == 5)
+                        if(Enemy_Mod == 5)  // 자폭 몬스터가 자폭할 때 제자리에 있기 위한 코드
                         {
                             Enemy_Speed = 5f;
                             if (Attacking == true)
@@ -246,23 +256,30 @@ public abstract class Enemy : MonoBehaviour
                             }
                         }
                         transform.Translate(new Vector2(1, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
-                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && (Enemy_Mod == 2 || Enemy_Mod == 4 || Enemy_Mod == 5))
+                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && Enemy_Mod != 3)
                         {
+                            Debug.Log("dddddd");
                             Attacking = true;
                             if (Enemy_Mod == 5)
                             {
                                 Attack();
                             }
+                            else if (Enemy_Mod == 9)
+                            {
+                                Debug.Log("점프 공격 시작");
+                                StartCoroutine(slimeJump());
+                            }
                             else
                             {
                                 Invoke("Attack", atkDelay); // 공격 쿨타임 적용
                             }
+                            
                         }
                     }
                     else if (nextDirX == 1 && rayHit.collider == null)
                     {
                         transform.Translate(new Vector2(0, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (0,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
-                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && (Enemy_Mod == 2 || Enemy_Mod == 4 || Enemy_Mod == 5))
+                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && Enemy_Mod != 3)
                         {
                             Attacking = true;
                             Invoke("Attack", atkDelay); // 공격 쿨타임 적용
@@ -301,7 +318,7 @@ public abstract class Enemy : MonoBehaviour
                             }
                         }
                         transform.Translate(new Vector2(-1, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
-                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && (Enemy_Mod == 2 || Enemy_Mod == 4 || Enemy_Mod == 5))
+                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && Enemy_Mod != 3)
                         {
                             Attacking = true;
                             if (Enemy_Mod == 5)
@@ -318,7 +335,7 @@ public abstract class Enemy : MonoBehaviour
                     {
                         transform.Translate(new Vector2(0, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
 
-                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && (Enemy_Mod == 2 || Enemy_Mod == 4 || Enemy_Mod == 5))
+                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && Enemy_Mod != 3)
                         {
                             Attacking = true;
                             Invoke("Attack", atkDelay); // 공격 쿨타임 적용
@@ -375,7 +392,7 @@ public abstract class Enemy : MonoBehaviour
         Bcollider = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();    // 본인 오브젝트의 첫번째 자식 오브젝트에 포함된 BoxCollider2D를 가져옴.
         spriteRenderer = this.gameObject.transform.GetChild(1).GetComponent<SpriteRenderer>();
 
-        if (!Dying && Enemy_Mod != 1 && Enemy_Mod != 5)
+        if (!Dying && Enemy_Mod == 3)
         {
             Bcollider.enabled = true;   // 공격 박스 콜라이더 생성
 
@@ -419,8 +436,6 @@ public abstract class Enemy : MonoBehaviour
         posi = this.gameObject.transform.GetChild(0).GetComponent<Transform>();
         Box = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();
         Collider2D[] collider2D = Physics2D.OverlapBoxAll(posi.position, Box.size, 0);
-
-        //Player player = GetComponent<Player>();   // 필요없었음 23/07/03
         
         foreach (Collider2D collider in collider2D)
         {
@@ -461,9 +476,20 @@ public abstract class Enemy : MonoBehaviour
 
     public IEnumerator Split()  // 슬라임 분열 함수
     {
-        yield return null;
+        spawn = this.gameObject.transform.GetChild(2).GetComponent<Transform>();
+        spawn2 = this.gameObject.transform.GetChild(3).GetComponent<Transform>();
+        Debug.Log("분열 할게");
         GameObject splitSlime = Instantiate(Split_Slime, spawn.position, spawn.rotation);
+        GameObject splitSlime2 = Instantiate(Split_Slime, spawn2.position, spawn2.rotation);
+        yield return null;
+    }
 
+    public IEnumerator slimeJump() //슬라임 점프공격
+    {
+        yield return null;
+        Debug.Log("점프 공격");
+        upjump = this.gameObject.GetComponent<Rigidbody2D>();
 
     }
+    
 }

@@ -28,6 +28,9 @@ public class Player : MonoBehaviour
     public bool isknockback = false;    //넉백 확인
     public float Dmg;  // 대미지 적용 변수
     public float DmgChange; // 대미지 변경 저장 변수
+
+    public static Player instance;  // 23-07-06 enemy용추가함
+
     public GameObject GameManager;
     public GameObject attackRange;
 
@@ -56,6 +59,9 @@ public class Player : MonoBehaviour
         pos = transform.GetChild(0).GetComponentInChildren<Transform>(); //attackRange의 위치값을 pos에 저장
         Arrowpos = transform.GetChild(1).GetComponentInChildren<Transform>(); //Arrowpos의 위치값을 pos에 저장
         Arrowpos2 = transform.GetChild(2).GetComponentInChildren<Transform>(); //Arrowpos2의 위치값을 pos에 저장
+
+        instance = this;
+
     }
     void Update()
     {
