@@ -16,7 +16,7 @@ public class Mushroom : Enemy
         Enemy_Dying_anim_Time = 0.6f;   // 죽는 애니메이션 실행 시간
         Enemy_Sensing_X = 10f; // 플레이어 인지 X값
         Enemy_Sensing_Y = 5f;  // 플레이어 인지 Y값
-        Enemy_Range_X = 0.5f; //적의 X축 공격 사거리
+        Enemy_Range_X = 1.5f; //적의 X축 공격 사거리
         Enemy_Range_Y = 1.5f; //적의 Y축 공격 사거리
         atkDelay = 1f; // 공격 딜레이
         Attacking = false;

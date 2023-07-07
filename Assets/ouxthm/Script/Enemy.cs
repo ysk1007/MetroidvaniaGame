@@ -40,14 +40,18 @@ public abstract class Enemy : MonoBehaviour
     Transform spawn2;   // 분열된 슬라임 생성될 위치 2
     Rigidbody2D rigid;
     Animator animator;
-    Transform target;
+    public Transform target;
     SpriteRenderer spriteRenderer;
     RaycastHit2D rayHit;
     BoxCollider2D Bcollider;
     BoxCollider2D Box;
     Transform posi;
     BoxCollider2D Boxs;
-   
+
+    /* Enemy_Attack 스크립트에 GiveDamage()함수를 넣을거임 콜라이더 범위에 들어와도 몬스터 자체 콜라이더에 플레이어가 충돌해야 데미지가 들어가기 때문에 몬스터 공격 콜라이더만 들어 갈 수 있도록
+     스크립트를 몬스터 공격 오브젝트에 넣을거임*/
+    //Enemy_Attack Enemy_Attack;  
+
     public Transform Pos;
     public Arrow arrow;
 
@@ -87,8 +91,6 @@ public abstract class Enemy : MonoBehaviour
                     Pdamage = arrow.Dmg;
                     StartCoroutine(Hit(Pdamage));
                 }
-                else
-                    Debug.Log("좆버그");               // 가끔 일어남 해결해야 함 예외처리 실행하면 됨
             }
         }
     }
@@ -176,7 +178,6 @@ public abstract class Enemy : MonoBehaviour
         rigid = this.GetComponent<Rigidbody2D>();
 
         Enemy_HP -= damage;
-        Debug.Log("데미지 받음");
         if (Enemy_HP > 0) // Enemy의 체력이 0 이상일 때
         {
             if (!animator.GetBool("Hit"))
@@ -207,13 +208,11 @@ public abstract class Enemy : MonoBehaviour
             enemyHit = false;
             if(Enemy_Mod == 9 && posi.localScale.y > 1f)   // 분열 몬스터일 경우
             {
-                Debug.Log("분열 시작");
                 StartCoroutine(Split());
                 this.gameObject.SetActive(false);
             }       
             else if (Enemy_Mod == 9 && posi.localScale.y <= 1f)
             {
-                Debug.Log("이제 없앨게");
                 this.gameObject.SetActive(false);   // clone slime 제거
                 //Destroy();
             }
@@ -268,18 +267,12 @@ public abstract class Enemy : MonoBehaviour
                             }
                         }
                         transform.Translate(new Vector2(1, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
-                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && Enemy_Mod != 3)
+                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false)
                         {
-                            Debug.Log("dddddd");
                             Attacking = true;
-                            if (Enemy_Mod == 5)
+                            if (Enemy_Mod == 5) // 자폭이라 딜레이 없이 바로 공격해야 함.
                             {
                                 Attack();
-                            }
-                            else if (Enemy_Mod == 9)
-                            {
-                                Debug.Log("점프 공격 시작");
-                                StartCoroutine(slimeJump());
                             }
                             else
                             {
@@ -291,7 +284,7 @@ public abstract class Enemy : MonoBehaviour
                     else if (nextDirX == 1 && rayHit.collider == null)
                     {
                         transform.Translate(new Vector2(0, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (0,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
-                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && Enemy_Mod != 3)
+                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false)
                         {
                             Attacking = true;
                             Invoke("Attack", atkDelay); // 공격 쿨타임 적용
@@ -330,7 +323,7 @@ public abstract class Enemy : MonoBehaviour
                             }
                         }
                         transform.Translate(new Vector2(-1, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
-                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && Enemy_Mod != 3)
+                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false)
                         {
                             Attacking = true;
                             if (Enemy_Mod == 5)
@@ -347,7 +340,7 @@ public abstract class Enemy : MonoBehaviour
                     {
                         transform.Translate(new Vector2(0, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
 
-                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && Enemy_Mod != 3)
+                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false)
                         {
                             Attacking = true;
                             Invoke("Attack", atkDelay); // 공격 쿨타임 적용
@@ -404,27 +397,37 @@ public abstract class Enemy : MonoBehaviour
         Bcollider = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();    // 본인 오브젝트의 첫번째 자식 오브젝트에 포함된 BoxCollider2D를 가져옴.
         spriteRenderer = this.gameObject.transform.GetChild(1).GetComponent<SpriteRenderer>();
 
-        if (!Dying && Enemy_Mod == 3)
+        if (!Dying && Enemy_Mod != 5)
         {
-            Bcollider.enabled = true;   // 공격 박스 콜라이더 생성
-
-            if (spriteRenderer.flipX == true)   // 이미지 플립했을 때 공격 범위 x값 전환 조건문
+            if(Enemy_Mod == 3)
             {
-                AtkTransform.localPosition = new Vector3(atkX, atkY);   // 몬스터의 공격 콜라이더 박스의 x좌표와 y좌표
-            }
-            else if (spriteRenderer.flipX == false) // 왼쪽을 볼 때
-            {
-                AtkTransform.localPosition = new Vector3(-atkX, atkY);  // 몬스터의 공격 콜라이더 박스의 -x좌표와 y좌표
-            }
+                Bcollider.enabled = true;   // 공격 박스 콜라이더 생성
 
-            GiveDamage();       // 플레이어에게 데미지 주는 함수 실행
-            animator.SetTrigger("Attack");  // 벌 공격용
-            animator.SetBool("Attacking", true);    // 벌 공격 확인하는 용인 듯(너무 오래되서 기억 안 남)
-            Enemy_Speed = 0;
+                if (spriteRenderer.flipX == true)   // 이미지 플립했을 때 공격 범위 x값 전환 조건문
+                {
+                    AtkTransform.localPosition = new Vector3(atkX, atkY);   // 몬스터의 공격 콜라이더 박스의 x좌표와 y좌표
+                }
+                else if (spriteRenderer.flipX == false) // 왼쪽을 볼 때
+                {
+                    AtkTransform.localPosition = new Vector3(-atkX, atkY);  // 몬스터의 공격 콜라이더 박스의 -x좌표와 y좌표
+                }
+
+                /*Enemy_Attack.*/GiveDamage();       // 플레이어에게 데미지 주는 함수 실행    
+                animator.SetTrigger("Attack");  // 벌 공격용
+                animator.SetBool("Attacking", true);    // 벌 공격 확인하는 용인 듯(너무 오래되서 기억 안 남)
+                Enemy_Speed = 0;
+            }
+            else if(Enemy_Mod == 9)
+            {
+                Debug.Log("10");
+                slimeJump();
+            }
 
             if (Attacking == true)
             {
-                Invoke("offAttkack", 0.5f);
+                Debug.Log("인보크");
+                Invoke("offAttkack", 0.7f);
+                Debug.Log("20");
             }
 
         }
@@ -432,17 +435,26 @@ public abstract class Enemy : MonoBehaviour
         {
             StartCoroutine(Boom());
         }
-
+         
     }
     public void offAttkack() // 공격 종료 함수
     {
-        Bcollider = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();    // 본인 오브젝트의 첫번째 자식 오브젝트에 포함된 BoxCollider2D를 가져옴. 
+        if(Enemy_Mod == 3)
+        {
+            Bcollider = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();    // 본인 오브젝트의 첫번째 자식 오브젝트에 포함된 BoxCollider2D를 가져옴. 
+            animator.SetBool("Attacking", false);
+            Enemy_Speed = 3f;
+            Bcollider.enabled = false;
+            Attacking = false;
+        }
+        else if(Enemy_Mod == 9)
+        {
+            GiveDamage();
+            this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        }
         Attacking = false;
-        animator.SetBool("Attacking", false);
-        Enemy_Speed = 3f;
-        Bcollider.enabled = false;
     }
-    
+
     public void GiveDamage()    // 플레이어에게 데미지를 주는 함수
     {
         posi = this.gameObject.transform.GetChild(0).GetComponent<Transform>();
@@ -480,7 +492,7 @@ public abstract class Enemy : MonoBehaviour
         animator.SetBool("Attacking", true);
         Attacking = true;
         yield return new WaitForSeconds(0.5f);
-        GiveDamage();
+        /*Enemy_Attack.*/GiveDamage();
         this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
         yield return new WaitForSeconds(0.6f);
         this.gameObject.SetActive(false);
@@ -488,20 +500,21 @@ public abstract class Enemy : MonoBehaviour
 
     public IEnumerator Split()  // 슬라임 분열 함수
     {
-        //posi = this.gameObject.GetComponent<Transform>();
         spawn = this.gameObject.transform.GetChild(2).GetComponent<Transform>();
         spawn2 = this.gameObject.transform.GetChild(3).GetComponent<Transform>();
-        Debug.Log("분열 할게");
         GameObject splitSlime = Instantiate(Split_Slime, spawn.position, spawn.rotation);
         GameObject splitSlime2 = Instantiate(Split_Slime, spawn2.position, spawn2.rotation);
         yield return null;
     }
 
-    public IEnumerator slimeJump() //슬라임 점프공격
+    public void slimeJump() //슬라임 점프공격
     {
-        yield return null;
-        Debug.Log("점프 공격");
-
+        animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
+        animator.SetTrigger("Attacking");
+        this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+        /*yield return new WaitForSeconds(0.5f);
+        GiveDamage();
+        this.gameObject.transform.GetChild(0).gameObject.SetActive(false);*/
     }
 
     /*public void Destroy()

@@ -2307,6 +2307,7 @@ MonoBehaviour:
   old_Speed: 0
   dTime: 0
   Split_Slime: {fileID: 0}
+  target: {fileID: 0}
   Pos: {fileID: 0}
   arrow: {fileID: 0}
 --- !u!114 &171890771
@@ -12515,6 +12516,7 @@ GameObject:
   - component: {fileID: 992234458}
   - component: {fileID: 992234460}
   - component: {fileID: 992234461}
+  - component: {fileID: 992234462}
   m_Layer: 14
   m_Name: Boom_eff
   m_TagString: Enemy
@@ -12657,6 +12659,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &992234462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 992234456}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc287e724f98d564eb0361879a78f58c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  posi: {fileID: 0}
+  Box: {fileID: 0}
 --- !u!1 &1004816097
 GameObject:
   m_ObjectHideFlags: 0
@@ -15372,6 +15388,7 @@ MonoBehaviour:
   old_Speed: 0
   dTime: 0
   Split_Slime: {fileID: 0}
+  target: {fileID: 0}
   Pos: {fileID: 0}
   arrow: {fileID: 0}
 --- !u!114 &1265608979
@@ -19640,6 +19657,7 @@ MonoBehaviour:
   old_Speed: 0
   dTime: 0
   Split_Slime: {fileID: 8270943371635978861, guid: 1ef77a656131b094f86590be59dea090, type: 3}
+  target: {fileID: 0}
   Pos: {fileID: 0}
   arrow: {fileID: 0}
 --- !u!114 &1591236217
@@ -20090,7 +20108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monster: {fileID: 1636626836}
-  target: {fileID: 860553416}
+  target: {fileID: 0}
 --- !u!114 &1636626836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20129,6 +20147,7 @@ MonoBehaviour:
   old_Speed: 0
   dTime: 0
   Split_Slime: {fileID: 0}
+  target: {fileID: 0}
   Pos: {fileID: 0}
   arrow: {fileID: 0}
 --- !u!1 &1642725378
@@ -24670,6 +24689,7 @@ MonoBehaviour:
   old_Speed: 0
   dTime: 0
   Split_Slime: {fileID: 0}
+  target: {fileID: 0}
   Pos: {fileID: 0}
   arrow: {fileID: 0}
 --- !u!114 &1845722144
@@ -27902,6 +27922,7 @@ MonoBehaviour:
   old_Speed: 0
   dTime: 0
   Split_Slime: {fileID: 0}
+  target: {fileID: 0}
   Pos: {fileID: 0}
   arrow: {fileID: 0}
 --- !u!114 &2136804885
