@@ -59,8 +59,8 @@ public abstract class Enemy : MonoBehaviour
 
     public virtual void Short_Monster(Transform target) 
     {
-        Gap_Distance_X = Mathf.Abs(target.transform.position.x - transform.position.x);
-        Gap_Distance_Y = Mathf.Abs(target.transform.position.y - transform.position.y);
+        Gap_Distance_X = Mathf.Abs(target.transform.position.x - transform.position.x); //X축 거리 계산
+        Gap_Distance_Y = Mathf.Abs(target.transform.position.y - transform.position.y); //Y축 거리 계산
         Sensing(target, rayHit);
         Sensor();
     }
@@ -108,16 +108,20 @@ public abstract class Enemy : MonoBehaviour
         if (nextDirX == -1)
         {
             spriteRenderer.flipX = false;
+            if(Enemy_Mod == 9)
+            {
+                animator.SetBool("Run", true);
+            }
         }
         else if (nextDirX == 1)
         {
             spriteRenderer.flipX = true;
+            if (Enemy_Mod == 9)
+            {
+                animator.SetBool("Run", true);
+            }
         }
-        if (Enemy_Mod == 5 && (nextDirX == 1 || nextDirX == -1))
-        {
-            animator.SetBool("Run", true);
-        }
-        else if (Enemy_Mod == 5 && (nextDirX == 0))
+        else if (Enemy_Mod == 9 && (nextDirX == 0))
         {
             animator.SetBool("Run", false);
         }
@@ -419,15 +423,12 @@ public abstract class Enemy : MonoBehaviour
             }
             else if(Enemy_Mod == 9)
             {
-                Debug.Log("10");
                 slimeJump();
             }
 
             if (Attacking == true)
             {
-                Debug.Log("인보크");
                 Invoke("offAttkack", 0.7f);
-                Debug.Log("20");
             }
 
         }
@@ -512,9 +513,6 @@ public abstract class Enemy : MonoBehaviour
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
         animator.SetTrigger("Attacking");
         this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
-        /*yield return new WaitForSeconds(0.5f);
-        GiveDamage();
-        this.gameObject.transform.GetChild(0).gameObject.SetActive(false);*/
     }
 
     /*public void Destroy()
