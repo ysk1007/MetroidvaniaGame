@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 956e1a770a162544bb1281422f033d8f
+guid: 13dc4cdf5097906458b5f04c0f090fa7
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,13 +117,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Wind Hit Effect_0
+      name: Holy VFX 01 Repeatable_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 37
-        width: 18
-        height: 23
+        x: 8
+        y: 12
+        width: 23
+        height: 9
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,20 +131,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 236a94e8ba62fa149a7cc7fa0346c9d3
-      internalID: 1535565700
+      spriteID: de81ab8778afd034dab768e456038787
+      internalID: 2092264122
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Wind Hit Effect_1
+      name: Holy VFX 01 Repeatable_1
       rect:
         serializedVersion: 2
-        x: 37
-        y: 37
+        x: 39
+        y: 12
         width: 24
-        height: 23
+        height: 9
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,20 +152,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3a8d66d83cfd12d4b867022e659237ce
-      internalID: 1708566117
+      spriteID: e2fafeb0ace7da4449054adc03a673b2
+      internalID: -523456216
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Wind Hit Effect_2
+      name: Holy VFX 01 Repeatable_2
       rect:
         serializedVersion: 2
-        x: 73
-        y: 37
-        width: 22
-        height: 23
+        x: 70
+        y: 10
+        width: 26
+        height: 11
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,20 +173,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6f17a98c2bc2dec45a117b8245d5d175
-      internalID: -534377359
+      spriteID: 8a38550db64fb0d44b893f37f5196835
+      internalID: -636824120
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Wind Hit Effect_4
+      name: Holy VFX 01 Repeatable_3
       rect:
         serializedVersion: 2
-        x: 13
-        y: 5
-        width: 19
-        height: 20
+        x: 103
+        y: 10
+        width: 24
+        height: 11
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,8 +194,92 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a37ca54d9994b2b419cd780a4e175b6c
-      internalID: 630770818
+      spriteID: cfcd700c627d5b84b93eb92a381372b6
+      internalID: -348474842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Holy VFX 01 Repeatable_4
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 10
+        width: 25
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8787ab13071eba243be7b7c57e887ca8
+      internalID: -124380200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Holy VFX 01 Repeatable_5
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 10
+        width: 25
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 819d421274ad3584f9ed3edbb0181e08
+      internalID: -570701705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Holy VFX 01 Repeatable_6
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 12
+        width: 26
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb7ccf6a65c5afe498b44f9092aff044
+      internalID: 1413198198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Holy VFX 01 Repeatable_7
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 12
+        width: 24
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 236f52046fbebe04dbd853dc276d8da5
+      internalID: -1592383281
       vertices: []
       indices: 
       edges: []
@@ -211,11 +295,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Wind Hit Effect_0: 1535565700
-      Wind Hit Effect_1: 1708566117
-      Wind Hit Effect_2: -534377359
-      Wind Hit Effect_3: 184796345
-      Wind Hit Effect_4: 630770818
+      Holy VFX 01 Repeatable_0: 2092264122
+      Holy VFX 01 Repeatable_1: -523456216
+      Holy VFX 01 Repeatable_2: -636824120
+      Holy VFX 01 Repeatable_3: -348474842
+      Holy VFX 01 Repeatable_4: -124380200
+      Holy VFX 01 Repeatable_5: -570701705
+      Holy VFX 01 Repeatable_6: 1413198198
+      Holy VFX 01 Repeatable_7: -1592383281
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

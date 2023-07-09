@@ -1,16 +1,20 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
     public Player player; // Player 스크립트를 가지고 있는 GameObject
+    public Enemy enemy;
     public LayerMask islayer; // 충돌 감지를 할 레이어
     public Transform pos; // 화살 위치 정보
     public int Dmg = 5; //대미지 변수, 몬스터가 피격시 화살 데미지값을 받기 위해
-    private float speed = 15f; // 화살 이동 속도
-    private bool SetSkill = false; // 스킬 사용 여부
+    public float speed = 15f; // 화살 이동 속도
+    private bool isSkill = false; // 스킬 사용 여부
+    private bool isMasterSkill = false;   //숙련 스킬 사용 여부
     private Vector3 moveDirection = Vector3.right; // 화살이 나가는 방향
-    private float detectRadius = 1.2f; // 화살이 감지할 수 있는 반경 (적이 있는지 없는지 확인)
+    private float detectRadius = 2f; // 화살이 감지할 수 있는 반경 (적이 있는지 없는지 확인)
+    public GameObject BowMaster;  // 숙련도 오브젝트
 
     public SpriteRenderer spriteRenderer;
     private Dictionary<Collider2D, bool> hitDict = new Dictionary<Collider2D, bool>(); // 이미 적에게 대미지를 입혔는지 여부를 기록하는 Dictionary 변수
@@ -37,11 +41,16 @@ public class Arrow : MonoBehaviour
             }
             if (player.isSkill == true)
             {
-                SetSkill = true; // 스킬 사용 중이면 SetSkill 변수를 true로 설정
+                isSkill = true; // 스킬 사용 중이면 SetSkill 변수를 true로 설정
+            }
+            else if (player.isMasterSkill == true)
+            {
+                isMasterSkill = true; // 숙련도 스킬 사용중이면 true로 설정
             }
             else
             {
-                SetSkill = false; // 스킬 사용 중이 아니면 SetSkill 변수를 false로 설정
+                isSkill = false; // 스킬 사용 중이 아니면 SetSkill 변수를 false로 설정
+                isMasterSkill = false;
             }
         }
     }
@@ -72,9 +81,15 @@ public class Arrow : MonoBehaviour
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, detectRadius, islayer);
         Collider2D closestCollider = FindCollider(hitColliders);
 
-        if(SetSkill == true) // 스킬일 때
+        if(isSkill == true) // 스킬일 때
         {
+            
             Dmg = 10;
+            pos.position += moveDirection * speed * Time.deltaTime; // 화살 직진 이동
+        }
+        else if(isMasterSkill == true)    // 숙련도 스킬일 때
+        {
+            Dmg = 20;
             pos.position += moveDirection * speed * Time.deltaTime; // 화살 직진 이동
         }
         else
@@ -107,19 +122,33 @@ public class Arrow : MonoBehaviour
     {
         if (collision.tag == "Enemy")
         {
-            if (SetSkill == true && !hitDict.ContainsKey(collision)) // 스킬 사용 중이고, 이미 적에게 대미지를 입힌 경우가 아닐 때
+            if (isSkill == true && !hitDict.ContainsKey(collision)) // 스킬 사용 중이고, 이미 적에게 대미지를 입힌 경우가 아닐 때
             {
                 hitDict.Add(collision, true); // 적 정보를 Dictionary에 추가
             }
-            else if (SetSkill == false)
+            else if (isMasterSkill == true)
+            {
+                StartCoroutine(MasterSkill());
+            }
+            else
             {
                 DestroyArrow();
             }
+
+            
         }
         if (collision.tag == "Wall" || collision.tag == "Tilemap") // 벽이나 땅에 맞으면 화살 사라짐 패드는 없는게 나은것 같아서 뺐음
         {
             DestroyArrow();
         }
+    }
+
+    IEnumerator MasterSkill()
+    {
+        Instantiate(BowMaster, pos.position, transform.rotation);
+        yield return new WaitForSeconds(2f);
+        isMasterSkill = false;
+        Destroy(BowMaster);
     }
 
     public void DestroyArrow()  // 화살 제거 함수

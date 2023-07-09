@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 956e1a770a162544bb1281422f033d8f
+guid: 1669364bfe75e084ea23c9fa17660d82
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 25
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -117,85 +117,169 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Wind Hit Effect_0
+      name: Smoke VFX 1_
       rect:
         serializedVersion: 2
-        x: 5
-        y: 37
-        width: 18
-        height: 23
+        x: 19
+        y: 0
+        width: 29
+        height: 17
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 236a94e8ba62fa149a7cc7fa0346c9d3
-      internalID: 1535565700
+      spriteID: 633d40bf635030c45a24ed5c61b9c09f
+      internalID: -1655080577
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Wind Hit Effect_1
+      name: Smoke VFX 1_2
       rect:
         serializedVersion: 2
-        x: 37
-        y: 37
+        x: 64
+        y: 0
+        width: 29
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1148bcc314a8e548984b670c7a97966
+      internalID: 487662253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Smoke VFX 1_3
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 0
         width: 24
-        height: 23
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3a8d66d83cfd12d4b867022e659237ce
-      internalID: 1708566117
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Wind Hit Effect_2
-      rect:
-        serializedVersion: 2
-        x: 73
-        y: 37
-        width: 22
-        height: 23
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6f17a98c2bc2dec45a117b8245d5d175
-      internalID: -534377359
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Wind Hit Effect_4
-      rect:
-        serializedVersion: 2
-        x: 13
-        y: 5
-        width: 19
         height: 20
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a37ca54d9994b2b419cd780a4e175b6c
-      internalID: 630770818
+      spriteID: baf21520ee0078e4fa715e1008ad1ba3
+      internalID: 1795233018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Smoke VFX 1_4
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 0
+        width: 23
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 581ca0f2a0ca4c84faa6ffcd09b4a8cf
+      internalID: 471361520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Smoke VFX 1_5
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 0
+        width: 25
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed694cb6a89ac3246b85ea87589ed553
+      internalID: 1433156711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Smoke VFX 1_6
+      rect:
+        serializedVersion: 2
+        x: 249
+        y: 0
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5fb67beef89fab646ae442ecce8cde5f
+      internalID: 1701725484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Smoke VFX 1_7
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 0
+        width: 10
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dcea0d8993597ca4f88915657b7cf604
+      internalID: 1986322340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Smoke VFX 1_8
+      rect:
+        serializedVersion: 2
+        x: 343
+        y: 0
+        width: 9
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f033a87f405a2104e88ad7eb3aa2dc5f
+      internalID: -1473867086
       vertices: []
       indices: 
       edges: []
@@ -211,11 +295,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Wind Hit Effect_0: 1535565700
-      Wind Hit Effect_1: 1708566117
-      Wind Hit Effect_2: -534377359
-      Wind Hit Effect_3: 184796345
-      Wind Hit Effect_4: 630770818
+      Smoke VFX 1_: -1655080577
+      Smoke VFX 1_2: 487662253
+      Smoke VFX 1_3: 1795233018
+      Smoke VFX 1_4: 471361520
+      Smoke VFX 1_5: 1433156711
+      Smoke VFX 1_6: 1701725484
+      Smoke VFX 1_7: 1986322340
+      Smoke VFX 1_8: -1473867086
+      Smoke VFX 1_9: 2005634011
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
