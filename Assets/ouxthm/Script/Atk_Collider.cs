@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Slime_Atk_Collider : MonoBehaviour
+public class Atk_Collider : MonoBehaviour
 {
     Enemy enemy;
     BoxCollider2D boxCollider;

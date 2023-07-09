@@ -33,6 +33,7 @@ public abstract class Enemy : MonoBehaviour
     public bool enemyHit = false;   // 적이 피해입은 상태인지 확인하는 변수
     public float old_Speed;     // 속도 값 변하기 전 속도 값
     public float dTime;
+    public float atkTime;   // 공격 모션 시간
 
     public GameObject Split_Slime;
 
@@ -94,7 +95,25 @@ public abstract class Enemy : MonoBehaviour
             }
         }
     }
+    void switchCollider()
+    {
+        if (Enemy_Mod == 4)
+        {
+            Box = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();
+            Vector2 firoffset = Box.offset;
+            Vector2 offset = Box.offset;
 
+            if (nextDirX == -1)
+            {
+                Box.offset = firoffset;
+            }
+            else if (nextDirX == 1)
+            {
+                offset.x *= -1;
+                Box.offset = offset;
+            }
+        }
+    }
     void Move() // 이동
     {
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
@@ -104,11 +123,12 @@ public abstract class Enemy : MonoBehaviour
         {
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
         }
+        else 
 
         if (nextDirX == -1)
         {
             spriteRenderer.flipX = false;
-            if(Enemy_Mod == 9)
+            if (Enemy_Mod == 9)
             {
                 animator.SetBool("Run", true);
             }
@@ -421,14 +441,15 @@ public abstract class Enemy : MonoBehaviour
                 animator.SetBool("Attacking", true);    // 벌 공격 확인하는 용인 듯(너무 오래되서 기억 안 남)
                 Enemy_Speed = 0;
             }
-            else if(Enemy_Mod == 9)
+            else if(Enemy_Mod != 3)
             {
-                slimeJump();
+                switchCollider();
+                onAttack();
             }
 
             if (Attacking == true)
             {
-                Invoke("offAttkack", 0.7f);
+                Invoke("offAttkack", atkTime); 
             }
 
         }
@@ -437,6 +458,13 @@ public abstract class Enemy : MonoBehaviour
             StartCoroutine(Boom());
         }
          
+    }
+
+    public void onAttack()
+    {
+        animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
+        animator.SetTrigger("Attacking");
+        this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
     }
     public void offAttkack() // 공격 종료 함수
     {
@@ -448,7 +476,7 @@ public abstract class Enemy : MonoBehaviour
             Bcollider.enabled = false;
             Attacking = false;
         }
-        else if(Enemy_Mod == 9)
+        else if(Enemy_Mod != 3)
         {
             GiveDamage();
             this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
@@ -521,5 +549,4 @@ public abstract class Enemy : MonoBehaviour
         Destroy(Split_Slime); 
 
     }*/
-
 }
