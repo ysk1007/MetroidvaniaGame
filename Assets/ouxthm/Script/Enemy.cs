@@ -36,9 +36,11 @@ public abstract class Enemy : MonoBehaviour
     public float atkTime;   // 공격 모션 시간
 
     public GameObject Split_Slime;
+    public GameObject fire;
 
     Transform spawn;    // 분열된 슬라임 생성될 위치 1
     Transform spawn2;   // 분열된 슬라임 생성될 위치 2
+    Transform PObject;    // 투사체 생성 위치
     Rigidbody2D rigid;
     Animator animator;
     public Transform target;
@@ -63,7 +65,7 @@ public abstract class Enemy : MonoBehaviour
         Gap_Distance_X = Mathf.Abs(target.transform.position.x - transform.position.x); //X축 거리 계산
         Gap_Distance_Y = Mathf.Abs(target.transform.position.y - transform.position.y); //Y축 거리 계산
         Sensing(target, rayHit);
-        Sensor();
+        Sensor();       
     }
     public virtual void onetime()   // Awake에 적용
     {
@@ -119,16 +121,15 @@ public abstract class Enemy : MonoBehaviour
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
         gameObject.transform.Translate(new Vector2(nextDirX, 0) * Time.deltaTime * Enemy_Speed);
 
-        if(Enemy_Mod == 9)
+        if(Enemy_Mod == 9 || Enemy_Mod == 7)
         {
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
         }
-        else 
 
         if (nextDirX == -1)
         {
             spriteRenderer.flipX = false;
-            if (Enemy_Mod == 9)
+            if (Enemy_Mod == 9 || Enemy_Mod == 7)
             {
                 animator.SetBool("Run", true);
             }
@@ -136,12 +137,12 @@ public abstract class Enemy : MonoBehaviour
         else if (nextDirX == 1)
         {
             spriteRenderer.flipX = true;
-            if (Enemy_Mod == 9)
+            if (Enemy_Mod == 9 || Enemy_Mod == 7)
             {
                 animator.SetBool("Run", true);
             }
         }
-        else if (Enemy_Mod == 9 && (nextDirX == 0))
+        else if (Enemy_Mod == 9 || Enemy_Mod == 7 && nextDirX == 0)
         {
             animator.SetBool("Run", false);
         }
@@ -193,6 +194,7 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
+    
     public IEnumerator Hit(float damage) // 피해 함수
     {
         posi = this.gameObject.GetComponent<Transform>();
@@ -209,7 +211,10 @@ public abstract class Enemy : MonoBehaviour
                 /*한 사이클 돌고 
                   0 디버그 두 번째 찍힐 때 처음 히트 애니메이션 나옴
                   애니메이션 끝나고 1.5 올드 스피드 디버그와 1.5 디버그 나옴*/
-
+                if(animator.GetBool("Run") == true)
+                {
+                    animator.SetBool("Run", false);
+                }
                 if(Enemy_Speed > 0)
                 {
                     old_Speed = Enemy_Speed;  // 이전 속도 값으로 돌리기 위해 다른 변수에 속도 값을 저장
@@ -224,6 +229,10 @@ public abstract class Enemy : MonoBehaviour
         else if (Enemy_HP <= 0 && Enemy_Mod != 3) // Enemy의 체력이 0과 같거나 이하일 때(죽음)
         {
             Dying = true;
+            if (animator.GetBool("Run") == true)
+            {
+                animator.SetBool("Run", false);
+            }
             Enemy_Speed = 0;
             old_Speed = Enemy_Speed;
             animator.SetTrigger("Die");
@@ -418,7 +427,10 @@ public abstract class Enemy : MonoBehaviour
     {
         Transform AtkTransform = transform.GetChild(0);
         animator = this.GetComponentInChildren<Animator>();
+        if(Enemy_Mod != 4)
+        {
         Bcollider = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();    // 본인 오브젝트의 첫번째 자식 오브젝트에 포함된 BoxCollider2D를 가져옴.
+        }
         spriteRenderer = this.gameObject.transform.GetChild(1).GetComponent<SpriteRenderer>();
 
         if (!Dying && Enemy_Mod != 5)
@@ -441,10 +453,14 @@ public abstract class Enemy : MonoBehaviour
                 animator.SetBool("Attacking", true);    // 벌 공격 확인하는 용인 듯(너무 오래되서 기억 안 남)
                 Enemy_Speed = 0;
             }
-            else if(Enemy_Mod != 3)
+            else if(Enemy_Mod != 3 && Enemy_Mod != 7)
             {
                 switchCollider();
                 onAttack();
+            }
+            else if(Enemy_Mod == 7)
+            {
+                ProjectiveBody();
             }
 
             if (Attacking == true)
@@ -456,6 +472,10 @@ public abstract class Enemy : MonoBehaviour
         else if(!Dying && Enemy_Mod == 5)
         {
             StartCoroutine(Boom());
+        }
+        else if(!Dying && Enemy_Mod == 7)
+        {
+            ProjectiveBody();
         }
          
     }
@@ -476,7 +496,7 @@ public abstract class Enemy : MonoBehaviour
             Bcollider.enabled = false;
             Attacking = false;
         }
-        else if(Enemy_Mod != 3)
+        else if(Enemy_Mod != 3 && Enemy_Mod !=7 )
         {
             GiveDamage();
             this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
@@ -549,4 +569,31 @@ public abstract class Enemy : MonoBehaviour
         Destroy(Split_Slime); 
 
     }*/
+
+    public void ProjectiveBody()
+    {
+        PObject = this.gameObject.transform.GetChild(0).GetComponent<Transform>();
+        Rigidbody2D rigid = PObject.GetComponent<Rigidbody2D>();
+        SpriteRenderer sprite = PObject.GetComponent<SpriteRenderer>();
+        if(nextDirX == 1)
+        {
+            PObject.localPosition = new Vector2(0.8f, 0);
+        }
+        else if(nextDirX == -1)
+        {
+            PObject.localPosition = new Vector2(-0.8f, 0);
+        }
+        GameObject ProObject = Instantiate(fire, PObject.position, PObject.rotation);
+
+        if(nextDirX == 1)
+        {
+            rigid.AddForce(transform.right * 2, ForceMode2D.Impulse);
+            sprite.flipX = false;
+        }
+        else if(nextDirX == -1)
+        {
+            rigid.AddForce(transform.right * -2, ForceMode2D.Impulse);
+            sprite.flipX = true;
+        }
+    }
 }
