@@ -883,7 +883,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &73921980
 Transform:
   m_ObjectHideFlags: 0
@@ -988,6 +988,8 @@ MonoBehaviour:
   atkTime: 0
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
+  ProObject: {fileID: 0}
+  PObject: {fileID: 0}
   target: {fileID: 0}
   Pos: {fileID: 0}
   arrow: {fileID: 0}
@@ -2450,6 +2452,8 @@ MonoBehaviour:
   atkTime: 0
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
+  ProObject: {fileID: 0}
+  PObject: {fileID: 0}
   target: {fileID: 0}
   Pos: {fileID: 0}
   arrow: {fileID: 0}
@@ -14429,7 +14433,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1206586612
 Transform:
   m_ObjectHideFlags: 0
@@ -14438,7 +14442,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1206586611}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 45.216, y: -7.27, z: -9.66276}
+  m_LocalPosition: {x: 41.52, y: -7.27, z: -9.66276}
   m_LocalScale: {x: -1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -14534,6 +14538,8 @@ MonoBehaviour:
   atkTime: 0
   Split_Slime: {fileID: 0}
   fire: {fileID: 117786764753181504, guid: abfbb84a32e4b6043b3768c340d03021, type: 3}
+  ProObject: {fileID: 0}
+  PObject: {fileID: 0}
   target: {fileID: 0}
   Pos: {fileID: 0}
   arrow: {fileID: 0}
@@ -15553,7 +15559,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1255631666
 Transform:
   m_ObjectHideFlags: 0
@@ -15562,7 +15568,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1255631665}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.8, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15705,6 +15711,8 @@ MonoBehaviour:
   atkTime: 0
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
+  ProObject: {fileID: 0}
+  PObject: {fileID: 0}
   target: {fileID: 0}
   Pos: {fileID: 0}
   arrow: {fileID: 0}
@@ -20082,6 +20090,8 @@ MonoBehaviour:
   atkTime: 0
   Split_Slime: {fileID: 2044582282278339179, guid: 778767c3509229a45bd506b494a859c0, type: 3}
   fire: {fileID: 0}
+  ProObject: {fileID: 0}
+  PObject: {fileID: 0}
   target: {fileID: 0}
   Pos: {fileID: 0}
   arrow: {fileID: 0}
@@ -20574,6 +20584,8 @@ MonoBehaviour:
   atkTime: 0
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
+  ProObject: {fileID: 0}
+  PObject: {fileID: 0}
   target: {fileID: 0}
   Pos: {fileID: 0}
   arrow: {fileID: 0}
@@ -25348,6 +25360,8 @@ MonoBehaviour:
   atkTime: 0
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
+  ProObject: {fileID: 0}
+  PObject: {fileID: 0}
   target: {fileID: 0}
   Pos: {fileID: 0}
   arrow: {fileID: 0}
@@ -28689,6 +28703,8 @@ MonoBehaviour:
   atkTime: 0
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
+  ProObject: {fileID: 0}
+  PObject: {fileID: 0}
   target: {fileID: 0}
   Pos: {fileID: 0}
   arrow: {fileID: 0}

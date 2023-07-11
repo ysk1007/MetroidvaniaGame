@@ -1,19 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
+using UnityEngine.UIElements;
 
 public class Projective_Body : MonoBehaviour
 {
     Rigidbody2D rigid;
     SpriteRenderer sprite;
-
+    Player player;
     public int Dir;
+
     void Start()
     {
         rigid = this.GetComponent<Rigidbody2D>();
 
         sprite = this.GetComponent<SpriteRenderer>();
-        
+
         DestoryObject();
     }
     private void Update()
@@ -37,5 +40,14 @@ public class Projective_Body : MonoBehaviour
             sprite.flipX = true;
         }
     }
-
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+        {
+            Destroy(gameObject);
+        }
+        else if (collision.tag == "Wall"){
+            Destroy(gameObject);
+        }
+    }
 }

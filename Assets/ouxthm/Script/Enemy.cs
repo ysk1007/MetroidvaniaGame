@@ -75,7 +75,6 @@ public abstract class Enemy : MonoBehaviour
         if(Enemy_Mod == 7)
         {
             PObject = this.gameObject.transform.GetChild(0).GetComponent<Transform>();
-
         }
     }
 
@@ -466,30 +465,27 @@ public abstract class Enemy : MonoBehaviour
             }
             else if(Enemy_Mod == 7)
             {
-                ProjectiveBody();
+                onAttack();
+                Invoke("ProjectiveBody", 0.5f);
             }
 
             if (Attacking == true)
             {
-                Invoke("offAttkack", atkTime); 
+                Invoke("offAttkack", atkTime);
             }
 
         }
         else if(!Dying && Enemy_Mod == 5)
         {
             StartCoroutine(Boom());
-        }
-        else if(!Dying && Enemy_Mod == 7)
-        {
-            ProjectiveBody();
-        }
-         
+        }         
     }
 
     public void onAttack()
     {
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
         animator.SetTrigger("Attacking");
+        animator.SetBool("Run", false); 
         this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
     }
     public void offAttkack() // 공격 종료 함수
@@ -506,8 +502,13 @@ public abstract class Enemy : MonoBehaviour
         {
             GiveDamage();
             this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+            Attacking = false;
         }
-        Attacking = false;
+        else if(Enemy_Mod == 7)
+        {
+            //GiveDamage();
+            Attacking = false;
+        }
     }
 
     public void GiveDamage()    // 플레이어에게 데미지를 주는 함수
@@ -578,19 +579,17 @@ public abstract class Enemy : MonoBehaviour
 
     public void ProjectiveBody()    // 투사체 생성 (위치 저장)
     {
-        //PObject = this.gameObject.transform.GetChild(0).GetComponent<Transform>();
         Rigidbody2D rigid = PObject.GetComponent<Rigidbody2D>();
         if(nextDirX == 1)
         {
-            PObject.localPosition = new Vector2(0.8f, 0);
+            PObject.localPosition = new Vector2(-0.8f, 0);
         }
         else if(nextDirX == -1)
         {
-            PObject.localPosition = new Vector2(-0.8f, 0);
+            PObject.localPosition = new Vector2(0.8f, 0);
         }
         ProObject = Instantiate(fire, PObject.position, PObject.rotation);
 
         ProObject.GetComponent<Projective_Body>().Dir = nextDirX;   // Projective_Body 스크립트에 있는 Dir 변수에 현재 스크립트의 변수 nextDirX를 저장
-
     }
 }
