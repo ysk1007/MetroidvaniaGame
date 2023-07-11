@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 117786764753181508}
   - component: {fileID: 117786764753181510}
   - component: {fileID: 117786764753181511}
-  - component: {fileID: 4273877623587192924}
+  - component: {fileID: -5255970725759683297}
   m_Layer: 0
   m_Name: torch_eff
   m_TagString: Untagged
@@ -119,7 +119,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.5465145, y: -0.18217182}
@@ -155,8 +155,8 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &4273877623587192924
+  m_Constraints: 6
+--- !u!114 &-5255970725759683297
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

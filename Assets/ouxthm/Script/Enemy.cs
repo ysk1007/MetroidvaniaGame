@@ -8,7 +8,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public abstract class Enemy : MonoBehaviour
 {
-    public int Enemy_Mod;   // 1: 달팽이, 2: 근접공격 가능 몬스터, 3:비행몬스터, 4:원거리 몬스터
+    public int Enemy_Mod;   // 1: 달팽이, 2: 근접공격 가능 몬스터, 3:비행몬스터, 4:제라스, 5: 자폭, 7: 투사체 원거리, 9: 분열
     public float Enemy_HP;  // 적의 체력
     public float Enemy_Power;   //적의 공격력
     public float Enemy_Speed;   // 적의 이동속도
@@ -36,11 +36,12 @@ public abstract class Enemy : MonoBehaviour
     public float atkTime;   // 공격 모션 시간
 
     public GameObject Split_Slime;
-    public GameObject fire;
+    public GameObject fire; // 프리펩 투사체
+    public GameObject ProObject;    // 클론 투사체
 
     Transform spawn;    // 분열된 슬라임 생성될 위치 1
     Transform spawn2;   // 분열된 슬라임 생성될 위치 2
-    Transform PObject;    // 투사체 생성 위치
+    public Transform PObject;    // 투사체 생성 위치
     Rigidbody2D rigid;
     Animator animator;
     public Transform target;
@@ -65,12 +66,17 @@ public abstract class Enemy : MonoBehaviour
         Gap_Distance_X = Mathf.Abs(target.transform.position.x - transform.position.x); //X축 거리 계산
         Gap_Distance_Y = Mathf.Abs(target.transform.position.y - transform.position.y); //Y축 거리 계산
         Sensing(target, rayHit);
-        Sensor();       
+        Sensor();
     }
     public virtual void onetime()   // Awake에 적용
     {
         Pos = GetComponent<Transform>();
         StartCoroutine(Think());
+        if(Enemy_Mod == 7)
+        {
+            PObject = this.gameObject.transform.GetChild(0).GetComponent<Transform>();
+
+        }
     }
 
     void OnCollisionStay2D(Collision2D collision)
@@ -570,11 +576,10 @@ public abstract class Enemy : MonoBehaviour
 
     }*/
 
-    public void ProjectiveBody()
+    public void ProjectiveBody()    // 투사체 생성 (위치 저장)
     {
-        PObject = this.gameObject.transform.GetChild(0).GetComponent<Transform>();
+        //PObject = this.gameObject.transform.GetChild(0).GetComponent<Transform>();
         Rigidbody2D rigid = PObject.GetComponent<Rigidbody2D>();
-        SpriteRenderer sprite = PObject.GetComponent<SpriteRenderer>();
         if(nextDirX == 1)
         {
             PObject.localPosition = new Vector2(0.8f, 0);
@@ -583,17 +588,9 @@ public abstract class Enemy : MonoBehaviour
         {
             PObject.localPosition = new Vector2(-0.8f, 0);
         }
-        GameObject ProObject = Instantiate(fire, PObject.position, PObject.rotation);
+        ProObject = Instantiate(fire, PObject.position, PObject.rotation);
 
-        if(nextDirX == 1)
-        {
-            rigid.AddForce(transform.right * 2, ForceMode2D.Impulse);
-            sprite.flipX = false;
-        }
-        else if(nextDirX == -1)
-        {
-            rigid.AddForce(transform.right * -2, ForceMode2D.Impulse);
-            sprite.flipX = true;
-        }
+        ProObject.GetComponent<Projective_Body>().Dir = nextDirX;   // Projective_Body 스크립트에 있는 Dir 변수에 현재 스크립트의 변수 nextDirX를 저장
+
     }
 }
