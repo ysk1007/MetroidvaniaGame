@@ -3,22 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 using UnityEngine.UIElements;
+using Unity.VisualScripting;
 
 public class Projective_Body : MonoBehaviour
 {
     Rigidbody2D rigid;
     SpriteRenderer sprite;
     Player player;
+    Enemy enemy;
+    public float Power;
     public int Dir;
 
     void Start()
     {
         rigid = this.GetComponent<Rigidbody2D>();
-
         sprite = this.GetComponent<SpriteRenderer>();
-
         DestoryObject();
     }
+
     private void Update()
     {
         Shot();

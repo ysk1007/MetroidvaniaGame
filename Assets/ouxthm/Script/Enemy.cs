@@ -76,6 +76,7 @@ public abstract class Enemy : MonoBehaviour
         {
             PObject = this.gameObject.transform.GetChild(0).GetComponent<Transform>();
         }
+
     }
 
     void OnCollisionStay2D(Collision2D collision)
@@ -592,4 +593,5 @@ public abstract class Enemy : MonoBehaviour
 
         ProObject.GetComponent<Projective_Body>().Dir = nextDirX;   // Projective_Body 스크립트에 있는 Dir 변수에 현재 스크립트의 변수 nextDirX를 저장
     }
+
 }

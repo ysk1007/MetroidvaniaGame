@@ -46,7 +46,9 @@ public class Player : MonoBehaviour
     //private SpriteRenderer AttackRennderer;
     Rigidbody2D rigid;
     Animator anim;
-    public Enemy enemy;
+    Enemy enemy;
+    Projective_Body PBody;
+    public float enemyPower;
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -61,7 +63,6 @@ public class Player : MonoBehaviour
         Arrowpos2 = transform.GetChild(2).GetComponentInChildren<Transform>(); //Arrowpos2의 위치값을 pos에 저장
 
         instance = this;
-
     }
     void Update()
     {
@@ -272,6 +273,16 @@ public class Player : MonoBehaviour
             Playerhurt(10, pos.position);
             PlayerReposition();
         }
+        /* else if (collision.gameObject.tag == "Projective_Body")
+        {
+           enemy = collision.GetComponent<Enemy>();
+            if(enemy != null)
+            {
+                enemyPower = PBody.Power;
+                Playerhurt(enemyPower, pos.position);
+           
+            Playerhurt(10, pos.position);
+        } }*/
     }
 
     private IEnumerator Sliding() //슬라이딩 실행
