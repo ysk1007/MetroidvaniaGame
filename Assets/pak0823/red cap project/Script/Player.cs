@@ -37,8 +37,9 @@ public class Player : MonoBehaviour
     public GameObject attackRange;  //근접공격 위치
     public GameObject Arrow; //화살 오브젝트
     public GameObject Arrow2; //화살 증가 오브젝트
-    public GameObject Slash;  // 검기 오브젝트
-    public GameObject BowSkill;  // 검기 오브젝트
+    public GameObject Slash;  // 검 기본스킬 오브젝트
+    public GameObject BowSkill;  // 활 기본스킬 오브젝트
+    public GameObject BowMaster; // 활 숙련도 화살 오브젝트
 
     public Transform Arrowpos; //화살 생성 오브젝트
     public Transform Arrowpos2; //증가된 화살  오브젝트
@@ -517,7 +518,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            Instantiate(Arrow, Arrowpos.position, transform.rotation);
+            Instantiate(BowMaster, Arrowpos.position, transform.rotation);
         }
 
 

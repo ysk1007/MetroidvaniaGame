@@ -11,10 +11,8 @@ public class Arrow : MonoBehaviour
     public int Dmg = 5; //대미지 변수, 몬스터가 피격시 화살 데미지값을 받기 위해
     public float speed = 15f; // 화살 이동 속도
     private bool isSkill = false; // 스킬 사용 여부
-    private bool isMasterSkill = false;   //숙련 스킬 사용 여부
     private Vector3 moveDirection = Vector3.right; // 화살이 나가는 방향
     private float detectRadius = 2f; // 화살이 감지할 수 있는 반경 (적이 있는지 없는지 확인)
-    public GameObject BowMaster;  // 숙련도 오브젝트
 
     public SpriteRenderer spriteRenderer;
     private Dictionary<Collider2D, bool> hitDict = new Dictionary<Collider2D, bool>(); // 이미 적에게 대미지를 입혔는지 여부를 기록하는 Dictionary 변수
@@ -43,14 +41,9 @@ public class Arrow : MonoBehaviour
             {
                 isSkill = true; // 스킬 사용 중이면 SetSkill 변수를 true로 설정
             }
-            else if (player.isMasterSkill == true)
-            {
-                isMasterSkill = true; // 숙련도 스킬 사용중이면 true로 설정
-            }
             else
             {
                 isSkill = false; // 스킬 사용 중이 아니면 SetSkill 변수를 false로 설정
-                isMasterSkill = false;
             }
         }
     }
@@ -87,11 +80,6 @@ public class Arrow : MonoBehaviour
             Dmg = 10;
             pos.position += moveDirection * speed * Time.deltaTime; // 화살 직진 이동
         }
-        else if(isMasterSkill == true)    // 숙련도 스킬일 때
-        {
-            Dmg = 20;
-            pos.position += moveDirection * speed * Time.deltaTime; // 화살 직진 이동
-        }
         else
         {
             Dmg = 5;
@@ -126,10 +114,6 @@ public class Arrow : MonoBehaviour
             {
                 hitDict.Add(collision, true); // 적 정보를 Dictionary에 추가
             }
-            else if (isMasterSkill == true)
-            {
-                StartCoroutine(MasterSkill());
-            }
             else
             {
                 DestroyArrow();
@@ -141,14 +125,6 @@ public class Arrow : MonoBehaviour
         {
             DestroyArrow();
         }
-    }
-
-    IEnumerator MasterSkill()
-    {
-        Instantiate(BowMaster, pos.position, transform.rotation);
-        yield return new WaitForSeconds(2f);
-        isMasterSkill = false;
-        Destroy(BowMaster);
     }
 
     public void DestroyArrow()  // 화살 제거 함수
