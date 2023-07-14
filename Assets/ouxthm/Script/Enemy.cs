@@ -433,10 +433,10 @@ public abstract class Enemy : MonoBehaviour
     {
         Transform AtkTransform = transform.GetChild(0);
         animator = this.GetComponentInChildren<Animator>();
-        if(Enemy_Mod != 4)
-        {
+        /*if(Enemy_Mod != 4)
+        {*/
         Bcollider = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();    // 본인 오브젝트의 첫번째 자식 오브젝트에 포함된 BoxCollider2D를 가져옴.
-        }
+      //  }
         spriteRenderer = this.gameObject.transform.GetChild(1).GetComponent<SpriteRenderer>();
 
         if (!Dying && Enemy_Mod != 5)
@@ -463,6 +463,7 @@ public abstract class Enemy : MonoBehaviour
             {
                 switchCollider();
                 onAttack();
+                Invoke("GiveDamage", 0.8f);
             }
             else if(Enemy_Mod == 7)
             {
@@ -501,7 +502,7 @@ public abstract class Enemy : MonoBehaviour
         }
         else if(Enemy_Mod != 3 && Enemy_Mod !=7 )
         {
-            GiveDamage();
+            //GiveDamage();
             this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
             Attacking = false;
         }
@@ -516,6 +517,7 @@ public abstract class Enemy : MonoBehaviour
     {
         posi = this.gameObject.transform.GetChild(0).GetComponent<Transform>();
         Box = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();
+       
         Collider2D[] collider2D = Physics2D.OverlapBoxAll(posi.position, Box.size, 0);
         
         foreach (Collider2D collider in collider2D)
@@ -591,7 +593,9 @@ public abstract class Enemy : MonoBehaviour
         }
         ProObject = Instantiate(fire, PObject.position, PObject.rotation);
 
-        ProObject.GetComponent<Projective_Body>().Dir = nextDirX;   // Projective_Body 스크립트에 있는 Dir 변수에 현재 스크립트의 변수 nextDirX를 저장
+        Projective_Body Pb = ProObject.GetComponent<Projective_Body>();
+        Pb.Dir = nextDirX;   // Projective_Body 스크립트에 있는 Dir 변수에 현재 스크립트의 변수 nextDirX를 저장
+        Pb.Power = Enemy_Power;
     }
 
 }

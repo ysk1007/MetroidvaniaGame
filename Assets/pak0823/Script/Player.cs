@@ -273,16 +273,17 @@ public class Player : MonoBehaviour
             Playerhurt(10, pos.position);
             PlayerReposition();
         }
-        /* else if (collision.gameObject.tag == "Projective_Body")
+       /* else if (collision.gameObject.tag == "Projective_Body")
         {
            enemy = collision.GetComponent<Enemy>();
-            if(enemy != null)
+            if (enemy != null)
             {
-                enemyPower = PBody.Power;
+                /*enemyPower = PBody.Power;
                 Playerhurt(enemyPower, pos.position);
-           
-            Playerhurt(10, pos.position);
-        } }*/
+
+                Playerhurt(10, pos.position);
+            //}
+        } */
     }
 
     private IEnumerator Sliding() //슬라이딩 실행

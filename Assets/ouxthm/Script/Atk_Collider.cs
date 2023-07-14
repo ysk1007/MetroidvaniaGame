@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
+using UnityEngine.UIElements;
 
 public class Atk_Collider : MonoBehaviour
 {
@@ -9,7 +11,7 @@ public class Atk_Collider : MonoBehaviour
 
     private void Awake()
     {
-        boxCollider = this.gameObject.GetComponent<BoxCollider2D>();        
+        boxCollider = this.gameObject.GetComponent<BoxCollider2D>();
     }
     public void onCollider()
     {
@@ -18,5 +20,7 @@ public class Atk_Collider : MonoBehaviour
     public void offCollider()
     {
         boxCollider.enabled = false;
+
     }
+
 }

@@ -14,6 +14,7 @@ public class Projective_Body : MonoBehaviour
     public float Power;
     public int Dir;
 
+
     void Start()
     {
         rigid = this.GetComponent<Rigidbody2D>();
@@ -46,6 +47,8 @@ public class Projective_Body : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
+            Vector2 vector2 = new Vector2(Dir, 1);
+            Player.instance.GetComponent<Player>().Playerhurt(Power, vector2);
             Destroy(gameObject);
         }
         else if (collision.tag == "Wall"){
