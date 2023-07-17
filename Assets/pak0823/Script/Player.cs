@@ -185,7 +185,7 @@ public class Player : MonoBehaviour
 
     }
 
-    public void AttackDamage()// Player 공격시 적에게 대미지값 넘겨주기
+    public void AttackDamage() // Player 공격시 적에게 대미지값 넘겨주기
     {
         Dmg = DmgChange;
         box = transform.GetChild(0).GetComponentInChildren<BoxCollider2D>();

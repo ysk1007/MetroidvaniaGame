@@ -34,6 +34,7 @@ public abstract class Enemy : MonoBehaviour
     public float old_Speed;     // 속도 값 변하기 전 속도 값
     public float dTime;
     public float atkTime;   // 공격 모션 시간
+    public bool Attacker;  // 비행 몬스터가 공격형인지 아닌지 구분짓는 변수
 
     public GameObject Split_Slime;
     public GameObject fire; // 프리펩 투사체
@@ -67,6 +68,24 @@ public abstract class Enemy : MonoBehaviour
         Gap_Distance_Y = Mathf.Abs(target.transform.position.y - transform.position.y); //Y축 거리 계산
         Sensing(target, rayHit);
         Sensor();
+        if(nextDirX != 0)   // 특정 몬스터에만 Run 애니메이션이 있기 때문에 지정해줘야 함
+        {
+            animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
+            animator.SetBool("Run", true);
+            if (enemyHit)
+            {
+                animator.SetBool("Run", false);
+                if (!enemyHit)
+                {
+                    animator.SetBool("Run", true);
+                }
+            }
+        }
+        else if(nextDirX == 0)
+        {
+            animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
+            animator.SetBool("Run", false);
+        }
     }
     public virtual void onetime()   // Awake에 적용
     {
@@ -103,7 +122,7 @@ public abstract class Enemy : MonoBehaviour
             }
         }
     }
-    void switchCollider()
+    void switchCollider()   // 제라스 박스 콜라이더 위치 옮겨주는 함수
     {
         if (Enemy_Mod == 4)
         {
@@ -127,31 +146,31 @@ public abstract class Enemy : MonoBehaviour
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
         gameObject.transform.Translate(new Vector2(nextDirX, 0) * Time.deltaTime * Enemy_Speed);
 
-        if(Enemy_Mod == 9 || Enemy_Mod == 7)
+        /*if(Enemy_Mod == 9 || Enemy_Mod == 7)
         {
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
-        }
-
+        }*/
+      
         if (nextDirX == -1)
         {
             spriteRenderer.flipX = false;
-            if (Enemy_Mod == 9 || Enemy_Mod == 7)
+            /*if (Enemy_Mod == 9 || Enemy_Mod == 7)
             {
                 animator.SetBool("Run", true);
-            }
+            }*/
         }
         else if (nextDirX == 1)
         {
             spriteRenderer.flipX = true;
-            if (Enemy_Mod == 9 || Enemy_Mod == 7)
+          /*  if (Enemy_Mod == 9 || Enemy_Mod == 7)
             {
                 animator.SetBool("Run", true);
-            }
+            }*/
         }
-        else if (Enemy_Mod == 9 || Enemy_Mod == 7 && nextDirX == 0)
+        /*else if (Enemy_Mod == 9 || Enemy_Mod == 7 && nextDirX == 0)
         {
             animator.SetBool("Run", false);
-        }
+        }*/
     }
 
     IEnumerator Think() // 자동으로 다음 방향을 정하는 코루틴
@@ -187,25 +206,13 @@ public abstract class Enemy : MonoBehaviour
         StartCoroutine(Think());
     }
 
-    void delayTime()
-    {
-        dTime -= Time.deltaTime;
-        if (dTime > 0)
-        {
-            delayTime();
-        }
-        else if (dTime <= 0)
-        {
-            return;
-        }
-    }
 
     
     public IEnumerator Hit(float damage) // 피해 함수
     {
         posi = this.gameObject.GetComponent<Transform>();
         enemyHit = true;
-        animator = this.GetComponentInChildren<Animator>();
+        animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
         rigid = this.GetComponent<Rigidbody2D>();
 
@@ -225,6 +232,7 @@ public abstract class Enemy : MonoBehaviour
                 {
                     old_Speed = Enemy_Speed;  // 이전 속도 값으로 돌리기 위해 다른 변수에 속도 값을 저장
                 }
+                Debug.Log("왜 실행 안해?");
                 animator.SetTrigger("Hit");
                 Enemy_Speed = 0;
                 yield return new WaitForSeconds(0.5f);
@@ -267,18 +275,28 @@ public abstract class Enemy : MonoBehaviour
             Enemy_Speed = 0;
             old_Speed = Enemy_Speed;
             nextDirX = 0;
-            for (int i = 0; i < 4; i++) 
+            if (Attacker)
             {
-                // 스프라이트 블링크
+                for (int i = 0; i < 4; i++)
+                {
+                    // 스프라이트 블링크
+                    spriteRenderer.color = new Color(1, 1, 1, 0.4f);
+                    yield return new WaitForSeconds(0.1f);
+                    spriteRenderer.color = new Color(1, 1, 1, 1);
+                    yield return new WaitForSeconds(0.1f);
+                }
                 spriteRenderer.color = new Color(1, 1, 1, 0.4f);
-                yield return new WaitForSeconds(0.1f);
-                spriteRenderer.color = new Color(1, 1, 1, 1);
-                yield return new WaitForSeconds(0.1f);
             }
-            spriteRenderer.color = new Color(1, 1, 1, 0.4f);
+            else if (!Attacker)
+            {
+                animator.SetTrigger("Die");
+                rigid.isKinematic = false;
+            }
             yield return new WaitForSeconds(Enemy_Dying_anim_Time);
             this.gameObject.gameObject.SetActive(false);
         }
+        animator.SetBool("Hit", false);
+        enemyHit = false;
         
     }
 
@@ -333,14 +351,21 @@ public abstract class Enemy : MonoBehaviour
                 else if (nextDirX == 1 && Enemy_Mod == 3)  // 비행 몬스터의 플레이어 추적
                 {
                     spriteRenderer.flipX = true;
-                    Vector2 resHeight = new Vector2(-1.5f, 1f);
-                    Vector2 playerPoint = (Vector2)target.transform.position + resHeight;   // 플레이어와 겹쳐서 공격하는 것을 방지하기 위해 새로운 지점을 정의함
-                    transform.position = Vector2.MoveTowards(transform.position, playerPoint, Enemy_Speed * Time.deltaTime);   // resHeight를 더해주어 플레이어의 아래에서 공격하지 않도록 했음
-                    if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && target.position.y + 1 <= transform.position.y)
+                    if (Attacker)
                     {
-                        Attacking = true;
-                        Invoke("Attack", atkDelay); // 공격 쿨타임 적용
+                        Vector2 resHeight = new Vector2(-1.5f, 1f);
+                        Vector2 playerPoint = (Vector2)target.transform.position + resHeight;   // 플레이어와 겹쳐서 공격하는 것을 방지하기 위해 새로운 지점을 정의함
+                        transform.position = Vector2.MoveTowards(transform.position, playerPoint, Enemy_Speed * Time.deltaTime);   // resHeight를 더해주어 플레이어의 아래에서 공격하지 않도록 했음
+                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && target.position.y + 1 <= transform.position.y)
+                        {
+                            Attacking = true;
+                            Invoke("Attack", atkDelay); // 공격 쿨타임 적용
 
+                        }
+                    }
+                    else if (!Attacker) 
+                    { 
+                        transform.position = Vector2.MoveTowards(transform.position, target.transform.position, Enemy_Speed * Time.deltaTime);
                     }
                 }
 
@@ -389,14 +414,22 @@ public abstract class Enemy : MonoBehaviour
                 else if (nextDirX == -1 && Enemy_Mod == 3)  // 비행 몬스터의 플레이어 추적
                 {
                     spriteRenderer.flipX = false;
-                    Vector2 resHeight = new Vector2(1.5f, 1f);
-                    Vector2 playerPoint = (Vector2)target.transform.position + resHeight;       // 플레이어와 겹쳐서 공격하는 것을 방지하기 위해 새로운 지점을 정의함(Vector2를 정의하여 +를 쓸 때 Vector2인지 3인지 모호하지 않게 함)
-                    transform.position = Vector2.MoveTowards(transform.position, playerPoint, Enemy_Speed * Time.deltaTime);
-                    if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && target.position.y + 1 <= transform.position.y) // 타겟의 위치에 2.5f를 더해서 Bee가 플레이어의 아래쪽에서 공격하는 것을 방지
+                    if (Attacker)
                     {
-                        Attacking = true;
-                        Invoke("Attack", atkDelay); // 공격 쿨타임 적용
+                        Vector2 resHeight = new Vector2(1.5f, 1f);
+                        Vector2 playerPoint = (Vector2)target.transform.position + resHeight;       // 플레이어와 겹쳐서 공격하는 것을 방지하기 위해 새로운 지점을 정의함(Vector2를 정의하여 +를 쓸 때 Vector2인지 3인지 모호하지 않게 함)
+                        transform.position = Vector2.MoveTowards(transform.position, playerPoint, Enemy_Speed * Time.deltaTime);
+                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && target.position.y + 1 <= transform.position.y) // 타겟의 위치에 2.5f를 더해서 Bee가 플레이어의 아래쪽에서 공격하는 것을 방지
+                        {
+                            Attacking = true;
+                            Invoke("Attack", atkDelay); // 공격 쿨타임 적용
 
+                        }
+
+                    }
+                    else if (!Attacker)
+                    {
+                        transform.position = Vector2.MoveTowards(transform.position, target.transform.position, Enemy_Speed * Time.deltaTime);
                     }
                 }
             }
