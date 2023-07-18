@@ -152,31 +152,14 @@ public abstract class Enemy : MonoBehaviour
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
         gameObject.transform.Translate(new Vector2(nextDirX, 0) * Time.deltaTime * Enemy_Speed);
 
-        /*if(Enemy_Mod == 9 || Enemy_Mod == 7)
-        {
-        animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
-        }*/
-      
         if (nextDirX == -1)
         {
             spriteRenderer.flipX = false;
-            /*if (Enemy_Mod == 9 || Enemy_Mod == 7)
-            {
-                animator.SetBool("Run", true);
-            }*/
         }
         else if (nextDirX == 1)
         {
             spriteRenderer.flipX = true;
-          /*  if (Enemy_Mod == 9 || Enemy_Mod == 7)
-            {
-                animator.SetBool("Run", true);
-            }*/
         }
-        /*else if (Enemy_Mod == 9 || Enemy_Mod == 7 && nextDirX == 0)
-        {
-            animator.SetBool("Run", false);
-        }*/
     }
 
     IEnumerator Think() // 자동으로 다음 방향을 정하는 코루틴
@@ -230,12 +213,12 @@ public abstract class Enemy : MonoBehaviour
                 /*한 사이클 돌고 
                   0 디버그 두 번째 찍힐 때 처음 히트 애니메이션 나옴
                   애니메이션 끝나고 1.5 올드 스피드 디버그와 1.5 디버그 나옴*/
-                if(Enemy_Mod != 1 && Enemy_Mod != 3 && Enemy_Mod != 4)
-                if(animator.GetBool("Run") == true)
-                {
-                    animator.SetBool("Run", false);
-                }
-                if(Enemy_Speed > 0)
+                if (Enemy_Mod != 1 && Enemy_Mod != 3 && Enemy_Mod != 4)
+                    if (animator.GetBool("Run") == true)
+                    {
+                        animator.SetBool("Run", false);
+                    }
+                if (Enemy_Speed > 0)
                 {
                     old_Speed = Enemy_Speed;  // 이전 속도 값으로 돌리기 위해 다른 변수에 속도 값을 저장
                 }
@@ -250,9 +233,12 @@ public abstract class Enemy : MonoBehaviour
         else if (Enemy_HP <= 0 && Enemy_Mod != 3) // Enemy의 체력이 0과 같거나 이하일 때(죽음)
         {
             Dying = true;
-            if (animator.GetBool("Run") == true)
+            if (Enemy_Mod != 1 && Enemy_Mod != 3 && Enemy_Mod != 4)
             {
-                animator.SetBool("Run", false);
+                if (animator.GetBool("Run") == true)
+                {
+                    animator.SetBool("Run", false);
+                }
             }
             Enemy_Speed = 0;
             old_Speed = Enemy_Speed;
