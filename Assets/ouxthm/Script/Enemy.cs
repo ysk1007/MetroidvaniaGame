@@ -71,20 +71,26 @@ public abstract class Enemy : MonoBehaviour
         if(nextDirX != 0)   // 특정 몬스터에만 Run 애니메이션이 있기 때문에 지정해줘야 함
         {
             animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
-            animator.SetBool("Run", true);
-            if (enemyHit)
+            if (Enemy_Mod != 1 && Enemy_Mod != 3 && Enemy_Mod != 4)
             {
-                animator.SetBool("Run", false);
-                if (!enemyHit)
+                animator.SetBool("Run", true);
+                if (enemyHit)
                 {
-                    animator.SetBool("Run", true);
+                    animator.SetBool("Run", false);
+                    if (!enemyHit)
+                    {
+                        animator.SetBool("Run", true);
+                    }
                 }
             }
         }
         else if(nextDirX == 0)
         {
             animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
-            animator.SetBool("Run", false);
+            if (Enemy_Mod != 1 && Enemy_Mod != 3 && Enemy_Mod != 4)
+            {
+                animator.SetBool("Run", false);
+            }
         }
     }
     public virtual void onetime()   // Awake에 적용
@@ -224,6 +230,7 @@ public abstract class Enemy : MonoBehaviour
                 /*한 사이클 돌고 
                   0 디버그 두 번째 찍힐 때 처음 히트 애니메이션 나옴
                   애니메이션 끝나고 1.5 올드 스피드 디버그와 1.5 디버그 나옴*/
+                if(Enemy_Mod != 1 && Enemy_Mod != 3 && Enemy_Mod != 4)
                 if(animator.GetBool("Run") == true)
                 {
                     animator.SetBool("Run", false);
@@ -324,27 +331,33 @@ public abstract class Enemy : MonoBehaviour
                             }
                         }
                         transform.Translate(new Vector2(1, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
-                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false)
+                        if(Enemy_Mod != 1)
                         {
-                            Attacking = true;
-                            if (Enemy_Mod == 5) // 자폭이라 딜레이 없이 바로 공격해야 함.
+                            if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false)
                             {
-                                Attack();
+                                Attacking = true;
+                                if (Enemy_Mod == 5) // 자폭이라 딜레이 없이 바로 공격해야 함.
+                                {
+                                    Attack();
+                                }
+                                else
+                                {
+                                    Invoke("Attack", atkDelay); // 공격 쿨타임 적용
+                                }
+
                             }
-                            else
-                            {
-                                Invoke("Attack", atkDelay); // 공격 쿨타임 적용
-                            }
-                            
                         }
                     }
                     else if (nextDirX == 1 && rayHit.collider == null)
                     {
                         transform.Translate(new Vector2(0, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (0,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
-                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false)
+                        if(Enemy_Mod != 1)
                         {
-                            Attacking = true;
-                            Invoke("Attack", atkDelay); // 공격 쿨타임 적용
+                            if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false)
+                            {
+                                Attacking = true;
+                                Invoke("Attack", atkDelay); // 공격 쿨타임 적용
+                            }
                         }
                     }
                 }
@@ -387,27 +400,32 @@ public abstract class Enemy : MonoBehaviour
                             }
                         }
                         transform.Translate(new Vector2(-1, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
-                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false)
+                        if(Enemy_Mod != 1)
                         {
-                            Attacking = true;
-                            if (Enemy_Mod == 5)
+                            if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false)
                             {
-                                Attack();
-                            }
-                            else
-                            {
-                                Invoke("Attack", atkDelay); // 공격 쿨타임 적용
+                                Attacking = true;
+                                if (Enemy_Mod == 5)
+                                {
+                                    Attack();
+                                }
+                                else
+                                {
+                                    Invoke("Attack", atkDelay); // 공격 쿨타임 적용
+                                }
                             }
                         }
                     }
                     else if (nextDirX == -1 && rayHit.collider == null)
                     {
                         transform.Translate(new Vector2(0, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
-
-                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false)
+                        if (Enemy_Mod != 1)
                         {
-                            Attacking = true;
-                            Invoke("Attack", atkDelay); // 공격 쿨타임 적용
+                            if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false)
+                            {
+                                Attacking = true;
+                                Invoke("Attack", atkDelay); // 공격 쿨타임 적용
+                            }
                         }
                     }
                 }
@@ -423,9 +441,7 @@ public abstract class Enemy : MonoBehaviour
                         {
                             Attacking = true;
                             Invoke("Attack", atkDelay); // 공격 쿨타임 적용
-
                         }
-
                     }
                     else if (!Attacker)
                     {
