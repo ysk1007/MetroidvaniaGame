@@ -14,7 +14,6 @@ public abstract class Enemy : MonoBehaviour
     public float Enemy_Speed;   // 적의 이동속도
     public float Enemy_Atk_Speed;    // 적의 공격속도
     public bool Attacking = false;  // 공격 중인이 확인하는 변수
-    public bool Hit_Set;    // 피해를 입었는지 확인하는 변수
     public float Gap_Distance_X;  // 적과 Player X 거리차이
     public float Gap_Distance_Y;  // 적과 Player Y 거리차이
     public float Enemy_Sensing_X;  // 적의 X축 감지 사거리
@@ -144,6 +143,21 @@ public abstract class Enemy : MonoBehaviour
             {
                 offset.x *= -1;
                 Box.offset = offset;
+            }
+        }
+        if(Enemy_Mod == 2 || Enemy_Mod == 3)
+        {
+            Bcollider = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();    // 본인 오브젝트의 첫번째 자식 오브젝트에 포함된 BoxCollider2D를 가져옴.
+            spriteRenderer = this.gameObject.transform.GetChild(1).GetComponent<SpriteRenderer>();
+            posi = this.gameObject.transform.GetChild(0).GetComponent<Transform>();
+            Bcollider.enabled = true;   // 공격 박스 콜라이더 생성
+            if (spriteRenderer.flipX == true)   // 이미지 플립했을 때 공격 범위 x값 전환 조건문
+            {
+                posi.localPosition = new Vector3(atkX, atkY);   // 몬스터의 공격 콜라이더 박스의 x좌표와 y좌표
+            }
+            else if (spriteRenderer.flipX == false) // 왼쪽을 볼 때
+            {
+                posi.localPosition = new Vector3(-atkX, atkY);  // 몬스터의 공격 콜라이더 박스의 -x좌표와 y좌표
             }
         }
     }
@@ -359,7 +373,6 @@ public abstract class Enemy : MonoBehaviour
                         {
                             Attacking = true;
                             Invoke("Attack", atkDelay); // 공격 쿨타임 적용
-
                         }
                     }
                     else if (!Attacker) 
@@ -367,7 +380,6 @@ public abstract class Enemy : MonoBehaviour
                         transform.position = Vector2.MoveTowards(transform.position, target.transform.position, Enemy_Speed * Time.deltaTime);
                     }
                 }
-
             }
             else if (transform.position.x > target.position.x)      // 왼쪽 방향
             {
@@ -466,44 +478,33 @@ public abstract class Enemy : MonoBehaviour
 
     public void Attack() //공격 함수
     {
-        Transform AtkTransform = transform.GetChild(0);
         animator = this.GetComponentInChildren<Animator>();
-        /*if(Enemy_Mod != 4)
-        {*/
-        Bcollider = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();    // 본인 오브젝트의 첫번째 자식 오브젝트에 포함된 BoxCollider2D를 가져옴.
-      //  }
-        spriteRenderer = this.gameObject.transform.GetChild(1).GetComponent<SpriteRenderer>();
-
         if (!Dying && Enemy_Mod != 5)
         {
-            if(Enemy_Mod == 3)
+            if (Enemy_Mod == 3)
             {
-                Bcollider.enabled = true;   // 공격 박스 콜라이더 생성
-
-                if (spriteRenderer.flipX == true)   // 이미지 플립했을 때 공격 범위 x값 전환 조건문
-                {
-                    AtkTransform.localPosition = new Vector3(atkX, atkY);   // 몬스터의 공격 콜라이더 박스의 x좌표와 y좌표
-                }
-                else if (spriteRenderer.flipX == false) // 왼쪽을 볼 때
-                {
-                    AtkTransform.localPosition = new Vector3(-atkX, atkY);  // 몬스터의 공격 콜라이더 박스의 -x좌표와 y좌표
-                }
-
-                /*Enemy_Attack.*/GiveDamage();       // 플레이어에게 데미지 주는 함수 실행    
+                switchCollider();
+                GiveDamage();       // 플레이어에게 데미지 주는 함수 실행    
                 animator.SetTrigger("Attack");  // 벌 공격용
                 animator.SetBool("Attacking", true);    // 벌 공격 확인하는 용인 듯(너무 오래되서 기억 안 남)
                 Enemy_Speed = 0;
             }
-            else if(Enemy_Mod != 3 && Enemy_Mod != 7)
+            else if (Enemy_Mod != 3 && Enemy_Mod != 7 && Enemy_Mod != 2)
             {
                 switchCollider();
                 onAttack();
                 Invoke("GiveDamage", 0.8f);
             }
-            else if(Enemy_Mod == 7)
+            else if (Enemy_Mod == 7)
             {
                 onAttack();
                 Invoke("ProjectiveBody", 0.5f);
+            }
+            else if(Enemy_Mod == 2)
+            {
+                switchCollider();
+                onAttack();
+                Invoke("GiveDamage", 0.5f);
             }
 
             if (Attacking == true)
@@ -537,13 +538,11 @@ public abstract class Enemy : MonoBehaviour
         }
         else if(Enemy_Mod != 3 && Enemy_Mod !=7 )
         {
-            //GiveDamage();
             this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
             Attacking = false;
         }
         else if(Enemy_Mod == 7)
         {
-            //GiveDamage();
             Attacking = false;
         }
     }
@@ -561,11 +560,12 @@ public abstract class Enemy : MonoBehaviour
             {
                 collider.GetComponent<Player>().Playerhurt(Enemy_Power, Pos.position);
                 Debug.Log("데미지 줌");
-
             }
-            Debug.Log("데미지 못 줌");
+            else
+            {
+                Debug.Log("데미지 못 줌");
+            }
         }
-
     }
 
     public void Bump()      // 충돌 데미지 함수
