@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 82cc2be80c58ad542ad5e060d8940e5c
+guid: d6e1eb7b44f564a49b64cc35ac23cac4
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -141,190 +141,211 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: spr_NecromancerGetHit_strip9_0
+      name: AtkEFF3__1_0
       rect:
         serializedVersion: 2
-        x: 38
-        y: 32
-        width: 28
+        x: 50
+        y: 48
+        width: 32
+        height: 61
+      alignment: 9
+      pivot: {x: 0.658, y: 0.401}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a5203d7c00f9724d824b9208418f495
+      internalID: -1781043147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtkEFF3__1_1
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 48
+        width: 30
+        height: 61
+      alignment: 9
+      pivot: {x: 0.635, y: 0.401}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4fd11cb1945ba7149aa0023775367d52
+      internalID: 809368247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtkEFF3__1_2
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 48
+        width: 32
+        height: 61
+      alignment: 9
+      pivot: {x: 0.658, y: 0.401}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48eb75145cf45f54e9d6086fbd652705
+      internalID: -1191310564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtkEFF3__1_3
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 48
+        width: 32
+        height: 61
+      alignment: 9
+      pivot: {x: 0.658, y: 0.401}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: acfa7448a9ba8ae47b02c015816254fd
+      internalID: 773421467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtkEFF3__1_4
+      rect:
+        serializedVersion: 2
+        x: 563
+        y: 48
+        width: 32
+        height: 61
+      alignment: 9
+      pivot: {x: 0.627, y: 0.401}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc3b1f5d0c4fcd44cb6551321ebf9bba
+      internalID: 1272092145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtkEFF3__1_5
+      rect:
+        serializedVersion: 2
+        x: 692
+        y: 48
+        width: 30
+        height: 59
+      alignment: 9
+      pivot: {x: 0.635, y: 0.416}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38d3af444e5b12f47aae17854b7d4f2e
+      internalID: -1004928652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtkEFF3__1_6
+      rect:
+        serializedVersion: 2
+        x: 820
+        y: 48
+        width: 30
+        height: 47
+      alignment: 9
+      pivot: {x: 0.635, y: 0.523}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d9eaa7781d39794abdef81f40792f62
+      internalID: -1377624588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtkEFF3__1_7
+      rect:
+        serializedVersion: 2
+        x: 948
+        y: 48
+        width: 30
+        height: 48
+      alignment: 9
+      pivot: {x: 0.635, y: 0.512}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7db061a305fa024db1beee417427953
+      internalID: -19733620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AtkEFF3__1_8
+      rect:
+        serializedVersion: 2
+        x: 1076
+        y: 48
+        width: 31
         height: 49
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.615, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 076267b39014b764c9415ef91298b860
-      internalID: 1365968516
+      spriteID: f952644ae2b398e4fab1f8c1b5dc7e72
+      internalID: -130793115
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spr_NecromancerGetHit_strip9_1
+      name: AtkEFF3__1_9
       rect:
         serializedVersion: 2
-        x: 111
-        y: 32
-        width: 49
-        height: 33
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 43ae9fff9907a35469245e627113effc
-      internalID: -1712129964
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spr_NecromancerGetHit_strip9_2
-      rect:
-        serializedVersion: 2
-        x: 209
-        y: 32
-        width: 49
-        height: 37
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 72c2a2d04fb0e334fbeec16873778e22
-      internalID: 745907579
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spr_NecromancerGetHit_strip9_3
-      rect:
-        serializedVersion: 2
-        x: 308
-        y: 32
-        width: 48
-        height: 42
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 818c97562e6f1b94bae0c4b04a44b929
-      internalID: -523094719
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spr_NecromancerGetHit_strip9_4
-      rect:
-        serializedVersion: 2
-        x: 412
-        y: 32
-        width: 37
-        height: 52
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5b7166b1d541c3b4bbe25dfe464192f0
-      internalID: 341047423
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spr_NecromancerGetHit_strip9_5
-      rect:
-        serializedVersion: 2
-        x: 518
-        y: 32
-        width: 28
+        x: 1204
+        y: 48
+        width: 63
         height: 49
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.302, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ed0b6bdf9cb66684e84d1d5256e86e4f
-      internalID: -1615976180
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spr_NecromancerGetHit_strip9_6
-      rect:
-        serializedVersion: 2
-        x: 614
-        y: 32
-        width: 28
-        height: 49
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fa814f477de3f454fa2e003fe0d7b6b9
-      internalID: 1111548033
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spr_NecromancerGetHit_strip9_7
-      rect:
-        serializedVersion: 2
-        x: 710
-        y: 32
-        width: 28
-        height: 49
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 81fa12f7fd0b11c4bae3196a34f91b81
-      internalID: 524369939
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spr_NecromancerGetHit_strip9_8
-      rect:
-        serializedVersion: 2
-        x: 806
-        y: 32
-        width: 28
-        height: 49
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 676d8681fab0c3449a32e49d430f6234
-      internalID: -1251305584
+      spriteID: 18becc81a045a594d8a6d9430b828373
+      internalID: 1050078446
       vertices: []
       indices: 
       edges: []
@@ -340,15 +361,16 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      spr_NecromancerGetHit_strip9_0: 1365968516
-      spr_NecromancerGetHit_strip9_1: -1712129964
-      spr_NecromancerGetHit_strip9_2: 745907579
-      spr_NecromancerGetHit_strip9_3: -523094719
-      spr_NecromancerGetHit_strip9_4: 341047423
-      spr_NecromancerGetHit_strip9_5: -1615976180
-      spr_NecromancerGetHit_strip9_6: 1111548033
-      spr_NecromancerGetHit_strip9_7: 524369939
-      spr_NecromancerGetHit_strip9_8: -1251305584
+      AtkEFF3__1_0: -1781043147
+      AtkEFF3__1_1: 809368247
+      AtkEFF3__1_2: -1191310564
+      AtkEFF3__1_3: 773421467
+      AtkEFF3__1_4: 1272092145
+      AtkEFF3__1_5: -1004928652
+      AtkEFF3__1_6: -1377624588
+      AtkEFF3__1_7: -19733620
+      AtkEFF3__1_8: -130793115
+      AtkEFF3__1_9: 1050078446
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

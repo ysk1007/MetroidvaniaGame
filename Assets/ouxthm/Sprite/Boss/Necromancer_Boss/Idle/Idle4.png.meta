@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 82cc2be80c58ad542ad5e060d8940e5c
+guid: c13c56f5e16e70c479a219d91c77fd5b
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -141,190 +141,211 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: spr_NecromancerGetHit_strip9_0
+      name: Idle4_0
       rect:
         serializedVersion: 2
-        x: 38
+        x: 39
+        y: 32
+        width: 33
+        height: 49
+      alignment: 9
+      pivot: {x: 0.5762, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c36bc494fb8f9444fb0db6d34811b000
+      internalID: 2146372492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle4_1
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 32
+        width: 30
+        height: 49
+      alignment: 9
+      pivot: {x: 0.534, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: baf6868e73994aa4bb60964e634b4e37
+      internalID: -259264751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle4_2
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 32
+        width: 32
+        height: 49
+      alignment: 9
+      pivot: {x: 0.563, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bac74f6b2531adc439b0a900d68a6192
+      internalID: 546131631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle4_3
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 32
+        width: 31
+        height: 49
+      alignment: 9
+      pivot: {x: 0.549, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74818a6951f0cd24eac1993a1c3a2b0f
+      internalID: 433537273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle4_4
+      rect:
+        serializedVersion: 2
+        x: 428
         y: 32
         width: 28
         height: 49
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.501, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 076267b39014b764c9415ef91298b860
-      internalID: 1365968516
+      spriteID: 55f0489a95f855943bd3ca4b191af206
+      internalID: -1640898930
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spr_NecromancerGetHit_strip9_1
+      name: Idle4_5
       rect:
         serializedVersion: 2
-        x: 111
-        y: 32
-        width: 49
-        height: 33
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 43ae9fff9907a35469245e627113effc
-      internalID: -1712129964
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spr_NecromancerGetHit_strip9_2
-      rect:
-        serializedVersion: 2
-        x: 209
-        y: 32
-        width: 49
-        height: 37
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 72c2a2d04fb0e334fbeec16873778e22
-      internalID: 745907579
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spr_NecromancerGetHit_strip9_3
-      rect:
-        serializedVersion: 2
-        x: 308
-        y: 32
-        width: 48
-        height: 42
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 818c97562e6f1b94bae0c4b04a44b929
-      internalID: -523094719
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spr_NecromancerGetHit_strip9_4
-      rect:
-        serializedVersion: 2
-        x: 412
-        y: 32
-        width: 37
-        height: 52
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5b7166b1d541c3b4bbe25dfe464192f0
-      internalID: 341047423
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spr_NecromancerGetHit_strip9_5
-      rect:
-        serializedVersion: 2
-        x: 518
+        x: 524
         y: 32
         width: 28
         height: 49
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.501, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ed0b6bdf9cb66684e84d1d5256e86e4f
-      internalID: -1615976180
+      spriteID: 3153b2ed71bf3794ab6acff1ffc4ed5c
+      internalID: 44949101
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spr_NecromancerGetHit_strip9_6
+      name: Idle4_6
       rect:
         serializedVersion: 2
-        x: 614
+        x: 620
         y: 32
         width: 28
         height: 49
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.501, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fa814f477de3f454fa2e003fe0d7b6b9
-      internalID: 1111548033
+      spriteID: b1fa695b7af652a41b904bd74d351685
+      internalID: 358776257
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spr_NecromancerGetHit_strip9_7
+      name: Idle4_7
       rect:
         serializedVersion: 2
-        x: 710
+        x: 716
         y: 32
         width: 28
         height: 49
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.501, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 81fa12f7fd0b11c4bae3196a34f91b81
-      internalID: 524369939
+      spriteID: 9a7ef1f19f436b246b7b07153ba566c6
+      internalID: -956621455
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spr_NecromancerGetHit_strip9_8
+      name: Idle4_8
       rect:
         serializedVersion: 2
-        x: 806
+        x: 812
         y: 32
         width: 28
         height: 49
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.501, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 676d8681fab0c3449a32e49d430f6234
-      internalID: -1251305584
+      spriteID: ded3d9ba3317e024398ebd9b5fcaba16
+      internalID: -742881000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle4_9
+      rect:
+        serializedVersion: 2
+        x: 908
+        y: 32
+        width: 28
+        height: 49
+      alignment: 9
+      pivot: {x: 0.501, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ac93d676896eb44da94aaeeb46d34e6
+      internalID: 473021840
       vertices: []
       indices: 
       edges: []
@@ -340,15 +361,16 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      spr_NecromancerGetHit_strip9_0: 1365968516
-      spr_NecromancerGetHit_strip9_1: -1712129964
-      spr_NecromancerGetHit_strip9_2: 745907579
-      spr_NecromancerGetHit_strip9_3: -523094719
-      spr_NecromancerGetHit_strip9_4: 341047423
-      spr_NecromancerGetHit_strip9_5: -1615976180
-      spr_NecromancerGetHit_strip9_6: 1111548033
-      spr_NecromancerGetHit_strip9_7: 524369939
-      spr_NecromancerGetHit_strip9_8: -1251305584
+      Idle4_0: 2146372492
+      Idle4_1: -259264751
+      Idle4_2: 546131631
+      Idle4_3: 433537273
+      Idle4_4: -1640898930
+      Idle4_5: 44949101
+      Idle4_6: 358776257
+      Idle4_7: -956621455
+      Idle4_8: -742881000
+      Idle4_9: 473021840
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
