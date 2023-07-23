@@ -34,12 +34,12 @@ public class Projective_Body : MonoBehaviour
     { 
         if (Dir == 1)
         {
-            rigid.AddForce(transform.right * 0.05f, ForceMode2D.Impulse);
+            rigid.AddForce(transform.right * 0.1f, ForceMode2D.Impulse);
             sprite.flipX = false;
         }
         else if (Dir == -1)
         {
-            rigid.AddForce(transform.right * -0.05f, ForceMode2D.Impulse);
+            rigid.AddForce(transform.right * -0.1f, ForceMode2D.Impulse);
             sprite.flipX = true;
         }
     }

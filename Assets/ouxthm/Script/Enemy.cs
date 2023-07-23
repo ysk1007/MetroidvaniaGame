@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static UnityEditor.PlayerSettings;
 using static UnityEngine.GraphicsBuffer;
 
@@ -35,22 +36,31 @@ public abstract class Enemy : MonoBehaviour
     public float atkTime;   // 공격 모션 시간
     public bool Attacker;  // 비행 몬스터가 공격형인지 아닌지 구분짓는 변수
 
+    public int atkPattern;  // boss의 공격 패턴 번호
+    public float playerLoc; // player의 X좌표
+    public float bossLoc;   // boss의 X좌표
+    public float myLocY;    // boss의 y값
+    public bool bossMoving;  // boss가 움직이도록 rock 풂
+
     public GameObject Split_Slime;
     public GameObject fire; // 프리펩 투사체
     public GameObject ProObject;    // 클론 투사체
+    
 
     Transform spawn;    // 분열된 슬라임 생성될 위치 1
     Transform spawn2;   // 분열된 슬라임 생성될 위치 2
     public Transform PObject;    // 투사체 생성 위치
     Rigidbody2D rigid;
     Animator animator;
-    public Transform target;
+   // public Transform target;
     SpriteRenderer spriteRenderer;
     RaycastHit2D rayHit;
     BoxCollider2D Bcollider;
     BoxCollider2D Box;
     Transform posi;
     BoxCollider2D Boxs;
+    BoxCollider2D bossBox;  // 보스 공격 콜라이더 켰다 끄는 변수
+    BoxCollider2D BossSpriteBox;    // 보스 이미지 콜라이더
 
     /* Enemy_Attack 스크립트에 GiveDamage()함수를 넣을거임 콜라이더 범위에 들어와도 몬스터 자체 콜라이더에 플레이어가 충돌해야 데미지가 들어가기 때문에 몬스터 공격 콜라이더만 들어 갈 수 있도록
      스크립트를 몬스터 공격 오브젝트에 넣을거임*/
@@ -92,6 +102,16 @@ public abstract class Enemy : MonoBehaviour
             }
         }
     }
+
+    public virtual void Boss(Transform target)  // boss용 Update문
+    {
+        playerLoc = target.position.x;
+        bossLoc = this.gameObject.transform.position.x;
+        
+        bossMove();
+        BossAtk();
+    }
+    
     public virtual void onetime()   // Awake에 적용
     {
         Pos = GetComponent<Transform>();
@@ -101,6 +121,18 @@ public abstract class Enemy : MonoBehaviour
             PObject = this.gameObject.transform.GetChild(0).GetComponent<Transform>();
         }
 
+    }
+
+    public virtual void bossOnetime()   // boss용 Awake문
+    {
+        PObject = this.gameObject.transform.GetChild(2).GetComponent<Transform>();
+        BossSpriteBox = this.gameObject.GetComponent<BoxCollider2D>();
+        bossBox = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();
+        Pos = GetComponent<Transform>();
+        spriteRenderer = this.gameObject.transform.GetChild(1).GetComponent<SpriteRenderer>();
+        animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
+        
+        randomAtk();
     }
 
     void OnCollisionStay2D(Collision2D collision)
@@ -236,7 +268,6 @@ public abstract class Enemy : MonoBehaviour
                 {
                     old_Speed = Enemy_Speed;  // 이전 속도 값으로 돌리기 위해 다른 변수에 속도 값을 저장
                 }
-                Debug.Log("왜 실행 안해?");
                 animator.SetTrigger("Hit");
                 Enemy_Speed = 0;
                 yield return new WaitForSeconds(0.5f);
@@ -244,7 +275,7 @@ public abstract class Enemy : MonoBehaviour
                 enemyHit = true;
             }
         }
-        else if (Enemy_HP <= 0 && Enemy_Mod != 3) // Enemy의 체력이 0과 같거나 이하일 때(죽음)
+        else if (Enemy_HP <= 0 && Enemy_Mod != 3 && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy")) // Enemy의 체력이 0과 같거나 이하일 때(죽음)
         {
             Dying = true;
             if (Enemy_Mod != 1 && Enemy_Mod != 3 && Enemy_Mod != 4)
@@ -275,7 +306,7 @@ public abstract class Enemy : MonoBehaviour
                 this.gameObject.SetActive(false);
             }
         }
-        else if (Enemy_HP <= 0 && Enemy_Mod == 3) // 비행 몬스터 죽음)
+        else if (Enemy_HP <= 0 && Enemy_Mod == 3 && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy")) // 비행 몬스터 죽음)
         {
             Dying = true;
             this.gameObject.layer = LayerMask.NameToLayer("Dieenemy");
@@ -618,19 +649,132 @@ public abstract class Enemy : MonoBehaviour
     public void ProjectiveBody()    // 투사체 생성 (위치 저장)
     {
         Rigidbody2D rigid = PObject.GetComponent<Rigidbody2D>();
-        if(nextDirX == 1)
+        if(Enemy_Mod != 2)
         {
-            PObject.localPosition = new Vector2(-0.8f, 0);
+            if (nextDirX == 1)
+            {
+                PObject.localPosition = new Vector2(-0.8f, 0);
+            }
+            else if (nextDirX == -1)
+            {
+                PObject.localPosition = new Vector2(0.8f, 0);
+            }
         }
-        else if(nextDirX == -1)
+        else if(Enemy_Mod == 2)
         {
-            PObject.localPosition = new Vector2(0.8f, 0);
+            if(nextDirX == 1)
+            {
+                PObject.localPosition = new Vector2(3.5f, 0.15f);
+            } 
+            else if(nextDirX == -1)
+            {
+                PObject.localPosition = new Vector2(-3.5f, 0.15f);
+            }
         }
+        
         ProObject = Instantiate(fire, PObject.position, PObject.rotation);
 
         Projective_Body Pb = ProObject.GetComponent<Projective_Body>();
         Pb.Dir = nextDirX;   // Projective_Body 스크립트에 있는 Dir 변수에 현재 스크립트의 변수 nextDirX를 저장
+        
         Pb.Power = Enemy_Power;
     }
+    public void BossAtk()
+    {
+        if (playerLoc < bossLoc)
+        {
+            spriteRenderer.flipX = true;
+            nextDirX = -1;
+            BossSpriteBox.offset = new Vector2(0.3042426f, -0.3726118f);
+        }
+        else if(playerLoc > bossLoc)
+        {
+            spriteRenderer.flipX = false;
+            nextDirX = 1;
+            BossSpriteBox.offset = new Vector2(-0.3042426f, -0.3726118f);
+        }
 
+        switch (atkPattern)
+        {
+            case 1:
+                bossSoul();
+                Invoke("ProjectiveBody", 2f);
+                atkPattern = 0;
+                break;
+
+            case 2:
+                StartCoroutine(bossJump());
+                atkPattern = 0;
+                break;
+
+            case 3:
+                bossFloor();
+                atkPattern = 0; 
+                break;
+
+        }
+
+    }
+ 
+    public void bossMove()
+    {
+        if (bossMoving)
+        {
+            gameObject.transform.Translate(new Vector2(nextDirX, 0) * Time.deltaTime * Enemy_Speed);     // 업데이트문에 넣기 bossJump할 때만 이동하도록 조건 넣기
+        }
+    }
+    public void randomAtk()
+    {
+        int nextNum;
+
+        atkPattern = Random.Range(1, 4);
+        nextNum = Random.Range(4, 7);
+        Invoke("randomAtk", nextNum);
+    }
+
+    public void bossSoul()      // 영혼 발사
+    {
+        animator.SetTrigger("Attacking");
+    }
+
+    public IEnumerator bossJump()       // 몸통박치기
+    {
+        animator.SetTrigger("Jump");
+        Enemy_Speed = 12f;
+        bossMoving = true;
+        yield return new WaitForSeconds(0.5f);
+        bossMoving = false;
+    }
+
+    public void bossFloor()     // 바닥 터뜨리는 기술
+    {
+        Enemy_Speed = 1f;
+        animator.SetTrigger("Run");
+        bossMoving = true;
+        Invoke("offFloor", 2f);
+        
+    }
+
+    public void offFloor()
+    {
+        myLocY = this.gameObject.transform.position.y;
+        this.gameObject.transform.localPosition = new Vector2(playerLoc - 2f, myLocY);
+        animator.SetTrigger("Spawn");
+        bossMoving = false;
+        Invoke("onBox", 0.9f);
+    }
+    public void onBox()
+    {
+        if(spriteRenderer.flipX == true)
+        {
+            bossBox.transform.localPosition = new Vector2(-1.71f, 0);
+        }
+        else if(spriteRenderer.flipX == false)
+        {
+            bossBox.transform.localPosition = new Vector2(1.71f, 0);
+        }
+        bossBox.enabled = true;
+        GiveDamage();
+        bossBox.enabled = false;
+    }
 }

@@ -4,23 +4,23 @@ using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public class MonsterConstroller : MonoBehaviour
+public class BossController : MonoBehaviour
 {
 
     public Enemy monster;
     public Transform target;
 
-    
+
     void Start()
     {
         target = Player.instance.gameObject.transform;
         monster.InitSetting();
-        monster.onetime();
+        monster.bossOnetime();
     }
 
     void Update()
     {
-        monster.Short_Monster(target);
+        monster.Boss(target);
     }
-        
+
 }
