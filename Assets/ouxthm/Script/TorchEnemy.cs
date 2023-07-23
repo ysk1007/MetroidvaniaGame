@@ -6,7 +6,7 @@ public class TorchEnemy : Enemy
 {
     public override void InitSetting()  // 적의 기본 정보를 설정하는 함수
     {
-        Enemy_Mod = 7;  // 원거리 투사체 O
+        Enemy_Mod = 7;  // 원거리 투사체 
         Enemy_Power = 10f; //적의 공격력
         Enemy_HP = 60f;  // 적의 체력
         Enemy_Speed = 1.5f;    // 적의 이동속도
@@ -20,6 +20,7 @@ public class TorchEnemy : Enemy
         Enemy_Range_Y = 1f; //적의 Y축 공격 사거리
         atkDelay = 1.5f; // 공격 딜레이
         atkTime = 1.1f; // 공격 모션 시간
+        endTime = 1f;   //투사체 사라지는 시간
         Attacking = false;
     }
 

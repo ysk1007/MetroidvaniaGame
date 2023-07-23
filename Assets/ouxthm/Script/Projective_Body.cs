@@ -13,6 +13,7 @@ public class Projective_Body : MonoBehaviour
     Enemy enemy;
     public float Power;
     public int Dir;
+    public float Time;
 
 
     void Start()
@@ -28,7 +29,7 @@ public class Projective_Body : MonoBehaviour
     }
     public void DestoryObject()
     {
-        Destroy(gameObject, 1f);
+        Destroy(gameObject, Time) ;
     }
     public void Shot()
     { 

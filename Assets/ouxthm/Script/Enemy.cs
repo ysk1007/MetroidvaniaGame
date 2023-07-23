@@ -35,6 +35,7 @@ public abstract class Enemy : MonoBehaviour
     public float dTime;
     public float atkTime;   // 공격 모션 시간
     public bool Attacker;  // 비행 몬스터가 공격형인지 아닌지 구분짓는 변수
+    public float endTime;   // 투사체 사라지는 시간
 
     public int atkPattern;  // boss의 공격 패턴 번호
     public float playerLoc; // player의 X좌표
@@ -664,11 +665,11 @@ public abstract class Enemy : MonoBehaviour
         {
             if(nextDirX == 1)
             {
-                PObject.localPosition = new Vector2(3.5f, 0.15f);
+                PObject.localPosition = new Vector2(3f, 0.15f);
             } 
             else if(nextDirX == -1)
             {
-                PObject.localPosition = new Vector2(-3.5f, 0.15f);
+                PObject.localPosition = new Vector2(-3f, 0.15f);
             }
         }
         
@@ -676,8 +677,8 @@ public abstract class Enemy : MonoBehaviour
 
         Projective_Body Pb = ProObject.GetComponent<Projective_Body>();
         Pb.Dir = nextDirX;   // Projective_Body 스크립트에 있는 Dir 변수에 현재 스크립트의 변수 nextDirX를 저장
-        
         Pb.Power = Enemy_Power;
+        Pb.Time = endTime;
     }
     public void BossAtk()
     {
@@ -698,7 +699,7 @@ public abstract class Enemy : MonoBehaviour
         {
             case 1:
                 bossSoul();
-                Invoke("ProjectiveBody", 2f);
+                Invoke("ProjectiveBody", 3f);
                 atkPattern = 0;
                 break;
 
