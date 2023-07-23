@@ -116,7 +116,6 @@ MonoBehaviour:
   Enemy_Speed: 0
   Enemy_Atk_Speed: 0
   Attacking: 0
-  Hit_Set: 0
   Gap_Distance_X: 0
   Gap_Distance_Y: 0
   Enemy_Sensing_X: 0
@@ -135,8 +134,19 @@ MonoBehaviour:
   enemyHit: 0
   old_Speed: 0
   dTime: 0
+  atkTime: 0
+  Attacker: 0
+  endTime: 0
+  atkPattern: 0
+  playerLoc: 0
+  bossLoc: 0
+  myLocY: 0
+  bossMoving: 0
+  SoulFloor: {fileID: 0}
   Split_Slime: {fileID: 2975204008383248924, guid: 1ef77a656131b094f86590be59dea090, type: 3}
-  target: {fileID: 0}
+  fire: {fileID: 0}
+  ProObject: {fileID: 0}
+  PObject: {fileID: 0}
   Pos: {fileID: 0}
   arrow: {fileID: 0}
 --- !u!1 &6322146984183352934

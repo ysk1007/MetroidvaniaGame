@@ -43,6 +43,11 @@ public abstract class Enemy : MonoBehaviour
     public float myLocY;    // boss의 y값
     public bool bossMoving;  // boss가 움직이도록 rock 풂
 
+    Transform soulSpawn;    // 보스 바닥 터뜨리기 생성 위치
+    Transform soulSpawn1;   // 보스 바닥 터뜨리기 생성 위치
+    Transform soulSpawn2;   // 보스 바닥 터뜨리기 생성 위치
+
+    public GameObject SoulFloor; // 보스 영혼 공격
     public GameObject Split_Slime;
     public GameObject fire; // 프리펩 투사체
     public GameObject ProObject;    // 클론 투사체
@@ -132,7 +137,11 @@ public abstract class Enemy : MonoBehaviour
         Pos = GetComponent<Transform>();
         spriteRenderer = this.gameObject.transform.GetChild(1).GetComponent<SpriteRenderer>();
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
-        
+
+        soulSpawn = this.gameObject.transform.GetChild(2).GetComponent<Transform>();
+        soulSpawn1 = this.gameObject.transform.GetChild(3).GetComponent<Transform>();
+        soulSpawn2 = this.gameObject.transform.GetChild(4).GetComponent<Transform>();
+
         randomAtk();
     }
 
@@ -633,6 +642,7 @@ public abstract class Enemy : MonoBehaviour
         yield return null;
     }
 
+
     public void slimeJump() //슬라임 점프공격
     {
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
@@ -680,6 +690,30 @@ public abstract class Enemy : MonoBehaviour
         Pb.Power = Enemy_Power;
         Pb.Time = endTime;
     }
+
+    public void soulSpawning()
+    {
+        GameObject Soul = Instantiate(SoulFloor, soulSpawn.position, soulSpawn.rotation);
+        GameObject Soul1 = Instantiate(SoulFloor, soulSpawn1.position, soulSpawn1.rotation);
+        GameObject Soul2 = Instantiate(SoulFloor, soulSpawn2.position, soulSpawn2.rotation);
+        SoulEff Se = Soul.GetComponent<SoulEff>();
+        SoulEff Se1 = Soul1.GetComponent<SoulEff>();
+        SoulEff Se2 = Soul2.GetComponent<SoulEff>();
+
+        Se.Time = endTime;
+        Se1.Time = endTime;
+        Se2.Time = endTime;
+
+        Se.Power = Enemy_Power;
+        Se1.Power = Enemy_Power;
+        Se2.Power = Enemy_Power;
+
+        Se.Dir = nextDirX;
+        Se1.Dir = nextDirX;
+        Se2.Dir = nextDirX;
+    }
+
+
     public void BossAtk()
     {
         if (playerLoc < bossLoc)
@@ -687,12 +721,22 @@ public abstract class Enemy : MonoBehaviour
             spriteRenderer.flipX = true;
             nextDirX = -1;
             BossSpriteBox.offset = new Vector2(0.3042426f, -0.3726118f);
+
+            soulSpawn.localPosition = new Vector2(-5.5f, 0.197f);
+            soulSpawn1.localPosition = new Vector2(-9.22f, 0.197f);
+            soulSpawn2.localPosition = new Vector2(-12.94f, 0.197f);
+            
+
         }
         else if(playerLoc > bossLoc)
         {
             spriteRenderer.flipX = false;
             nextDirX = 1;
             BossSpriteBox.offset = new Vector2(-0.3042426f, -0.3726118f);
+
+            soulSpawn.localPosition = new Vector2(5.5f, 0.197f);
+            soulSpawn1.localPosition = new Vector2(9.22f, 0.197f);
+            soulSpawn2.localPosition = new Vector2(12.94f, 0.197f);
         }
 
         switch (atkPattern)
@@ -717,14 +761,14 @@ public abstract class Enemy : MonoBehaviour
 
     }
  
-    public void bossMove()
+    public void bossMove()  // boss의 움직이도록 하는 함수
     {
         if (bossMoving)
         {
-            gameObject.transform.Translate(new Vector2(nextDirX, 0) * Time.deltaTime * Enemy_Speed);     // 업데이트문에 넣기 bossJump할 때만 이동하도록 조건 넣기
+            gameObject.transform.Translate(new Vector2(nextDirX, 0) * Time.deltaTime * Enemy_Speed);   
         }
     }
-    public void randomAtk()
+    public void randomAtk() // 공격 패턴 랜덤으로 정하기
     {
         int nextNum;
 
@@ -756,23 +800,26 @@ public abstract class Enemy : MonoBehaviour
         
     }
 
-    public void offFloor()
+    public void offFloor()  // 보스 바닥 터뜨리는 공격 마무리 함수
     {
         myLocY = this.gameObject.transform.position.y;
         this.gameObject.transform.localPosition = new Vector2(playerLoc - 2f, myLocY);
         animator.SetTrigger("Spawn");
         bossMoving = false;
         Invoke("onBox", 0.9f);
+        Invoke("soulSpawning", 0.75f);
     }
-    public void onBox()
+    public void onBox() // 보스 공격 콜라이더 on 함수
     {
         if(spriteRenderer.flipX == true)
         {
             bossBox.transform.localPosition = new Vector2(-1.71f, 0);
+            
         }
         else if(spriteRenderer.flipX == false)
         {
             bossBox.transform.localPosition = new Vector2(1.71f, 0);
+            
         }
         bossBox.enabled = true;
         GiveDamage();

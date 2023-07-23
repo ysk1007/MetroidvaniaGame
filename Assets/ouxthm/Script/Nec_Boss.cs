@@ -21,7 +21,7 @@ public class Nec_Boss : Enemy
         Enemy_Range_Y = 1f; //적의 Y축 공격 사거리
         atkDelay = 1f; // 공격 딜레이
         atkTime = 0.6f; // 공격 모션 시간
-        endTime = 0.9f; // 투사체 사라지는 시간
+        endTime = 0.8f; // 투사체 사라지는 시간
         Attacking = false;
     }
 
