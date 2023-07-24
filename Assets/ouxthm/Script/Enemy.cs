@@ -37,6 +37,7 @@ public abstract class Enemy : MonoBehaviour
     public bool Attacker;  // 비행 몬스터가 공격형인지 아닌지 구분짓는 변수
     public float endTime;   // 투사체 사라지는 시간
 
+    public bool turning;    // 보스가 뒤돌 수 있는 상황인지 확인하는 변수
     public int atkPattern;  // boss의 공격 패턴 번호
     public float playerLoc; // player의 X좌표
     public float bossLoc;   // boss의 X좌표
@@ -113,9 +114,11 @@ public abstract class Enemy : MonoBehaviour
     {
         playerLoc = target.position.x;
         bossLoc = this.gameObject.transform.position.x;
-        
-        bossMove();
-        BossAtk();
+        if(this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
+        {
+            bossMove();
+            BossAtk();
+        }
     }
     
     public virtual void onetime()   // Awake에 적용
@@ -264,7 +267,7 @@ public abstract class Enemy : MonoBehaviour
         Enemy_HP -= damage;
         if (Enemy_HP > 0) // Enemy의 체력이 0 이상일 때
         {
-            if (!animator.GetBool("Hit"))
+            if (!animator.GetBool("Hit") && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
             {
                 /*한 사이클 돌고 
                   0 디버그 두 번째 찍힐 때 처음 히트 애니메이션 나옴
@@ -694,50 +697,62 @@ public abstract class Enemy : MonoBehaviour
     public void soulSpawning()
     {
         GameObject Soul = Instantiate(SoulFloor, soulSpawn.position, soulSpawn.rotation);
-        GameObject Soul1 = Instantiate(SoulFloor, soulSpawn1.position, soulSpawn1.rotation);
-        GameObject Soul2 = Instantiate(SoulFloor, soulSpawn2.position, soulSpawn2.rotation);
         SoulEff Se = Soul.GetComponent<SoulEff>();
-        SoulEff Se1 = Soul1.GetComponent<SoulEff>();
-        SoulEff Se2 = Soul2.GetComponent<SoulEff>();
 
         Se.Time = endTime;
-        Se1.Time = endTime;
-        Se2.Time = endTime;
-
         Se.Power = Enemy_Power;
-        Se1.Power = Enemy_Power;
-        Se2.Power = Enemy_Power;
-
         Se.Dir = nextDirX;
+       
+    }
+    public void soulSpawning1()
+    {
+        GameObject Soul1 = Instantiate(SoulFloor, soulSpawn1.position, soulSpawn1.rotation);
+        SoulEff Se1 = Soul1.GetComponent<SoulEff>();
+
+        Se1.Time = endTime;
+        Se1.Power = Enemy_Power;
         Se1.Dir = nextDirX;
+    }
+
+    public void soulSpawning2()
+    {
+        GameObject Soul2 = Instantiate(SoulFloor, soulSpawn2.position, soulSpawn2.rotation);
+        SoulEff Se2 = Soul2.GetComponent<SoulEff>();
+
+        Se2.Time = endTime;
+        Se2.Power = Enemy_Power;
         Se2.Dir = nextDirX;
+        turning = true;
     }
 
 
     public void BossAtk()
     {
-        if (playerLoc < bossLoc)
+        if (turning == true)    // 돌기 가능할 때만
         {
-            spriteRenderer.flipX = true;
-            nextDirX = -1;
-            BossSpriteBox.offset = new Vector2(0.3042426f, -0.3726118f);
+            if (playerLoc < bossLoc)
+            {
 
-            soulSpawn.localPosition = new Vector2(-5.5f, 0.197f);
-            soulSpawn1.localPosition = new Vector2(-9.22f, 0.197f);
-            soulSpawn2.localPosition = new Vector2(-12.94f, 0.197f);
-            
+                spriteRenderer.flipX = true;
+                nextDirX = -1;
+                BossSpriteBox.offset = new Vector2(0.3042426f, -0.3726118f);
 
+                soulSpawn.localPosition = new Vector2(-5.5f, 0.197f);
+                soulSpawn1.localPosition = new Vector2(-9.22f, 0.197f);
+                soulSpawn2.localPosition = new Vector2(-12.94f, 0.197f);
+            }
+            else if (playerLoc > bossLoc)
+            {
+                spriteRenderer.flipX = false;
+                nextDirX = 1;
+                BossSpriteBox.offset = new Vector2(-0.3042426f, -0.3726118f);
+
+                soulSpawn.localPosition = new Vector2(5.5f, 0.197f);
+                soulSpawn1.localPosition = new Vector2(9.22f, 0.197f);
+                soulSpawn2.localPosition = new Vector2(12.94f, 0.197f);
+            }
         }
-        else if(playerLoc > bossLoc)
-        {
-            spriteRenderer.flipX = false;
-            nextDirX = 1;
-            BossSpriteBox.offset = new Vector2(-0.3042426f, -0.3726118f);
-
-            soulSpawn.localPosition = new Vector2(5.5f, 0.197f);
-            soulSpawn1.localPosition = new Vector2(9.22f, 0.197f);
-            soulSpawn2.localPosition = new Vector2(12.94f, 0.197f);
-        }
+        
 
         switch (atkPattern)
         {
@@ -753,8 +768,9 @@ public abstract class Enemy : MonoBehaviour
                 break;
 
             case 3:
+                
                 bossFloor();
-                atkPattern = 0; 
+                atkPattern = 0;
                 break;
 
         }
@@ -803,11 +819,25 @@ public abstract class Enemy : MonoBehaviour
     public void offFloor()  // 보스 바닥 터뜨리는 공격 마무리 함수
     {
         myLocY = this.gameObject.transform.position.y;
-        this.gameObject.transform.localPosition = new Vector2(playerLoc - 2f, myLocY);
+        if(playerLoc < bossLoc) 
+        {
+            this.gameObject.transform.localPosition = new Vector2(playerLoc + 3f, myLocY);
+        }
+        else if (playerLoc > bossLoc)
+        {
+            this.gameObject.transform.localPosition = new Vector2(playerLoc - 3f, myLocY);
+        }
+        
         animator.SetTrigger("Spawn");
         bossMoving = false;
+        turning = false;
         Invoke("onBox", 0.9f);
-        Invoke("soulSpawning", 0.75f);
+        if(this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
+        {
+            Invoke("soulSpawning", 1f);
+            Invoke("soulSpawning1", 1.3f);
+            Invoke("soulSpawning2", 1.6f);    
+        }
     }
     public void onBox() // 보스 공격 콜라이더 on 함수
     {

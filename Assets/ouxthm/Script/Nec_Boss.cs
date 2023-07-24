@@ -22,6 +22,7 @@ public class Nec_Boss : Enemy
         atkDelay = 1f; // 공격 딜레이
         atkTime = 0.6f; // 공격 모션 시간
         endTime = 0.8f; // 투사체 사라지는 시간
+        turning = true; // 돌기 가능
         Attacking = false;
     }
 
