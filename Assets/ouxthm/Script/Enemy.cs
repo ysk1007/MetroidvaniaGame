@@ -9,7 +9,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public abstract class Enemy : MonoBehaviour
 {
-    public int Enemy_Mod;   // 1: 달팽이, 2: 근접공격 가능 몬스터, 3:비행몬스터, 4:제라스, 5: 자폭, 7: 투사체 원거리, 9: 분열
+    public int Enemy_Mod;   // 1: 달팽이, 2: 근접공격 가능 몬스터, 3:비행몬스터, 4:제라스, 5: 자폭, 7: 투사체 원거리, 9: 분열, 11: 돌진하여 충돌
     public float Enemy_HP;  // 적의 체력
     public float Enemy_Power;   //적의 공격력
     public float Enemy_Speed;   // 적의 이동속도
@@ -43,6 +43,12 @@ public abstract class Enemy : MonoBehaviour
     public float bossLoc;   // boss의 X좌표
     public float myLocY;    // boss의 y값
     public bool bossMoving;  // boss가 움직이도록 rock 풂
+
+    public bool Enemy_Left; // 적의 방향
+    public bool Hit_Set;    // 몬스터를 깨우는 변수
+    public float boarLoc;    // 멧돼지의 현재위치 X
+
+
 
     Transform soulSpawn;    // 보스 바닥 터뜨리기 생성 위치
     Transform soulSpawn1;   // 보스 바닥 터뜨리기 생성 위치
@@ -120,6 +126,14 @@ public abstract class Enemy : MonoBehaviour
             BossAtk();
         }
     }
+
+    public virtual void Boar(Transform target)  // boar용
+    {
+        playerLoc = target.position.x;
+        boarLoc = this.gameObject.transform.position.x;
+
+        StartCoroutine(boarMove());
+    }
     
     public virtual void onetime()   // Awake에 적용
     {
@@ -148,12 +162,29 @@ public abstract class Enemy : MonoBehaviour
         randomAtk();
     }
 
+    public virtual void boarOntime()
+    {
+        Hit_Set = false;    // 플레이어에게 맞지 않은 상태
+        animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        Pos = GetComponent<Transform>();
+    }
+
     void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.name == "Player")
         {
             Boxs = GetComponent<BoxCollider2D>();
             Bump();
+        }
+        
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (Enemy_Mod == 11 && collision.gameObject.CompareTag("Wall"))
+        {
+            StartCoroutine(StopRush());
         }
     }
 
@@ -170,6 +201,7 @@ public abstract class Enemy : MonoBehaviour
                     StartCoroutine(Hit(Pdamage));
                 }
             }
+            
         }
     }
     void switchCollider()   // 제라스 박스 콜라이더 위치 옮겨주는 함수
@@ -254,8 +286,6 @@ public abstract class Enemy : MonoBehaviour
         StartCoroutine(Think());
     }
 
-
-    
     public IEnumerator Hit(float damage) // 피해 함수
     {
         posi = this.gameObject.GetComponent<Transform>();
@@ -265,6 +295,13 @@ public abstract class Enemy : MonoBehaviour
         rigid = this.GetComponent<Rigidbody2D>();
 
         Enemy_HP -= damage;
+
+        if(Enemy_Mod == 11)
+        {
+            Hit_Set = true;
+            StartCoroutine(Rush());
+        }
+
         if (Enemy_HP > 0) // Enemy의 체력이 0 이상일 때
         {
             if (!animator.GetBool("Hit") && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
@@ -272,7 +309,7 @@ public abstract class Enemy : MonoBehaviour
                 /*한 사이클 돌고 
                   0 디버그 두 번째 찍힐 때 처음 히트 애니메이션 나옴
                   애니메이션 끝나고 1.5 올드 스피드 디버그와 1.5 디버그 나옴*/
-                if (Enemy_Mod != 1 && Enemy_Mod != 3 && Enemy_Mod != 4)
+                if (Enemy_Mod != 1 && Enemy_Mod != 3 && Enemy_Mod != 4 && Enemy_Mod != 11)
                     if (animator.GetBool("Run") == true)
                     {
                         animator.SetBool("Run", false);
@@ -288,10 +325,10 @@ public abstract class Enemy : MonoBehaviour
                 enemyHit = true;
             }
         }
-        else if (Enemy_HP <= 0 && Enemy_Mod != 3 && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy")) // Enemy의 체력이 0과 같거나 이하일 때(죽음)
+        else if (Enemy_HP <= 0 && Enemy_Mod != 3 && Enemy_Mod != 11 && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy")) // Enemy의 체력이 0과 같거나 이하일 때(죽음)
         {
             Dying = true;
-            if (Enemy_Mod != 1 && Enemy_Mod != 3 && Enemy_Mod != 4)
+            if (Enemy_Mod != 1 && Enemy_Mod != 3 && Enemy_Mod != 4 && Enemy_Mod != 11)
             {
                 if (animator.GetBool("Run") == true)
                 {
@@ -300,7 +337,10 @@ public abstract class Enemy : MonoBehaviour
             }
             Enemy_Speed = 0;
             old_Speed = Enemy_Speed;
-            animator.SetTrigger("Die");
+            if(Enemy_Mod != 11)
+            {
+                animator.SetTrigger("Die");
+            }
             this.gameObject.layer = LayerMask.NameToLayer("Dieenemy");
             yield return new WaitForSeconds(Enemy_Dying_anim_Time );
             enemyHit = false;
@@ -346,9 +386,29 @@ public abstract class Enemy : MonoBehaviour
             yield return new WaitForSeconds(Enemy_Dying_anim_Time);
             this.gameObject.gameObject.SetActive(false);
         }
+        else if(Enemy_HP <= 0 && Enemy_Mod == 11 && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
+        {
+            animator.SetBool("Rush", false);
+            Dying = true;
+            this.gameObject.layer = LayerMask.NameToLayer("Dieenemy");
+            Enemy_Speed = 0;
+            old_Speed = Enemy_Speed;
+            nextDirX = 0;
+            Debug.Log("죽는 애니메이션 직전");
+            for (int i = 0; i < 4; i++)
+            {
+                // 스프라이트 블링크
+                spriteRenderer.color = new Color(1, 1, 1, 0.4f);
+                yield return new WaitForSeconds(0.1f);
+                spriteRenderer.color = new Color(1, 1, 1, 1);
+                yield return new WaitForSeconds(0.1f);
+                Debug.Log("반짝반짝");
+            }
+            spriteRenderer.color = new Color(1, 1, 1, 0.4f);
+            this.gameObject.gameObject.SetActive(false);
+        }
         animator.SetBool("Hit", false);
         enemyHit = false;
-        
     }
 
 
@@ -555,7 +615,6 @@ public abstract class Enemy : MonoBehaviour
             {
                 Invoke("offAttkack", atkTime);
             }
-
         }
         else if(!Dying && Enemy_Mod == 5)
         {
@@ -855,4 +914,60 @@ public abstract class Enemy : MonoBehaviour
         GiveDamage();
         bossBox.enabled = false;
     }
+
+    IEnumerator boarMove()
+    {
+        if (Hit_Set == true)    // 플레이어에게 맞았다면
+        {
+            if (animator.GetBool("Rush") && Enemy_Left == true)       // 뛰는 애니메이션이 실행 중이고, Fat_Left의 값이 true라면
+            {
+                gameObject.transform.Translate(new Vector2(-1, 0) * Time.deltaTime * Enemy_Speed);   // 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴.
+                spriteRenderer.flipX = false;
+            }
+            else if (animator.GetBool("Rush") && Enemy_Left == false)  // Running 애니메이션이 실행 중이고 Fat_Left의 값이 false라면
+            {
+                gameObject.transform.Translate(new Vector2(1, 0) * Time.deltaTime * Enemy_Speed);   // 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴.           
+                spriteRenderer.flipX = true;
+            }
+        }
+        yield return null;
+    }
+
+    IEnumerator Rush()   // 돌진 코루틴.
+    {
+        if (playerLoc < boarLoc) // 플레이어가 왼쪽에 있다면.
+        {
+            Enemy_Left = true;
+        }
+        else if (playerLoc > boarLoc)    // 플레이어가 오른쪽에 있다면.
+        {
+            Enemy_Left = false;
+        }
+        yield return new WaitForSeconds(1f);    // 플레이어 인지 후 달려가기 위한 기 모음 1초
+        Attacking = true;
+
+        animator.SetBool("Rush", true);
+
+        Enemy_Speed = 10f;        //  속도 10 설정.
+    }
+
+    IEnumerator StopRush()
+    {
+        animator.SetBool("Rush", false);
+        animator.SetTrigger("Hit");
+        Attacking = false;  // 공격 중 끄기
+        if (Enemy_Left == true)
+        {
+            Enemy_Left = false;
+            Debug.Log("바꿀게1");
+        }
+        else if (Enemy_Left == false)
+        {
+            Enemy_Left = true;
+            Debug.Log("바꿀게2");
+        }
+        yield return null; 
+        Hit_Set = false;
+    }
+
 }

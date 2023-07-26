@@ -44,20 +44,6 @@ public class Boar : MonoBehaviour
             animator.SetTrigger("Hit");
             Hit_Set = true;
         }
-        else if (collision.gameObject.tag == "Axe")
-        {
-            StartCoroutine(Rush());
-            Debug.Log(collision.gameObject.tag);
-            animator.SetTrigger("Hit");
-            Hit_Set = true;
-        }
-        else if (collision.gameObject.tag == "Arrow")
-        {
-            StartCoroutine(Rush());
-            Debug.Log(collision.gameObject.tag);
-            animator.SetTrigger("Hit");
-            Hit_Set = true;
-        }
     }
 
     IEnumerator Move()
