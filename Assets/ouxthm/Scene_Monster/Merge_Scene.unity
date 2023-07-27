@@ -123,6 +123,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &12830344
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 12830345}
+  m_Layer: 0
+  m_Name: Empty
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &12830345
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 12830344}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -42.459297, y: 0.58615637, z: -0.2852202}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1747966934}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &21647019
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,6 +308,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 23802075}
   m_CullTransparentMesh: 1
+--- !u!1 &27362650
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 27362651}
+  m_Layer: 0
+  m_Name: Empty
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &27362651
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 27362650}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.83747864, y: 0.85886765, z: 0.008557294}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1759241275}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &38280103
 GameObject:
   m_ObjectHideFlags: 0
@@ -993,6 +1055,9 @@ MonoBehaviour:
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
+  Enemy_Left: 0
+  Hit_Set: 0
+  boarLoc: 0
   SoulFloor: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
@@ -2427,6 +2492,9 @@ MonoBehaviour:
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
+  Enemy_Left: 0
+  Hit_Set: 0
+  boarLoc: 0
   SoulFloor: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
@@ -2782,6 +2850,9 @@ MonoBehaviour:
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
+  Enemy_Left: 0
+  Hit_Set: 0
+  boarLoc: 0
   SoulFloor: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
@@ -2917,7 +2988,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!50 &188731344
 Rigidbody2D:
   serializedVersion: 4
@@ -3027,6 +3098,9 @@ MonoBehaviour:
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
+  Enemy_Left: 0
+  Hit_Set: 0
+  boarLoc: 0
   SoulFloor: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
@@ -7799,7 +7873,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1747966934}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &575726142
 Animator:
@@ -9297,6 +9371,9 @@ MonoBehaviour:
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
+  Enemy_Left: 0
+  Hit_Set: 0
+  boarLoc: 0
   SoulFloor: {fileID: 3381584811184784677, guid: b19b36ece8236c340be0d6c4c54b8016, type: 3}
   Split_Slime: {fileID: 0}
   fire: {fileID: 1381773150433089148, guid: 9d24de82d2bcbc740be1a891606f9949, type: 3}
@@ -11561,7 +11638,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 860553411}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 74.79, y: -7.66, z: 0}
+  m_LocalPosition: {x: 42.93, y: -7.66, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -15593,6 +15670,9 @@ MonoBehaviour:
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
+  Enemy_Left: 0
+  Hit_Set: 0
+  boarLoc: 0
   SoulFloor: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 117786764753181504, guid: abfbb84a32e4b6043b3768c340d03021, type: 3}
@@ -16773,6 +16853,9 @@ MonoBehaviour:
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
+  Enemy_Left: 0
+  Hit_Set: 0
+  boarLoc: 0
   SoulFloor: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
@@ -18326,6 +18409,9 @@ MonoBehaviour:
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
+  Enemy_Left: 0
+  Hit_Set: 0
+  boarLoc: 0
   SoulFloor: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
@@ -19929,6 +20015,9 @@ MonoBehaviour:
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
+  Enemy_Left: 0
+  Hit_Set: 0
+  boarLoc: 0
   SoulFloor: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
@@ -21565,6 +21654,9 @@ MonoBehaviour:
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
+  Enemy_Left: 0
+  Hit_Set: 0
+  boarLoc: 0
   SoulFloor: {fileID: 0}
   Split_Slime: {fileID: 2044582282278339179, guid: 778767c3509229a45bd506b494a859c0, type: 3}
   fire: {fileID: 0}
@@ -22172,6 +22264,9 @@ MonoBehaviour:
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
+  Enemy_Left: 0
+  Hit_Set: 0
+  boarLoc: 0
   SoulFloor: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
@@ -25521,7 +25616,8 @@ GameObject:
   - component: {fileID: 1747966934}
   - component: {fileID: 1747966933}
   - component: {fileID: 1747966932}
-  - component: {fileID: 1747966931}
+  - component: {fileID: 1747966936}
+  - component: {fileID: 1747966935}
   m_Layer: 10
   m_Name: Boar
   m_TagString: Enemy
@@ -25529,24 +25625,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &1747966931
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1747966930}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 106fabfde4e87594fbdea1886eec5916, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Enemy_HP: 50
-  Enemy_Speed: 1
-  Enemy_Left: 0
-  Attacking: 0
-  Hit_Set: 0
-  Gap_Distance: 99
 --- !u!61 &1747966932
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -25606,10 +25684,80 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 12830345}
   - {fileID: 575726141}
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1747966935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747966930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90331d9158faad740b4453cc939e831e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemy_Mod: 0
+  Enemy_HP: 0
+  Enemy_Power: 0
+  Enemy_Speed: 0
+  Enemy_Atk_Speed: 0
+  Attacking: 0
+  Gap_Distance_X: 0
+  Gap_Distance_Y: 0
+  Enemy_Sensing_X: 0
+  Enemy_Sensing_Y: 0
+  Enemy_Range_X: 0
+  Enemy_Range_Y: 0
+  Pdamage: 0
+  Bump_Power: 0
+  atkDelay: 0
+  nextDirX: 0
+  nextDirY: 0
+  Dying: 0
+  Enemy_Dying_anim_Time: 0
+  atkX: 0
+  atkY: 0
+  enemyHit: 0
+  old_Speed: 0
+  dTime: 0
+  atkTime: 0
+  Attacker: 0
+  endTime: 0
+  turning: 0
+  atkPattern: 0
+  playerLoc: 0
+  bossLoc: 0
+  myLocY: 0
+  bossMoving: 0
+  Enemy_Left: 0
+  Hit_Set: 0
+  boarLoc: 0
+  SoulFloor: {fileID: 0}
+  Split_Slime: {fileID: 0}
+  fire: {fileID: 0}
+  ProObject: {fileID: 0}
+  PObject: {fileID: 0}
+  Pos: {fileID: 0}
+  arrow: {fileID: 0}
+--- !u!114 &1747966936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747966930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eb73bd1845574e498d560ec58b9966b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monster: {fileID: 0}
+  target: {fileID: 0}
 --- !u!1 &1759241271
 GameObject:
   m_ObjectHideFlags: 0
@@ -25621,7 +25769,8 @@ GameObject:
   - component: {fileID: 1759241275}
   - component: {fileID: 1759241274}
   - component: {fileID: 1759241273}
-  - component: {fileID: 1759241272}
+  - component: {fileID: 1759241278}
+  - component: {fileID: 1759241276}
   m_Layer: 10
   m_Name: blackBoar
   m_TagString: Enemy
@@ -25629,24 +25778,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &1759241272
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1759241271}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 106fabfde4e87594fbdea1886eec5916, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Enemy_HP: 50
-  Enemy_Speed: 1
-  Enemy_Left: 0
-  Attacking: 0
-  Hit_Set: 0
-  Gap_Distance: 99
 --- !u!61 &1759241273
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -25702,15 +25833,85 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1759241271}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 73.7, y: -7.66, z: 0}
+  m_LocalPosition: {x: 48.79, y: -7.66, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 27362651}
   - {fileID: 1811887902}
   - {fileID: 2136804888}
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1759241276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1759241271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90331d9158faad740b4453cc939e831e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemy_Mod: 0
+  Enemy_HP: 0
+  Enemy_Power: 0
+  Enemy_Speed: 0
+  Enemy_Atk_Speed: 0
+  Attacking: 0
+  Gap_Distance_X: 0
+  Gap_Distance_Y: 0
+  Enemy_Sensing_X: 0
+  Enemy_Sensing_Y: 0
+  Enemy_Range_X: 0
+  Enemy_Range_Y: 0
+  Pdamage: 0
+  Bump_Power: 0
+  atkDelay: 0
+  nextDirX: 0
+  nextDirY: 0
+  Dying: 0
+  Enemy_Dying_anim_Time: 0
+  atkX: 0
+  atkY: 0
+  enemyHit: 0
+  old_Speed: 0
+  dTime: 0
+  atkTime: 0
+  Attacker: 0
+  endTime: 0
+  turning: 0
+  atkPattern: 0
+  playerLoc: 0
+  bossLoc: 0
+  myLocY: 0
+  bossMoving: 0
+  Enemy_Left: 0
+  Hit_Set: 0
+  boarLoc: 0
+  SoulFloor: {fileID: 0}
+  Split_Slime: {fileID: 0}
+  fire: {fileID: 0}
+  ProObject: {fileID: 0}
+  PObject: {fileID: 0}
+  Pos: {fileID: 0}
+  arrow: {fileID: 0}
+--- !u!114 &1759241278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1759241271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eb73bd1845574e498d560ec58b9966b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monster: {fileID: 0}
+  target: {fileID: 0}
 --- !u!1 &1762178950
 GameObject:
   m_ObjectHideFlags: 0
@@ -26387,7 +26588,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1759241275}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1811887903
 Animator:
@@ -27242,6 +27443,9 @@ MonoBehaviour:
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
+  Enemy_Left: 0
+  Hit_Set: 0
+  boarLoc: 0
   SoulFloor: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
@@ -30810,6 +31014,9 @@ MonoBehaviour:
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
+  Enemy_Left: 0
+  Hit_Set: 0
+  boarLoc: 0
   SoulFloor: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
@@ -30893,7 +31100,7 @@ Transform:
   - {fileID: 177107149}
   - {fileID: 1846698427}
   m_Father: {fileID: 1759241275}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2146881865
 GameObject:

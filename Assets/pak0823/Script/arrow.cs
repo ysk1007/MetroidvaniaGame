@@ -163,12 +163,29 @@ public class Arrow : MonoBehaviour
                     hitDict.Add(rayHit.collider, true); // 적 정보를 Dictionary에 추가
                 }
             }
+            else if(collision.tag == "Boss")    // 2023-07-27 추가
+            {
+                if (!hitDict.ContainsKey(rayHit.collider)) // 이미 적에게 대미지를 입힌 경우, Dictionary 체크
+                {
+                    //enemy.Hit(Dmg); // Enemy 스크립트의 Hit 함수를 호출해 적에게 대미지
+                    //enemy.Hit(Dmg);
+                    hitDict.Add(rayHit.collider, true); // 적 정보를 Dictionary에 추가
+                }
+            }
         }
         else
         {
             if (collision.tag == "Enemy")
             {
                 Debug.Log("Emeny맞춤");
+                //Enemy enemy = collision.transform.GetComponent<Enemy>();
+                //StartCoroutine(enemy.Hit(Dmg)); // Enemy 스크립트의 Hit 함수를 호출해 적에게 대미지
+                //enemy.Hit(Dmg);   
+                DestroyArrow();
+            }
+            else if (collision.tag == "Boss")    // 2023-07-27 추가
+            {
+                Debug.Log("Boss맞춤");
                 //Enemy enemy = collision.transform.GetComponent<Enemy>();
                 //StartCoroutine(enemy.Hit(Dmg)); // Enemy 스크립트의 Hit 함수를 호출해 적에게 대미지
                 //enemy.Hit(Dmg);   

@@ -201,7 +201,6 @@ public abstract class Enemy : MonoBehaviour
                     StartCoroutine(Hit(Pdamage));
                 }
             }
-            
         }
     }
     void switchCollider()   // 제라스 박스 콜라이더 위치 옮겨주는 함수
@@ -295,7 +294,6 @@ public abstract class Enemy : MonoBehaviour
         rigid = this.GetComponent<Rigidbody2D>();
 
         Enemy_HP -= damage;
-
         if(Enemy_Mod == 11)
         {
             Hit_Set = true;
@@ -306,9 +304,6 @@ public abstract class Enemy : MonoBehaviour
         {
             if (!animator.GetBool("Hit") && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
             {
-                /*한 사이클 돌고 
-                  0 디버그 두 번째 찍힐 때 처음 히트 애니메이션 나옴
-                  애니메이션 끝나고 1.5 올드 스피드 디버그와 1.5 디버그 나옴*/
                 if (Enemy_Mod != 1 && Enemy_Mod != 3 && Enemy_Mod != 4 && Enemy_Mod != 11)
                     if (animator.GetBool("Run") == true)
                     {
@@ -791,7 +786,6 @@ public abstract class Enemy : MonoBehaviour
         {
             if (playerLoc < bossLoc)
             {
-
                 spriteRenderer.flipX = true;
                 nextDirX = -1;
                 BossSpriteBox.offset = new Vector2(0.3042426f, -0.3726118f);
@@ -811,8 +805,6 @@ public abstract class Enemy : MonoBehaviour
                 soulSpawn2.localPosition = new Vector2(12.94f, 0.197f);
             }
         }
-        
-
         switch (atkPattern)
         {
             case 1:
@@ -827,13 +819,10 @@ public abstract class Enemy : MonoBehaviour
                 break;
 
             case 3:
-                
                 bossFloor();
                 atkPattern = 0;
                 break;
-
         }
-
     }
  
     public void bossMove()  // boss의 움직이도록 하는 함수
