@@ -149,18 +149,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deleteTime: 2
   Dmg: 1
-  speed: 10
+  speed: 15
   isMasterSkill: 0
   TreeCnt: 0
   player: {fileID: 0}
   enemy: {fileID: 0}
   pos: {fileID: 0}
+  part: {fileID: 1366308009388034104, guid: 5c5c68cbaf5281a48acc99ba6e784d3b, type: 3}
   spriteRenderer: {fileID: 6656649470542869818}
   dir: {x: 0, y: 0, z: 0}
-  BowTree: {fileID: 3132264638377511036, guid: 9e47b1fb242da7a4ab7a113d03662ea9, type: 3}
+  BowTree1: {fileID: 3132264638377511036, guid: 9e47b1fb242da7a4ab7a113d03662ea9, type: 3}
   BowTree2: {fileID: 1388887970189401861, guid: ef0165de775d5c04aa9a6205d195cb48, type: 3}
   BowTree3: {fileID: 4553482049619742573, guid: 3000713ae40e63045bde5a59e3e22efd, type: 3}
   BowTree4: {fileID: 1042365120759594126, guid: f5561ba910c2a614b9756c20a1d43b4c, type: 3}
+  ParticlePrefab: {fileID: 1366308009388034109, guid: 5c5c68cbaf5281a48acc99ba6e784d3b, type: 3}
+  Particle: {fileID: 1366308009388034111, guid: 5c5c68cbaf5281a48acc99ba6e784d3b, type: 3}
 --- !u!95 &1674979988733480483
 Animator:
   serializedVersion: 5

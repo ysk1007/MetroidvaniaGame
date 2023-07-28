@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public int level;   // 플레이어 레벨
     public float jumpPower; //Jump 높이 저장 변수
     public float Speed; //Move 속도 저장 변수
     public float SpeedChange; // Move 속도변경 저장 변수
@@ -32,6 +33,9 @@ public class Player : MonoBehaviour
     public float Dmg;  // 대미지 적용 변수
     public float DmgChange; // 대미지 변경 저장 변수
     public float ShieldTime; // 도끼 스킬 방어막 지속시간
+    public float chargingTime = 2f; // 차징 시간
+    public bool isCharging = false; // 차징 상태 여부
+    public float chargeTimer = 0f; // 차징 시간을 측정하는 타이머
 
     public GameObject GameManager;  //게임 매니저
     public GameObject attackRange;  //근접공격 위치
@@ -46,12 +50,25 @@ public class Player : MonoBehaviour
     public Transform Attackpos;   //공격박스 위치
     public Transform Skillpos;  // 스킬 생성 오브젝트
 
+    public AudioClip SwordSkillSound;
+    public AudioClip SwordAtkSound;
+    public AudioClip AxeAtk1Sound;
+    public AudioClip AxeAtk2Sound;
+    public AudioClip BowAtkSound;
+    public AudioClip BowSkillSound;
+    public AudioClip DamagedSound;
+    public AudioClip AxeSkillSound;
+    public AudioClip JumpSound;
+    public AudioClip SlideingSound;
+
+
     public BoxCollider2D box; //근접 공격 범위
     public SpriteRenderer spriteRenderer;
     public Enemy enemy;
 
     Rigidbody2D rigid;
     Animator anim;
+    new AudioSource audio;
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -61,6 +78,7 @@ public class Player : MonoBehaviour
         SpeedChange = 4;  //시작시 기본 이동속도
         jumpPower = 15; //기본 점프높이
         DmgChange = 7; // 기본 공격 대미지
+        audio = GetComponent<AudioSource>();
         Attackpos = transform.GetChild(0).GetComponentInChildren<Transform>(); //attackRange의 위치값을 pos에 저장
         Arrowpos = transform.GetChild(1).GetComponentInChildren<Transform>(); //Arrowpos의 위치값을 pos에 저장
         Arrowpos2 = transform.GetChild(2).GetComponentInChildren<Transform>(); //Arrowpos2의 위치값을 pos에 저장
@@ -197,8 +215,41 @@ public class Player : MonoBehaviour
                 Bow_SkTime -= Time.deltaTime;
         }
             
+        if(Input.GetKey(KeyCode.A) && !anim.GetBool("Sliding") && !isSkill) // Axe 차징 공격
+        {
+            if(WeaponChage == 2)
+            {
+                if (!isCharging)
+                {
+                    isCharging = true;
+                    print("차징 시작");
+                    chargeTimer = 0f;
+                }
+                else // 이미 차징 중인 경우
+                {
+                    chargeTimer += Time.deltaTime;
+                    if (chargeTimer >= chargingTime)
+                    {
+                        chargeTimer = chargingTime; // 차징 시간이 최대 시간을 넘어가지 않도록 제한
+                        print("차징완료");
+                    }
 
-        if (Input.GetKey(KeyCode.A) && !anim.GetBool("Sliding") && !isSkill)    //기본 공격
+                }
+            }
+        }
+        else
+        {
+            isCharging = false;
+            if (chargeTimer >= chargingTime && chargeTimer != 0)
+            {
+                Axe_chargeing();
+                StartCoroutine(Attack_delay());
+            }
+           
+        }
+
+
+        if (Input.GetKeyUp(KeyCode.A) && !anim.GetBool("Sliding") && !isSkill)    //기본 공격
         {
             if (!isdelay)   //딜레이가 false일때 공격 가능
             {
@@ -230,7 +281,6 @@ public class Player : MonoBehaviour
                 gameObject.layer = LayerMask.NameToLayer("Player");
                 isShield = false;
             }
-                
         }
     }
 
@@ -259,7 +309,7 @@ public class Player : MonoBehaviour
     } 
     IEnumerator Skill()//스킬 작동시 실행(아직 수정중)
     {
-        yield return null;
+        //yield return null;
         if (WeaponChage == 1) //sword 스킬
         {
             StartCoroutine(SkillTime());
@@ -273,12 +323,15 @@ public class Player : MonoBehaviour
                 SkillTransform.localPosition = new Vector3(-2, 0.2f);
             }
             Instantiate(Slash, Skillpos.position, transform.rotation); // 검기 복사 생성
+            PlaySound("SwordSkill");
+            yield return new WaitForSeconds(0.2f);
             SwdCnt = 1;
         }
         if (WeaponChage == 2) //Axe 스킬
         {
             gameObject.layer = LayerMask.NameToLayer("Shield"); //방어막 활성화 후 10초간 지속
             this.transform.GetChild(6).gameObject.SetActive(true);  //방어막 이펙트 켜기
+            PlaySound("AxeSkill");
             isShield = true;
             ShieldTime = 10f;
         }
@@ -356,6 +409,7 @@ public class Player : MonoBehaviour
         gameObject.tag = "Sliding";
         gameObject.layer = LayerMask.NameToLayer("Sliding");
         anim.SetBool("Sliding", true);
+        PlaySound("Slideing");
         if (slideDir == 1) //오른쪽으로 슬라이딩
         {
             rigid.velocity = new Vector2(transform.localScale.x * slideSpeed, Time.deltaTime);
@@ -392,6 +446,7 @@ public class Player : MonoBehaviour
 
                 ishurt = true;
                 CurrentHp = CurrentHp - Damage;
+                PlaySound("Damaged");
 
                 if (CurrentHp <= 0)
                 {
@@ -425,29 +480,26 @@ public class Player : MonoBehaviour
     IEnumerator Attack_delay() //연속공격 딜레이
     {
         yield return new WaitForSeconds(delayTime);
-        delayTime = 1f;
         isdelay = false;
     }
 
     void Sword_attack() //Sword 공격 관련 정보
     {
+        isdelay = true;
         DmgChange = 7;
         box.size = new Vector2(3.5f, 2.5f);
         box.offset = new Vector2(1.5f, 0);
-
-        //공격 대미지 함수 실행은 애니메이션 부분에 들어있음
-        isdelay = true;
         anim.SetFloat("Sword", SwdCnt); //Blend를 이용해 일반공격과 스킬 애니메이션 구분 실행
-        anim.SetTrigger("sword_atk");
+        anim.SetTrigger("sword_atk"); //공격 대미지 함수 실행은 애니메이션 부분에 들어있음
     }   
 
     void Axe_attack()   //Axe 공격 관련 정보
     {
+        isdelay = true;
         if (curTime > 0)    //첫번째 공격후 쿨타임 내에 공격시 강공격 발동
             AxeCnt++;
         else
             AxeCnt = 1;
-
 
         if(AxeCnt == 1) // 동작별 대미지 변경
         {
@@ -457,6 +509,7 @@ public class Player : MonoBehaviour
                 box.offset = new Vector2(2, 0);
             else
                 box.offset = new Vector2(1, 0);
+            //PlaySound("AxeAtk1");     유니티 애니메이션에 실행되게 추가해뒀음
         }
         else if (AxeCnt == 2)    
         {
@@ -466,7 +519,7 @@ public class Player : MonoBehaviour
                 box.offset = new Vector2(2.5f, 0);
             else
                 box.offset = new Vector2(0.5f, 0);
-            
+            //PlaySound("AxeAtk1");     유니티 애니메이션에 실행되게 추가해뒀음
         }
         else if (AxeCnt == 3)
         {
@@ -476,11 +529,9 @@ public class Player : MonoBehaviour
             if (slideDir == 1)
                 box.offset = new Vector2(3.5f, 0);
             else
-                box.offset = new Vector2(-0.5f, 0); 
+                box.offset = new Vector2(-0.5f, 0);
+            //PlaySound("AxeAtk3");     유니티 애니메이션에 실행되게 추가해뒀음
         }
-            
-
-        isdelay = true;
         anim.SetFloat("Axe", AxeCnt); //Blend를 이용해 연속공격의 애니메이션 순차적 실행
         anim.SetTrigger("axe_atk");
 
@@ -489,8 +540,19 @@ public class Player : MonoBehaviour
 
         curTime = coolTime + 0.5f;  // 콤보 공격 제한시간
     }       
-
-    IEnumerator Arrow_attack() //화살 일반공격 및 스킬 - 애니메이션 특정 부분에서 실행되게 유니티에서 설정함
+    
+    void Axe_chargeing()  //Axe 차징 스킬 관련
+    {
+        isdelay = true;
+        Speed = 0;
+        AxeCnt = 3;
+        DmgChange = 30;
+        isCharging = false;
+        chargeTimer = 0f;
+        anim.SetFloat("Axe", AxeCnt); //차징 공격은 3번 애니메이션으로 실행
+        anim.SetTrigger("axe_atk");
+    }   
+    IEnumerator Bow_attack() //화살 일반공격 및 스킬 - 애니메이션 특정 부분에서 실행되게 유니티에서 설정함
     {
         yield return null;
         Transform ArrowposTransform = transform.GetChild(1);  // 기본 화살
@@ -507,18 +569,21 @@ public class Player : MonoBehaviour
             Arrowpos2Transform.localPosition = new Vector3(-1, -0.5f);
         }
 
-        if(!isSkill && !isMasterSkill)
-        {
-            Instantiate(Arrow, Arrowpos.position, transform.rotation); // 기본 화살 복사 생성
-            Instantiate(Arrow2, Arrowpos2.position, transform.rotation);  // 증가된 화살 복사 생성
-        }
-        else if(isSkill)
+        if(isSkill)
         {
             Instantiate(BowSkill, Arrowpos.position, transform.rotation);   //스킬 이펙트 화살 생성
+            PlaySound("BowSkill");
+        }
+        else if(isMasterSkill)
+        {
+            Instantiate(BowMaster, Arrowpos.position, transform.rotation);  //마스터 스킬 이펙트 화살 생성
         }
         else
         {
-            Instantiate(BowMaster, Arrowpos.position, transform.rotation);
+            Instantiate(Arrow, Arrowpos.position, transform.rotation); // 기본 화살 복사 생성
+            if(level == 2)
+                Instantiate(Arrow2, Arrowpos2.position, transform.rotation);  // 증가된 화살 복사 생성
+            PlaySound("BowAtk");
         }
 
 
@@ -615,11 +680,13 @@ public class Player : MonoBehaviour
 
     IEnumerator PadJump()
     {
+        PlaySound("Jump");
         if (JumpCnt == 1)
             this.transform.GetChild(5).gameObject.SetActive(true);
         isjump = true;
         anim.SetBool("Player_Jump", true);
         gameObject.layer = LayerMask.NameToLayer("Jump");
+        
         yield return new WaitForSeconds(0.3f);
         if (ShieldTime >= 0 && !ishurt && !isSlide) //방어막 지속시간이 끝났다면 방어막 레이어 해제
             gameObject.layer = LayerMask.NameToLayer("Shield");
@@ -636,5 +703,46 @@ public class Player : MonoBehaviour
     void PlayerReposition() // 리스폰 위치 지정(임시)
     {
         transform.position = new Vector3(-30, -7.5f, 0);
+    }
+
+    void PlaySound(string action) // 사운드 관련 함수
+    {
+        switch (action)
+        {
+            case "Jump":
+                audio.clip = JumpSound;
+                break;
+            case "Slideing":
+                audio.clip = SlideingSound;
+                break;
+            case "Damaged":
+                audio.clip = DamagedSound;
+                break;
+            case "Die":
+                //audio.clip =
+                break;
+            case "SwordAtk":
+                audio.clip = SwordAtkSound;
+                break;
+            case "AxeAtk1":
+                audio.clip = AxeAtk1Sound;
+                break;
+            case "AxeAtk2":
+                audio.clip = AxeAtk2Sound;
+                break;
+            case "BowAtk":
+                audio.clip = BowAtkSound;
+                break;
+            case "SwordSkill":
+                audio.clip = SwordSkillSound;
+                break;
+            case "AxeSkill":
+                audio.clip = AxeSkillSound;
+                break;
+            case "BowSkill":
+                audio.clip = BowSkillSound;
+                break;
+        }
+        audio.Play();
     }
 }

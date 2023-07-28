@@ -8,7 +8,7 @@ public class Arrow : MonoBehaviour
     public Enemy enemy;
     public LayerMask islayer; // 충돌 감지를 할 레이어
     public Transform pos; // 화살 위치 정보
-    public int Dmg = 5; //대미지 변수, 몬스터가 피격시 화살 데미지값을 받기 위해
+    public float Dmg = 5; //대미지 변수, 몬스터가 피격시 화살 데미지값을 받기 위해
     public float speed = 15f; // 화살 이동 속도
     private bool isSkill = false; // 스킬 사용 여부
     private Vector3 moveDirection = Vector3.right; // 화살이 나가는 방향
