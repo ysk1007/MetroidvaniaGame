@@ -163,7 +163,6 @@ public class WeaponSwap : MonoBehaviour
                 break;
             }
         time += Time.deltaTime;
-        Debug.Log(time);
         yield return null;
         }
         time = 0;

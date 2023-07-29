@@ -20,6 +20,7 @@ public class EnemyUi : MonoBehaviour
         pos = this.gameObject.transform;
         MaxHp = ThisEnemy.Enemy_HP;
         CurrentHp = MaxHp;
+        MaxHp = CurrentHp;
         /*InvokeRepeating("ShowDamgeText", 1f, 1f);*/
     }
 
@@ -35,7 +36,7 @@ public class EnemyUi : MonoBehaviour
         HpUi.SetActive(true);
     }
 
-    public void ShowDamgeText(int DamagedValue)
+    public void ShowDamgeText(float DamagedValue)
     {
         ShowHpBar();
         GameObject Text = DamagedText;

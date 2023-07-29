@@ -71,6 +71,7 @@ public class Effect : MonoBehaviour
         if (collision != null && collision.tag == "Enemy")
         {
             enemy = collision.GetComponent<Enemy>();
+            Debug.Log(player.WeaponChage);
             if (enemy != null)
             {
                 if (isMasterSkill)

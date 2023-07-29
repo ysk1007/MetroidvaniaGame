@@ -81,6 +81,7 @@ public abstract class Enemy : MonoBehaviour
 
     public Transform Pos;
     public Arrow arrow;
+    public Effect slash;
 
     public abstract void InitSetting(); // 적의 기본 정보를 설정하는 함수(추상)
 
@@ -201,6 +202,15 @@ public abstract class Enemy : MonoBehaviour
                     StartCoroutine(Hit(Pdamage));
                 }
             }
+            else if (collision.tag == "Slash")
+            {
+                slash = collision.GetComponent<Effect>();
+                if (slash != null)
+                {
+                    Pdamage = slash.Dmg;
+                    StartCoroutine(Hit(Pdamage));
+                }
+            }
         }
     }
     void switchCollider()   // 제라스 박스 콜라이더 위치 옮겨주는 함수
@@ -292,7 +302,7 @@ public abstract class Enemy : MonoBehaviour
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
         rigid = this.GetComponent<Rigidbody2D>();
-        this.GetComponentInChildren<EnemyUi>().ShowDamgeText(5); //윤성권 추가함
+        this.GetComponentInChildren<EnemyUi>().ShowDamgeText(damage); //윤성권 추가함
 
         Enemy_HP -= damage;
         if(Enemy_Mod == 11)
