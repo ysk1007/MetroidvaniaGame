@@ -336,16 +336,21 @@ public class DataManager : MonoBehaviour
     {
         Debug.Log("디버그 : 선택지 레벨 리스트 파일 생성 중");
 
-        // 데이터 생성 및 추가
-        SelectLevel test = new SelectLevel();
-        test.SelectName = "selectAtkLevel";
-        test.Level = 1;
+        // JSON 데이터 생성
+        SelectList data = new SelectList();
+        data.Selects = new List<SelectLevel>();
 
-        Dictionary<string, int> selects = new Dictionary<string, int>();
-        selects.Add(test.SelectName,test.Level);
+        data.Selects.Add(new SelectLevel { SelectName = "selectAtkLevel", Level = 1 });
+        data.Selects.Add(new SelectLevel { SelectName = "selectATSLevel", Level = 1 });
+        data.Selects.Add(new SelectLevel { SelectName = "selectCCLevel", Level = 1 });
+        data.Selects.Add(new SelectLevel { SelectName = "selectDefLevel", Level = 1 });
+        data.Selects.Add(new SelectLevel { SelectName = "selectHpLevel", Level = 1 });
+        data.Selects.Add(new SelectLevel { SelectName = "selectGoldLevel", Level = 1 });
+        data.Selects.Add(new SelectLevel { SelectName = "selectExpLevel", Level = 1 });
+        data.Selects.Add(new SelectLevel { SelectName = "selectCoolTimeLevel", Level = 1 });
 
         // JSON 파일로 저장
-        SaveToJson(selects);
+        /*SaveToJson(data);*/
 
         Debug.Log("디버그 : 선택지 레벨 리스트 파일 생성 완료");
     }
