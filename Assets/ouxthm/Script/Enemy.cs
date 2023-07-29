@@ -292,6 +292,7 @@ public abstract class Enemy : MonoBehaviour
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
         rigid = this.GetComponent<Rigidbody2D>();
+        this.GetComponentInChildren<EnemyUi>().ShowDamgeText(5); //윤성권 추가함
 
         Enemy_HP -= damage;
         if(Enemy_Mod == 11)

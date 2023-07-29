@@ -3,6 +3,24 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static Player instance; //추가함
+    public int gold;  //추가함
+    public int level; //추가함
+    public int AtkPower; //추가함
+    public int Def; //추가함
+    public float CriticalChance; //추가함 , 이속,공속 복구되는거 수정 필요
+    public float DmgIncrease; //추가함
+
+    //선택능력치 추가함
+    public float[] selectAtkLevel = { 10f, 20f, 30f };
+    public float[] selectATSLevel = { 15f, 30f, 45f };
+    public float[] selectCCLevel = { 5f, 10f, 20f };
+    public float[] selectDefLevel = { 10f, 20f, 30f };
+    public float[] selectHpLevel = { 30f, 60f, 90f };
+    public float[] selectGoldLevel = { 130f, 160f, 200f };
+    public float[] selectExpLevel = { 130f, 160f, 200f };
+    public float[] selectCoolTimeLevel = { 5f, 10f, 20f };
+
     public float jumpPower; //Jump 높이 저장 변수
     public float Speed; //Move 속도 저장 변수
     public float SpeedChange; // Move 속도변경 저장 변수
@@ -51,6 +69,7 @@ public class Player : MonoBehaviour
     public float enemyPower;
     void Awake()
     {
+        instance = this; //추가함
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
@@ -62,8 +81,6 @@ public class Player : MonoBehaviour
         Arrowpos = transform.GetChild(1).GetComponentInChildren<Transform>(); //Arrowpos의 위치값을 pos에 저장
         Arrowpos2 = transform.GetChild(2).GetComponentInChildren<Transform>(); //Arrowpos2의 위치값을 pos에 저장
 
-        instance = this;
-    }
     void Update()
     {
         Player_Move();  //Player의 이동, 점프, 속도 함수

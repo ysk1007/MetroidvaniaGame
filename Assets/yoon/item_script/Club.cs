@@ -10,6 +10,9 @@ public class Club : itemStatus
     {
         data.itemimg = this.GetComponent<Image>();
         data.itemName = "¸ùµÕÀÌ";
+        data.itemNameEng = "Club";
+        data.itemPrice = 300;
+        data.color = Color.white;
         data.itemExplanation = "ÈÇ¸¢ÇÑ ´ëÈ­¼ö´Ü";
         data.itemStat = "°ø°Ý·Â +2 \nÃÖ´ëÃ¼·Â +5";
         data.itemNumber = 2;
@@ -17,8 +20,13 @@ public class Club : itemStatus
         data.MaxHp = 5;
     }
 
-    public override void TextImageSettings(Image img, TextMeshProUGUI NameText, TextMeshProUGUI ExplanationText, TextMeshProUGUI StatText)
+    public override void SpecialPower()
     {
-        base.TextImageSettings(img, NameText, ExplanationText, StatText);
+        
+    }
+
+    public override void TextImageSettings(Image img, TextMeshProUGUI NameText, TextMeshProUGUI ExplanationText, TextMeshProUGUI StatText, TextMeshProUGUI PriceText)
+    {
+        base.TextImageSettings(img, NameText, ExplanationText, StatText, PriceText);
     }
 }

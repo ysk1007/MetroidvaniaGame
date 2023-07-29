@@ -26,9 +26,11 @@ public class SoundManager : MonoBehaviour
 
     void Start()
     {
-        mixer.SetFloat("Master", Mathf.Log10(PlayerPrefs.GetFloat("Master")) * 20);
-        mixer.SetFloat("SFX", Mathf.Log10(PlayerPrefs.GetFloat("SFX")) * 20);
-        mixer.SetFloat("BGM", Mathf.Log10(PlayerPrefs.GetFloat("BGM")) * 20);
+        List<float> Volumes = new List<float>();
+        Volumes = DataManager.instance.getVolume();
+        mixer.SetFloat("Master", Mathf.Log10(Volumes[0]) * 20);
+        mixer.SetFloat("SFX", Mathf.Log10(Volumes[1]) * 20);
+        mixer.SetFloat("BGM", Mathf.Log10(Volumes[2]) * 20);
     }
 
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)

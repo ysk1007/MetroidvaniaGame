@@ -6,10 +6,11 @@ using TMPro;
 
 public class Proficiency_ui : MonoBehaviour
 {
+    public static Proficiency_ui instance;
 
     public GameObject ProWeaponUi;
     public Image[] Weaponimages;
-    private int proWeaponIndex = 0;
+    public int proWeaponIndex = 0;
     public int proLevel = 0;
 
     public Image Profill;
@@ -35,6 +36,7 @@ public class Proficiency_ui : MonoBehaviour
 
     private void Awake()
     {
+        instance = this;
         Weaponimages = ProWeaponUi.GetComponentsInChildren<Image>();
         Pro1Skillimages = Pro1_Skill.GetComponentsInChildren<Image>();
         Pro2Skillimages = Pro2_Skill.GetComponentsInChildren<Image>();

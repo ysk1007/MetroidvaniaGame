@@ -6,15 +6,15 @@ using UnityEngine.UI;
 
 public class SoundSlider : MonoBehaviour
 {
+    public static SoundSlider instance;
     public AudioMixer mixer;
     public Slider bgm_slider;
     public Slider sfx_slider;
     public Slider master_slider;
     void Start()
     {
-        master_slider.value = PlayerPrefs.GetFloat("Master");
-        bgm_slider.value = PlayerPrefs.GetFloat("BGM");
-        sfx_slider.value = PlayerPrefs.GetFloat("SFX");
+        instance = this;
+        DataManager.instance.JsonLoad("SliderData");
     }
 
     private void FixedUpdate()
@@ -27,19 +27,16 @@ public class SoundSlider : MonoBehaviour
     public void SetMasterVolume(float sliderValue)
     {
         mixer.SetFloat("Master", Mathf.Log10(sliderValue) * 20);
-        PlayerPrefs.SetFloat("Master", sliderValue);
     }
 
     public void SetBgmVolume(float sliderValue)
     {
         mixer.SetFloat("BGM", Mathf.Log10(sliderValue) * 20);
-        PlayerPrefs.SetFloat("BGM", sliderValue);
     }
 
     public void SetSfxVolume(float sliderValue)
     {
         mixer.SetFloat("SFX", Mathf.Log10(sliderValue) * 20);
-        PlayerPrefs.SetFloat("SFX", sliderValue);
     }
 }
 

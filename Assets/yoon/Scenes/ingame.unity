@@ -1985,6 +1985,7 @@ MonoBehaviour:
   PlayerMaxHpText: {fileID: 1518585170}
   PlayerCurrentHpText: {fileID: 422249399}
   BloodScreen: {fileID: 1048968196}
+  player: {fileID: 0}
   inven_ui: {fileID: 380215262}
   iconObject: {fileID: 1541043442}
   pro_ui: {fileID: 183542208}
@@ -2047,6 +2048,7 @@ MonoBehaviour:
   img_Swap_coolTime: {fileID: 801471997}
   img_Skill_coolTime: {fileID: 1882258596}
   Tab_key: {fileID: 218513208}
+  player: {fileID: 0}
 --- !u!114 &218543426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8421,6 +8423,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 717110359}
   m_CullTransparentMesh: 1
+--- !u!1 &718183668
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 718183670}
+  - component: {fileID: 718183669}
+  m_Layer: 0
+  m_Name: GameObject (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &718183669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718183668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b268dfbc28cfc546b7e61fb7a16ec19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &718183670
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718183668}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 587.25665, y: 495.91208, z: -6.895645}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &730737365
 GameObject:
   m_ObjectHideFlags: 0

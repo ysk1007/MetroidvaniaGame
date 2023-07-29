@@ -80,10 +80,12 @@ public class Btn_Ctrol : MonoBehaviour
         {
             case 0:
                 Debug.Log("새 이야기 시작");
-                Scene_Move.SceneLoader("ingame");
+                DataManager.instance.GetComponent<DataManager>().JsonSave(default);
+                Scene_Move.SceneLoader("ingame_scene");
                 break;
             case 1:
                 Debug.Log("이어서 시작");
+                Scene_Move.SceneLoader("ingame_scene");
                 break;
             case 2:
                 OptionPanel.SetActive(true);
