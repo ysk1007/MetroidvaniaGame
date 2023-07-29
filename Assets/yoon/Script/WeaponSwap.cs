@@ -2,27 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class WeaponSwap : MonoBehaviour
 {
     public GameObject WeaponUi;
     public Image[] images;
+    public TextMeshProUGUI SwapCoolRemain;
 
     public GameObject SkillUi;
     public Image[] skills;
+    public TextMeshProUGUI SkillCoolRemain;
+
+    public GameObject UltUi;
+    public Image[] UltSkills;
+    public TextMeshProUGUI UltCoolRemain;
 
     public int currentWeaponIndex = 0;
     public float swapCool = 2f;
     public float skillcool = 6.3f;
+    public float ultcool = 180f;
+
+    public float SkillremainTime = 0f;
+    public float SwapremainTime = 0f;
+    public float UltremainTime = 0f;
 
     public bool swaping = false;
     public bool skilling = false;
+    public bool ultting = false;
 
     public bool ableExe = false;
     public bool ableBow = false;
 
     public Image img_Swap_coolTime;
     public Image img_Skill_coolTime;
+    public Image img_Ult_coolTime;
     public Image Tab_key;
 
     public Player player;
@@ -37,6 +51,8 @@ public class WeaponSwap : MonoBehaviour
         images[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = true;
         skills = SkillUi.GetComponentsInChildren<Image>();
         skills[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = true;
+        UltSkills = UltUi.GetComponentsInChildren<Image>();
+        UltSkills[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = true;
     }
 
     // Start is called before the first frame update
@@ -55,9 +71,11 @@ public class WeaponSwap : MonoBehaviour
             Tab_key.enabled = false;
             images[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = false;
             skills[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = false;
+            UltSkills[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = false;
             currentWeaponIndex = 0;
             images[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = true;
             skills[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = true;
+            UltSkills[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = true;
         }
         if (Input.GetKeyDown(KeyCode.Tab) && !swaping && ableExe)
         {
@@ -80,11 +98,13 @@ public class WeaponSwap : MonoBehaviour
                 {
                     images[i].gameObject.GetComponent<Image>().enabled = true;
                     skills[i].gameObject.GetComponent<Image>().enabled = true;
+                    UltSkills[i].gameObject.GetComponent<Image>().enabled = true;
                 }
                 else
                 {
                     images[i].gameObject.GetComponent<Image>().enabled = false;
                     skills[i].gameObject.GetComponent<Image>().enabled = false;
+                    UltSkills[i].gameObject.GetComponent<Image>().enabled = false;
                 }
             }
             StartCoroutine(FillSliderOverTime(img_Swap_coolTime, swapCool, "swap"));
@@ -92,6 +112,10 @@ public class WeaponSwap : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S) && !skilling)
         {
             StartCoroutine(FillSliderOverTime(img_Skill_coolTime, skillcool, "skill"));
+        }
+        if (Input.GetKeyDown(KeyCode.U) && !ultting)
+        {
+            StartCoroutine(FillSliderOverTime(img_Ult_coolTime, ultcool, "ult"));
         }
     }
 
@@ -112,6 +136,11 @@ public class WeaponSwap : MonoBehaviour
         {
             skilling = false;
             StartCoroutine(ReadyAnim(skills[currentWeaponIndex].gameObject.GetComponent<Image>()));
+        }
+        else if (type == "ult")
+        {
+            ultting = false;
+            StartCoroutine(ReadyAnim(UltSkills[currentWeaponIndex].gameObject.GetComponent<Image>()));
         }
     }
 
@@ -143,22 +172,78 @@ public class WeaponSwap : MonoBehaviour
 
     IEnumerator FillSliderOverTime(Image img, float coolTime, string type)
     {
+        float remainTime;
+        img.enabled = true;
         if (type == "swap")
         {
             swaping = true;
+            SwapCoolRemain.enabled = true;
+            SwapremainTime = coolTime;
+            remainTime = SwapremainTime;
+            while (remainTime >= 0f)
+            {
+                remainTime -= Time.deltaTime;
+                img.fillAmount = remainTime / coolTime;
+                if (remainTime > 1.0f)
+                {
+                    SwapCoolRemain.text = remainTime.ToString("F0");
+                }
+                else
+                {
+                    SwapCoolRemain.text = remainTime.ToString("F1");
+                }
+
+                yield return null;
+            }
+            SwapCoolRemain.enabled = false;
         }
         else if (type == "skill")
         {
             skilling = true;
+            SkillCoolRemain.enabled = true;
+            SkillremainTime = coolTime;
+            remainTime = SkillremainTime;
+            while (remainTime >= 0f)
+            {
+                remainTime -= Time.deltaTime;
+                img.fillAmount = remainTime / coolTime;
+                if (remainTime > 1.0f)
+                {
+                    SkillCoolRemain.text = remainTime.ToString("F0");
+                }
+                else
+                {
+                    SkillCoolRemain.text = remainTime.ToString("F1");
+                }
+
+                yield return null;
+            }
+            SkillCoolRemain.enabled = false;
         }
-        img.enabled = true;
-        float time = coolTime;
-        while (time >= 0f)
+        else if (type == "ult")
         {
-            time -= Time.deltaTime;
-            img.fillAmount = time / coolTime;
-            yield return null;
+            ultting = true;
+            UltCoolRemain.enabled = true;
+            UltremainTime = coolTime;
+            remainTime = UltremainTime;
+            while (remainTime >= 0f)
+            {
+                remainTime -= Time.deltaTime;
+                img.fillAmount = remainTime / coolTime;
+                if (remainTime > 1.0f)
+                {
+                    UltCoolRemain.text = remainTime.ToString("F0");
+                }
+                else
+                {
+                    UltCoolRemain.text = remainTime.ToString("F1");
+                }
+
+                yield return null;
+            }
+            UltCoolRemain.enabled = false;
         }
+        img.enabled = false;
         img.fillAmount = 0f;
         StartCoroutine(Ready(img, type));
         

@@ -142,6 +142,7 @@ public abstract class Enemy : MonoBehaviour
 
     IEnumerator Hit() // 피해 함수
     {
+        this.GetComponentInChildren<EnemyUi>().ShowDamgeText(5); //윤성권 추가함
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
         rigid = this.GetComponent<Rigidbody2D>();
         Enemy_HP -= 5;

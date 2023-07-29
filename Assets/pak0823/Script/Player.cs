@@ -4,6 +4,24 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static Player instance; //추가함
+    public int gold;  //추가함
+    public int level; //추가함
+    public int AtkPower; //추가함
+    public int Def; //추가함
+    public float CriticalChance; //추가함 , 이속,공속 복구되는거 수정 필요
+    public float DmgIncrease; //추가함
+
+    //선택능력치 추가함
+    public float[] selectAtkLevel = { 10f, 20f, 30f };
+    public float[] selectATSLevel = { 15f, 30f, 45f };
+    public float[] selectCCLevel = { 5f, 10f, 20f };
+    public float[] selectDefLevel = { 10f, 20f, 30f };
+    public float[] selectHpLevel = { 30f, 60f, 90f };
+    public float[] selectGoldLevel = { 130f, 160f, 200f };
+    public float[] selectExpLevel = { 130f, 160f, 200f };
+    public float[] selectCoolTimeLevel = { 5f, 10f, 20f };
+
     public float jumpPower; //Jump 높이 저장 변수
     public float Speed; //Move 속도 저장 변수
     public float curTime, coolTime = 2;  // 연속공격이 가능한 시간
@@ -35,12 +53,18 @@ public class Player : MonoBehaviour
     Animator anim;
     void Awake()
     {
+        instance = this; //추가함
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         JumpCnt = JumpCount;    //시작시 점프 가능 횟수 적용
         Speed = 4;  //시작시 기본 이동속도
         jumpPower = 17; //기본 점프높이
+    }
+
+    void Start() //추가함
+    {
+        DataManager.instance.JsonLoad("PlayerData");
     }
 
     void Update()

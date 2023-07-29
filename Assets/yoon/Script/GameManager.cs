@@ -24,4 +24,15 @@ public class GameManager : MonoBehaviour
     }
 
     // 게임매니저 기능 구현
+    public void gameover()
+    {
+        StartCoroutine(DataSave());
+        Application.Quit();
+    }
+
+    IEnumerator DataSave()
+    {
+        DataManager.instance.JsonSave(default);
+        yield return null;
+    }
 }

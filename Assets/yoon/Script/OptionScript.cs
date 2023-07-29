@@ -40,4 +40,12 @@ public class OptionScript : MonoBehaviour
     {
         this.gameObject.SetActive(true);
     }
+
+    public void GameExit()
+    {
+        DataManager.instance.JsonSave("PlayerData");
+        DataManager.instance.JsonSave("SliderData");
+        DataManager.instance.JsonSave("ItemData");
+        Application.Quit();
+    }
 }

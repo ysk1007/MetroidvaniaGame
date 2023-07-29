@@ -9,19 +9,36 @@ public class Ui_Controller : MonoBehaviour
     public Slider SlidingBar;
     public Slider ExpBar;
     public TextMeshProUGUI LevelVelueUi;
+    public int PlayerLevel;
     public HpBar PlayerHp;
     public TextMeshProUGUI PlayerMaxHpText;
     public TextMeshProUGUI PlayerCurrentHpText;
+    public TextMeshProUGUI AtkPowerValueText;
+    public TextMeshProUGUI DefValueText;
+    public TextMeshProUGUI AtkSpeedValueText;
+    public TextMeshProUGUI DmgIncreaseValueText;
+    public TextMeshProUGUI MarketTextBox;
+    public TextMeshProUGUI MarketGoldText;
     public Image BloodScreen;
     public Player player;
 
+    public TextMeshProUGUI GoldVelueUI;
+    public int PlayerGold;
+
     public GameObject inven_ui;
+    public GameObject inven_screen;
+    public GameObject equip_screen;
     private bool openinven = false;
+    public bool openMarket = false;
     public GameObject iconObject;
     private Image[] Icons;
 
     public GameObject pro_ui;
     private bool openpro = false;
+
+    public GameObject Select_ui;
+    public GameObject Select_error_text;
+    public bool openSelect = false;
 
     public float duration = 1f; //애니메이션 시간 (1초)
     public float elapsedTime = 0f; //경과 시간
@@ -29,22 +46,17 @@ public class Ui_Controller : MonoBehaviour
     public float RemainHpValue = 0; //목표 값
 
     public bool isDown = false;
-    public int PlayerLevel = 1;
 
     private void Awake()
     {
-        PlayerHp = PlayerHpBar.GetComponent<HpBar>();
-        PlayerHp.maxHp = player.MaxHp;
-        PlayerHp.currentHp = player.CurrentHp;
-        PlayerMaxHpText.text = PlayerHp.maxHp.ToString("F0");
-        PlayerCurrentHpText.text = PlayerHp.currentHp.ToString("F0");
-        Icons = iconObject.GetComponentsInChildren<Image>();
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
-
+        UiUpdate();
+        Icons = iconObject.GetComponentsInChildren<Image>();
     }
 
     // Update is called once per frame
@@ -111,9 +123,13 @@ public class Ui_Controller : MonoBehaviour
 
     public void LevelUp()
     {
+        Select_ui.SetActive(true);
+        openSelect = true;
+        this.gameObject.GetComponent<SelectUi>().OpenSelectUi();
+        Time.timeScale = 0f;
         ExpBar.value = 0f;
-        PlayerLevel++;
-        LevelVelueUi.text = PlayerLevel.ToString();
+        player.level++;
+        LevelVelueUi.text = player.level.ToString();
     }
 
     public void Damage(float damage)
@@ -137,6 +153,51 @@ public class Ui_Controller : MonoBehaviour
     public void Sliding()
     {
         StartCoroutine(SlidingUP());
+    }
+
+    public void GetGold(int value)
+    {
+        player.gold += value;
+        GoldVelueUI.text = player.gold.ToString();
+        MarketGoldText.text = player.gold.ToString();
+    }
+
+    public bool UseGold(int value)
+    {
+        if (player.gold - value < 0)
+        {
+            Debug.Log("골드 부족!");
+            return false;
+        }
+        else
+        {
+            player.gold -= value;
+            GoldVelueUI.text = player.gold.ToString();
+            MarketGoldText.text = player.gold.ToString();
+            return true;
+        }
+    }
+
+    public void UiUpdate()
+    {
+        //체력바 갱신
+        PlayerHp = PlayerHpBar.GetComponent<HpBar>();
+        PlayerHp.maxHp = player.MaxHp;
+        PlayerHp.currentHp = player.CurrentHp;
+        PlayerMaxHpText.text = PlayerHp.maxHp.ToString("F0");
+        PlayerCurrentHpText.text = PlayerHp.currentHp.ToString("F0");
+
+        //인벤토리 갱신
+        AtkPowerValueText.text = player.AtkPower.ToString();
+        DefValueText.text = player.Def.ToString();
+        AtkSpeedValueText.text = player.delayTime.ToString();
+        DmgIncreaseValueText.text = player.DmgIncrease.ToString("F0")+"%";
+
+        //레벨 골드 갱신
+        PlayerLevel = player.level;
+        LevelVelueUi.text = player.level.ToString();
+        GoldVelueUI.text = player.gold.ToString();
+        MarketGoldText.text = player.gold.ToString();
     }
 
     IEnumerator SlidingUP()

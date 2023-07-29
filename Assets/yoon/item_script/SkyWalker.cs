@@ -10,15 +10,32 @@ public class SkyWalker : itemStatus
     {
         data.itemimg = this.GetComponent<Image>();
         data.itemName = "스카이 워커";
+        data.itemNameEng = "SkyWalker";
+        data.itemPrice = 700;
+        data.color = Color.green;
         data.itemExplanation = "착용자의 신체가 가벼워진다";
         data.itemStat = "이동속도 +50% \n공격속도 +50%";
         data.itemNumber = 1;
-        data.Speed = 0.5f;
+        data.Speed = 2f;
         data.AtkSpeed = 0.5f;
     }
 
-    public override void TextImageSettings(Image img, TextMeshProUGUI NameText, TextMeshProUGUI ExplanationText, TextMeshProUGUI StatText)
+    public override void SpecialPower()
     {
-        base.TextImageSettings(img, NameText, ExplanationText, StatText);
+        if (!data.SpecialPower)
+        {
+            Player.instance.JumpCount--;
+            Player.instance.JumpCnt--;
+        }
+        if(data.SpecialPower)
+        {
+            Player.instance.JumpCount++;
+            Player.instance.JumpCnt++;
+        }
+    }
+
+    public override void TextImageSettings(Image img, TextMeshProUGUI NameText, TextMeshProUGUI ExplanationText, TextMeshProUGUI StatText, TextMeshProUGUI PriceText)
+    {
+        base.TextImageSettings(img, NameText, ExplanationText, StatText, PriceText);
     }
 }

@@ -8,22 +8,16 @@ using TMPro;
 public class inven : MonoBehaviour
 {
     public Button[] inven_slots = { };
+    public itemStatus[] itemStatus_list_inven = { };
     public GameObject slots_obj;
     public int select_slot_index = -1;
-    public GameObject select_case;
 
     public Button[] equip_slots = { };
     public GameObject equips_obj;
     public int equip_slot_index = -1;
-    public GameObject equip_case;
 
     public itemStatus itemStatus;
-    public itemStatus[] itemStatus_list;
-
-    public TextMeshProUGUI ItemNameText;
-    public TextMeshProUGUI ItemExplanationText;
-    public TextMeshProUGUI ItemStatText;
-    public Image Itemimg;
+    public itemStatus[] itemStatus_list_equip;
 
     public AudioClip Equip_clip;
     private void Awake()
@@ -36,7 +30,7 @@ public class inven : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        StartEquipSpecialpower();
     }
 
     // Update is called once per frame
@@ -45,65 +39,8 @@ public class inven : MonoBehaviour
 
     }
 
-    public void inven_SlotSelect(int i) //인벤토리에서 아이템 클릭
+    public void select_item() //장착
     {
-        if (select_slot_index == i)
-        {
-            select_item();
-        }
-        else
-        {
-            equip_case.SetActive(false);
-            select_case.SetActive(true);
-
-            select_slot_index = i;
-            select_case.transform.position = inven_slots[i].transform.position;
-            if (inven_slots[i].GetComponentInChildren<itemStatus>() != null)
-            {
-                itemStatus itemstat = inven_slots[i].GetComponentInChildren<itemStatus>();
-                itemstat.Using(Itemimg,ItemNameText, ItemExplanationText, ItemStatText);
-            }
-            else
-            {
-                TextReset();
-            }
-            
-        }
-        
-    }
-
-    public void Equip_SlotSelect(int i) //장착슬롯에서 아이템 클릭
-    {
-        if (equip_slot_index == i)
-        {
-            SoundManager.instance.SFXPlay("Equip_", Equip_clip);
-            select_equip_slot();
-        }
-        else
-        {
-            select_case.SetActive(false);
-            equip_case.SetActive(true);
-
-            equip_slot_index = i;
-            equip_case.transform.position = equip_slots[i].transform.position;
-            if (equip_slots[i].GetComponentInChildren<itemStatus>() != null)
-            {
-                itemStatus itemstat = equip_slots[i].GetComponentInChildren<itemStatus>();
-                itemstat.Using(Itemimg, ItemNameText, ItemExplanationText, ItemStatText);
-            }
-            else
-            {
-                TextReset();
-            }
-        }
-        
-
-    }
-
-    void select_item() //장착
-    {
-        select_case.SetActive(false);
-        equip_case.SetActive(false);
         if (inven_slots[select_slot_index].GetComponentInChildren<itemStatus>() != null)
         {
             itemStatus item = inven_slots[select_slot_index].GetComponentInChildren<itemStatus>();
@@ -112,7 +49,11 @@ public class inven : MonoBehaviour
                 if (equip_slots[i].GetComponentInChildren<itemStatus>() == null)
                 {
                     SoundManager.instance.SFXPlay("Equip_", Equip_clip);
+                    item.StatusGet(Player.instance);
+                    GameManager.Instance.GetComponent<Ui_Controller>().UiUpdate();
                     Instantiate(item, equip_slots[i].transform);
+                    item.data.SpecialPower = true;
+                    item.SpecialPower();
                     Destroy(item.transform.gameObject);
                     equip_slots[i].GetComponentInChildren<Image>().color = Color.green;
                     break;
@@ -123,10 +64,8 @@ public class inven : MonoBehaviour
         select_slot_index = -1;
     }
 
-    void select_equip_slot() //해체
+    public void select_equip_slot() //해체
     {
-        select_case.SetActive(false);
-        equip_case.SetActive(false);
         if (equip_slots[equip_slot_index].GetComponentInChildren<itemStatus>() != null)
         {
             itemStatus item = equip_slots[equip_slot_index].GetComponentInChildren<itemStatus>();
@@ -134,7 +73,12 @@ public class inven : MonoBehaviour
             {
                 if (inven_slots[i].GetComponentInChildren<itemStatus>() == null)
                 {
+                    SoundManager.instance.SFXPlay("Equip_", Equip_clip);
+                    item.StatusReturn(Player.instance);
+                    GameManager.Instance.GetComponent<Ui_Controller>().UiUpdate();
                     Instantiate(item, inven_slots[i].transform);
+                    item.data.SpecialPower = false;
+                    item.SpecialPower();
                     Destroy(item.transform.gameObject);
                     equip_slots[equip_slot_index].GetComponentInChildren<Image>().color = Color.white;
                     break;
@@ -145,7 +89,21 @@ public class inven : MonoBehaviour
         equip_slot_index = -1;
     }
 
-    void updateUi() // 전부 갱신
+    public void sell_item() //판매
+    {
+        if (inven_slots[select_slot_index].GetComponentInChildren<itemStatus>() != null)
+        {
+            itemStatus item = inven_slots[select_slot_index].GetComponentInChildren<itemStatus>();
+            float sellprice = (float)item.data.itemPrice * 0.3f;
+            int newprice = (int)sellprice;
+            GameManager.Instance.GetComponent<Ui_Controller>().GetGold(newprice);
+            Destroy(item.transform.gameObject);
+        }
+        updateUi();
+        select_slot_index = -1;
+    }
+
+    public void updateUi() // 전부 갱신
     {
         updateInven();
         updateEquip();
@@ -163,7 +121,7 @@ public class inven : MonoBehaviour
             }
 
         }
-        itemStatus_list = append;
+        itemStatus_list_inven = append;
     }
 
     void updateEquip() //장착 슬롯 갱신
@@ -178,15 +136,22 @@ public class inven : MonoBehaviour
             }
 
         }
-        itemStatus_list = append;
+        itemStatus_list_equip = append;
     }
-
-    void TextReset() //아이템 설명 null
+    void StartEquipSpecialpower() //시작할 때 착용한 장비 특수 능력치 키는 함수
     {
-        Itemimg.sprite = null;
-        Itemimg.color = new Color32(255, 255, 255, 0);
-        ItemNameText.text = null;
-        ItemExplanationText.text = null;
-        ItemStatText.text = null;
+        itemStatus[] append = new itemStatus[equip_slots.Length];
+        for (int i = 0; i < equip_slots.Length; i++)
+        {
+            append[i] = equip_slots[i].GetComponentInChildren<itemStatus>();
+            if (append[i] != null)
+            {
+                append[i].InitSetting();
+                append[i].data.SpecialPower = true;
+                append[i].SpecialPower();
+            }
+
+        }
+        itemStatus_list_equip = append;
     }
 }
