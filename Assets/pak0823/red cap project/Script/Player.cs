@@ -37,6 +37,24 @@ public class Player : MonoBehaviour
     public bool isCharging = false; // 차징 상태 여부
     public float chargeTimer = 0f; // 차징 시간을 측정하는 타이머
 
+    public static Player instance; //추가함
+    public int gold;  //추가함
+    public int AtkPower; //추가함
+    public int Def; //추가함
+    public float CriticalChance; //추가함 , 이속,공속 복구되는거 수정 필요
+    public float DmgIncrease; //추가함
+    public float enemyPower;
+
+    //선택능력치 추가함
+    public float[] selectAtkLevel = { 10f, 20f, 30f };
+    public float[] selectATSLevel = { 15f, 30f, 45f };
+    public float[] selectCCLevel = { 5f, 10f, 20f };
+    public float[] selectDefLevel = { 10f, 20f, 30f };
+    public float[] selectHpLevel = { 30f, 60f, 90f };
+    public float[] selectGoldLevel = { 130f, 160f, 200f };
+    public float[] selectExpLevel = { 130f, 160f, 200f };
+    public float[] selectCoolTimeLevel = { 5f, 10f, 20f };
+
     public GameObject GameManager;  //게임 매니저
     public GameObject attackRange;  //근접공격 위치
     public GameObject Arrow; //화살 오브젝트
@@ -65,12 +83,14 @@ public class Player : MonoBehaviour
     public BoxCollider2D box; //근접 공격 범위
     public SpriteRenderer spriteRenderer;
     public Enemy enemy;
+    Projective_Body PBody;
 
     Rigidbody2D rigid;
     Animator anim;
     new AudioSource audio;
     void Awake()
     {
+        instance = this; //추가함
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
@@ -84,6 +104,12 @@ public class Player : MonoBehaviour
         Arrowpos2 = transform.GetChild(2).GetComponentInChildren<Transform>(); //Arrowpos2의 위치값을 pos에 저장
         Skillpos = transform.GetChild(3).GetComponentInChildren<Transform>(); //Skillpos의 위치값을 pos에 저장
     }
+
+    void Start() //추가함
+    {
+        DataManager.instance.JsonLoad("PlayerData");
+    }
+
     void Update()
     {
         Player_Move();  //Player의 이동, 점프, 속도 함수
