@@ -319,7 +319,7 @@ public class Player : MonoBehaviour
             Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(Attackpos.position, box.size, 0); //공격 범위 안에 콜라이더를 
             foreach (Collider2D collider in collider2Ds)
             {
-                if (collider != null && collider.tag == "Enemy")
+                if (collider != null && collider.tag == "Enemy" || collider.tag == "Boss")
                 {
                     enemy = collider.GetComponent<Enemy>();
                     if (enemy != null)

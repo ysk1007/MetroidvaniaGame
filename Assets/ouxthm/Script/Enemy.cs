@@ -58,7 +58,8 @@ public abstract class Enemy : MonoBehaviour
     public GameObject Split_Slime;
     public GameObject fire; // 프리펩 투사체
     public GameObject ProObject;    // 클론 투사체
-    
+       
+
 
     Transform spawn;    // 분열된 슬라임 생성될 위치 1
     Transform spawn2;   // 분열된 슬라임 생성될 위치 2
@@ -83,6 +84,7 @@ public abstract class Enemy : MonoBehaviour
     public Arrow arrow;
     public Effect slash;
 
+    
     public abstract void InitSetting(); // 적의 기본 정보를 설정하는 함수(추상)
 
     public virtual void Short_Monster(Transform target) 
