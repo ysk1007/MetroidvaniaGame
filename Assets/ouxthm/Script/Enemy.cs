@@ -313,11 +313,16 @@ public abstract class Enemy : MonoBehaviour
         StartCoroutine(Think());
     }
 
-    public void bleeding()
+    public void bleeding()  // 도트데미지 주는 함수
     {
         if (bleedLevel > 0 && Enemy_HP > 0)
         {
             Enemy_HP -= bleedLevel;
+
+            if(Enemy_HP <= Enemy_HPten)
+            {
+                Enemy_HP = 0f;
+            }
         }
         if(this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
         {
@@ -455,7 +460,7 @@ public abstract class Enemy : MonoBehaviour
         animator.SetBool("Hit", false);
         enemyHit = false;
     }
-    public IEnumerator Die()
+    public IEnumerator Die()    // 죽는 코루틴
     {
         if (Enemy_HP <= 0 && Enemy_Mod != 3 && Enemy_Mod != 11 && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy")) // Enemy의 체력이 0과 같거나 이하일 때(죽음)
         {
