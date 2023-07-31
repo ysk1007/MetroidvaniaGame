@@ -45,6 +45,8 @@ public class Player : MonoBehaviour
     public float DmgIncrease; //추가함
     public float enemyPower;
 
+    public static int swordLevel = 1;       // 2023-07-31 추가(칼 숙련도)
+
     //선택능력치 추가함
     public float[] selectAtkLevel = { 10f, 20f, 30f };
     public float[] selectATSLevel = { 15f, 30f, 45f };

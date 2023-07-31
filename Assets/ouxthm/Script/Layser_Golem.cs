@@ -20,6 +20,7 @@ public class Layser_Golem : Enemy
         Enemy_Range_Y = 1f; //적의 Y축 공격 사거리
         atkDelay = 1.5f; // 공격 딜레이
         atkTime = 1.1f; // 공격 모션 시간
+        bleedLevel = 0; // 받은 출혈량
         Attacking = false;
     }
 

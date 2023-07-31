@@ -22,6 +22,7 @@ public class blueSlime : Enemy
         atkY = -0.21f;   // 공격 박스 콜라이더의 y값
         atkDelay = 1.2f; // 공격 딜레이
         atkTime = 0.4f; // 공격 모션 시간
+        bleedLevel = 0; // 받은 출혈량
         Attacking = false;
     }
 

@@ -22,6 +22,7 @@ public class Canine : Enemy
         atkY = -0.1f;   // 공격 박스 콜라이더의 y값
         atkDelay = 1f; // 공격 딜레이
         atkTime = 0.6f; // 공격 모션 시간
+        bleedLevel = 0; // 받은 출혈량
         Attacking = false;
     }
 

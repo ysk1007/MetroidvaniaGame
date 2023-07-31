@@ -16,6 +16,7 @@ public class Rat : Enemy
         Enemy_Sensing_X = 10f; // 플레이어 인지 X값
         Enemy_Sensing_Y = 5f;  // 플레이어 인지 Y값
         Bump_Power = 2; // 충돌 시 줄 데미지
+        bleedLevel = 0; // 받은 출혈량
     }
 
     public override void Short_Monster(Transform target)

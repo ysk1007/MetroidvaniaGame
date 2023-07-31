@@ -11,6 +11,7 @@ public abstract class Enemy : MonoBehaviour
 {
     public int Enemy_Mod;   // 1: 달팽이, 2: 근접공격 가능 몬스터, 3:비행몬스터, 4:제라스, 5: 자폭, 7: 투사체 원거리, 9: 분열, 11: 돌진하여 충돌
     public float Enemy_HP;  // 적의 체력
+    public float Enemy_HPten;   // 적의 체력의 10%
     public float Enemy_Power;   //적의 공격력
     public float Enemy_Speed;   // 적의 이동속도
     public float Enemy_Atk_Speed;    // 적의 공격속도
@@ -36,13 +37,15 @@ public abstract class Enemy : MonoBehaviour
     public float atkTime;   // 공격 모션 시간
     public bool Attacker;  // 비행 몬스터가 공격형인지 아닌지 구분짓는 변수
     public float endTime;   // 투사체 사라지는 시간
-
+    public int bloodLevel;  // 출혈 레벨
+    public int bleedLevel;  // 받은 출혈량
     public bool turning;    // 보스가 뒤돌 수 있는 상황인지 확인하는 변수
     public int atkPattern;  // boss의 공격 패턴 번호
     public float playerLoc; // player의 X좌표
     public float bossLoc;   // boss의 X좌표
     public float myLocY;    // boss의 y값
     public bool bossMoving;  // boss가 움직이도록 rock 풂
+    public float bleedingTime = 5f;  // 출혈 지속시간
 
     public bool Enemy_Left; // 적의 방향
     public bool Hit_Set;    // 몬스터를 깨우는 변수
@@ -50,7 +53,7 @@ public abstract class Enemy : MonoBehaviour
 
     public GameObject hiteff;  // 히트 이펙트 
     Transform hitTrans; // 히트 이펙트 위치
-    public GameObject blood;   // 출혈 이펙트
+    public GameObject blood;   // 출혈 폭발 이펙트
 
     Transform soulSpawn;    // 보스 바닥 터뜨리기 생성 위치
     Transform soulSpawn1;   // 보스 바닥 터뜨리기 생성 위치
@@ -95,7 +98,8 @@ public abstract class Enemy : MonoBehaviour
         Gap_Distance_Y = Mathf.Abs(target.transform.position.y - transform.position.y); //Y축 거리 계산
         Sensing(target, rayHit);
         Sensor();
-        if(nextDirX != 0)   // 특정 몬스터에만 Run 애니메이션이 있기 때문에 지정해줘야 함
+        bloodLevel = Player.swordLevel;
+        if (nextDirX != 0)   // 특정 몬스터에만 Run 애니메이션이 있기 때문에 지정해줘야 함
         {
             animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
             if (Enemy_Mod != 1 && Enemy_Mod != 3 && Enemy_Mod != 4)
@@ -123,6 +127,7 @@ public abstract class Enemy : MonoBehaviour
 
     public virtual void Boss(Transform target)  // boss용 Update문
     {
+        bloodLevel = Player.swordLevel;
         playerLoc = target.position.x;
         bossLoc = this.gameObject.transform.position.x;
         if(this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
@@ -136,12 +141,13 @@ public abstract class Enemy : MonoBehaviour
     {
         playerLoc = target.position.x;
         boarLoc = this.gameObject.transform.position.x;
-
+        bloodLevel = Player.swordLevel;
         StartCoroutine(boarMove());
     }
     
     public virtual void onetime()   // Awake에 적용
     {
+        Enemy_HPten = Enemy_HP * 0.1f;
         hitTrans = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
         Pos = GetComponent<Transform>();
         StartCoroutine(Think());
@@ -149,11 +155,12 @@ public abstract class Enemy : MonoBehaviour
         {
             PObject = this.gameObject.transform.GetChild(0).GetComponent<Transform>();
         }
-
+        bleeding();
     }
 
     public virtual void bossOnetime()   // boss용 Awake문
     {
+        Enemy_HPten = Enemy_HP * 0.1f;
         PObject = this.gameObject.transform.GetChild(2).GetComponent<Transform>();
         BossSpriteBox = this.gameObject.GetComponent<BoxCollider2D>();
         bossBox = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();
@@ -168,15 +175,18 @@ public abstract class Enemy : MonoBehaviour
         soulSpawn2 = this.gameObject.transform.GetChild(4).GetComponent<Transform>();
 
         randomAtk();
+        bleeding();
     }
 
     public virtual void boarOntime()
     {
+        Enemy_HPten = Enemy_HP * 0.1f;
         Hit_Set = false;    // 플레이어에게 맞지 않은 상태
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
         hitTrans = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         Pos = GetComponent<Transform>();
+        bleeding();
     }
 
     void OnCollisionStay2D(Collision2D collision)
@@ -303,6 +313,18 @@ public abstract class Enemy : MonoBehaviour
         StartCoroutine(Think());
     }
 
+    public void bleeding()
+    {
+        if (bleedLevel > 0 && Enemy_HP > 0)
+        {
+            Enemy_HP -= bleedLevel;
+        }
+        if(this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
+        {
+            StartCoroutine(Die());
+        }
+        Invoke("bleeding", 1f);
+    }
     public IEnumerator Hit(float damage) // 피해 함수
     {
         posi = this.gameObject.GetComponent<Transform>();
@@ -311,7 +333,15 @@ public abstract class Enemy : MonoBehaviour
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
         rigid = this.GetComponent<Rigidbody2D>();
         this.GetComponentInChildren<EnemyUi>().ShowDamgeText(damage); //윤성권 추가함
-        hitEff();
+
+        if(bloodLevel > 0)  // 플레이어가 출혈 업글했을 경우
+        {
+            if(bleedLevel <= 5)     // 출혈스택 6까지 쌓임
+            {
+                bleedLevel++;
+            }
+        }
+
         Enemy_HP -= damage;
         if(Enemy_Mod == 11)
         {
@@ -323,6 +353,7 @@ public abstract class Enemy : MonoBehaviour
         {
             if (!animator.GetBool("Hit") && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
             {
+                hitEff();
                 if (Enemy_Mod != 1 && Enemy_Mod != 3 && Enemy_Mod != 4 && Enemy_Mod != 11)
                     if (animator.GetBool("Run") == true)
                     {
@@ -424,7 +455,91 @@ public abstract class Enemy : MonoBehaviour
         animator.SetBool("Hit", false);
         enemyHit = false;
     }
-
+    public IEnumerator Die()
+    {
+        if (Enemy_HP <= 0 && Enemy_Mod != 3 && Enemy_Mod != 11 && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy")) // Enemy의 체력이 0과 같거나 이하일 때(죽음)
+        {
+            Dying = true;
+            if (Enemy_Mod != 1 && Enemy_Mod != 3 && Enemy_Mod != 4 && Enemy_Mod != 11)
+            {
+                if (animator.GetBool("Run") == true)
+                {
+                    animator.SetBool("Run", false);
+                }
+            }
+            Enemy_Speed = 0;
+            old_Speed = Enemy_Speed;
+            if (Enemy_Mod != 11)
+            {
+                animator.SetTrigger("Die");
+            }
+            this.gameObject.layer = LayerMask.NameToLayer("Dieenemy");
+            yield return new WaitForSeconds(Enemy_Dying_anim_Time);
+            enemyHit = false;
+            if (Enemy_Mod == 9 && posi.localScale.y > 1f)   // 분열 몬스터일 경우
+            {
+                StartCoroutine(Split());
+                this.gameObject.SetActive(false);
+            }
+            else if (Enemy_Mod == 9 && posi.localScale.y <= 1f)
+            {
+                this.gameObject.SetActive(false);   // clone slime 제거
+                //Destroy();
+            }
+            else if (Enemy_Mod != 9)
+            {
+                this.gameObject.SetActive(false);
+            }
+        }
+        else if (Enemy_HP <= 0 && Enemy_Mod == 3 && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy")) // 비행 몬스터 죽음)
+        {
+            Dying = true;
+            this.gameObject.layer = LayerMask.NameToLayer("Dieenemy");
+            Enemy_Speed = 0;
+            old_Speed = Enemy_Speed;
+            nextDirX = 0;
+            if (Attacker)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    // 스프라이트 블링크
+                    spriteRenderer.color = new Color(1, 1, 1, 0.4f);
+                    yield return new WaitForSeconds(0.1f);
+                    spriteRenderer.color = new Color(1, 1, 1, 1);
+                    yield return new WaitForSeconds(0.1f);
+                }
+                spriteRenderer.color = new Color(1, 1, 1, 0.4f);
+            }
+            else if (!Attacker)
+            {
+                animator.SetTrigger("Die");
+                rigid.isKinematic = false;
+            }
+            yield return new WaitForSeconds(Enemy_Dying_anim_Time);
+            this.gameObject.gameObject.SetActive(false);
+        }
+        else if (Enemy_HP <= 0 && Enemy_Mod == 11 && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
+        {
+            animator.SetBool("Rush", false);
+            Dying = true;
+            this.gameObject.layer = LayerMask.NameToLayer("Dieenemy");
+            Enemy_Speed = 0;
+            old_Speed = Enemy_Speed;
+            nextDirX = 0;
+            Debug.Log("죽는 애니메이션 직전");
+            for (int i = 0; i < 4; i++)
+            {
+                // 스프라이트 블링크
+                spriteRenderer.color = new Color(1, 1, 1, 0.4f);
+                yield return new WaitForSeconds(0.1f);
+                spriteRenderer.color = new Color(1, 1, 1, 1);
+                yield return new WaitForSeconds(0.1f);
+                Debug.Log("반짝반짝");
+            }
+            spriteRenderer.color = new Color(1, 1, 1, 0.4f);
+            this.gameObject.gameObject.SetActive(false);
+        }
+    }
 
     void Sensing(Transform target, RaycastHit2D rayHit)  // 플레이어 추적
     {

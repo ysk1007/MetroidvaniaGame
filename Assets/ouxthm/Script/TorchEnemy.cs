@@ -21,6 +21,7 @@ public class TorchEnemy : Enemy
         atkDelay = 1.5f; // 공격 딜레이
         atkTime = 1.1f; // 공격 모션 시간
         endTime = 1f;   //투사체 사라지는 시간
+        bleedLevel = 0; // 받은 출혈량
         Attacking = false;
     }
 

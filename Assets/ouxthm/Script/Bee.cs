@@ -23,6 +23,7 @@ public class Bee : Enemy
         atkTime = 0.5f; // 공격 모션 시간
         atkX = 0.8f;    // 공격 박스 콜라이더의 x값
         atkY = -1.2f;   // 공격 박스 콜라이더의 y값
+        bleedLevel = 0; // 받은 출혈량
         Attacker = true;
     }
 
