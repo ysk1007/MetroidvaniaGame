@@ -48,7 +48,9 @@ public abstract class Enemy : MonoBehaviour
     public bool Hit_Set;    // 몬스터를 깨우는 변수
     public float boarLoc;    // 멧돼지의 현재위치 X
 
-
+    public GameObject hiteff;  // 히트 이펙트 
+    Transform hitTrans; // 히트 이펙트 위치
+    public GameObject blood;   // 출혈 이펙트
 
     Transform soulSpawn;    // 보스 바닥 터뜨리기 생성 위치
     Transform soulSpawn1;   // 보스 바닥 터뜨리기 생성 위치
@@ -140,6 +142,7 @@ public abstract class Enemy : MonoBehaviour
     
     public virtual void onetime()   // Awake에 적용
     {
+        hitTrans = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
         Pos = GetComponent<Transform>();
         StartCoroutine(Think());
         if(Enemy_Mod == 7)
@@ -158,6 +161,8 @@ public abstract class Enemy : MonoBehaviour
         spriteRenderer = this.gameObject.transform.GetChild(1).GetComponent<SpriteRenderer>();
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
 
+        hitTrans = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
+
         soulSpawn = this.gameObject.transform.GetChild(2).GetComponent<Transform>();
         soulSpawn1 = this.gameObject.transform.GetChild(3).GetComponent<Transform>();
         soulSpawn2 = this.gameObject.transform.GetChild(4).GetComponent<Transform>();
@@ -169,6 +174,7 @@ public abstract class Enemy : MonoBehaviour
     {
         Hit_Set = false;    // 플레이어에게 맞지 않은 상태
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
+        hitTrans = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         Pos = GetComponent<Transform>();
     }
@@ -305,7 +311,7 @@ public abstract class Enemy : MonoBehaviour
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
         rigid = this.GetComponent<Rigidbody2D>();
         this.GetComponentInChildren<EnemyUi>().ShowDamgeText(damage); //윤성권 추가함
-
+        hitEff();
         Enemy_HP -= damage;
         if(Enemy_Mod == 11)
         {
@@ -791,7 +797,11 @@ public abstract class Enemy : MonoBehaviour
         Se2.Dir = nextDirX;
         turning = true;
     }
-
+    public void hitEff()
+    {
+        GameObject hitEff = Instantiate(hiteff, hitTrans.position, hitTrans.rotation);
+        hitEFF hitEFF = hitEff.GetComponent<hitEFF>();
+    }
 
     public void BossAtk()
     {
