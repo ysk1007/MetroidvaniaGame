@@ -99,6 +99,10 @@ public abstract class Enemy : MonoBehaviour
         Sensing(target, rayHit);
         Sensor();
         bloodLevel = Player.swordLevel;
+        if (bleedingTime >= 0)
+        {
+            bleedingTime -= Time.deltaTime;
+        }
         if (nextDirX != 0)   // 특정 몬스터에만 Run 애니메이션이 있기 때문에 지정해줘야 함
         {
             animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
@@ -130,7 +134,11 @@ public abstract class Enemy : MonoBehaviour
         bloodLevel = Player.swordLevel;
         playerLoc = target.position.x;
         bossLoc = this.gameObject.transform.position.x;
-        if(this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
+        if (bleedingTime >= 0)
+        {
+            bleedingTime -= Time.deltaTime;
+        }
+        if (this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
         {
             bossMove();
             BossAtk();
@@ -356,7 +364,8 @@ public abstract class Enemy : MonoBehaviour
             {
                 bleedLevel++;
             }
-            bleedingTime = 3f;
+            bleedingTime = Player.BleedingTime;
+            Debug.Log(bleedingTime);
         }
 
         Enemy_HP -= damage;
