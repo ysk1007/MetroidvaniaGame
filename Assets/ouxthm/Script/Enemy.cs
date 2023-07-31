@@ -45,7 +45,7 @@ public abstract class Enemy : MonoBehaviour
     public float bossLoc;   // boss의 X좌표
     public float myLocY;    // boss의 y값
     public bool bossMoving;  // boss가 움직이도록 rock 풂
-    public float bleedingTime = 5f;  // 출혈 지속시간
+    public float bleedingTime;  // 출혈 지속시간
 
     public bool Enemy_Left; // 적의 방향
     public bool Hit_Set;    // 몬스터를 깨우는 변수
@@ -139,6 +139,10 @@ public abstract class Enemy : MonoBehaviour
 
     public virtual void Boar(Transform target)  // boar용
     {
+        if (bleedingTime >= 0)
+        {
+            bleedingTime -= Time.deltaTime;
+        }
         playerLoc = target.position.x;
         boarLoc = this.gameObject.transform.position.x;
         bloodLevel = Player.swordLevel;
@@ -315,18 +319,25 @@ public abstract class Enemy : MonoBehaviour
 
     public void bleeding()  // 도트데미지 주는 함수
     {
-        if (bleedLevel > 0 && Enemy_HP > 0)
+        if(bleedingTime > 0)
         {
-            Enemy_HP -= bleedLevel;
-
-            if(Enemy_HP <= Enemy_HPten)
+            if (bleedLevel > 0 && Enemy_HP > 0)
             {
-                Enemy_HP = 0f;
+                Enemy_HP -= bleedLevel;
+
+                if (Enemy_HP <= Enemy_HPten)
+                {
+                    Enemy_HP = 0f;
+                }
             }
         }
         if(this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
         {
             StartCoroutine(Die());
+            if(this.gameObject.layer == LayerMask.NameToLayer("Dieenemy"))
+            {
+                return;
+            }
         }
         Invoke("bleeding", 1f);
     }
@@ -345,6 +356,7 @@ public abstract class Enemy : MonoBehaviour
             {
                 bleedLevel++;
             }
+            bleedingTime = 3f;
         }
 
         Enemy_HP -= damage;
