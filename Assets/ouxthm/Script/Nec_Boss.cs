@@ -25,6 +25,7 @@ public class Nec_Boss : Enemy
         bleedLevel = 0; // 받은 출혈량
         turning = true; // 돌기 가능
         Attacking = false;
+        iamBoss = true;    //  보스임
     }
 
     public override void Boss(Transform target)

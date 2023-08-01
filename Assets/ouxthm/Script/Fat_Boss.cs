@@ -17,6 +17,7 @@ public class Fat_Boss : MonoBehaviour
     public float Fat_HP;    // Fat_Boss의 체력.
     public bool Fat_Left = true;    // Fat_Boss의 방향.
     public bool Attacking;
+    public bool iamBoss = false;    //  보스임
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();

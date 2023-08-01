@@ -3723,6 +3723,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy_Mod: 0
+  iamBoss: 0
   Enemy_HP: 0
   Enemy_HPten: 0
   Enemy_Power: 0
@@ -3750,15 +3751,16 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
-  bloodLevel: 0
+  swordLevel: 0
   bleedLevel: 0
+  bleedingDamage: 0
+  bleedingTime: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
-  bleedingTime: 5
   Enemy_Left: 0
   Hit_Set: 0
   boarLoc: 0
@@ -3849,7 +3851,7 @@ Transform:
   - {fileID: 669087275}
   - {fileID: 706525411}
   m_Father: {fileID: 0}
-  m_RootOrder: 22
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &78009680
 AudioSource:
@@ -5247,6 +5249,7 @@ MonoBehaviour:
   Fat_HP: 100
   Fat_Left: 1
   Attacking: 0
+  iamBoss: 0
 --- !u!61 &137502399
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5314,6 +5317,7 @@ MonoBehaviour:
   Fat_HP: 100
   Fat_Left: 0
   Attacking: 0
+  iamBoss: 0
 --- !u!4 &137502402
 Transform:
   m_ObjectHideFlags: 0
@@ -5428,37 +5432,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &144364908
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 144364909}
-  m_Layer: 0
-  m_Name: Empty
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &144364909
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 144364908}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1958881081}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &147203019
 GameObject:
   m_ObjectHideFlags: 0
@@ -9981,7 +9954,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &491972692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9995,6 +9968,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy_Mod: 0
+  iamBoss: 0
   Enemy_HP: 0
   Enemy_HPten: 0
   Enemy_Power: 0
@@ -10022,15 +9996,16 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
-  bloodLevel: 0
+  swordLevel: 0
   bleedLevel: 0
+  bleedingDamage: 0
+  bleedingTime: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
-  bleedingTime: 0
   Enemy_Left: 0
   Hit_Set: 0
   boarLoc: 0
@@ -10540,6 +10515,7 @@ MonoBehaviour:
   CriticalChance: 0
   DmgIncrease: 0
   enemyPower: 0
+  enemyBleedingTime: 0
   selectAtkLevel:
   - 10
   - 20
@@ -13641,6 +13617,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy_Mod: 0
+  iamBoss: 0
   Enemy_HP: 0
   Enemy_HPten: 0
   Enemy_Power: 0
@@ -13668,15 +13645,16 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
-  bloodLevel: 0
+  swordLevel: 0
   bleedLevel: 0
+  bleedingDamage: 0
+  bleedingTime: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
-  bleedingTime: 5
   Enemy_Left: 0
   Hit_Set: 0
   boarLoc: 0
@@ -13759,7 +13737,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 690602281}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 61.79, y: -6.82, z: 0}
+  m_LocalPosition: {x: 71.7, y: -6.82, z: 0}
   m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -13770,7 +13748,7 @@ Transform:
   - {fileID: 1607122282}
   - {fileID: 389291110}
   m_Father: {fileID: 0}
-  m_RootOrder: 24
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &690602287
 AudioSource:
@@ -15880,112 +15858,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 782584290}
   m_CullTransparentMesh: 1
---- !u!1 &786879094
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 786879095}
-  - component: {fileID: 786879097}
-  - component: {fileID: 786879096}
-  m_Layer: 10
-  m_Name: Snail_Img
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &786879095
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 786879094}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1958881081}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &786879096
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 786879094}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4abe050b1c2991b49ba4ee1be451e8cd, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!212 &786879097
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 786879094}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
-  m_Sprite: {fileID: -1686723038, guid: 4e9520137dcc4774f9235b9440d200a4, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
 --- !u!1 &789418893
 GameObject:
   m_ObjectHideFlags: 0
@@ -19688,6 +19560,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy_Mod: 0
+  iamBoss: 0
   Enemy_HP: 0
   Enemy_HPten: 0
   Enemy_Power: 0
@@ -19715,15 +19588,16 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
-  bloodLevel: 0
+  swordLevel: 0
   bleedLevel: 0
+  bleedingDamage: 0
+  bleedingTime: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
-  bleedingTime: 5
   Enemy_Left: 0
   Hit_Set: 0
   boarLoc: 0
@@ -19814,7 +19688,7 @@ Transform:
   - {fileID: 250613015}
   - {fileID: 1729379986}
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &999857962
 AudioSource:
@@ -21581,6 +21455,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy_Mod: 0
+  iamBoss: 0
   Enemy_HP: 0
   Enemy_HPten: 0
   Enemy_Power: 0
@@ -21608,15 +21483,16 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
-  bloodLevel: 0
+  swordLevel: 0
   bleedLevel: 0
+  bleedingDamage: 0
+  bleedingTime: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
-  bleedingTime: 5
   Enemy_Left: 0
   Hit_Set: 0
   boarLoc: 0
@@ -21707,7 +21583,7 @@ Transform:
   - {fileID: 1040616770}
   - {fileID: 1729368099}
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1100504047
 AudioSource:
@@ -27097,7 +26973,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1382152227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27111,6 +26987,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy_Mod: 0
+  iamBoss: 0
   Enemy_HP: 0
   Enemy_HPten: 0
   Enemy_Power: 0
@@ -27138,15 +27015,16 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
-  bloodLevel: 0
+  swordLevel: 0
   bleedLevel: 0
+  bleedingDamage: 0
+  bleedingTime: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
-  bleedingTime: 5
   Enemy_Left: 0
   Hit_Set: 0
   boarLoc: 0
@@ -27229,7 +27107,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1382152226}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 74.11, y: -6.81, z: 0}
+  m_LocalPosition: {x: 76.52, y: -7.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -27237,7 +27115,7 @@ Transform:
   - {fileID: 2006591519}
   - {fileID: 412764676}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1382152232
 AudioSource:
@@ -29888,6 +29766,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy_Mod: 0
+  iamBoss: 0
   Enemy_HP: 0
   Enemy_HPten: 0
   Enemy_Power: 0
@@ -29915,15 +29794,16 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
-  bloodLevel: 0
+  swordLevel: 0
   bleedLevel: 0
+  bleedingDamage: 0
+  bleedingTime: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
-  bleedingTime: 5
   Enemy_Left: 0
   Hit_Set: 0
   boarLoc: 0
@@ -30014,7 +29894,7 @@ Transform:
   - {fileID: 1810301694}
   - {fileID: 1349834703}
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1574764559
 AudioSource:
@@ -30822,7 +30702,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1624148420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30836,6 +30716,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy_Mod: 0
+  iamBoss: 0
   Enemy_HP: 0
   Enemy_HPten: 0
   Enemy_Power: 0
@@ -30863,15 +30744,16 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
-  bloodLevel: 0
+  swordLevel: 0
   bleedLevel: 0
+  bleedingDamage: 0
+  bleedingTime: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
-  bleedingTime: 5
   Enemy_Left: 0
   Hit_Set: 0
   boarLoc: 0
@@ -30954,7 +30836,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1624148419}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 65.59, y: -7.82, z: 1.6506131}
+  m_LocalPosition: {x: 72.04, y: -2.27, z: 1.6506131}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -34750,6 +34632,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy_Mod: 0
+  iamBoss: 0
   Enemy_HP: 0
   Enemy_HPten: 0
   Enemy_Power: 0
@@ -34777,15 +34660,16 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
-  bloodLevel: 0
+  swordLevel: 0
   bleedLevel: 0
+  bleedingDamage: 0
+  bleedingTime: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
-  bleedingTime: 5
   Enemy_Left: 0
   Hit_Set: 0
   boarLoc: 0
@@ -34876,7 +34760,7 @@ Transform:
   - {fileID: 16365252}
   - {fileID: 1580996580}
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1761195242
 AudioSource:
@@ -36813,6 +36697,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy_Mod: 0
+  iamBoss: 0
   Enemy_HP: 0
   Enemy_HPten: 0
   Enemy_Power: 0
@@ -36840,15 +36725,16 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
-  bloodLevel: 0
+  swordLevel: 0
   bleedLevel: 0
+  bleedingDamage: 0
+  bleedingTime: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
-  bleedingTime: 5
   Enemy_Left: 0
   Hit_Set: 0
   boarLoc: 0
@@ -36939,7 +36825,7 @@ Transform:
   - {fileID: 1345365668}
   - {fileID: 1037544164}
   m_Father: {fileID: 0}
-  m_RootOrder: 23
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1838800825
 AudioSource:
@@ -38161,6 +38047,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy_Mod: 0
+  iamBoss: 0
   Enemy_HP: 0
   Enemy_HPten: 0
   Enemy_Power: 0
@@ -38188,15 +38075,16 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
-  bloodLevel: 0
+  swordLevel: 0
   bleedLevel: 0
+  bleedingDamage: 0
+  bleedingTime: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
-  bleedingTime: 5
   Enemy_Left: 0
   Hit_Set: 0
   boarLoc: 0
@@ -38287,7 +38175,7 @@ Transform:
   - {fileID: 1532000404}
   - {fileID: 1606999091}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1939571925
 AudioSource:
@@ -38678,166 +38566,6 @@ Transform:
   m_Father: {fileID: 1624148424}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1958881080
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1958881081}
-  - component: {fileID: 1958881085}
-  - component: {fileID: 1958881084}
-  - component: {fileID: 1958881083}
-  - component: {fileID: 1958881082}
-  m_Layer: 10
-  m_Name: Snail (1)
-  m_TagString: Enemy
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1958881081
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1958881080}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 34.500004, y: -7.6, z: 1.6506131}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 144364909}
-  - {fileID: 786879095}
-  m_Father: {fileID: 0}
-  m_RootOrder: 14
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1958881082
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1958881080}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 127f5443a4ba2514c86cdc9271c3885b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Enemy_Mod: 0
-  Enemy_HP: 0
-  Enemy_HPten: 0
-  Enemy_Power: 0
-  Enemy_Speed: 0
-  Enemy_Atk_Speed: 0
-  Attacking: 0
-  Gap_Distance_X: 0
-  Gap_Distance_Y: 0
-  Enemy_Sensing_X: 0
-  Enemy_Sensing_Y: 0
-  Enemy_Range_X: 2
-  Enemy_Range_Y: 2
-  Pdamage: 0
-  Bump_Power: 0
-  atkDelay: 0
-  nextDirX: 0
-  nextDirY: 0
-  Dying: 0
-  Enemy_Dying_anim_Time: 0
-  atkX: 0
-  atkY: 0
-  enemyHit: 0
-  old_Speed: 0
-  dTime: 0
-  atkTime: 0
-  Attacker: 0
-  endTime: 0
-  bloodLevel: 0
-  bleedLevel: 0
-  turning: 0
-  atkPattern: 0
-  playerLoc: 0
-  bossLoc: 0
-  myLocY: 0
-  bossMoving: 0
-  bleedingTime: 5
-  Enemy_Left: 0
-  Hit_Set: 0
-  boarLoc: 0
-  hiteff: {fileID: 0}
-  blood: {fileID: 0}
-  SoulFloor: {fileID: 0}
-  Split_Slime: {fileID: 0}
-  fire: {fileID: 0}
-  ProObject: {fileID: 0}
-  PObject: {fileID: 0}
-  Pos: {fileID: 0}
-  arrow: {fileID: 0}
-  slash: {fileID: 0}
---- !u!114 &1958881083
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1958881080}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ead661ec44538f45ad169810974e7f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  monster: {fileID: 1958881082}
-  target: {fileID: 0}
---- !u!61 &1958881084
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1958881080}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.0057492256, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.7473078, y: 1.4138927}
-  m_EdgeRadius: 0
---- !u!50 &1958881085
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1958881080}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!1 &1969491588
 GameObject:
   m_ObjectHideFlags: 0
@@ -38948,6 +38676,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy_Mod: 0
+  iamBoss: 0
   Enemy_HP: 0
   Enemy_HPten: 0
   Enemy_Power: 0
@@ -38975,15 +38704,16 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
-  bloodLevel: 0
+  swordLevel: 0
   bleedLevel: 0
+  bleedingDamage: 0
+  bleedingTime: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
-  bleedingTime: 5
   Enemy_Left: 0
   Hit_Set: 0
   boarLoc: 0
@@ -39076,7 +38806,7 @@ Transform:
   - {fileID: 1987344470}
   - {fileID: 671117195}
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1974481439
 AudioSource:
@@ -41639,6 +41369,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy_Mod: 0
+  iamBoss: 0
   Enemy_HP: 0
   Enemy_HPten: 0
   Enemy_Power: 0
@@ -41666,15 +41397,16 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
-  bloodLevel: 0
+  swordLevel: 0
   bleedLevel: 0
+  bleedingDamage: 0
+  bleedingTime: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
-  bleedingTime: 5
   Enemy_Left: 0
   Hit_Set: 0
   boarLoc: 0
@@ -41765,7 +41497,7 @@ Transform:
   - {fileID: 542079346}
   - {fileID: 1813168152}
   m_Father: {fileID: 0}
-  m_RootOrder: 25
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &2075239567
 AudioSource:

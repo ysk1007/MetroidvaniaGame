@@ -25,6 +25,7 @@ public class Bee : Enemy
         atkY = -1.2f;   // 공격 박스 콜라이더의 y값
         bleedLevel = 0; // 받은 출혈량
         Attacker = true;
+        iamBoss = false;    //  보스가 아님
     }
 
     public override void Short_Monster(Transform target)

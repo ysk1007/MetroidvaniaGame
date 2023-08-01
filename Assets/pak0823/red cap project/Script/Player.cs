@@ -45,9 +45,10 @@ public class Player : MonoBehaviour
     public float DmgIncrease; //추가함
     public float enemyPower;
 
-    public static int swordLevel = 1;       // 2023-07-31 추가(칼 숙련도)
+    public static int swordLevel = 3;       // 2023-07-31 추가(칼 숙련도)
     public static float BleedingTime = 8f;  // 2023-07-31 추가(출혈 지속 시간)
-    public static float bleedDamage = 0.5f; // 출혈 데미지
+    public static float bleedDamage = 0.5f; // 2023-08-01 출혈 데미지
+    public float enemyBleedingTime; // 2023-08-01(몬스터의 출혈 남은 시간)
 
     //선택능력치 추가함
     public float[] selectAtkLevel = { 10f, 20f, 30f };
@@ -116,6 +117,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        //enemyBleedingTime = Enemy.bleedingTime; // 2023-08-01 추가 (적의 출혈 남은 시간 계속 계산)
+
         Player_Move();  //Player의 이동, 점프, 속도 함수
         Player_Attack();    //Player의 공격 함수
     }

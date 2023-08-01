@@ -24,6 +24,7 @@ public class Canine : Enemy
         atkTime = 0.6f; // 공격 모션 시간
         bleedLevel = 0; // 받은 출혈량
         Attacking = false;
+        iamBoss = false;    //  보스가 아님
     }
 
     public override void Short_Monster(Transform target)
