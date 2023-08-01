@@ -38,7 +38,8 @@ public abstract class Enemy : MonoBehaviour
     public bool Attacker;  // 비행 몬스터가 공격형인지 아닌지 구분짓는 변수
     public float endTime;   // 투사체 사라지는 시간
     public int bloodLevel;  // 출혈 레벨
-    public int bleedLevel;  // 받은 출혈량
+    public int bleedLevel;  // 출혈 스택
+    public float bleedingDamage;    // 출혈 데미지
     public bool turning;    // 보스가 뒤돌 수 있는 상황인지 확인하는 변수
     public int atkPattern;  // boss의 공격 패턴 번호
     public float playerLoc; // player의 X좌표
@@ -99,6 +100,7 @@ public abstract class Enemy : MonoBehaviour
         Sensing(target, rayHit);
         Sensor();
         bloodLevel = Player.swordLevel;
+        bleedingDamage = Player.bleedDamage;
         if (bleedingTime >= 0)
         {
             bleedingTime -= Time.deltaTime;
@@ -132,6 +134,7 @@ public abstract class Enemy : MonoBehaviour
     public virtual void Boss(Transform target)  // boss용 Update문
     {
         bloodLevel = Player.swordLevel;
+        bleedingDamage = Player.bleedDamage;
         playerLoc = target.position.x;
         bossLoc = this.gameObject.transform.position.x;
         if (bleedingTime >= 0)
@@ -154,6 +157,7 @@ public abstract class Enemy : MonoBehaviour
         playerLoc = target.position.x;
         boarLoc = this.gameObject.transform.position.x;
         bloodLevel = Player.swordLevel;
+        bleedingDamage = Player.bleedDamage;
         StartCoroutine(boarMove());
     }
     
@@ -331,7 +335,7 @@ public abstract class Enemy : MonoBehaviour
         {
             if (bleedLevel > 0 && Enemy_HP > 0)
             {
-                Enemy_HP -= bleedLevel;
+                Enemy_HP -= (bleedLevel * bleedingDamage);
 
                 if (Enemy_HP <= Enemy_HPten)
                 {
