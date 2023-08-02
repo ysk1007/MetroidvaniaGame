@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7614696593688231737}
   - component: {fileID: 7614696593688231734}
   - component: {fileID: 7614696593688231735}
+  - component: {fileID: -4464842688281033941}
   m_Layer: 0
   m_Name: Blood_eff
   m_TagString: Untagged
@@ -73,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: -1998926722, guid: df548d0f5b094bf4aa9932a2d39a0e98, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -106,3 +107,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-4464842688281033941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7614696593688231732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 650bd6428c3798041b6bf4988dd4178e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -3751,13 +3751,14 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
-  swordLevel: 0
+  Swordlevel: 0
   bleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
+  enemyLoc: 0
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
@@ -3765,7 +3766,7 @@ MonoBehaviour:
   Hit_Set: 0
   boarLoc: 0
   hiteff: {fileID: 5284812379320055701, guid: 575e99c42061c9642b56a8dafa63c14e, type: 3}
-  blood: {fileID: 0}
+  blood: {fileID: 7614696593688231732, guid: 2da69be80ef7a1344bde5bf47d8105db, type: 3}
   SoulFloor: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
@@ -9954,7 +9955,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &491972692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9996,13 +9997,14 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
-  swordLevel: 0
+  Swordlevel: 0
   bleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
+  enemyLoc: 0
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
@@ -10010,7 +10012,7 @@ MonoBehaviour:
   Hit_Set: 0
   boarLoc: 0
   hiteff: {fileID: 5284812379320055701, guid: 575e99c42061c9642b56a8dafa63c14e, type: 3}
-  blood: {fileID: 0}
+  blood: {fileID: 7614696593688231732, guid: 2da69be80ef7a1344bde5bf47d8105db, type: 3}
   SoulFloor: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
@@ -10515,7 +10517,6 @@ MonoBehaviour:
   CriticalChance: 0
   DmgIncrease: 0
   enemyPower: 0
-  enemyBleedingTime: 0
   selectAtkLevel:
   - 10
   - 20
@@ -13645,13 +13646,14 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
-  swordLevel: 0
+  Swordlevel: 0
   bleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
+  enemyLoc: 0
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
@@ -13659,7 +13661,7 @@ MonoBehaviour:
   Hit_Set: 0
   boarLoc: 0
   hiteff: {fileID: 5284812379320055701, guid: 575e99c42061c9642b56a8dafa63c14e, type: 3}
-  blood: {fileID: 0}
+  blood: {fileID: 7614696593688231732, guid: 2da69be80ef7a1344bde5bf47d8105db, type: 3}
   SoulFloor: {fileID: 3381584811184784677, guid: b19b36ece8236c340be0d6c4c54b8016, type: 3}
   Split_Slime: {fileID: 0}
   fire: {fileID: 1381773150433089148, guid: 9d24de82d2bcbc740be1a891606f9949, type: 3}
@@ -13759,7 +13761,7 @@ AudioSource:
   m_GameObject: {fileID: 690602281}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -7425439255117714164, guid: 6126956f554f0a046a85c7352ef91187, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.5
@@ -19588,13 +19590,14 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
-  swordLevel: 0
+  Swordlevel: 0
   bleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
+  enemyLoc: 0
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
@@ -19602,7 +19605,7 @@ MonoBehaviour:
   Hit_Set: 0
   boarLoc: 0
   hiteff: {fileID: 5284812379320055701, guid: 575e99c42061c9642b56a8dafa63c14e, type: 3}
-  blood: {fileID: 0}
+  blood: {fileID: 7614696593688231732, guid: 2da69be80ef7a1344bde5bf47d8105db, type: 3}
   SoulFloor: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 117786764753181504, guid: abfbb84a32e4b6043b3768c340d03021, type: 3}
@@ -21483,13 +21486,14 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
-  swordLevel: 0
+  Swordlevel: 0
   bleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
+  enemyLoc: 0
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
@@ -21497,7 +21501,7 @@ MonoBehaviour:
   Hit_Set: 0
   boarLoc: 0
   hiteff: {fileID: 5284812379320055701, guid: 575e99c42061c9642b56a8dafa63c14e, type: 3}
-  blood: {fileID: 0}
+  blood: {fileID: 7614696593688231732, guid: 2da69be80ef7a1344bde5bf47d8105db, type: 3}
   SoulFloor: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
@@ -27015,13 +27019,14 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
-  swordLevel: 0
+  Swordlevel: 0
   bleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
+  enemyLoc: 0
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
@@ -27029,7 +27034,7 @@ MonoBehaviour:
   Hit_Set: 0
   boarLoc: 0
   hiteff: {fileID: 5284812379320055701, guid: 575e99c42061c9642b56a8dafa63c14e, type: 3}
-  blood: {fileID: 0}
+  blood: {fileID: 7614696593688231732, guid: 2da69be80ef7a1344bde5bf47d8105db, type: 3}
   SoulFloor: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
@@ -29794,13 +29799,14 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
-  swordLevel: 0
+  Swordlevel: 0
   bleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
+  enemyLoc: 0
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
@@ -29808,7 +29814,7 @@ MonoBehaviour:
   Hit_Set: 0
   boarLoc: 0
   hiteff: {fileID: 5284812379320055701, guid: 575e99c42061c9642b56a8dafa63c14e, type: 3}
-  blood: {fileID: 0}
+  blood: {fileID: 7614696593688231732, guid: 2da69be80ef7a1344bde5bf47d8105db, type: 3}
   SoulFloor: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
@@ -30744,13 +30750,14 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
-  swordLevel: 0
+  Swordlevel: 0
   bleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
+  enemyLoc: 0
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
@@ -30758,7 +30765,7 @@ MonoBehaviour:
   Hit_Set: 0
   boarLoc: 0
   hiteff: {fileID: 5284812379320055701, guid: 575e99c42061c9642b56a8dafa63c14e, type: 3}
-  blood: {fileID: 0}
+  blood: {fileID: 7614696593688231732, guid: 2da69be80ef7a1344bde5bf47d8105db, type: 3}
   SoulFloor: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
@@ -30836,7 +30843,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1624148419}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 72.04, y: -2.27, z: 1.6506131}
+  m_LocalPosition: {x: 72.04, y: -7.7, z: 1.6506131}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -34660,13 +34667,14 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
-  swordLevel: 0
+  Swordlevel: 0
   bleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
+  enemyLoc: 0
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
@@ -34674,7 +34682,7 @@ MonoBehaviour:
   Hit_Set: 0
   boarLoc: 0
   hiteff: {fileID: 5284812379320055701, guid: 575e99c42061c9642b56a8dafa63c14e, type: 3}
-  blood: {fileID: 0}
+  blood: {fileID: 7614696593688231732, guid: 2da69be80ef7a1344bde5bf47d8105db, type: 3}
   SoulFloor: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
@@ -34771,7 +34779,7 @@ AudioSource:
   m_GameObject: {fileID: 1761195236}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -7425439255117714164, guid: 6126956f554f0a046a85c7352ef91187, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -36725,13 +36733,14 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
-  swordLevel: 0
+  Swordlevel: 0
   bleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
+  enemyLoc: 0
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
@@ -36739,7 +36748,7 @@ MonoBehaviour:
   Hit_Set: 0
   boarLoc: 0
   hiteff: {fileID: 5284812379320055701, guid: 575e99c42061c9642b56a8dafa63c14e, type: 3}
-  blood: {fileID: 0}
+  blood: {fileID: 7614696593688231732, guid: 2da69be80ef7a1344bde5bf47d8105db, type: 3}
   SoulFloor: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
@@ -38075,13 +38084,14 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
-  swordLevel: 0
+  Swordlevel: 0
   bleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
+  enemyLoc: 0
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
@@ -38089,7 +38099,7 @@ MonoBehaviour:
   Hit_Set: 0
   boarLoc: 0
   hiteff: {fileID: 5284812379320055701, guid: 575e99c42061c9642b56a8dafa63c14e, type: 3}
-  blood: {fileID: 0}
+  blood: {fileID: 7614696593688231732, guid: 2da69be80ef7a1344bde5bf47d8105db, type: 3}
   SoulFloor: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
@@ -38704,13 +38714,14 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
-  swordLevel: 0
+  Swordlevel: 0
   bleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
+  enemyLoc: 0
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
@@ -38718,7 +38729,7 @@ MonoBehaviour:
   Hit_Set: 0
   boarLoc: 0
   hiteff: {fileID: 5284812379320055701, guid: 575e99c42061c9642b56a8dafa63c14e, type: 3}
-  blood: {fileID: 0}
+  blood: {fileID: 7614696593688231732, guid: 2da69be80ef7a1344bde5bf47d8105db, type: 3}
   SoulFloor: {fileID: 0}
   Split_Slime: {fileID: 2044582282278339179, guid: 778767c3509229a45bd506b494a859c0, type: 3}
   fire: {fileID: 0}
@@ -38796,7 +38807,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1974481433}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 78.98, y: -7.68, z: 0}
+  m_LocalPosition: {x: 66.5, y: -7.68, z: 0}
   m_LocalScale: {x: -1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -39404,7 +39415,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: -1462710061, guid: 36031ce220291a64593f64499d147eea, type: 3}
-  m_Color: {r: 0.9647059, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -41397,13 +41408,14 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
-  swordLevel: 0
+  Swordlevel: 0
   bleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
+  enemyLoc: 0
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
@@ -41411,7 +41423,7 @@ MonoBehaviour:
   Hit_Set: 0
   boarLoc: 0
   hiteff: {fileID: 5284812379320055701, guid: 575e99c42061c9642b56a8dafa63c14e, type: 3}
-  blood: {fileID: 0}
+  blood: {fileID: 7614696593688231732, guid: 2da69be80ef7a1344bde5bf47d8105db, type: 3}
   SoulFloor: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}

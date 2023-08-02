@@ -39,7 +39,7 @@ public abstract class Enemy : MonoBehaviour
     public bool Attacker;  // 비행 몬스터가 공격형인지 아닌지 구분짓는 변수
     public float endTime;   // 투사체 사라지는 시간
 
-    public int swordLevel;  // 플레이어 검 숙련도
+    public int Swordlevel;  // 플레이어 검 숙련도
     public int bleedLevel;  // 출혈 스택
     public float bleedingDamage;    // 출혈 데미지
     public float bleedingTime;  // 출혈 지속시간
@@ -47,6 +47,7 @@ public abstract class Enemy : MonoBehaviour
     public bool turning;    // 보스가 뒤돌 수 있는 상황인지 확인하는 변수
     public int atkPattern;  // boss의 공격 패턴 번호
     public float playerLoc; // player의 X좌표
+    public float enemyLoc;  // 몬스터의 X좌표
     public float bossLoc;   // boss의 X좌표
     public float myLocY;    // boss의 y값
     public bool bossMoving;  // boss가 움직이도록 rock 풂
@@ -57,7 +58,7 @@ public abstract class Enemy : MonoBehaviour
     public float boarLoc;    // 멧돼지의 현재위치 X
 
     public GameObject hiteff;  // 히트 이펙트 
-    Transform hitTrans; // 히트 이펙트 위치
+    Transform hit_bloodTrans; // 히트 이펙트 위치
     public GameObject blood;   // 출혈 폭발 이펙트
 
     Transform soulSpawn;    // 보스 바닥 터뜨리기 생성 위치
@@ -85,25 +86,23 @@ public abstract class Enemy : MonoBehaviour
     BoxCollider2D bossBox;  // 보스 공격 콜라이더 켰다 끄는 변수
     BoxCollider2D BossSpriteBox;    // 보스 이미지 콜라이더
 
-    /* Enemy_Attack 스크립트에 GiveDamage()함수를 넣을거임 콜라이더 범위에 들어와도 몬스터 자체 콜라이더에 플레이어가 충돌해야 데미지가 들어가기 때문에 몬스터 공격 콜라이더만 들어 갈 수 있도록
-     스크립트를 몬스터 공격 오브젝트에 넣을거임*/
-    //Enemy_Attack Enemy_Attack;  
-
     public Transform Pos;
     public Arrow arrow;
     public Effect slash;
-
     
     public abstract void InitSetting(); // 적의 기본 정보를 설정하는 함수(추상)
 
     public virtual void Short_Monster(Transform target) 
     {
+        playerLoc = target.position.x;
+        enemyLoc = this.gameObject.transform.position.x;
         Gap_Distance_X = Mathf.Abs(target.transform.position.x - transform.position.x); //X축 거리 계산
         Gap_Distance_Y = Mathf.Abs(target.transform.position.y - transform.position.y); //Y축 거리 계산
         Sensing(target, rayHit);
         Sensor();
-        swordLevel = Player.swordLevel;
+        Swordlevel = Player.swordLevel;
         bleedingDamage = Player.bleedDamage;
+
         if (bleedingTime >= 0)
         {
             bleedingTime -= Time.deltaTime;
@@ -136,7 +135,7 @@ public abstract class Enemy : MonoBehaviour
 
     public virtual void Boss(Transform target)  // boss용 Update문
     {
-        swordLevel = Player.swordLevel;
+        Swordlevel = Player.swordLevel;
         bleedingDamage = Player.bleedDamage;
         playerLoc = target.position.x;
         bossLoc = this.gameObject.transform.position.x;
@@ -159,7 +158,7 @@ public abstract class Enemy : MonoBehaviour
         }
         playerLoc = target.position.x;
         boarLoc = this.gameObject.transform.position.x;
-        swordLevel = Player.swordLevel;
+        Swordlevel = Player.swordLevel;
         bleedingDamage = Player.bleedDamage;
         StartCoroutine(boarMove());
     }
@@ -168,7 +167,7 @@ public abstract class Enemy : MonoBehaviour
     {
         Enemy_HPten = Enemy_HP * 0.1f;
         bleedingTime = 0f;
-        hitTrans = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
+        hit_bloodTrans = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
         Pos = GetComponent<Transform>();
         StartCoroutine(Think());
         if(Enemy_Mod == 7)
@@ -189,7 +188,7 @@ public abstract class Enemy : MonoBehaviour
         spriteRenderer = this.gameObject.transform.GetChild(1).GetComponent<SpriteRenderer>();
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
 
-        hitTrans = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
+        hit_bloodTrans = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
 
         soulSpawn = this.gameObject.transform.GetChild(2).GetComponent<Transform>();
         soulSpawn1 = this.gameObject.transform.GetChild(3).GetComponent<Transform>();
@@ -205,7 +204,7 @@ public abstract class Enemy : MonoBehaviour
         bleedingTime = 0f;
         Hit_Set = false;    // 플레이어에게 맞지 않은 상태
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
-        hitTrans = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
+        hit_bloodTrans = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         Pos = GetComponent<Transform>();
         bleeding();
@@ -339,26 +338,13 @@ public abstract class Enemy : MonoBehaviour
     {
         if(bleedingTime > 0)
         {
-            if (swordLevel > 0 && Enemy_HP > 0)
+            if (Swordlevel > 0 && Enemy_HP > 0)
             {
                 Enemy_HP -= (bleedLevel * bleedingDamage); // 체력을  출혈스택 * 출혈 데미지로 감소
 
-                if (swordLevel > 1 && Enemy_HP <= Enemy_HPten && iamBoss == false)  // 검 숙련도가 1 이상 일정 체력 이하의 몬스터가 출혈 중이면 즉사(보스 제외)
+                if (Swordlevel > 1 && Enemy_HP <= Enemy_HPten && iamBoss == false)  // 검 숙련도가 1 이상 일정 체력 이하의 몬스터가 출혈 중이면 즉사(보스 제외)
                 {
                     Enemy_HP = 0f;
-                }
-            }
-            if(Input.GetKeyDown(KeyCode.D) && swordLevel > 2 && iamBoss == true)
-            {
-                Enemy_HP -= (swordLevel * (bleedingDamage * 2));    // 출혈 스택 * (출혈 데미지의 두 배)
-            }
-            else if(Input.GetKeyDown(KeyCode.D) && swordLevel > 2 && iamBoss == false)
-            {
-                Enemy_HP -= (swordLevel * (bleedingDamage * 2));    // 출혈 스택 * (출혈 데미지의 두 배)
-
-                if (Enemy_HP <= Enemy_HPten)
-                {
-                    Enemy_HP = 0;
                 }
             }
         }
@@ -376,6 +362,19 @@ public abstract class Enemy : MonoBehaviour
         }
         Invoke("bleeding", 1f);
     }
+
+    public void StackBleed()
+    {
+        if (Swordlevel > 0)  // 플레이어가 출혈 업글했을 경우
+        {
+            if (bleedLevel <= 5)     // 출혈스택 6까지 쌓임
+            {
+                bleedLevel++;
+                Debug.Log("출혈스택 쌓임");
+            }
+            bleedingTime = Player.BleedingTime;
+        }
+    }
     public IEnumerator Hit(float damage) // 피해 함수
     {
         posi = this.gameObject.GetComponent<Transform>();
@@ -385,15 +384,7 @@ public abstract class Enemy : MonoBehaviour
         rigid = this.GetComponent<Rigidbody2D>();
         this.GetComponentInChildren<EnemyUi>().ShowDamgeText(damage); //윤성권 추가함
 
-        if(swordLevel > 0)  // 플레이어가 출혈 업글했을 경우
-        {
-            if(bleedLevel <= 5)     // 출혈스택 6까지 쌓임
-            {
-                bleedLevel++;
-            }
-            bleedingTime = Player.BleedingTime;
-            Debug.Log(bleedingTime);
-        }
+        StackBleed();
 
         Enemy_HP -= damage;
         if(Enemy_Mod == 11)
@@ -505,7 +496,7 @@ public abstract class Enemy : MonoBehaviour
             spriteRenderer.color = new Color(1, 1, 1, 0.4f);
             this.gameObject.gameObject.SetActive(false);
         }
-        animator.SetBool("Hit", false);
+        //animator.SetBool("Hit", false);
         enemyHit = false;
     }
     public IEnumerator Die()    // 죽는 코루틴
@@ -592,6 +583,8 @@ public abstract class Enemy : MonoBehaviour
             spriteRenderer.color = new Color(1, 1, 1, 0.4f);
             this.gameObject.gameObject.SetActive(false);
         }
+        //animator.SetBool("Hit", false);
+        enemyHit = false;
     }
 
     void Sensing(Transform target, RaycastHit2D rayHit)  // 플레이어 추적
@@ -871,7 +864,7 @@ public abstract class Enemy : MonoBehaviour
         animator.SetBool("Attacking", true);
         Attacking = true;
         yield return new WaitForSeconds(0.5f);
-        /*Enemy_Attack.*/GiveDamage();
+        GiveDamage();
         this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
         yield return new WaitForSeconds(0.6f);
         this.gameObject.SetActive(false);
@@ -967,8 +960,17 @@ public abstract class Enemy : MonoBehaviour
     }
     public void hitEff()
     {
-        GameObject hitEff = Instantiate(hiteff, hitTrans.position, hitTrans.rotation);
-        hitEFF hitEFF = hitEff.GetComponent<hitEFF>();
+        GameObject hitEff = Instantiate(hiteff, hit_bloodTrans.position, hit_bloodTrans.rotation, hit_bloodTrans);
+        hitEFF hitEFF = hitEff.GetComponent<hitEFF>();       
+    }
+
+    public void bleedEff()
+    {
+        GameObject bloodEff = Instantiate(blood, hit_bloodTrans.position, hit_bloodTrans.rotation, hit_bloodTrans);
+        bloodEFF bloodEFF = bloodEff.GetComponent<bloodEFF>();
+
+        bloodEFF.dir = nextDirX;
+        bleedLevel = 0;
     }
 
     public void BossAtk()

@@ -113,7 +113,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy_Mod: 0
+  iamBoss: 0
   Enemy_HP: 0
+  Enemy_HPten: 0
   Enemy_Power: 0
   Enemy_Speed: 0
   Enemy_Atk_Speed: 0
@@ -139,9 +141,14 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  Swordlevel: 0
+  bleedLevel: 0
+  bleedingDamage: 0
+  bleedingTime: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
+  enemyLoc: 0
   bossLoc: 0
   myLocY: 0
   bossMoving: 0
@@ -149,7 +156,7 @@ MonoBehaviour:
   Hit_Set: 0
   boarLoc: 0
   hiteff: {fileID: 5284812379320055701, guid: 575e99c42061c9642b56a8dafa63c14e, type: 3}
-  blood: {fileID: 0}
+  blood: {fileID: 7614696593688231732, guid: 2da69be80ef7a1344bde5bf47d8105db, type: 3}
   SoulFloor: {fileID: 0}
   Split_Slime: {fileID: 2975204008383248924, guid: 1ef77a656131b094f86590be59dea090, type: 3}
   fire: {fileID: 0}
@@ -658,11 +665,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7166585528206624360, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 68.33
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7166585528206624360, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 7.68
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7166585528206624360, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

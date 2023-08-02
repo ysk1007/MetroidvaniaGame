@@ -8,7 +8,7 @@ public class Bee : Enemy
     {
         Enemy_Mod = 3;  // 비행 몬스터
         Enemy_Power = 4; //적의 공격력
-        Enemy_HP = 20f;  // 적의 체력
+        Enemy_HP = 50f;  // 적의 체력
         Enemy_Speed = 3f;    // 적의 이동속도
         Gap_Distance_X = 99f;  // Enemy와 Player의 X 거리차이
         Gap_Distance_Y = 99f;  // Enemy와 Player의 Y 거리차이
