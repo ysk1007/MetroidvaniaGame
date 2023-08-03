@@ -48,6 +48,7 @@ public class Player : MonoBehaviour
     public static int swordLevel = 3;       // 2023-07-31 추가(칼 숙련도)
     public static float BleedingTime = 8f;  // 2023-07-31 추가(출혈 지속 시간)
     public static float bleedDamage = 0.5f; // 2023-08-01 출혈 데미지
+    public static float bloodBoomDmg = 7f;  // 출혈스택 터뜨리는 데미지
     //public float enemyBleedingTime; // 2023-08-01(몬스터의 출혈 남은 시간)
 
     //선택능력치 추가함

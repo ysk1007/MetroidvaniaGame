@@ -43,6 +43,7 @@ public abstract class Enemy : MonoBehaviour
     public int bleedLevel;  // 출혈 스택
     public float bleedingDamage;    // 출혈 데미지
     public float bleedingTime;  // 출혈 지속시간
+    public float bloodBoomDmg;  // 플레이어의 출혈 스택 터뜨리는 데미지
 
     public bool turning;    // 보스가 뒤돌 수 있는 상황인지 확인하는 변수
     public int atkPattern;  // boss의 공격 패턴 번호
@@ -102,7 +103,7 @@ public abstract class Enemy : MonoBehaviour
         Sensor();
         Swordlevel = Player.swordLevel;
         bleedingDamage = Player.bleedDamage;
-
+        bloodBoomDmg = Player.bloodBoomDmg;
         if (bleedingTime >= 0)
         {
             bleedingTime -= Time.deltaTime;
@@ -137,6 +138,7 @@ public abstract class Enemy : MonoBehaviour
     {
         Swordlevel = Player.swordLevel;
         bleedingDamage = Player.bleedDamage;
+        bloodBoomDmg = Player.bloodBoomDmg;
         playerLoc = target.position.x;
         bossLoc = this.gameObject.transform.position.x;
         if (bleedingTime >= 0)
@@ -160,6 +162,7 @@ public abstract class Enemy : MonoBehaviour
         boarLoc = this.gameObject.transform.position.x;
         Swordlevel = Player.swordLevel;
         bleedingDamage = Player.bleedDamage;
+        bloodBoomDmg = Player.bloodBoomDmg;
         StartCoroutine(boarMove());
     }
     
@@ -968,8 +971,12 @@ public abstract class Enemy : MonoBehaviour
     {
         GameObject bloodEff = Instantiate(blood, hit_bloodTrans.position, hit_bloodTrans.rotation, hit_bloodTrans);
         bloodEFF bloodEFF = bloodEff.GetComponent<bloodEFF>();
-
+        Debug.Log(Enemy_HP+"Enemy_HP");
         bloodEFF.dir = nextDirX;
+        Enemy_HP -= bloodBoomDmg * bleedLevel;
+        Debug.Log(bleedLevel+"bleedLevel");
+        Debug.Log(bloodBoomDmg * bleedLevel+"BloodBoomDmg");
+        Debug.Log(Enemy_HP+"Enemy_HP");
         bleedLevel = 0;
     }
 
