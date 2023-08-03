@@ -145,11 +145,30 @@ public abstract class Enemy : MonoBehaviour
         {
             bleedingTime -= Time.deltaTime;
         }
+
         if (this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
         {
             bossMove();
             BossAtk();
         }
+    }
+
+    public virtual void OrcBoss(Transform target)
+    {
+        Swordlevel = Player.swordLevel;
+        bleedingDamage = Player.bleedDamage;
+        bloodBoomDmg = Player.bloodBoomDmg;
+        if (bleedingTime >= 0)
+        {
+            bleedingTime -= Time.deltaTime;
+        }
+
+        if (this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
+        {
+            OrcAttack();
+            orcMove();
+        }
+        
     }
 
     public virtual void Boar(Transform target)  // boar용
@@ -198,6 +217,17 @@ public abstract class Enemy : MonoBehaviour
         soulSpawn2 = this.gameObject.transform.GetChild(4).GetComponent<Transform>();
 
         randomAtk();
+        bleeding();
+    }
+
+    public virtual void orcbossOnetime()
+    {
+        animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
+        hit_bloodTrans = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
+        Enemy_HPten = Enemy_HP * 0.1f;
+        bleedingTime = 0f;
+
+        OrcRandomAtk();
         bleeding();
     }
 
@@ -971,12 +1001,8 @@ public abstract class Enemy : MonoBehaviour
     {
         GameObject bloodEff = Instantiate(blood, hit_bloodTrans.position, hit_bloodTrans.rotation, hit_bloodTrans);
         bloodEFF bloodEFF = bloodEff.GetComponent<bloodEFF>();
-        Debug.Log(Enemy_HP+"Enemy_HP");
         bloodEFF.dir = nextDirX;
         Enemy_HP -= bloodBoomDmg * bleedLevel;
-        Debug.Log(bleedLevel+"bleedLevel");
-        Debug.Log(bloodBoomDmg * bleedLevel+"BloodBoomDmg");
-        Debug.Log(Enemy_HP+"Enemy_HP");
         bleedLevel = 0;
     }
 
@@ -1103,6 +1129,59 @@ public abstract class Enemy : MonoBehaviour
         GiveDamage();
         bossBox.enabled = false;
     }
+
+    void OrcRandomAtk()
+    {
+        int randNum;
+        randNum = Random.Range(4, 5);   // 4 ~ 5 예정
+        atkPattern = Random.Range(1, 5);     // 패턴 번호를 1 ~ 4까지 랜덤으로 뽑음.
+
+        Invoke("OrcRandomAtk", randNum);
+    }
+
+    void orcMove()  // Orc 보스의 오른쪽으로 움직이는 함수
+    {
+        gameObject.transform.Translate(Vector2.right * Time.deltaTime * Enemy_Speed);
+    }
+
+    void OrcAttack()
+    {
+        switch (atkPattern)
+        {
+            case 1:
+                Left_Hooking();
+                atkPattern = 0;
+                break;
+            case 2:
+                Right_Hooking();
+                atkPattern = 0;
+                break;
+            case 3:
+                Left_Hooking();
+                atkPattern = 0;
+                break;
+            case 4:
+                Right_Hooking();
+                atkPattern = 0;
+                break;
+        }
+    }
+
+    void Left_Hooking()
+    {
+        animator.SetTrigger("Left_Hooking");
+        Debug.Log("왼손");
+        Attacking = false;  // 공격중 끄기
+    }
+
+    void Right_Hooking()
+    {
+        animator.SetTrigger("Right_Hooking");
+        Debug.Log("오른손");
+        Attacking = false;  // 공격 중 끄기.
+
+    }
+
 
     IEnumerator boarMove()
     {

@@ -2704,9 +2704,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 36208536}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.06, y: -0.09, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -3.81, y: -2.52, z: 0}
+  m_LocalScale: {x: 1.7125747, y: 1.7125747, z: 1.7125747}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 137502402}
   m_RootOrder: 1
@@ -2773,7 +2773,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -365986183, guid: 558c5f8cafa30364ea5b617d1cfdd5e8, type: 3}
+  m_Sprite: {fileID: 396039687, guid: bc71b3854c923b94ca4b789fdc147e25, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3755,6 +3755,7 @@ MonoBehaviour:
   bleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
+  bloodBoomDmg: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
@@ -5229,7 +5230,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &137502398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5327,8 +5328,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 137502397}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 67.73, y: -5.1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 67.73, y: -5.6497, z: 0}
+  m_LocalScale: {x: 1.4596, y: 1.4596, z: 1.4596}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 564297405}
@@ -10001,6 +10002,7 @@ MonoBehaviour:
   bleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
+  bloodBoomDmg: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
@@ -13650,6 +13652,7 @@ MonoBehaviour:
   bleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
+  bloodBoomDmg: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
@@ -19594,6 +19597,7 @@ MonoBehaviour:
   bleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
+  bloodBoomDmg: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
@@ -21490,6 +21494,7 @@ MonoBehaviour:
   bleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
+  bloodBoomDmg: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
@@ -27023,6 +27028,7 @@ MonoBehaviour:
   bleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
+  bloodBoomDmg: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
@@ -29803,6 +29809,7 @@ MonoBehaviour:
   bleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
+  bloodBoomDmg: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
@@ -30754,6 +30761,7 @@ MonoBehaviour:
   bleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
+  bloodBoomDmg: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
@@ -34671,6 +34679,7 @@ MonoBehaviour:
   bleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
+  bloodBoomDmg: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
@@ -36737,6 +36746,7 @@ MonoBehaviour:
   bleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
+  bloodBoomDmg: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
@@ -38088,6 +38098,7 @@ MonoBehaviour:
   bleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
+  bloodBoomDmg: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
@@ -38672,7 +38683,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1974481434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38718,6 +38729,7 @@ MonoBehaviour:
   bleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
+  bloodBoomDmg: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
@@ -41412,6 +41424,7 @@ MonoBehaviour:
   bleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
+  bloodBoomDmg: 0
   turning: 0
   atkPattern: 0
   playerLoc: 0
