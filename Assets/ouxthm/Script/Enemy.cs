@@ -56,7 +56,7 @@ public abstract class Enemy : MonoBehaviour
 
     public bool Enemy_Left; // 적의 방향
     public bool Hit_Set;    // 몬스터를 깨우는 변수
-    public float boarLoc;    // 멧돼지의 현재위치 X
+    public float boarLoc;    // 멧돼지의 X 현재위치 
 
     public GameObject hiteff;  // 히트 이펙트 
     Transform hit_bloodTrans; // 히트 이펙트 위치
@@ -66,8 +66,13 @@ public abstract class Enemy : MonoBehaviour
     Transform soulSpawn1;   // 보스 바닥 터뜨리기 생성 위치
     Transform soulSpawn2;   // 보스 바닥 터뜨리기 생성 위치
 
+    Transform rockSpawn;    // 보스가 던지는 돌 생성 위치
+    Transform rockSpawn1;   // 보스가 던지는 돌 생성 위치
+    Transform rockSpawn2;   // 보스가 던지는 돌 생성 위치
+
     public GameObject SoulFloor; // 보스 영혼 공격
-    public GameObject Split_Slime;
+    public GameObject Rock; // 보스가 던지는 돌
+    public GameObject Split_Slime;  // 분열 슬라임
     public GameObject fire; // 프리펩 투사체
     public GameObject ProObject;    // 클론 투사체
        
@@ -168,7 +173,9 @@ public abstract class Enemy : MonoBehaviour
             OrcAttack();
             orcMove();
         }
-        
+        orcDie();
+
+
     }
 
     public virtual void Boar(Transform target)  // boar용
@@ -222,8 +229,15 @@ public abstract class Enemy : MonoBehaviour
 
     public virtual void orcbossOnetime()
     {
+        Pos = GetComponent<Transform>();
+        BossSpriteBox = this.gameObject.GetComponent<BoxCollider2D>();
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
+        rigid = this.gameObject.GetComponent<Rigidbody2D>();
         hit_bloodTrans = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
+
+        rockSpawn = this.gameObject.transform.GetChild(2).GetComponent<Transform>();
+        rockSpawn1 = this.gameObject.transform.GetChild(3).GetComponent<Transform>();
+        rockSpawn2 = this.gameObject.transform.GetChild(3).GetComponent<Transform>();
         Enemy_HPten = Enemy_HP * 0.1f;
         bleedingTime = 0f;
 
@@ -250,6 +264,7 @@ public abstract class Enemy : MonoBehaviour
             Boxs = GetComponent<BoxCollider2D>();
             Bump();
         }
+        //Debug.Log(collision.gameObject.name);
         
     }
 
@@ -431,7 +446,7 @@ public abstract class Enemy : MonoBehaviour
             if (!animator.GetBool("Hit") && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
             {
                 hitEff();
-                if (Enemy_Mod != 1 && Enemy_Mod != 3 && Enemy_Mod != 4 && Enemy_Mod != 11)
+                if (Enemy_Mod != 1 && Enemy_Mod != 3 && Enemy_Mod != 4 && Enemy_Mod != 6 && Enemy_Mod != 11)
                     if (animator.GetBool("Run") == true)
                     {
                         animator.SetBool("Run", false);
@@ -447,94 +462,18 @@ public abstract class Enemy : MonoBehaviour
                 enemyHit = true;
             }
         }
-        else if (Enemy_HP <= 0 && Enemy_Mod != 3 && Enemy_Mod != 11 && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy")) // Enemy의 체력이 0과 같거나 이하일 때(죽음)
+        else if(Enemy_HP < 0)
         {
-            Dying = true;
-            if (Enemy_Mod != 1 && Enemy_Mod != 3 && Enemy_Mod != 4 && Enemy_Mod != 11)
-            {
-                if (animator.GetBool("Run") == true)
-                {
-                    animator.SetBool("Run", false);
-                }
-            }
-            Enemy_Speed = 0;
-            old_Speed = Enemy_Speed;
-            if(Enemy_Mod != 11)
-            {
-                animator.SetTrigger("Die");
-            }
-            this.gameObject.layer = LayerMask.NameToLayer("Dieenemy");
-            yield return new WaitForSeconds(Enemy_Dying_anim_Time );
-            enemyHit = false;
-            if(Enemy_Mod == 9 && posi.localScale.y > 1f)   // 분열 몬스터일 경우
-            {
-                StartCoroutine(Split());
-                this.gameObject.SetActive(false);
-            }       
-            else if (Enemy_Mod == 9 && posi.localScale.y <= 1f)
-            {
-                this.gameObject.SetActive(false);   // clone slime 제거
-                //Destroy();
-            }
-            else if(Enemy_Mod != 9)
-            {
-                this.gameObject.SetActive(false);
-            }
+            StartCoroutine(Die());
         }
-        else if (Enemy_HP <= 0 && Enemy_Mod == 3 && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy")) // 비행 몬스터 죽음)
-        {
-            Dying = true;
-            this.gameObject.layer = LayerMask.NameToLayer("Dieenemy");
-            Enemy_Speed = 0;
-            old_Speed = Enemy_Speed;
-            nextDirX = 0;
-            if (Attacker)
-            {
-                for (int i = 0; i < 4; i++)
-                {
-                    // 스프라이트 블링크
-                    spriteRenderer.color = new Color(1, 1, 1, 0.4f);
-                    yield return new WaitForSeconds(0.1f);
-                    spriteRenderer.color = new Color(1, 1, 1, 1);
-                    yield return new WaitForSeconds(0.1f);
-                }
-                spriteRenderer.color = new Color(1, 1, 1, 0.4f);
-            }
-            else if (!Attacker)
-            {
-                animator.SetTrigger("Die");
-                rigid.isKinematic = false;
-            }
-            yield return new WaitForSeconds(Enemy_Dying_anim_Time);
-            this.gameObject.gameObject.SetActive(false);
-        }
-        else if(Enemy_HP <= 0 && Enemy_Mod == 11 && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
-        {
-            animator.SetBool("Rush", false);
-            Dying = true;
-            this.gameObject.layer = LayerMask.NameToLayer("Dieenemy");
-            Enemy_Speed = 0;
-            old_Speed = Enemy_Speed;
-            nextDirX = 0;
-            Debug.Log("죽는 애니메이션 직전");
-            for (int i = 0; i < 4; i++)
-            {
-                // 스프라이트 블링크
-                spriteRenderer.color = new Color(1, 1, 1, 0.4f);
-                yield return new WaitForSeconds(0.1f);
-                spriteRenderer.color = new Color(1, 1, 1, 1);
-                yield return new WaitForSeconds(0.1f);
-                Debug.Log("반짝반짝");
-            }
-            spriteRenderer.color = new Color(1, 1, 1, 0.4f);
-            this.gameObject.gameObject.SetActive(false);
-        }
-        //animator.SetBool("Hit", false);
+
         enemyHit = false;
     }
     public IEnumerator Die()    // 죽는 코루틴
     {
-        if (Enemy_HP <= 0 && Enemy_Mod != 3 && Enemy_Mod != 11 && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy")) // Enemy의 체력이 0과 같거나 이하일 때(죽음)
+        animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
+
+        if (Enemy_HP <= 0 && Enemy_Mod != 3 && Enemy_Mod != 11 && Enemy_Mod != 6 && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy")) // Enemy의 체력이 0과 같거나 이하일 때(죽음)
         {
             Dying = true;
             if (Enemy_Mod != 1 && Enemy_Mod != 3 && Enemy_Mod != 4 && Enemy_Mod != 11)
@@ -595,6 +534,24 @@ public abstract class Enemy : MonoBehaviour
             yield return new WaitForSeconds(Enemy_Dying_anim_Time);
             this.gameObject.gameObject.SetActive(false);
         }
+        else if (Enemy_HP <= 0 && Enemy_Mod == 6 && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))  // Orc보스 죽음
+        {
+            Dying = true;
+            this.gameObject.layer = LayerMask.NameToLayer("Dieenemy");
+            Enemy_Speed = 0;
+            old_Speed = Enemy_Speed;
+            nextDirX = 0;
+            for (int i = 0; i < 10; i++)
+            {
+                // 스프라이트 블링크
+                spriteRenderer.color = new Color(1, 1, 1, 0.4f);
+                yield return new WaitForSeconds(0.1f);
+                spriteRenderer.color = new Color(1, 1, 1, 1);
+                yield return new WaitForSeconds(0.1f);
+            }
+            spriteRenderer.color = new Color(1, 1, 1, 0.4f);
+            this.gameObject.gameObject.SetActive(false);
+        }
         else if (Enemy_HP <= 0 && Enemy_Mod == 11 && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
         {
             animator.SetBool("Rush", false);
@@ -603,7 +560,7 @@ public abstract class Enemy : MonoBehaviour
             Enemy_Speed = 0;
             old_Speed = Enemy_Speed;
             nextDirX = 0;
-            Debug.Log("죽는 애니메이션 직전");
+
             for (int i = 0; i < 4; i++)
             {
                 // 스프라이트 블링크
@@ -616,7 +573,6 @@ public abstract class Enemy : MonoBehaviour
             spriteRenderer.color = new Color(1, 1, 1, 0.4f);
             this.gameObject.gameObject.SetActive(false);
         }
-        //animator.SetBool("Hit", false);
         enemyHit = false;
     }
 
@@ -960,6 +916,28 @@ public abstract class Enemy : MonoBehaviour
         Pb.Power = Enemy_Power;
         Pb.Time = endTime;
     }
+    public void rockSpawning()
+    {
+        GameObject rock = Instantiate(Rock, rockSpawn.position, rockSpawn.rotation);
+        //GameObject rock1 = Instantiate(Rock, rockSpawn1.position, rockSpawn1.rotation);
+        //GameObject rock2 = Instantiate(Rock, rockSpawn2.position, rockSpawn2.rotation);
+        
+        Rock_Eff rE = rock.GetComponent<Rock_Eff>();
+        //RockEff rE1 = rock.GetComponent<RockEff>();
+        //RockEff rE2 = rock.GetComponent<RockEff>();
+
+        rE.Time = endTime;
+        rE.Power = Enemy_Power;
+        rE.Dir = nextDirX;
+        /*
+        rE1.Time = endTime;
+        rE1.Power = Enemy_Power;
+        rE1.Dir = nextDirX;
+
+        rE2.Time = endTime;
+        rE2.Power = Enemy_Power;
+        rE2.Dir = nextDirX;*/
+    }
 
     public void soulSpawning()
     {
@@ -994,7 +972,8 @@ public abstract class Enemy : MonoBehaviour
     public void hitEff()
     {
         GameObject hitEff = Instantiate(hiteff, hit_bloodTrans.position, hit_bloodTrans.rotation, hit_bloodTrans);
-        hitEFF hitEFF = hitEff.GetComponent<hitEFF>();       
+        hitEFF hitEFF = hitEff.GetComponent<hitEFF>();
+        hitEFF.dir = nextDirX;
     }
 
     public void bleedEff()
@@ -1134,7 +1113,7 @@ public abstract class Enemy : MonoBehaviour
     {
         int randNum;
         randNum = Random.Range(4, 5);   // 4 ~ 5 예정
-        atkPattern = Random.Range(1, 5);     // 패턴 번호를 1 ~ 4까지 랜덤으로 뽑음.
+        atkPattern = Random.Range(1, 7);     // 패턴 번호를 1 ~ 6까지 랜덤으로 뽑음.
 
         Invoke("OrcRandomAtk", randNum);
     }
@@ -1143,25 +1122,51 @@ public abstract class Enemy : MonoBehaviour
     {
         gameObject.transform.Translate(Vector2.right * Time.deltaTime * Enemy_Speed);
     }
+    void orcDie()   // Orc 보스의 죽는 애니메이션
+    {
+        if (Dying)
+        {
+            BossSpriteBox.enabled = false;
+            rigid.isKinematic = true;
+            gameObject.transform.Translate(Vector2.down * Time.deltaTime * 5);
+        }
+    }
 
     void OrcAttack()
     {
+
         switch (atkPattern)
         {
             case 1:
                 Left_Hooking();
+                rockSpawning();
                 atkPattern = 0;
                 break;
             case 2:
                 Right_Hooking();
+                rockSpawning();
                 atkPattern = 0;
                 break;
             case 3:
                 Left_Hooking();
+                rockSpawning();
                 atkPattern = 0;
                 break;
             case 4:
                 Right_Hooking();
+                rockSpawning();
+                atkPattern = 0;
+                break;
+            case 5:
+                Right_Hooking();
+                rockSpawning();
+                StartCoroutine(recoil());
+                atkPattern = 0;
+                break;
+            case 6:
+                Right_Hooking();
+                rockSpawning();
+                StartCoroutine(recoil());
                 atkPattern = 0;
                 break;
         }
@@ -1169,17 +1174,23 @@ public abstract class Enemy : MonoBehaviour
 
     void Left_Hooking()
     {
+        Enemy_Speed = 1f;
         animator.SetTrigger("Left_Hooking");
-        Debug.Log("왼손");
         Attacking = false;  // 공격중 끄기
     }
 
     void Right_Hooking()
     {
+        Enemy_Speed = 1f;
         animator.SetTrigger("Right_Hooking");
-        Debug.Log("오른손");
         Attacking = false;  // 공격 중 끄기.
-
+    }
+    IEnumerator recoil()    // 공격 반동으로 잠시 멈추는 함수
+    {
+        animator.SetBool("Idle", true);
+        Enemy_Speed = 0f;
+        yield return new WaitForSeconds(4f);
+        animator.SetBool("Idle", false);
     }
 
 
@@ -1227,12 +1238,10 @@ public abstract class Enemy : MonoBehaviour
         if (Enemy_Left == true)
         {
             Enemy_Left = false;
-            Debug.Log("바꿀게1");
         }
         else if (Enemy_Left == false)
         {
             Enemy_Left = true;
-            Debug.Log("바꿀게2");
         }
         yield return null; 
         Hit_Set = false;

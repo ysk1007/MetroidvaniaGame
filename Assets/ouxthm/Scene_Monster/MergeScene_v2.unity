@@ -5219,11 +5219,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 137502402}
-  - component: {fileID: 137502401}
   - component: {fileID: 137502400}
   - component: {fileID: 137502399}
-  - component: {fileID: 137502398}
   - component: {fileID: 137502403}
+  - component: {fileID: 137502404}
+  - component: {fileID: 137502405}
   m_Layer: 3
   m_Name: Fat_Boss
   m_TagString: Boss
@@ -5231,27 +5231,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &137502398
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 137502397}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05e405305395f0347bc9b94149abab95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Fat_speed: 2
-  Fat_pattern: 0
-  Gap_Distance: 99
-  AtkDistance: 5
-  RushDistance: 10
-  Fat_HP: 100
-  Fat_Left: 1
-  Attacking: 0
-  iamBoss: 0
 --- !u!61 &137502399
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5299,27 +5278,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &137502401
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 137502397}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05e405305395f0347bc9b94149abab95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Fat_speed: 2
-  Fat_pattern: 0
-  Gap_Distance: 99
-  AtkDistance: 5
-  RushDistance: 30
-  Fat_HP: 100
-  Fat_Left: 0
-  Attacking: 0
-  iamBoss: 0
 --- !u!4 &137502402
 Transform:
   m_ObjectHideFlags: 0
@@ -5328,7 +5286,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 137502397}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 67.73, y: -5.6497, z: 0}
+  m_LocalPosition: {x: 157.8, y: -3.44, z: 0}
   m_LocalScale: {x: 1.4596, y: 1.4596, z: 1.4596}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5434,6 +5392,86 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &137502404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137502397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 104e5b4cf07dd8a48a16a5a73f14f949, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monster: {fileID: 137502405}
+  target: {fileID: 0}
+--- !u!114 &137502405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137502397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57ee7efa8633ed24f9355847714e6dac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemy_Mod: 0
+  iamBoss: 0
+  Enemy_HP: 0
+  Enemy_HPten: 0
+  Enemy_Power: 0
+  Enemy_Speed: 0
+  Enemy_Atk_Speed: 0
+  Attacking: 0
+  Gap_Distance_X: 0
+  Gap_Distance_Y: 0
+  Enemy_Sensing_X: 0
+  Enemy_Sensing_Y: 0
+  Enemy_Range_X: 0
+  Enemy_Range_Y: 0
+  Pdamage: 0
+  Bump_Power: 0
+  atkDelay: 0
+  nextDirX: 0
+  nextDirY: 0
+  Dying: 0
+  Enemy_Dying_anim_Time: 0
+  atkX: 0
+  atkY: 0
+  enemyHit: 0
+  old_Speed: 0
+  dTime: 0
+  atkTime: 0
+  Attacker: 0
+  endTime: 0
+  Swordlevel: 0
+  bleedLevel: 0
+  bleedingDamage: 0
+  bleedingTime: 0
+  bloodBoomDmg: 0
+  turning: 0
+  atkPattern: 0
+  playerLoc: 0
+  enemyLoc: 0
+  bossLoc: 0
+  myLocY: 0
+  bossMoving: 0
+  Enemy_Left: 0
+  Hit_Set: 0
+  boarLoc: 0
+  hiteff: {fileID: 0}
+  blood: {fileID: 0}
+  SoulFloor: {fileID: 0}
+  Split_Slime: {fileID: 0}
+  fire: {fileID: 0}
+  ProObject: {fileID: 0}
+  PObject: {fileID: 0}
+  Pos: {fileID: 0}
+  arrow: {fileID: 0}
+  slash: {fileID: 0}
 --- !u!1 &147203019
 GameObject:
   m_ObjectHideFlags: 0
@@ -23889,7 +23927,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1246792017
 Transform:
   m_ObjectHideFlags: 0
