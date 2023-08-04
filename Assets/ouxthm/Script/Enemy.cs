@@ -919,26 +919,30 @@ public abstract class Enemy : MonoBehaviour
     public void rockSpawning()
     {
         GameObject rock = Instantiate(Rock, rockSpawn.position, rockSpawn.rotation);
-        //GameObject rock1 = Instantiate(Rock, rockSpawn1.position, rockSpawn1.rotation);
-        //GameObject rock2 = Instantiate(Rock, rockSpawn2.position, rockSpawn2.rotation);
-        
+        rock.transform.eulerAngles = new Vector3(0, 0, 30); // 발사각 정하기
+
+        GameObject rock1 = Instantiate(Rock, rockSpawn1.position, rockSpawn1.rotation);
+        rock1.transform.eulerAngles = new Vector3(0, 0, 45);
+
+        GameObject rock2 = Instantiate(Rock, rockSpawn2.position, rockSpawn2.rotation);
+        rock2.transform.eulerAngles = new Vector3(0, 0, 60);
+
         Rock_Eff rE = rock.GetComponent<Rock_Eff>();
-        //RockEff rE1 = rock.GetComponent<RockEff>();
-        //RockEff rE2 = rock.GetComponent<RockEff>();
+        Rock_Eff rE1 = rock1.GetComponent<Rock_Eff>();
+        Rock_Eff rE2 = rock2.GetComponent<Rock_Eff>();
 
         rE.Time = endTime;
         rE.Power = Enemy_Power;
         rE.Dir = nextDirX;
-        /*
+        
         rE1.Time = endTime;
         rE1.Power = Enemy_Power;
         rE1.Dir = nextDirX;
 
         rE2.Time = endTime;
         rE2.Power = Enemy_Power;
-        rE2.Dir = nextDirX;*/
+        rE2.Dir = nextDirX;
     }
-
     public void soulSpawning()
     {
         GameObject Soul = Instantiate(SoulFloor, soulSpawn.position, soulSpawn.rotation);
