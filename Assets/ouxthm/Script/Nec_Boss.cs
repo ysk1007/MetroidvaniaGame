@@ -6,10 +6,13 @@ public class Nec_Boss : Enemy
 {
     public override void InitSetting()  // 적의 기본 정보를 설정하는 함수
     {
+        Enemy_Name = "네크로맨서"; //윤성권 추가함
+        AmIBoss = true; //윤성권 추가함
+        BossHpLine = 4; //윤성권 추가함
         Enemy_Mod = 2;  // 보스
         Enemy_Power = 12f; //적의 공격력
         Bump_Power = 10f;    // 충돌 공격력
-        Enemy_HP = 35f;  // 적의 체력
+        Enemy_HP = 300f;  // 적의 체력
         Enemy_Speed = 1f;    // 적의 이동속도
         Gap_Distance_X = 99f;  // Enemy와 Player의 X 거리차이
         Gap_Distance_Y = 99f;  // Enemy와 Player의 Y 거리차이
@@ -24,6 +27,7 @@ public class Nec_Boss : Enemy
         endTime = 0.8f; // 투사체 사라지는 시간
         turning = true; // 돌기 가능
         Attacking = false;
+        GameManager.Instance.GetComponent<BossHpController>().BossSpawn(this); //윤성권 추가함
     }
 
     public override void Boss(Transform target)

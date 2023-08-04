@@ -11,8 +11,12 @@ public class WeaponSwap : MonoBehaviour
     public TextMeshProUGUI SwapCoolRemain;
 
     public GameObject SkillUi;
-    public Image[] skills;
-    public TextMeshProUGUI SkillCoolRemain;
+    public GameObject[] skills;
+
+    public GameObject[] SkillCools;
+    public TextMeshProUGUI sword_skill_cool_text;
+    public TextMeshProUGUI axe_skill_cool_text;
+    public TextMeshProUGUI bow_skill_cool_text;
 
     public GameObject UltUi;
     public Image[] UltSkills;
@@ -20,7 +24,7 @@ public class WeaponSwap : MonoBehaviour
 
     public int currentWeaponIndex = 0;
     public float swapCool = 2f;
-    public float skillcool = 6.3f;
+    public float skillcool;
     public float ultcool = 180f;
 
     public float SkillremainTime = 0f;
@@ -29,17 +33,21 @@ public class WeaponSwap : MonoBehaviour
 
     public bool swaping = false;
     public bool skilling = false;
+    public bool[] Weapon_skilling = { false,false,false };
     public bool ultting = false;
 
     public bool ableExe = false;
     public bool ableBow = false;
 
     public Image img_Swap_coolTime;
-    public Image img_Skill_coolTime;
+    public Image Sword_Skill_coolTime;
+    public Image Axe_Skill_coolTime;
+    public Image Bow_Skill_coolTime;
     public Image img_Ult_coolTime;
     public Image Tab_key;
 
-    public Player player;
+    public Animator[] Cool_Anims;
+    public Animator Ult_cool_Anim;
 
     float time = 0;
     float _size = 1.5f;
@@ -49,8 +57,7 @@ public class WeaponSwap : MonoBehaviour
         if (!ableExe && !ableBow) Tab_key.enabled = false;
         images = WeaponUi.GetComponentsInChildren<Image>();
         images[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = true;
-        skills = SkillUi.GetComponentsInChildren<Image>();
-        skills[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = true;
+        skills[currentWeaponIndex].SetActive(true);
         UltSkills = UltUi.GetComponentsInChildren<Image>();
         UltSkills[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = true;
     }
@@ -70,11 +77,11 @@ public class WeaponSwap : MonoBehaviour
         {
             Tab_key.enabled = false;
             images[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = false;
-            skills[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = false;
+            skills[currentWeaponIndex].SetActive(false);
             UltSkills[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = false;
             currentWeaponIndex = 0;
             images[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = true;
-            skills[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = true;
+            skills[currentWeaponIndex].SetActive(true);
             UltSkills[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = true;
         }
         if (Input.GetKeyDown(KeyCode.Tab) && !swaping && ableExe)
@@ -97,21 +104,35 @@ public class WeaponSwap : MonoBehaviour
                 if (i == currentWeaponIndex)
                 {
                     images[i].gameObject.GetComponent<Image>().enabled = true;
-                    skills[i].gameObject.GetComponent<Image>().enabled = true;
+                    skills[i].SetActive(true);
                     UltSkills[i].gameObject.GetComponent<Image>().enabled = true;
                 }
                 else
                 {
                     images[i].gameObject.GetComponent<Image>().enabled = false;
-                    skills[i].gameObject.GetComponent<Image>().enabled = false;
+                    skills[i].SetActive(false);
                     UltSkills[i].gameObject.GetComponent<Image>().enabled = false;
                 }
             }
+            for (int i = 0; i < SkillCools.Length; i++)
+            {
+                if (i == currentWeaponIndex)
+                {
+                    SkillCools[i].SetActive(true);
+                }
+                else
+                {
+                    SkillCools[i].SetActive(false);
+                }
+            }
+
             StartCoroutine(FillSliderOverTime(img_Swap_coolTime, swapCool, "swap"));
         }
-        if (Input.GetKeyDown(KeyCode.S) && !skilling)
+        if (Input.GetKeyDown(KeyCode.S) && !Weapon_skilling[currentWeaponIndex])
         {
-            StartCoroutine(FillSliderOverTime(img_Skill_coolTime, skillcool, "skill"));
+            Player p = Player.instance.GetComponent<Player>();
+            Image i = SkillCools[currentWeaponIndex].GetComponent<Image>();
+            StartCoroutine(FillSliderOverTime(i, p.Skill_Cools[currentWeaponIndex], "skill"));
         }
         if (Input.GetKeyDown(KeyCode.U) && !ultting)
         {
@@ -119,7 +140,7 @@ public class WeaponSwap : MonoBehaviour
         }
     }
 
-    IEnumerator Ready(Image img, string type)
+    IEnumerator Ready(Image img, string type, int cur_index)
     {
         Color color = img.color;
         img.color = new Color32 (255,255,255,200);
@@ -134,13 +155,15 @@ public class WeaponSwap : MonoBehaviour
         }
         else if (type == "skill")
         {
-            skilling = false;
-            StartCoroutine(ReadyAnim(skills[currentWeaponIndex].gameObject.GetComponent<Image>()));
+            Weapon_skilling[cur_index] = false;
+            StartCoroutine(ReadyAnim(skills[cur_index].gameObject.GetComponent<Image>()));
+            Cool_Anims[cur_index].SetTrigger("cooltime");
         }
         else if (type == "ult")
         {
             ultting = false;
             StartCoroutine(ReadyAnim(UltSkills[currentWeaponIndex].gameObject.GetComponent<Image>()));
+            Ult_cool_Anim.SetTrigger("cooltime");
         }
     }
 
@@ -148,7 +171,6 @@ public class WeaponSwap : MonoBehaviour
     {
         while (time < 1f)
         {
-        Debug.Log("½ÃÀÛ");
         if (time <= _upSizeTime)
             {
                 img.rectTransform.localScale = Vector3.one * (1 + _size * time);
@@ -166,11 +188,11 @@ public class WeaponSwap : MonoBehaviour
         yield return null;
         }
         time = 0;
-
     }
 
     IEnumerator FillSliderOverTime(Image img, float coolTime, string type)
     {
+        int cur_index = currentWeaponIndex;
         float remainTime;
         img.enabled = true;
         if (type == "swap")
@@ -198,7 +220,10 @@ public class WeaponSwap : MonoBehaviour
         }
         else if (type == "skill")
         {
-            skilling = true;
+            Weapon_skilling[cur_index] = true;
+            TextMeshProUGUI SkillCoolRemain;
+            SkillCoolRemain = SkillCools[cur_index].GetComponentInChildren<TextMeshProUGUI>();
+            SkillCools[cur_index].SetActive(true);
             SkillCoolRemain.enabled = true;
             SkillremainTime = coolTime;
             remainTime = SkillremainTime;
@@ -218,6 +243,7 @@ public class WeaponSwap : MonoBehaviour
                 yield return null;
             }
             SkillCoolRemain.enabled = false;
+            SkillCools[cur_index].SetActive(false);
         }
         else if (type == "ult")
         {
@@ -244,7 +270,7 @@ public class WeaponSwap : MonoBehaviour
         }
         img.enabled = false;
         img.fillAmount = 0f;
-        StartCoroutine(Ready(img, type));
+        StartCoroutine(Ready(img, type, cur_index));
         
     }
 }

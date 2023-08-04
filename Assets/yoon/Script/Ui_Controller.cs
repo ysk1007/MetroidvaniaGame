@@ -16,7 +16,7 @@ public class Ui_Controller : MonoBehaviour
     public TextMeshProUGUI AtkPowerValueText;
     public TextMeshProUGUI DefValueText;
     public TextMeshProUGUI AtkSpeedValueText;
-    public TextMeshProUGUI DmgIncreaseValueText;
+    public TextMeshProUGUI CriticalChanceText;
     public TextMeshProUGUI MarketTextBox;
     public TextMeshProUGUI MarketGoldText;
     public Image BloodScreen;
@@ -188,10 +188,10 @@ public class Ui_Controller : MonoBehaviour
         PlayerCurrentHpText.text = PlayerHp.currentHp.ToString("F0");
 
         //인벤토리 갱신
-        AtkPowerValueText.text = player.AtkPower.ToString();
+        AtkPowerValueText.text = (player.AtkPower + player.DmgChange).ToString();
         DefValueText.text = player.Def.ToString();
-        AtkSpeedValueText.text = player.delayTime.ToString();
-        DmgIncreaseValueText.text = player.DmgIncrease.ToString("F0")+"%";
+        AtkSpeedValueText.text = player.ATS.ToString("F1");
+        CriticalChanceText.text = (player.CriticalChance * 100f).ToString() + "%";
 
         //레벨 골드 갱신
         PlayerLevel = player.level;

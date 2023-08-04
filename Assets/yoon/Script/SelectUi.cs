@@ -59,7 +59,7 @@ public class SelectUi : MonoBehaviour
         string path = Application.dataPath + "/Resources";
 
         //FromJson 부분
-        string fromJsonData = File.ReadAllText(path + "/UnlockSelectList.json");
+        string fromJsonData = File.ReadAllText(path + "/UnlockSelectList.txt");
         SelectFromJson = JsonUtility.FromJson<SelectList>(fromJsonData);
 
         FindRemainSelect();
@@ -68,7 +68,7 @@ public class SelectUi : MonoBehaviour
 
     void FindRemainSelect() //MAX(4) 레벨이 아닌 선택지만 불러옴
     {
-        for (int i = 0; i < SelectFromJson.Selects.Count; i++)
+        for (int i = 0; i < SelectFromJson.Selects.Length; i++)
         {
             if (SelectFromJson.Selects[i].Level != 4)
             {
@@ -155,30 +155,5 @@ public class SelectUi : MonoBehaviour
         SelectList = NewSelectList;
         List_Do_Select = NewDoList;
         RandomList = NewRandomList;
-    }
-
-    void CreateSelectJson()
-    {
-        // JSON 데이터 생성
-        SelectList data = new SelectList();
-        data.Selects = new List<SelectLevel>();
-
-        data.Selects.Add(new SelectLevel { SelectName = "selectAtkLevel", Level = 1 });
-        data.Selects.Add(new SelectLevel { SelectName = "selectATSLevel", Level = 1 });
-        data.Selects.Add(new SelectLevel { SelectName = "selectCCLevel", Level = 1 });
-        data.Selects.Add(new SelectLevel { SelectName = "selectDefLevel", Level = 1 });
-        data.Selects.Add(new SelectLevel { SelectName = "selectHpLevel", Level = 1 });
-        data.Selects.Add(new SelectLevel { SelectName = "selectGoldLevel", Level = 1 });
-        data.Selects.Add(new SelectLevel { SelectName = "selectExpLevel", Level = 1 });
-        data.Selects.Add(new SelectLevel { SelectName = "selectCoolTimeLevel", Level = 1 });
-
-        // JSON으로 변환
-        string json = JsonUtility.ToJson(data, true);
-
-        // JSON 파일 저장
-        string path = Application.dataPath + "/UnlockSelectList.json";
-        System.IO.File.WriteAllText(path, json);
-
-        Debug.Log("디버그 : Item JSON 파일 생성 완료");
     }
 }

@@ -53,28 +53,41 @@ public class Item
 }
 
 [System.Serializable]
-public class UnlockSelect
-{
-    public bool Unlock;
-}
-
-[System.Serializable]
-public class UnlockSelectList
-{
-    public Dictionary<string, int> Selects;
-}
-
-[System.Serializable]
 public class SelectLevel
 {
     public string SelectName;
     public int Level;
+
+    public SelectLevel(string selectName, int level)
+    {
+        SelectName = selectName;
+        Level = level;
+    }
 }
 
 [System.Serializable]
 public class SelectList
 {
-    public List<SelectLevel> Selects;
+    public SelectLevel[] Selects;
+}
+
+[System.Serializable]
+public class DMUlcokItem
+{
+    public string ItemName;
+    public bool isUnlock;
+
+    public DMUlcokItem(string itemName, bool unlock)
+    {
+        ItemName = itemName;
+        isUnlock = unlock;
+    }
+}
+
+[System.Serializable]
+public class ItemList
+{
+    public List<DMUlcokItem> items;
 }
 
 public class DataManager : MonoBehaviour
@@ -82,6 +95,7 @@ public class DataManager : MonoBehaviour
     public string PlayerPath;
     public string ItemPath;
     public string SelectPath;
+    public string ItemUlockPath;
     public Proficiency_ui proData;
     public SoundManager soundData;
     public SoundSlider sliderData;
@@ -113,6 +127,7 @@ public class DataManager : MonoBehaviour
         PlayerPath = Path.Combine(Application.dataPath + "/Resources", "PlayerData.json");
         ItemPath = Path.Combine(Application.dataPath + "/Resources", "ItemData.json");
         SelectPath = Path.Combine(Application.dataPath + "/Resources", "UnlockSelectList.txt");
+        ItemUlockPath = Path.Combine(Application.dataPath + "/Resources", "UnlockItemList.txt");
     }
 
     void Start()
@@ -120,6 +135,7 @@ public class DataManager : MonoBehaviour
         PlayerPath = Path.Combine(Application.dataPath+ "/Resources", "PlayerData.json");
         ItemPath = Path.Combine(Application.dataPath + "/Resources", "ItemData.json");
         SelectPath = Path.Combine(Application.dataPath + "/Resources", "UnlockSelectList.txt");
+        ItemUlockPath = Path.Combine(Application.dataPath + "/Resources", "UnlockItemList.txt");
         JsonLoad("Default");
         JsonLoad("ItemData");
     }
@@ -284,6 +300,7 @@ public class DataManager : MonoBehaviour
         CreatePlayerJson();
         CreateItemJson();
         CreateSelectJson();
+        CreateUnlockItemJson();
         Debug.Log("디버그 : 데이터를 성공적으로 생성하였습니다");
     }
 
@@ -336,42 +353,59 @@ public class DataManager : MonoBehaviour
     {
         Debug.Log("디버그 : 선택지 레벨 리스트 파일 생성 중");
 
-        // JSON 데이터 생성
-        SelectList data = new SelectList();
-        data.Selects = new List<SelectLevel>();
+        // SelectLevel 데이터 생성
+        List<SelectLevel> selectLevels = new List<SelectLevel>();
+        selectLevels.Add(new SelectLevel("selectAtkLevel", 1));
+        selectLevels.Add(new SelectLevel("selectATSLevel", 1));
+        selectLevels.Add(new SelectLevel("selectCCLevel", 1));
+        selectLevels.Add(new SelectLevel("selectDefLevel", 1));
+        selectLevels.Add(new SelectLevel("selectHpLevel", 1));
+        selectLevels.Add(new SelectLevel("selectGoldLevel", 1));
+        selectLevels.Add(new SelectLevel("selectExpLevel", 1));
+        selectLevels.Add(new SelectLevel("selectCoolTimeLevel", 1));
 
-        data.Selects.Add(new SelectLevel { SelectName = "selectAtkLevel", Level = 1 });
-        data.Selects.Add(new SelectLevel { SelectName = "selectATSLevel", Level = 1 });
-        data.Selects.Add(new SelectLevel { SelectName = "selectCCLevel", Level = 1 });
-        data.Selects.Add(new SelectLevel { SelectName = "selectDefLevel", Level = 1 });
-        data.Selects.Add(new SelectLevel { SelectName = "selectHpLevel", Level = 1 });
-        data.Selects.Add(new SelectLevel { SelectName = "selectGoldLevel", Level = 1 });
-        data.Selects.Add(new SelectLevel { SelectName = "selectExpLevel", Level = 1 });
-        data.Selects.Add(new SelectLevel { SelectName = "selectCoolTimeLevel", Level = 1 });
-
-        // JSON 파일로 저장
-        /*SaveToJson(data);*/
+        // 데이터를 JSON 파일로 저장
+        SaveToJson(selectLevels);
 
         Debug.Log("디버그 : 선택지 레벨 리스트 파일 생성 완료");
     }
 
-    private void SaveToJson(Dictionary<string, int> data)
+    void SaveToJson(List<SelectLevel> data)
     {
-        string jsonData = JsonUtility.ToJson(new JsonWrapper(data));
+        SelectList selectList = new SelectList();
+        selectList.Selects = data.ToArray();
+
+        string jsonData = JsonUtility.ToJson(selectList);
         File.WriteAllText(SelectPath, jsonData);
         Debug.Log("JSON 파일이 생성되었습니다.");
     }
 
-    // Dictionary를 직렬화하기 위한 래퍼 클래스
-    [System.Serializable]
-    private class JsonWrapper
+    void CreateUnlockItemJson()
     {
-        public Dictionary<string, int> data;
+        // Item 데이터 생성
+        List<DMUlcokItem> items = new List<DMUlcokItem>();
+        items.Add(new DMUlcokItem("SkyWalker", false));
+        items.Add(new DMUlcokItem("Club", false));
+        items.Add(new DMUlcokItem("JadeEmblem", false));
+        items.Add(new DMUlcokItem("ClownCloth", false));
+        items.Add(new DMUlcokItem("ClownHat", false));
+        items.Add(new DMUlcokItem("ClownGloves", false));
+        items.Add(new DMUlcokItem("ClownPants", false));
+        items.Add(new DMUlcokItem("ClownBoots", false));
 
-        public JsonWrapper(Dictionary<string, int> data)
-        {
-            this.data = data;
-        }
+        // 데이터를 JSON 파일로 저장
+        SaveToJson(items);
+    }
+
+    void SaveToJson(List<DMUlcokItem> data)
+    {
+        ItemList itemList = new ItemList();
+        itemList.items = data;
+
+        // Unity의 JsonUtility를 사용하여 JSON 파일 생성
+        string jsonData = JsonUtility.ToJson(itemList, true);
+        File.WriteAllText(ItemUlockPath, jsonData);
+        Debug.Log("JSON 파일이 생성되었습니다.");
     }
 
     public List<float> getVolume()
@@ -407,9 +441,9 @@ public class DataManager : MonoBehaviour
         List<SelectLevel> newSelectList = new List<SelectLevel>();
 
         string path = Application.dataPath + "/Resources";
-        string fromJsonData = File.ReadAllText(path + "/UnlockSelectList.json");
+        string fromJsonData = File.ReadAllText(path + "/UnlockSelectList.txt");
         SelectList = JsonUtility.FromJson<SelectList>(fromJsonData);
-        for (int i = 0; i < SelectList.Selects.Count; i++)
+        for (int i = 0; i < SelectList.Selects.Length; i++)
         {
             if (SelectList.Selects[i].SelectName == Name)
             {
@@ -426,7 +460,7 @@ public class DataManager : MonoBehaviour
         {
             Directory.CreateDirectory(path);
         }
-        File.WriteAllText(path + "/UnlockSelectList.json", jsonData);
+        File.WriteAllText(path + "/UnlockSelectList.txt", jsonData);
     }
 
 

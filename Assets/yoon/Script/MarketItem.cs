@@ -51,6 +51,7 @@ public class MarketItem : MonoBehaviour
                         EmptySloatSearch = true;
                         DataManager.instance.GetComponent<DataManager>().UnlockListUpdate(itemNumber);
                         Instantiate(randomitem, iv.inven_slots[i].transform);
+                        GameManager.Instance.GetComponent<inven>().updateUi();
                         Destroy(this.gameObject);
                         break;
                     }

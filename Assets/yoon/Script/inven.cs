@@ -147,6 +147,7 @@ public class inven : MonoBehaviour
             if (append[i] != null)
             {
                 append[i].InitSetting();
+                append[i].StatusGet(Player.instance.GetComponent<Player>());
                 append[i].data.SpecialPower = true;
                 append[i].SpecialPower();
             }

@@ -9,6 +9,9 @@ using static UnityEngine.GraphicsBuffer;
 
 public abstract class Enemy : MonoBehaviour
 {
+    public string Enemy_Name; //윤성권 추가함
+    public bool AmIBoss = false; //윤성권 추가함
+    public int BossHpLine; //윤성권 추가함
     public int Enemy_Mod;   // 1: 달팽이, 2: 근접공격 가능 몬스터, 3:비행몬스터, 4:제라스, 5: 자폭, 7: 투사체 원거리, 9: 분열, 11: 돌진하여 충돌
     public float Enemy_HP;  // 적의 체력
     public float Enemy_Power;   //적의 공격력
@@ -297,13 +300,24 @@ public abstract class Enemy : MonoBehaviour
 
     public IEnumerator Hit(float damage) // 피해 함수
     {
+        bool cc = false; // 추가
+        if (Player.instance.GetComponent<Player>().CCGetRandomResult()) //치명타 계산 추가
+        {
+            damage *= 2;
+            cc = true;
+        }
         posi = this.gameObject.GetComponent<Transform>();
         enemyHit = true;
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
         rigid = this.GetComponent<Rigidbody2D>();
-        this.GetComponentInChildren<EnemyUi>().ShowDamgeText(damage); //윤성권 추가함
-
+        Debug.Log(cc);
+        this.GetComponentInChildren<EnemyUi>().ShowDamgeText(damage, cc); //윤성권 추가함
+        if (AmIBoss)
+        {
+            GameManager.Instance.GetComponent<BossHpController>().BossHit(damage);
+        }
+        /*this.GetComponentInChildren<EnemyUi>().ShowBleedText(damage); //윤성권 추가함 출혈딜*/
         Enemy_HP -= damage;
         if(Enemy_Mod == 11)
         {

@@ -24,13 +24,15 @@ public class BossHpController : MonoBehaviour
     public HpBar[] HpSliders = { };
     public TextMeshProUGUI LineCount;
 
+    public TextMeshProUGUI BossName;
     public float BossTotalHp = 500f;
     public int BossHpLine = 5;
     private float DivisionHp;
     public int currentHpLine = 0;
 
+    public Enemy boss;
     // Start is called before the first frame update
-    void Start()
+    void BossStart()
     {
         startPosition = ShakeObject.transform.position;
         targetPosition = startPosition + new Vector3(0f, targetHeight, 0f);
@@ -65,8 +67,14 @@ public class BossHpController : MonoBehaviour
         }
     }
 
-    public void BossSpawn()
+    public void BossSpawn(Enemy enemy)
     {
+        boss = enemy;
+        BossName.text = boss.Enemy_Name;
+        BossTotalHp = boss.Enemy_HP;
+        BossHpLine = boss.BossHpLine;
+        BossStart();
+        TotalBar.SetActive(true);
         StartCoroutine(BossHpUi_Up());
     }
 

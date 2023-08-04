@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public float curTime, coolTime = 2;  // 연속공격이 가능한 시간
     public float skcoolTime;  // 스킬 쿨타임
     public float Sword_SkTime, Axe_SkTime, Bow_SkTime;   // 무기별 스킬 쿨타임
+    public float[] Skill_Cools = { 10f, 20f, 10f }; //스킬 쿨 리스트
     public bool isdelay = false;    //공격 딜레이 체크
     public bool isSlide = false;     //슬라이딩 체크
     public bool isGround = true;    //Player가 땅인지 아닌지 체크
@@ -36,13 +37,17 @@ public class Player : MonoBehaviour
     public float chargingTime = 2f; // 차징 시간
     public bool isCharging = false; // 차징 상태 여부
     public float chargeTimer = 0f; // 차징 시간을 측정하는 타이머
+    public PlayerCanvas playerCanvas; //추가함
 
     public static Player instance; //추가함
     public int gold;  //추가함
-    public int AtkPower; //추가함
-    public int Def; //추가함
+    public float AtkPower; //추가함
+    public float Def; //추가함
     public float CriticalChance; //추가함 , 이속,공속 복구되는거 수정 필요
     public float DmgIncrease; //추가함
+    public float ATS = 1; //추가함
+    public float GoldGet; //추가함
+    public float EXPGet; //추가함
     public float enemyPower;
 
     //선택능력치 추가함
@@ -86,7 +91,7 @@ public class Player : MonoBehaviour
     Projective_Body PBody;
 
     Rigidbody2D rigid;
-    Animator anim;
+    public Animator anim; //윤성권 퍼블릭으로 변경
     new AudioSource audio;
     void Awake()
     {
@@ -108,6 +113,7 @@ public class Player : MonoBehaviour
     void Start() //추가함
     {
         DataManager.instance.JsonLoad("PlayerData");
+        anim.SetFloat("AttackSpeed", ATS);
     }
 
     void Update()
@@ -250,10 +256,12 @@ public class Player : MonoBehaviour
                     isCharging = true;
                     print("차징 시작");
                     chargeTimer = 0f;
+                    playerCanvas.ChargeStart(); //도끼 게이지 추가함
                 }
                 else // 이미 차징 중인 경우
                 {
                     chargeTimer += Time.deltaTime;
+                    playerCanvas.GuageIncrease(chargeTimer/chargingTime); //도끼 게이지 추가함
                     if (chargeTimer >= chargingTime)
                     {
                         chargeTimer = chargingTime; // 차징 시간이 최대 시간을 넘어가지 않도록 제한
@@ -266,6 +274,7 @@ public class Player : MonoBehaviour
         else
         {
             isCharging = false;
+            playerCanvas.ChargeEnd(); //도끼 게이지 추가함
             if (chargeTimer >= chargingTime && chargeTimer != 0)
             {
                 Axe_chargeing();
@@ -770,5 +779,14 @@ public class Player : MonoBehaviour
                 break;
         }
         audio.Play();
+    }
+
+    public bool CCGetRandomResult() //치명타 계산 함수 추가
+    {
+        // 0과 1 사이의 랜덤한 값을 생성
+        float randomValue = Random.Range(0f, 1f);
+
+        // 랜덤 값이 확률보다 작거나 같으면 true를 반환, 그렇지 않으면 false를 반환
+        return randomValue <= CriticalChance;
     }
 }

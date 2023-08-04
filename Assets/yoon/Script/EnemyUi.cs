@@ -9,6 +9,7 @@ public class EnemyUi : MonoBehaviour
     public Image HpBar;
     public Enemy ThisEnemy;
     public GameObject DamagedText;
+    public GameObject BleedText;
     public GameObject HpUi;
     public float MaxHp;
     public float CurrentHp;
@@ -36,11 +37,29 @@ public class EnemyUi : MonoBehaviour
         HpUi.SetActive(true);
     }
 
-    public void ShowDamgeText(float DamagedValue)
+    public void ShowDamgeText(float DamagedValue, bool isCC)
     {
         ShowHpBar();
         GameObject Text = DamagedText;
         DamagedText TextCs = Text.GetComponentInChildren<DamagedText>();
+        TextCs.DamagedValue.text = DamagedValue.ToString();
+        TextCs.startPosition = ThisEnemy.transform.position;
+        if (isCC)
+        {
+            TextCs.DamagedValue.color = Color.yellow;
+        }
+        else
+        {
+            TextCs.DamagedValue.color = Color.white;
+        }
+        Instantiate(Text, ThisEnemy.transform.parent);
+    }
+
+    public void ShowBleedText(float DamagedValue)
+    {
+        ShowHpBar();
+        GameObject Text = BleedText;
+        BleedText TextCs = Text.GetComponentInChildren<BleedText>();
         TextCs.DamagedValue.text = DamagedValue.ToString();
         TextCs.startPosition = ThisEnemy.transform.position;
         Instantiate(Text, ThisEnemy.transform.parent);

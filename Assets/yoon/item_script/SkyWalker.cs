@@ -16,7 +16,7 @@ public class SkyWalker : itemStatus
         data.itemExplanation = "착용자의 신체가 가벼워진다";
         data.itemStat = "이동속도 +50% \n공격속도 +50%";
         data.itemNumber = 1;
-        data.Speed = 2f;
+        data.Speed = 0.5f;
         data.AtkSpeed = 0.5f;
     }
 
