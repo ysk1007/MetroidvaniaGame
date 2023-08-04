@@ -18,7 +18,7 @@ public class Rock_Eff : MonoBehaviour
     void Start()
     {
         rigid = this.GetComponent<Rigidbody2D>();
-        rigid.AddForce(transform.right * 20f, ForceMode2D.Impulse);
+        rigid.AddForce(transform.right * 20f, ForceMode2D.Impulse); // 이걸 Upadate문에 넣으니 힘을 계속 받아서 직선 운동함 // Start에 넣어 한 번만 실행 하게 하니 처음 받은 힘만 작용하여 포물선을 그림
         DestoryObject();
     }
 

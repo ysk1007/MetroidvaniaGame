@@ -64,11 +64,7 @@ public abstract class Enemy : MonoBehaviour
     Transform soulSpawn;    // 보스 바닥 터뜨리기 생성 위치
     Transform soulSpawn1;   // 보스 바닥 터뜨리기 생성 위치
     Transform soulSpawn2;   // 보스 바닥 터뜨리기 생성 위치
-
-    Transform rockSpawn;    // 보스가 던지는 돌 생성 위치
-    Transform rockSpawn1;   // 보스가 던지는 돌 생성 위치
-    Transform rockSpawn2;   // 보스가 던지는 돌 생성 위치
-    Transform canineSpawn;  // 보스가 던지는 몬스터 생성 위치
+    Transform PbSpawn;    // 보스가 던지는 돌 생성 위치
 
     public GameObject SoulFloor; // 보스 영혼 공격
     public GameObject Rock; // 보스가 던지는 돌
@@ -199,7 +195,7 @@ public abstract class Enemy : MonoBehaviour
         bleedingTime = 0f;
         hit_bloodTrans = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
         Pos = GetComponent<Transform>();
-        StartCoroutine(Think());
+        Think();
         if(Enemy_Mod == 7)
         {
             PObject = this.gameObject.transform.GetChild(0).GetComponent<Transform>();
@@ -232,14 +228,12 @@ public abstract class Enemy : MonoBehaviour
     {
         Pos = GetComponent<Transform>();
         BossSpriteBox = this.gameObject.GetComponent<BoxCollider2D>();
+        bossBox = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
         rigid = this.gameObject.GetComponent<Rigidbody2D>();
         hit_bloodTrans = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
 
-        canineSpawn = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
-        rockSpawn = this.gameObject.transform.GetChild(2).GetComponent<Transform>();
-        rockSpawn1 = this.gameObject.transform.GetChild(3).GetComponent<Transform>();
-        rockSpawn2 = this.gameObject.transform.GetChild(4).GetComponent<Transform>();
+        PbSpawn = this.gameObject.transform.GetChild(2).GetComponent<Transform>();
         Enemy_HPten = Enemy_HP * 0.1f;
         bleedingTime = 0f;
 
@@ -351,7 +345,7 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    IEnumerator Think() // 자동으로 다음 방향을 정하는 코루틴
+    void Think() // 자동으로 다음 방향을 정하는 코루틴
     {
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
 
@@ -367,8 +361,7 @@ public abstract class Enemy : MonoBehaviour
         }
         // 재귀
         float nextThinkTime = Random.Range(2f, 5f);
-        yield return new WaitForSeconds(nextThinkTime);
-        StartCoroutine(Think());
+        Invoke("Think", nextThinkTime);
     }
 
     void Turn() // 이미지를 뒤집는 코루틴
@@ -381,7 +374,7 @@ public abstract class Enemy : MonoBehaviour
             spriteRenderer.flipX = true; // nextDirX 값이 1이면 x축을 flip함
         }
         StopAllCoroutines();
-        StartCoroutine(Think());
+        Think();
     }
 
     public void bleeding()  // 도트데미지 주는 함수
@@ -501,8 +494,8 @@ public abstract class Enemy : MonoBehaviour
             }
             else if (Enemy_Mod == 9 && posi.localScale.y <= 1f)
             {
-                this.gameObject.SetActive(false);   // clone slime 제거
-                //Destroy();
+                //this.gameObject.SetActive(false);   // clone slime 제거
+                enemyDestroy();
             }
             else if (Enemy_Mod != 9)
             {
@@ -534,7 +527,8 @@ public abstract class Enemy : MonoBehaviour
                 rigid.isKinematic = false;
             }
             yield return new WaitForSeconds(Enemy_Dying_anim_Time);
-            this.gameObject.gameObject.SetActive(false);
+            //this.gameObject.gameObject.SetActive(false);
+            enemyDestroy();
         }
         else if (Enemy_HP <= 0 && Enemy_Mod == 6 && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))  // Orc보스 죽음
         {
@@ -552,7 +546,8 @@ public abstract class Enemy : MonoBehaviour
                 yield return new WaitForSeconds(0.1f);
             }
             spriteRenderer.color = new Color(1, 1, 1, 0.4f);
-            this.gameObject.gameObject.SetActive(false);
+            enemyDestroy();
+            //this.gameObject.gameObject.SetActive(false);
         }
         else if (Enemy_HP <= 0 && Enemy_Mod == 11 && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
         {
@@ -573,7 +568,8 @@ public abstract class Enemy : MonoBehaviour
                 Debug.Log("반짝반짝");
             }
             spriteRenderer.color = new Color(1, 1, 1, 0.4f);
-            this.gameObject.gameObject.SetActive(false);
+            enemyDestroy();
+            //this.gameObject.gameObject.SetActive(false);
         }
         enemyHit = false;
     }
@@ -878,12 +874,11 @@ public abstract class Enemy : MonoBehaviour
         this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
     }
 
-    /*public void Destroy()
+    public void enemyDestroy()
     {
         Debug.Log("아예 삭제");
-        Destroy(Split_Slime); 
-
-    }*/
+        Destroy(gameObject); 
+    }
 
     public void ProjectiveBody()    // 투사체 생성 (위치 저장)
     {
@@ -920,13 +915,13 @@ public abstract class Enemy : MonoBehaviour
     }
     public void rockSpawning()
     {
-        GameObject rock = Instantiate(Rock, rockSpawn.position, rockSpawn.rotation);
+        GameObject rock = Instantiate(Rock, PbSpawn.position, PbSpawn.rotation);
         rock.transform.eulerAngles = new Vector3(0, 0, 30); // 발사각 정하기
 
-        GameObject rock1 = Instantiate(Rock, rockSpawn1.position, rockSpawn1.rotation);
+        GameObject rock1 = Instantiate(Rock, PbSpawn.position, PbSpawn.rotation);
         rock1.transform.eulerAngles = new Vector3(0, 0, 45);
 
-        GameObject rock2 = Instantiate(Rock, rockSpawn2.position, rockSpawn2.rotation);
+        GameObject rock2 = Instantiate(Rock, PbSpawn.position, PbSpawn.rotation);
         rock2.transform.eulerAngles = new Vector3(0, 0, 60);
 
         Rock_Eff rE = rock.GetComponent<Rock_Eff>();
@@ -946,15 +941,15 @@ public abstract class Enemy : MonoBehaviour
         rE2.Dir = nextDirX;
     }
 
-    public void canineSpawning()
+    public void canineSpawning()    // 보스가 몬스터를 던지는 함수
     {
-        GameObject canine = Instantiate(CaninePb, canineSpawn.position, canineSpawn.rotation);
+        GameObject canine = Instantiate(CaninePb, PbSpawn.position, PbSpawn.rotation);
         canine.transform.eulerAngles = new Vector3(0, 0, 10); // 발사각 정하기
 
-        GameObject canine1 = Instantiate(CaninePb, canineSpawn.position, canineSpawn.rotation);
+        GameObject canine1 = Instantiate(CaninePb, PbSpawn.position, PbSpawn.rotation);
         canine1.transform.eulerAngles = new Vector3(0, 0, 15);
 
-        GameObject canine2 = Instantiate(CaninePb, canineSpawn.position, canineSpawn.rotation);
+        GameObject canine2 = Instantiate(CaninePb, PbSpawn.position, PbSpawn.rotation);
         canine2.transform.eulerAngles = new Vector3(0, 0, 20);
 
         CaninePb CPb = canine.GetComponent<CaninePb>();
@@ -1115,7 +1110,7 @@ public abstract class Enemy : MonoBehaviour
         animator.SetTrigger("Spawn");
         bossMoving = false;
         turning = false;
-        Invoke("onBox", 0.9f);
+        Invoke("locBox", 0.9f);
         if(this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
         {
             Invoke("soulSpawning", 1f);
@@ -1123,27 +1118,33 @@ public abstract class Enemy : MonoBehaviour
             Invoke("soulSpawning2", 1.6f);    
         }
     }
-    public void onBox() // 보스 공격 콜라이더 on 함수
+    public void locBox() // 보스 공격 콜라이더 위치함수
     {
         if(spriteRenderer.flipX == true)
         {
             bossBox.transform.localPosition = new Vector2(-1.71f, 0);
-            
         }
         else if(spriteRenderer.flipX == false)
         {
             bossBox.transform.localPosition = new Vector2(1.71f, 0);
-            
         }
-        bossBox.enabled = true;
-        GiveDamage();
+        onBox();
+        offBox();
+    }
+    public void onBox() // 보스 공격 콜라이더 on 함수
+    {
         bossBox.enabled = false;
+        GiveDamage();
+    }
+    public void offBox()
+    {
+        bossBox.enabled = true;
     }
 
     void OrcRandomAtk()
     {
         int randNum;
-        randNum = Random.Range(4, 5);   // 4 ~ 5 예정
+        randNum = Random.Range(4, 5); 
         atkPattern = Random.Range(1, 7);     // 패턴 번호를 1 ~ 6까지 랜덤으로 뽑음.
 
         Invoke("OrcRandomAtk", randNum);
@@ -1163,45 +1164,34 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    void OrcAttack()
+    void OrcAttack()    // orc 보스의 공격 패턴
     {
-
         switch (atkPattern)
         {
             case 1:
                 Left_Hooking();
-                //rockSpawning();
-                canineSpawning();
                 atkPattern = 0;
                 break;
             case 2:
                 Right_Hooking();
-                //rockSpawning();
-                canineSpawning();
                 atkPattern = 0;
                 break;
             case 3:
                 Left_Hooking();
-                //rockSpawning();
-                canineSpawning();
                 atkPattern = 0;
                 break;
             case 4:
                 Right_Hooking();
-                //rockSpawning();
-                canineSpawning();
                 atkPattern = 0;
                 break;
             case 5:
                 Right_Hooking();
-                //rockSpawning();
-                canineSpawning();
+                rockSpawning();
                 StartCoroutine(recoil());
                 atkPattern = 0;
                 break;
             case 6:
                 Right_Hooking();
-                //rockSpawning();
                 canineSpawning();
                 StartCoroutine(recoil());
                 atkPattern = 0;
@@ -1213,6 +1203,8 @@ public abstract class Enemy : MonoBehaviour
     {
         Enemy_Speed = 1f;
         animator.SetTrigger("Left_Hooking");
+        Invoke("onBox", 0.6f);
+        Invoke("offBox", 0.3f);
         Attacking = false;  // 공격중 끄기
     }
 
@@ -1220,6 +1212,8 @@ public abstract class Enemy : MonoBehaviour
     {
         Enemy_Speed = 1f;
         animator.SetTrigger("Right_Hooking");
+        Invoke("onBox", 0.8f);
+        Invoke("offBox", 0.2f);
         Attacking = false;  // 공격 중 끄기.
     }
     IEnumerator recoil()    // 공격 반동으로 잠시 멈추는 함수
