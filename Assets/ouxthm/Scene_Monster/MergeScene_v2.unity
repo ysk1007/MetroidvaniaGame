@@ -2735,8 +2735,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 36208536}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.81, y: -2.52, z: 0}
-  m_LocalScale: {x: 1.7125747, y: 1.7125747, z: 1.7125747}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.712575, y: 1.712575, z: 1.712575}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 137502402}
@@ -2804,7 +2804,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 422219055, guid: fc3120fa98606004fb54336f4fc80611, type: 3}
+  m_Sprite: {fileID: -1534229340, guid: fc3120fa98606004fb54336f4fc80611, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3801,6 +3801,7 @@ MonoBehaviour:
   blood: {fileID: 7614696593688231732, guid: 2da69be80ef7a1344bde5bf47d8105db, type: 3}
   SoulFloor: {fileID: 0}
   Rock: {fileID: 0}
+  CaninePb: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
   ProObject: {fileID: 0}
@@ -5276,7 +5277,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -3.5492234, y: -1.3367494}
+  m_Offset: {x: 0.84719324, y: 0.102786064}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.28866667}
@@ -5287,7 +5288,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.448182, y: 8.754692}
+  m_Size: {x: 5.8372517, y: 7.380001}
   m_EdgeRadius: 0
 --- !u!50 &137502400
 Rigidbody2D:
@@ -5318,7 +5319,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 137502397}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 168.26, y: 2.99, z: 0}
+  m_LocalPosition: {x: 159.17, y: -1.59, z: 0}
   m_LocalScale: {x: 1.9999999, y: 1.9999999, z: 1.9999999}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -5501,6 +5502,7 @@ MonoBehaviour:
   blood: {fileID: 7614696593688231732, guid: 2da69be80ef7a1344bde5bf47d8105db, type: 3}
   SoulFloor: {fileID: 0}
   Rock: {fileID: 3790992193033367980, guid: d7b2ef63a09e7c54e908763e40fa17bb, type: 3}
+  CaninePb: {fileID: 6721697972969242414, guid: d6085f97242aeb84ebe72696252499cc, type: 3}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
   ProObject: {fileID: 0}
@@ -10091,6 +10093,7 @@ MonoBehaviour:
   blood: {fileID: 7614696593688231732, guid: 2da69be80ef7a1344bde5bf47d8105db, type: 3}
   SoulFloor: {fileID: 0}
   Rock: {fileID: 0}
+  CaninePb: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
   ProObject: {fileID: 0}
@@ -12266,8 +12269,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 564297404}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.31747437, y: 4.472305, z: -0.075964056}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13742,6 +13745,7 @@ MonoBehaviour:
   blood: {fileID: 7614696593688231732, guid: 2da69be80ef7a1344bde5bf47d8105db, type: 3}
   SoulFloor: {fileID: 3381584811184784677, guid: b19b36ece8236c340be0d6c4c54b8016, type: 3}
   Rock: {fileID: 0}
+  CaninePb: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 1381773150433089148, guid: 9d24de82d2bcbc740be1a891606f9949, type: 3}
   ProObject: {fileID: 0}
@@ -19719,6 +19723,7 @@ MonoBehaviour:
   blood: {fileID: 7614696593688231732, guid: 2da69be80ef7a1344bde5bf47d8105db, type: 3}
   SoulFloor: {fileID: 0}
   Rock: {fileID: 0}
+  CaninePb: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 117786764753181504, guid: abfbb84a32e4b6043b3768c340d03021, type: 3}
   ProObject: {fileID: 0}
@@ -21617,6 +21622,7 @@ MonoBehaviour:
   blood: {fileID: 7614696593688231732, guid: 2da69be80ef7a1344bde5bf47d8105db, type: 3}
   SoulFloor: {fileID: 0}
   Rock: {fileID: 0}
+  CaninePb: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
   ProObject: {fileID: 0}
@@ -23763,7 +23769,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7166585528206624360, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7166585528206624360, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
       propertyPath: m_AnchorMax.x
@@ -27168,6 +27174,7 @@ MonoBehaviour:
   blood: {fileID: 7614696593688231732, guid: 2da69be80ef7a1344bde5bf47d8105db, type: 3}
   SoulFloor: {fileID: 0}
   Rock: {fileID: 0}
+  CaninePb: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
   ProObject: {fileID: 0}
@@ -29950,6 +29957,7 @@ MonoBehaviour:
   blood: {fileID: 7614696593688231732, guid: 2da69be80ef7a1344bde5bf47d8105db, type: 3}
   SoulFloor: {fileID: 0}
   Rock: {fileID: 0}
+  CaninePb: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
   ProObject: {fileID: 0}
@@ -30903,6 +30911,7 @@ MonoBehaviour:
   blood: {fileID: 7614696593688231732, guid: 2da69be80ef7a1344bde5bf47d8105db, type: 3}
   SoulFloor: {fileID: 0}
   Rock: {fileID: 0}
+  CaninePb: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
   ProObject: {fileID: 0}
@@ -34822,6 +34831,7 @@ MonoBehaviour:
   blood: {fileID: 7614696593688231732, guid: 2da69be80ef7a1344bde5bf47d8105db, type: 3}
   SoulFloor: {fileID: 0}
   Rock: {fileID: 0}
+  CaninePb: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
   ProObject: {fileID: 0}
@@ -36890,6 +36900,7 @@ MonoBehaviour:
   blood: {fileID: 7614696593688231732, guid: 2da69be80ef7a1344bde5bf47d8105db, type: 3}
   SoulFloor: {fileID: 0}
   Rock: {fileID: 0}
+  CaninePb: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
   ProObject: {fileID: 0}
@@ -38243,6 +38254,7 @@ MonoBehaviour:
   blood: {fileID: 7614696593688231732, guid: 2da69be80ef7a1344bde5bf47d8105db, type: 3}
   SoulFloor: {fileID: 0}
   Rock: {fileID: 0}
+  CaninePb: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
   ProObject: {fileID: 0}
@@ -38875,6 +38887,7 @@ MonoBehaviour:
   blood: {fileID: 7614696593688231732, guid: 2da69be80ef7a1344bde5bf47d8105db, type: 3}
   SoulFloor: {fileID: 0}
   Rock: {fileID: 0}
+  CaninePb: {fileID: 0}
   Split_Slime: {fileID: 2044582282278339179, guid: 778767c3509229a45bd506b494a859c0, type: 3}
   fire: {fileID: 0}
   ProObject: {fileID: 0}
@@ -41571,6 +41584,7 @@ MonoBehaviour:
   blood: {fileID: 7614696593688231732, guid: 2da69be80ef7a1344bde5bf47d8105db, type: 3}
   SoulFloor: {fileID: 0}
   Rock: {fileID: 0}
+  CaninePb: {fileID: 0}
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
   ProObject: {fileID: 0}

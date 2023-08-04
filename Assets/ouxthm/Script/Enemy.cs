@@ -52,7 +52,6 @@ public abstract class Enemy : MonoBehaviour
     public float bossLoc;   // boss의 X좌표
     public float myLocY;    // boss의 y값
     public bool bossMoving;  // boss가 움직이도록 rock 풂
-    
 
     public bool Enemy_Left; // 적의 방향
     public bool Hit_Set;    // 몬스터를 깨우는 변수
@@ -69,9 +68,11 @@ public abstract class Enemy : MonoBehaviour
     Transform rockSpawn;    // 보스가 던지는 돌 생성 위치
     Transform rockSpawn1;   // 보스가 던지는 돌 생성 위치
     Transform rockSpawn2;   // 보스가 던지는 돌 생성 위치
+    Transform canineSpawn;  // 보스가 던지는 몬스터 생성 위치
 
     public GameObject SoulFloor; // 보스 영혼 공격
     public GameObject Rock; // 보스가 던지는 돌
+    public GameObject CaninePb; // 보스가 던지는 몬스터
     public GameObject Split_Slime;  // 분열 슬라임
     public GameObject fire; // 프리펩 투사체
     public GameObject ProObject;    // 클론 투사체
@@ -235,9 +236,10 @@ public abstract class Enemy : MonoBehaviour
         rigid = this.gameObject.GetComponent<Rigidbody2D>();
         hit_bloodTrans = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
 
+        canineSpawn = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
         rockSpawn = this.gameObject.transform.GetChild(2).GetComponent<Transform>();
         rockSpawn1 = this.gameObject.transform.GetChild(3).GetComponent<Transform>();
-        rockSpawn2 = this.gameObject.transform.GetChild(3).GetComponent<Transform>();
+        rockSpawn2 = this.gameObject.transform.GetChild(4).GetComponent<Transform>();
         Enemy_HPten = Enemy_HP * 0.1f;
         bleedingTime = 0f;
 
@@ -938,10 +940,35 @@ public abstract class Enemy : MonoBehaviour
         rE1.Time = endTime;
         rE1.Power = Enemy_Power;
         rE1.Dir = nextDirX;
-
+        
         rE2.Time = endTime;
         rE2.Power = Enemy_Power;
         rE2.Dir = nextDirX;
+    }
+
+    public void canineSpawning()
+    {
+        GameObject canine = Instantiate(CaninePb, canineSpawn.position, canineSpawn.rotation);
+        canine.transform.eulerAngles = new Vector3(0, 0, 10); // 발사각 정하기
+
+        GameObject canine1 = Instantiate(CaninePb, canineSpawn.position, canineSpawn.rotation);
+        canine1.transform.eulerAngles = new Vector3(0, 0, 15);
+
+        GameObject canine2 = Instantiate(CaninePb, canineSpawn.position, canineSpawn.rotation);
+        canine2.transform.eulerAngles = new Vector3(0, 0, 20);
+
+        CaninePb CPb = canine.GetComponent<CaninePb>();
+        CaninePb CPb1 = canine1.GetComponent<CaninePb>();
+        CaninePb CPb2 = canine2.GetComponent<CaninePb>();
+        
+        CPb.Power = Enemy_Power;
+        CPb.Dir = nextDirX;
+
+        CPb1.Power = Enemy_Power;
+        CPb1.Dir = nextDirX;
+
+        CPb2.Power = Enemy_Power;
+        CPb2.Dir = nextDirX;
     }
     public void soulSpawning()
     {
@@ -1143,33 +1170,39 @@ public abstract class Enemy : MonoBehaviour
         {
             case 1:
                 Left_Hooking();
-                rockSpawning();
+                //rockSpawning();
+                canineSpawning();
                 atkPattern = 0;
                 break;
             case 2:
                 Right_Hooking();
-                rockSpawning();
+                //rockSpawning();
+                canineSpawning();
                 atkPattern = 0;
                 break;
             case 3:
                 Left_Hooking();
-                rockSpawning();
+                //rockSpawning();
+                canineSpawning();
                 atkPattern = 0;
                 break;
             case 4:
                 Right_Hooking();
-                rockSpawning();
+                //rockSpawning();
+                canineSpawning();
                 atkPattern = 0;
                 break;
             case 5:
                 Right_Hooking();
-                rockSpawning();
+                //rockSpawning();
+                canineSpawning();
                 StartCoroutine(recoil());
                 atkPattern = 0;
                 break;
             case 6:
                 Right_Hooking();
-                rockSpawning();
+                //rockSpawning();
+                canineSpawning();
                 StartCoroutine(recoil());
                 atkPattern = 0;
                 break;
