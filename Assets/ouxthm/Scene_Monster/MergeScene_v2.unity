@@ -2300,14 +2300,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5810560}
-  m_LocalRotation: {x: 0, y: 0, z: 0.2588191, w: 0.9659258}
-  m_LocalPosition: {x: 2.5, y: -5, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.86, y: -3.62, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 137502402}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 30}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &16216739
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2804,7 +2804,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -1534229340, guid: fc3120fa98606004fb54336f4fc80611, type: 3}
+  m_Sprite: {fileID: 422219055, guid: fc3120fa98606004fb54336f4fc80611, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5326,8 +5326,6 @@ Transform:
   - {fileID: 564297405}
   - {fileID: 36208537}
   - {fileID: 5810561}
-  - {fileID: 723288196}
-  - {fileID: 2122800181}
   - {fileID: 1243743762}
   m_Father: {fileID: 0}
   m_RootOrder: 12
@@ -12255,9 +12253,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 564297405}
+  - component: {fileID: 564297407}
+  - component: {fileID: 564297406}
   m_Layer: 15
-  m_Name: Empty
-  m_TagString: Untagged
+  m_Name: atkCollider
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12270,13 +12270,60 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 564297404}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 5.91, y: -1.81, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 137502402}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &564297406
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 564297404}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.0968616, y: 1.4528148}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3.954064, y: 7.4408126}
+  m_EdgeRadius: 0
+--- !u!50 &564297407
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 564297404}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &568249587
 GameObject:
   m_ObjectHideFlags: 0
@@ -14314,37 +14361,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 713070467}
   m_CullTransparentMesh: 1
---- !u!1 &723288195
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 723288196}
-  m_Layer: 0
-  m_Name: Rock_spawn2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &723288196
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 723288195}
-  m_LocalRotation: {x: 0, y: 0, z: 0.38268343, w: 0.92387956}
-  m_LocalPosition: {x: 2.5, y: -5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 137502402}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45}
 --- !u!1 &734136198
 GameObject:
   m_ObjectHideFlags: 0
@@ -18332,7 +18348,7 @@ GameObject:
   - component: {fileID: 937628689}
   - component: {fileID: 937628691}
   - component: {fileID: 937628690}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Canine_atk
   m_TagString: Enemy_atk
   m_Icon: {fileID: 0}
@@ -18346,7 +18362,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 937628688}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.3, y: -0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -18388,7 +18404,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.43639755, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -18399,7 +18415,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.8727951, y: 1}
   m_EdgeRadius: 0
 --- !u!1 &938730936
 GameObject:
@@ -20636,8 +20652,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 1838800824}
     m_Modifications:
     - target: {fileID: 7166585527212770930, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7166585527212770930, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7166585527562671015, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
+      propertyPath: m_Layer
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 7166585528206624360, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
       propertyPath: m_Pivot.x
@@ -20730,6 +20754,14 @@ PrefabInstance:
     - target: {fileID: 7166585528206624367, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
       propertyPath: m_Name
       value: Enemy_Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7166585528206624367, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7166585528630806324, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
@@ -23757,7 +23789,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7166585527562671015, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
       propertyPath: m_Layer
-      value: 15
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 7166585528206624360, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
       propertyPath: m_Pivot.x
@@ -26272,7 +26304,7 @@ GameObject:
   - component: {fileID: 1345365670}
   - component: {fileID: 1345365669}
   - component: {fileID: 1345365671}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Canine_img
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36833,13 +36865,13 @@ GameObject:
   - component: {fileID: 1838800821}
   - component: {fileID: 1838800820}
   - component: {fileID: 1838800825}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Canine
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1838800820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42115,37 +42147,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &2122800180
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2122800181}
-  m_Layer: 0
-  m_Name: Rock_spawn3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2122800181
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2122800180}
-  m_LocalRotation: {x: 0, y: 0, z: 0.5, w: 0.8660254}
-  m_LocalPosition: {x: 2.5, y: -5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 137502402}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 60}
 --- !u!1 &2127693413
 GameObject:
   m_ObjectHideFlags: 0

@@ -31,6 +31,7 @@ public abstract class Enemy : MonoBehaviour
     public bool Dying = false; // 죽는 중을 확인하는 변수
     public float Enemy_Dying_anim_Time;     // 죽는 애니메이션 시간 변수
     public float atkX;  // 공격 콜라이더의 x값
+    public float atkFlipx; // 공격 콜라이더의 x값(늑대 용)
     public float atkY;  // 공격 콜라이더의 y값
     public bool enemyHit = false;   // 적이 피해입은 상태인지 확인하는 변수
     public float old_Speed;     // 속도 값 변하기 전 속도 값
@@ -85,6 +86,9 @@ public abstract class Enemy : MonoBehaviour
     BoxCollider2D Bcollider;
     BoxCollider2D Box;
     Transform posi;
+    Transform transformPosition;
+    BoxCollider2D BoxCollider2DSize;
+
     BoxCollider2D Boxs;
     BoxCollider2D bossBox;  // 보스 공격 콜라이더 켰다 끄는 변수
     BoxCollider2D BossSpriteBox;    // 보스 이미지 콜라이더
@@ -167,12 +171,10 @@ public abstract class Enemy : MonoBehaviour
 
         if (this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
         {
+            orcMove(); 
             OrcAttack();
-            orcMove();
         }
         orcDie();
-
-
     }
 
     public virtual void Boar(Transform target)  // boar용
@@ -231,13 +233,13 @@ public abstract class Enemy : MonoBehaviour
         bossBox = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
         rigid = this.gameObject.GetComponent<Rigidbody2D>();
+        spriteRenderer = this.gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
         hit_bloodTrans = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
 
         PbSpawn = this.gameObject.transform.GetChild(2).GetComponent<Transform>();
         Enemy_HPten = Enemy_HP * 0.1f;
         bleedingTime = 0f;
-
-        OrcRandomAtk();
+        Invoke("OrcRandomAtk", 2f);
         bleeding();
     }
 
@@ -259,9 +261,7 @@ public abstract class Enemy : MonoBehaviour
         {
             Boxs = GetComponent<BoxCollider2D>();
             Bump();
-        }
-        //Debug.Log(collision.gameObject.name);
-        
+        }        
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -320,15 +320,31 @@ public abstract class Enemy : MonoBehaviour
             spriteRenderer = this.gameObject.transform.GetChild(1).GetComponent<SpriteRenderer>();
             posi = this.gameObject.transform.GetChild(0).GetComponent<Transform>();
             Bcollider.enabled = true;   // 공격 박스 콜라이더 생성
-            if (spriteRenderer.flipX == true)   // 이미지 플립했을 때 공격 범위 x값 전환 조건문
+            if (Enemy_Mod == 2)
             {
-                posi.localPosition = new Vector3(atkX, atkY);   // 몬스터의 공격 콜라이더 박스의 x좌표와 y좌표
+                if (spriteRenderer.flipX == true)   // 이미지 플립했을 때 공격 범위 x값 전환 조건문
+                {
+                    posi.localPosition = new Vector3(atkFlipx, atkY);   // 몬스터의 공격 콜라이더 박스의 x좌표와 y좌표
+                }
+                else if (spriteRenderer.flipX == false) // 왼쪽을 볼 때
+                {
+                    posi.localPosition = new Vector3(atkX, atkY);  // 몬스터의 공격 콜라이더 박스의 -x좌표와 y좌표
+                }
             }
-            else if (spriteRenderer.flipX == false) // 왼쪽을 볼 때
+            else if (Enemy_Mod == 3)
             {
-                posi.localPosition = new Vector3(-atkX, atkY);  // 몬스터의 공격 콜라이더 박스의 -x좌표와 y좌표
+                if (spriteRenderer.flipX == true)   // 이미지 플립했을 때 공격 범위 x값 전환 조건문
+                {
+                    posi.localPosition = new Vector3(atkX, atkY);   // 몬스터의 공격 콜라이더 박스의 x좌표와 y좌표
+                }
+                else if (spriteRenderer.flipX == false) // 왼쪽을 볼 때
+                {
+                    posi.localPosition = new Vector3(-atkX, atkY);  // 몬스터의 공격 콜라이더 박스의 -x좌표와 y좌표
+                }
             }
         }
+        
+
     }
     void Move() // 이동
     {
@@ -769,6 +785,7 @@ public abstract class Enemy : MonoBehaviour
             else if(Enemy_Mod == 2)
             {
                 switchCollider();
+                Debug.Log("실행");
                 onAttack();
                 Invoke("GiveDamage", 0.5f);
             }
@@ -814,23 +831,36 @@ public abstract class Enemy : MonoBehaviour
 
     public void GiveDamage()    // 플레이어에게 데미지를 주는 함수
     {
-        posi = this.gameObject.transform.GetChild(0).GetComponent<Transform>();
-        Box = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();
+        transformPosition = this.gameObject.transform.GetChild(0).GetComponent<Transform>();
+        BoxCollider2DSize = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();
        
-        Collider2D[] collider2D = Physics2D.OverlapBoxAll(posi.position, Box.size, 0);
+        Collider2D[] collider2D = Physics2D.OverlapBoxAll(transformPosition.position, BoxCollider2DSize.size, 0);
         
         foreach (Collider2D collider in collider2D)
         {
-            if (collider.tag == "Player" && collider != null)
+            if (collider.tag == "Player")
             {
                 collider.GetComponent<Player>().Playerhurt(Enemy_Power, Pos.position);
+                Debug.Log(collider.tag);
+                Debug.Log(BoxCollider2DSize.size + "if");
                 Debug.Log("데미지 줌");
             }
-            else
+            else if (collider.tag == null);
             {
+                Debug.Log(BoxCollider2DSize.size + "else");
                 Debug.Log("데미지 못 줌");
             }
         }
+        //OnDrawGizmos();
+
+    }
+    void OnDrawGizmos()
+    {
+        transformPosition = this.gameObject.transform.GetChild(0).GetComponent<Transform>();
+        BoxCollider2DSize = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(transformPosition.position, BoxCollider2DSize.size);
     }
 
     public void Bump()      // 충돌 데미지 함수
@@ -916,26 +946,26 @@ public abstract class Enemy : MonoBehaviour
     public void rockSpawning()
     {
         GameObject rock = Instantiate(Rock, PbSpawn.position, PbSpawn.rotation);
-        rock.transform.eulerAngles = new Vector3(0, 0, 30); // 발사각 정하기
 
         GameObject rock1 = Instantiate(Rock, PbSpawn.position, PbSpawn.rotation);
-        rock1.transform.eulerAngles = new Vector3(0, 0, 45);
 
         GameObject rock2 = Instantiate(Rock, PbSpawn.position, PbSpawn.rotation);
-        rock2.transform.eulerAngles = new Vector3(0, 0, 60);
 
         Rock_Eff rE = rock.GetComponent<Rock_Eff>();
         Rock_Eff rE1 = rock1.GetComponent<Rock_Eff>();
         Rock_Eff rE2 = rock2.GetComponent<Rock_Eff>();
 
+        rE.distance = 1f;
         rE.Time = endTime;
         rE.Power = Enemy_Power;
         rE.Dir = nextDirX;
-        
+
+        rE1.distance = 5f;
         rE1.Time = endTime;
         rE1.Power = Enemy_Power;
         rE1.Dir = nextDirX;
-        
+
+        rE2.distance = 9f;
         rE2.Time = endTime;
         rE2.Power = Enemy_Power;
         rE2.Dir = nextDirX;
@@ -958,12 +988,15 @@ public abstract class Enemy : MonoBehaviour
         
         CPb.Power = Enemy_Power;
         CPb.Dir = nextDirX;
+        CPb.Time = 7f;
 
         CPb1.Power = Enemy_Power;
         CPb1.Dir = nextDirX;
+        CPb1.Time = 7f;
 
         CPb2.Power = Enemy_Power;
         CPb2.Dir = nextDirX;
+        CPb2.Time = 7f;
     }
     public void soulSpawning()
     {
@@ -995,14 +1028,14 @@ public abstract class Enemy : MonoBehaviour
         Se2.Dir = nextDirX;
         turning = true;
     }
-    public void hitEff()
+    public void hitEff()    // 피격 이펙트 
     {
         GameObject hitEff = Instantiate(hiteff, hit_bloodTrans.position, hit_bloodTrans.rotation, hit_bloodTrans);
         hitEFF hitEFF = hitEff.GetComponent<hitEFF>();
         hitEFF.dir = nextDirX;
     }
 
-    public void bleedEff()
+    public void bleedEff()  // 출혈 이펙트 터뜨리는 함수
     {
         GameObject bloodEff = Instantiate(blood, hit_bloodTrans.position, hit_bloodTrans.rotation, hit_bloodTrans);
         bloodEFF bloodEFF = bloodEff.GetComponent<bloodEFF>();
@@ -1140,6 +1173,17 @@ public abstract class Enemy : MonoBehaviour
     {
         bossBox.enabled = true;
     }
+    void onSprite()
+    {
+        if(atkPattern < 5)
+        {
+            spriteRenderer.enabled = true;
+        }
+    }
+    void offSPrite()
+    {
+        spriteRenderer.enabled = false;
+    }
 
     void OrcRandomAtk()
     {
@@ -1169,33 +1213,47 @@ public abstract class Enemy : MonoBehaviour
         switch (atkPattern)
         {
             case 1:
-                Left_Hooking();
+                onSprite();
+                Invoke("Left_Hooking", 1f);
+                Invoke("GiveDamage", 0.7f);
                 atkPattern = 0;
                 break;
             case 2:
-                Right_Hooking();
+                onSprite();
+                Invoke("Right_Hooking", 1f);
+                Invoke("GiveDamage", 0.9f);
                 atkPattern = 0;
                 break;
             case 3:
-                Left_Hooking();
+                onSprite();
+                Invoke("Left_Hooking", 1f);
+                Invoke("GiveDamage", 0.7f);
                 atkPattern = 0;
                 break;
             case 4:
-                Right_Hooking();
+                onSprite();
+                Invoke("Right_Hooking", 1f);
+                Invoke("GiveDamage", 0.9f);
                 atkPattern = 0;
                 break;
             case 5:
-                Right_Hooking();
-                rockSpawning();
+                onSprite();
+                Invoke("Left_Hooking", 1f);
+                Invoke("GiveDamage", 1.7f);
+                //Invoke("rockSpawning", 1.7f);
                 StartCoroutine(recoil());
                 atkPattern = 0;
                 break;
             case 6:
-                Right_Hooking();
-                canineSpawning();
+                onSprite();
+                Invoke("Right_Hooking", 1f);
+                Invoke("GiveDamage", 1.9f);
+                //Invoke("canineSpawning", 1.9f);
                 StartCoroutine(recoil());
                 atkPattern = 0;
                 break;
+            default:
+                return;
         }
     }
 
@@ -1203,8 +1261,7 @@ public abstract class Enemy : MonoBehaviour
     {
         Enemy_Speed = 1f;
         animator.SetTrigger("Left_Hooking");
-        Invoke("onBox", 0.6f);
-        Invoke("offBox", 0.3f);
+        Invoke("offSPrite", 0.4f);
         Attacking = false;  // 공격중 끄기
     }
 
@@ -1212,8 +1269,7 @@ public abstract class Enemy : MonoBehaviour
     {
         Enemy_Speed = 1f;
         animator.SetTrigger("Right_Hooking");
-        Invoke("onBox", 0.8f);
-        Invoke("offBox", 0.2f);
+        Invoke("offSPrite", 0.2f);
         Attacking = false;  // 공격 중 끄기.
     }
     IEnumerator recoil()    // 공격 반동으로 잠시 멈추는 함수

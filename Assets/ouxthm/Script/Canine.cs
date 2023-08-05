@@ -8,6 +8,7 @@ public class Canine : Enemy
     {
         Enemy_Mod = 2;  // 근거리
         Enemy_Power = 7f; //적의 공격력
+        Bump_Power = 4f; // 충돌 시 줄 데미지
         Enemy_HP = 35f;  // 적의 체력
         Enemy_Speed = 2.5f;    // 적의 이동속도
         Gap_Distance_X = 99f;  // Enemy와 Player의 X 거리차이
@@ -18,12 +19,15 @@ public class Canine : Enemy
         Enemy_Sensing_Y = 5f;  // 플레이어 인지 Y값
         Enemy_Range_X = 2f; //적의 X축 공격 사거리
         Enemy_Range_Y = 1f; //적의 Y축 공격 사거리
-        atkX = 1.3f;    // 공격 박스 콜라이더의 x값
+        atkX = -1.3f;    // 공격 박스 콜라이더의 x값
+        atkFlipx =  0.45f;   // 플립 후 공격 박스 콜라이더의 x값
         atkY = -0.1f;   // 공격 박스 콜라이더의 y값
         atkDelay = 1f; // 공격 딜레이
         atkTime = 0.6f; // 공격 모션 시간
+        endTime = 7f;   
         bleedLevel = 0; // 받은 출혈량
         Attacking = false;
+        Dying = false;
         iamBoss = false;    //  보스가 아님
     }
 

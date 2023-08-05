@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 26d0987df33c68f4997aab21a47e0171
+guid: 8a5fb392a924ffe49b392f43ee4c9785
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -42,12 +42,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 10
+  spritePixelsToUnits: 40
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -139,91 +139,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: Slime_Spiked_Idle_0
-      rect:
-        serializedVersion: 2
-        x: 21
-        y: 16
-        width: 19
-        height: 14
-      alignment: 9
-      pivot: {x: 0.5, y: 0.65}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 58091921eec431a43927caceb62d807b
-      internalID: 942608731
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Slime_Spiked_Idle_1
-      rect:
-        serializedVersion: 2
-        x: 86
-        y: 16
-        width: 17
-        height: 18
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b22c182d274a93244bb3b9f9e4bb3673
-      internalID: 1020173927
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Slime_Spiked_Idle_2
-      rect:
-        serializedVersion: 2
-        x: 148
-        y: 16
-        width: 21
-        height: 16
-      alignment: 9
-      pivot: {x: 0.5, y: 0.568}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 59b7a6658df3e3242b2f0bde7d7122a1
-      internalID: -1870964980
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Slime_Spiked_Idle_3
-      rect:
-        serializedVersion: 2
-        x: 211
-        y: 16
-        width: 23
-        height: 15
-      alignment: 9
-      pivot: {x: 0.5, y: 0.61}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f255cb5affcb98a4688c2536ecff2cb5
-      internalID: 1428070700
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
@@ -234,11 +150,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      Slime_Spiked_Idle_0: 942608731
-      Slime_Spiked_Idle_1: 1020173927
-      Slime_Spiked_Idle_2: -1870964980
-      Slime_Spiked_Idle_3: 1428070700
+    nameFileIdTable: {}
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
