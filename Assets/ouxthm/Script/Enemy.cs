@@ -82,6 +82,7 @@ public abstract class Enemy : MonoBehaviour
     Rigidbody2D rigid;
     Animator animator;
     SpriteRenderer spriteRenderer;
+    SpriteRenderer sprite;
     RaycastHit2D rayHit;
     BoxCollider2D Bcollider;
     BoxCollider2D Box;
@@ -214,6 +215,7 @@ public abstract class Enemy : MonoBehaviour
         bossBox = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();
         Pos = GetComponent<Transform>();
         spriteRenderer = this.gameObject.transform.GetChild(1).GetComponent<SpriteRenderer>();
+        sprite = this.gameObject.transform.GetChild(5).GetComponent<SpriteRenderer>();
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
 
         hit_bloodTrans = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
@@ -235,7 +237,6 @@ public abstract class Enemy : MonoBehaviour
         rigid = this.gameObject.GetComponent<Rigidbody2D>();
         spriteRenderer = this.gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
         hit_bloodTrans = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
-
         PbSpawn = this.gameObject.transform.GetChild(2).GetComponent<Transform>();
         Enemy_HPten = Enemy_HP * 0.1f;
         bleedingTime = 0f;
@@ -1131,15 +1132,18 @@ public abstract class Enemy : MonoBehaviour
     public void offFloor()  // 보스 바닥 터뜨리는 공격 마무리 함수
     {
         myLocY = this.gameObject.transform.position.y;
-        if(playerLoc < bossLoc) 
+        onSpriteNec();
+        if (playerLoc < bossLoc) 
         {
             this.gameObject.transform.localPosition = new Vector2(playerLoc + 3f, myLocY);
+            sprite.transform.transform.localPosition = new Vector2(-8, 0.2f);
         }
         else if (playerLoc > bossLoc)
         {
             this.gameObject.transform.localPosition = new Vector2(playerLoc - 3f, myLocY);
+            sprite.transform.transform.localPosition = new Vector2(8, 0.2f);
         }
-        
+        Invoke("offSpriteNec", 0.5f);
         animator.SetTrigger("Spawn");
         bossMoving = false;
         turning = false;
@@ -1173,14 +1177,22 @@ public abstract class Enemy : MonoBehaviour
     {
         bossBox.enabled = true;
     }
-    void onSprite()
+    void onSpriteNec()  // Nec용
+    {
+        sprite.enabled = true;
+    }
+    void offSpriteNec() // Nec용
+    {
+        sprite.enabled = false;
+    }
+    void onSprite() // orc용
     {
         if(atkPattern < 5)
         {
             spriteRenderer.enabled = true;
         }
     }
-    void offSPrite()
+    void offSPrite() // orc용
     {
         spriteRenderer.enabled = false;
     }
