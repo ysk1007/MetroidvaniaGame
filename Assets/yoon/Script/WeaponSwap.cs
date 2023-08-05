@@ -132,9 +132,10 @@ public class WeaponSwap : MonoBehaviour
         {
             Player p = Player.instance.GetComponent<Player>();
             Image i = SkillCools[currentWeaponIndex].GetComponent<Image>();
-            StartCoroutine(FillSliderOverTime(i, p.Skill_Cools[currentWeaponIndex], "skill"));
+            float cooltime = p.DeCoolTimeCarcul(p.Skill_Cools[currentWeaponIndex]);
+            StartCoroutine(FillSliderOverTime(i, cooltime, "skill"));
         }
-        if (Input.GetKeyDown(KeyCode.U) && !ultting)
+        if (Input.GetKeyDown(KeyCode.D) && !ultting)
         {
             StartCoroutine(FillSliderOverTime(img_Ult_coolTime, ultcool, "ult"));
         }

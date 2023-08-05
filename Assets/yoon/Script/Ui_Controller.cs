@@ -47,6 +47,8 @@ public class Ui_Controller : MonoBehaviour
 
     public bool isDown = false;
 
+    public float[] ExpValue = {10f,20f,30f}; // 1,2,3 스테이지 값
+    public float[] GoldValue = {50f,75f,90f}; // 1,2,3 스테이지 값
     private void Awake()
     {
 
@@ -109,16 +111,24 @@ public class Ui_Controller : MonoBehaviour
         }
     }
 
-    public void GetExp(float value)
+    public void GetExp(int stage)
     {
-        float Expvalue = value * 0.01f;
+        float MaxExp = player.ExpBarValue[player.level - 1];
+        float value = ExpValue[stage - 1];
+        float Expvalue = Mathf.Lerp(0f, 1f, value * player.EXPGet / MaxExp);
         if (ExpBar.value + Expvalue > 1f) //오버 경험치 계산
         {
             float OverExp = (ExpBar.value + Expvalue - 1f)*100f;
             LevelUp();
-            GetExp(OverExp);
+            RemainGetExp(OverExp);
         }
         else ExpBar.value += Expvalue;
+    }
+
+    public void RemainGetExp(float value)
+    {
+        float Expvalue = value * 0.01f;
+        ExpBar.value += Expvalue;
     }
 
     public void LevelUp()
@@ -148,6 +158,7 @@ public class Ui_Controller : MonoBehaviour
     {
         PlayerHp.Heal(value);
         PlayerCurrentHpText.text = PlayerHp.currentHp.ToString("F0");
+        player.CurrentHp = int.Parse(PlayerCurrentHpText.text);
     }
 
     public void Sliding()
@@ -155,9 +166,11 @@ public class Ui_Controller : MonoBehaviour
         StartCoroutine(SlidingUP());
     }
 
-    public void GetGold(int value)
+    public void GetGold(int stage)
     {
-        player.gold += value;
+        float value = GoldValue[stage - 1];
+        Debug.Log("골드획득 :" + value);
+        player.gold += value * player.GoldGet;
         GoldVelueUI.text = player.gold.ToString();
         MarketGoldText.text = player.gold.ToString();
     }

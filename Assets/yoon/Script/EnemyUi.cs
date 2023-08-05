@@ -13,6 +13,12 @@ public class EnemyUi : MonoBehaviour
     public GameObject HpUi;
     public float MaxHp;
     public float CurrentHp;
+    public Color BleedColor = new Color32(176, 0, 0, 255);
+    public Color NormarColor = new Color32(255, 255, 255, 255);
+    public GameObject BleedIcon;
+    public TextMeshProUGUI BleedStack;
+    public bool bleed = false;
+    public int bleedstack;
     Transform pos;
     // Start is called before the first frame update
     void Start()
@@ -30,6 +36,19 @@ public class EnemyUi : MonoBehaviour
     {
         CurrentHp = ThisEnemy.Enemy_HP;
         HpBar.fillAmount = CurrentHp / MaxHp;
+        if (bleed/*ThisEnemy.bleed?*/)
+        {
+            HpBar.color = BleedColor;
+            BleedIcon.SetActive(true);
+            /*BleedStack.text = ThisEnemy.bleedStack.ToString();*/
+            BleedStack.text = bleedstack.ToString();
+        }
+        else if (!bleed/*ThisEnemy.bleed?*/)
+        {
+            HpBar.color = NormarColor;
+            BleedIcon.SetActive(false);
+            /*BleedStack.text = ThisEnemy.bleedStack.ToString();*/
+        }
     }
 
     public void ShowHpBar()
@@ -46,11 +65,11 @@ public class EnemyUi : MonoBehaviour
         TextCs.startPosition = ThisEnemy.transform.position;
         if (isCC)
         {
-            TextCs.DamagedValue.color = Color.yellow;
+            TextCs.DamagedValue.colorGradientPreset = TextCs.criColor;
         }
         else
         {
-            TextCs.DamagedValue.color = Color.white;
+            TextCs.DamagedValue.colorGradientPreset = TextCs.NormalColor;
         }
         Instantiate(Text, ThisEnemy.transform.parent);
     }

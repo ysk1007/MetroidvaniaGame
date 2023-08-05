@@ -51,7 +51,7 @@ public class SelectPrefab : MonoBehaviour
             case "selectAtkLevel":
                 for (int i = 0; i < 3; i++)
                 {
-                    values[i].text = player.selectAtkLevel[i].ToString();
+                    values[i].text = player.selectAtkValue[i].ToString();
                 }
                 NameText.text = "싸움꾼";
                 NameText.color = red;
@@ -60,7 +60,7 @@ public class SelectPrefab : MonoBehaviour
             case "selectATSLevel":
                 for (int i = 0; i < 3; i++)
                 {
-                    values[i].text = player.selectATSLevel[i].ToString();
+                    values[i].text = player.selectATSValue[i].ToString();
                 }
                 NameText.text = "광란";
                 NameText.color = red;
@@ -69,7 +69,7 @@ public class SelectPrefab : MonoBehaviour
             case "selectCCLevel":
                 for (int i = 0; i < 3; i++)
                 {
-                    values[i].text = player.selectCCLevel[i].ToString();
+                    values[i].text = player.selectCCValue[i].ToString();
                 }
                 NameText.text = "급소";
                 NameText.color = red;
@@ -78,7 +78,7 @@ public class SelectPrefab : MonoBehaviour
             case "selectDefLevel":
                 for (int i = 0; i < 3; i++)
                 {
-                    values[i].text = player.selectDefLevel[i].ToString();
+                    values[i].text = player.selectDefValue[i].ToString();
                 }
                 NameText.text = "기사";
                 NameText.color = blue;
@@ -87,7 +87,7 @@ public class SelectPrefab : MonoBehaviour
             case "selectHpLevel":
                 for (int i = 0; i < 3; i++)
                 {
-                    values[i].text = player.selectHpLevel[i].ToString();
+                    values[i].text = player.selectHpValue[i].ToString();
                 }
                 NameText.text = "최대체력";
                 NameText.color = blue;
@@ -96,7 +96,7 @@ public class SelectPrefab : MonoBehaviour
             case "selectGoldLevel":
                 for (int i = 0; i < 3; i++)
                 {
-                    values[i].text = player.selectGoldLevel[i].ToString();
+                    values[i].text = player.selectGoldValue[i].ToString();
                 }
                 NameText.text = "금수저";
                 NameText.color = purple;
@@ -105,7 +105,7 @@ public class SelectPrefab : MonoBehaviour
             case "selectExpLevel":
                 for (int i = 0; i < 3; i++)
                 {
-                    values[i].text = player.selectExpLevel[i].ToString();
+                    values[i].text = player.selectExpValue[i].ToString();
                 }
                 NameText.text = "학자";
                 NameText.color = purple;
@@ -114,7 +114,7 @@ public class SelectPrefab : MonoBehaviour
             case "selectCoolTimeLevel":
                 for (int i = 0; i < 3; i++)
                 {
-                    values[i].text = player.selectCoolTimeLevel[i].ToString();
+                    values[i].text = player.selectCoolTimeValue[i].ToString();
                 }
                 NameText.text = "쿨타임 감소";
                 NameText.color = purple;

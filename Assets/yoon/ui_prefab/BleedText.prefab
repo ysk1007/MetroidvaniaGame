@@ -55,7 +55,9 @@ MonoBehaviour:
   speed: 0.6
   height: 1
   target: {x: 0, y: 0, z: 0}
-  startPosition: {x: 83.59652, y: -7.829105, z: 1.6506131}
+  startPosition: {x: 76.48396, y: -7.829105, z: 1.6506131}
+  sx: 1.3
+  sy: 0.6
 --- !u!222 &6952896375259049866
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -86,8 +88,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 5
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d52c1bd3355f85340b5c007d3ebe0fc8, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 241fa8bb09f1b3c4bbd466ebc0ad6e9c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 145d2ff76d6bd4446a80bdeeffbeb217, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 20b5c951df716e845b76999e30e8509e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -95,13 +97,13 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4278190208
   m_fontColor: {r: 0.5, g: 0, b: 0, a: 1}
-  m_enableVertexGradient: 0
+  m_enableVertexGradient: 1
   m_colorMode: 3
   m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+    topLeft: {r: 0.8666667, g: 0.09411765, b: 0.09411765, a: 1}
+    topRight: {r: 0.8666667, g: 0.09411765, b: 0.09411765, a: 1}
+    bottomLeft: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+    bottomRight: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
@@ -111,8 +113,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.8
-  m_fontSizeBase: 0.8
+  m_fontSize: 0.5
+  m_fontSizeBase: 0.5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -207,12 +209,12 @@ Canvas:
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
-  m_OverrideSorting: 0
+  m_OverrideSorting: 1
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 12
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!114 &4223846935167207713
 MonoBehaviour:

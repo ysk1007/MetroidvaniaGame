@@ -4,6 +4,13 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public int level;   // 플레이어 레벨
+    public float[] ExpBarValue = {
+        100f, 150f, 200f, 250f, 300f, 
+        350f, 400f, 450f, 500f, 550f, 
+        600f, 650f, 700f, 750f, 800f,
+        850f, 900f, 950f, 1000f, 1050f,
+        1100f, 1150f, 1200f, 1250f, 1300f,
+        1350f, 1400f};   // 레벨업 하는데 필요한 경험치 추가함
     public float jumpPower; //Jump 높이 저장 변수
     public float Speed; //Move 속도 저장 변수
     public float SpeedChange; // Move 속도변경 저장 변수
@@ -40,25 +47,38 @@ public class Player : MonoBehaviour
     public PlayerCanvas playerCanvas; //추가함
 
     public static Player instance; //추가함
-    public int gold;  //추가함
+    public float gold;  //추가함
     public float AtkPower; //추가함
     public float Def; //추가함
     public float CriticalChance; //추가함 , 이속,공속 복구되는거 수정 필요
     public float DmgIncrease; //추가함
     public float ATS = 1; //추가함
-    public float GoldGet; //추가함
-    public float EXPGet; //추가함
+    public float GoldGet = 1f; //추가함
+    public float EXPGet = 1f; //추가함
+    public bool CanlifeStill = false; //추가함
+    public float lifeStill; //추가함
+    public float DecreaseCool = 0f; //추가함
     public float enemyPower;
 
-    //선택능력치 추가함
-    public float[] selectAtkLevel = { 10f, 20f, 30f };
-    public float[] selectATSLevel = { 15f, 30f, 45f };
-    public float[] selectCCLevel = { 5f, 10f, 20f };
-    public float[] selectDefLevel = { 10f, 20f, 30f };
-    public float[] selectHpLevel = { 30f, 60f, 90f };
-    public float[] selectGoldLevel = { 130f, 160f, 200f };
-    public float[] selectExpLevel = { 130f, 160f, 200f };
-    public float[] selectCoolTimeLevel = { 5f, 10f, 20f };
+    //선택능력치 밸류
+    public float[] selectAtkValue = { 10f, 20f, 30f };
+    public float[] selectATSValue = { 15f, 30f, 45f };
+    public float[] selectCCValue = { 5f, 10f, 20f };
+    public float[] selectDefValue = { 10f, 20f, 30f };
+    public float[] selectHpValue = { 30f, 60f, 90f };
+    public float[] selectGoldValue = { 130f, 160f, 200f };
+    public float[] selectExpValue = { 130f, 160f, 200f };
+    public float[] selectCoolTimeValue = { 5f, 10f, 20f };
+
+    //선택능력치 레벨
+    public int selectAtkLevel = 0;
+    public int selectATSLevel = 0;
+    public int selectCCLevel = 0;
+    public int selectDefLevel = 0;
+    public int selectHpLevel = 0;
+    public int selectGoldLevel = 0;
+    public int selectExpLevel = 0;
+    public int selectCoolTimeLevel = 0;
 
     public GameObject GameManager;  //게임 매니저
     public GameObject attackRange;  //근접공격 위치
@@ -216,7 +236,7 @@ public class Player : MonoBehaviour
         {
             if (WeaponChage == 1 && Sword_SkTime <= 0)    //Sword 스킬 실행
             {
-                skcoolTime = 10f;
+                skcoolTime = DeCoolTimeCarcul(Skill_Cools[0]); //스킬쿨 수정함
                 Sword_SkTime = skcoolTime;
                 isSkill = true;
                 SwdCnt = 2;
@@ -226,13 +246,13 @@ public class Player : MonoBehaviour
             if (WeaponChage == 2 && Axe_SkTime <= 0)    //Axe 스킬 실행
             {
                 StartCoroutine(Skill());
-                skcoolTime = 20f;
+                skcoolTime = DeCoolTimeCarcul(Skill_Cools[1]); //스킬쿨 수정함
                 Axe_SkTime = skcoolTime;
             }
             if (WeaponChage == 3 && Bow_SkTime <= 0)    //Bow 스킬 실행
             {
                 StartCoroutine(Skill());
-                skcoolTime = 10f;
+                skcoolTime = DeCoolTimeCarcul(Skill_Cools[2]); //스킬쿨 수정함
                 Bow_SkTime = skcoolTime;
                 isSkill = true;
             }
@@ -478,7 +498,7 @@ public class Player : MonoBehaviour
         {
             if (gameObject.layer != LayerMask.NameToLayer("Shield"))    // 방어막이 없으면 피격됨
             {
-
+                Damage = DefDamgeCarculation(Damage); //방어력 계산식 추가
                 ishurt = true;
                 CurrentHp = CurrentHp - Damage;
                 PlaySound("Damaged");
@@ -788,5 +808,31 @@ public class Player : MonoBehaviour
 
         // 랜덤 값이 확률보다 작거나 같으면 true를 반환, 그렇지 않으면 false를 반환
         return randomValue <= CriticalChance;
+    }
+
+    public float DefDamgeCarculation(float damage) //방어력 계산 함수 추가
+    {
+        float NewDmg;
+        if (Def > 0)
+        {
+            NewDmg = damage - (damage * (0.007f * Def));
+            return NewDmg;
+        }
+        else if (Def == 0)
+        {
+            return damage;
+        }
+        else
+        {
+            NewDmg = damage + (damage / (-0.05f * Def));
+            return NewDmg;
+        }
+    }
+
+    public float DeCoolTimeCarcul(float cooltime)
+    {
+        float newCooltime;
+        newCooltime = cooltime - (cooltime * DecreaseCool);
+        return newCooltime;
     }
 }

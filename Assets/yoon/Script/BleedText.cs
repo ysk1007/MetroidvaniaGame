@@ -13,11 +13,14 @@ public class BleedText : MonoBehaviour
     public Vector3 target;
     public Vector3 startPosition;
 
+    public float sx;
+    public float sy;
+
     private float elapsedTime = 0f;
 
     void Start()
     {
-        startPosition = new Vector3(startPosition.x, startPosition.y + 0.5f, startPosition.z);
+        startPosition = new Vector3(startPosition.x + sx, startPosition.y + sy + 0.5f, startPosition.z);
         target = new Vector3(startPosition.x, startPosition.y - height, startPosition.z);
     }
 

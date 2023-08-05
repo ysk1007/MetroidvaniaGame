@@ -9,7 +9,7 @@ public class SaveData
 {
     // 플레이어 데이터
     public int PlayerLevel = 1;
-    public int PlayerGold = 0;
+    public float PlayerGold = 0f;
     public float PlayerExp = 0f;
     public float PlayerMaxHp = 100f;
     public float PlayerCurrentHp = 100f;
@@ -101,12 +101,14 @@ public class DataManager : MonoBehaviour
     public SoundSlider sliderData;
     public Player playerData;
     public Item ItemData = new Item();
+    public SelectList SelectData = new SelectList();
     public UnlockList UnlockList;
     public SelectList SelectList;
     public SelectList selectData;
 
     public string PlayerloadJson;
     public string ItemloadJson;
+    public string SelectloadJson;
 
     public bool PlayerDataLoadComplete;
     public bool SoundDataLoadComplete;
@@ -152,8 +154,12 @@ public class DataManager : MonoBehaviour
             Debug.Log("디버그 : 사용자 데이터 불러오는 중");
             PlayerloadJson = File.ReadAllText(PlayerPath);
             ItemloadJson = File.ReadAllText(ItemPath);
+            SelectloadJson = File.ReadAllText(SelectPath);
+
             saveData = JsonUtility.FromJson<SaveData>(PlayerloadJson);
             ItemData = JsonUtility.FromJson<Item>(ItemloadJson);
+            SelectData = JsonUtility.FromJson<SelectList>(SelectloadJson);
+
             if (saveData != null)
             {
                 switch (casedata)
