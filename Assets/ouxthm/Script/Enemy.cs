@@ -864,12 +864,40 @@ public abstract class Enemy : MonoBehaviour
     }
     public void Bump()      // 충돌 데미지 함수
     {
-        Collider2D[] collider2D = Physics2D.OverlapBoxAll(Pos.position, Boxs.size, 0);
+        Vector3 vector3;
+        if(Enemy_Mod == 6)
+        {
+            vector3 = new Vector3(2f, 0.8f);
+        }
+        else
+        {
+            vector3 = new Vector3(0f, 0f);
+        }
+        Collider2D[] collider2D = Physics2D.OverlapBoxAll(Pos.position + vector3, Boxs.size, 0);
         Player player = GetComponent<Player>();
         foreach (Collider2D collider in collider2D)
         {
             if (collider.tag == "Player" && collider != null)
                 collider.GetComponent<Player>().Playerhurt(Bump_Power, Pos.position);
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Pos = GetComponent<Transform>();
+        Boxs = GetComponent<BoxCollider2D>();
+        Vector3 vector3;
+        if (Enemy_Mod == 6)
+        {
+            vector3 = new Vector2(2f, 0.8f);
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(Pos.position + vector3, Boxs.size);
+        }
+        else if(Enemy_Mod != 6)
+        {
+            vector3 = new Vector2(0f, 0f);
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(Pos.position + vector3, Boxs.size);
         }
     }
 
