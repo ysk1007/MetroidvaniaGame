@@ -40,6 +40,7 @@ public abstract class Enemy : MonoBehaviour
     public bool Attacker;  // 비행 몬스터가 공격형인지 아닌지 구분짓는 변수
     public float endTime;   // 투사체 사라지는 시간
 
+    public GameObject whatWeapon;  // 플레이어가 어떤 무기 상태인지 확인
     public int Swordlevel;  // 플레이어 검 숙련도
     public int bleedLevel;  // 출혈 스택
     public float bleedingDamage;    // 출혈 데미지
@@ -59,9 +60,9 @@ public abstract class Enemy : MonoBehaviour
     public float boarLoc;    // 멧돼지의 X 현재위치 
 
     public GameObject hiteff;  // 히트 이펙트 
-    Transform hit_bloodTrans; // 히트 이펙트 위치
+    Transform hit_bloodTrans; // 히트/출혈폭발 이펙트 위치
     public GameObject blood;   // 출혈 폭발 이펙트
-
+    
     Transform soulSpawn;    // 보스 바닥 터뜨리기 생성 위치
     Transform soulSpawn1;   // 보스 바닥 터뜨리기 생성 위치
     Transform soulSpawn2;   // 보스 바닥 터뜨리기 생성 위치
@@ -73,7 +74,6 @@ public abstract class Enemy : MonoBehaviour
     public GameObject Split_Slime;  // 분열 슬라임
     public GameObject fire; // 프리펩 투사체
     public GameObject ProObject;    // 클론 투사체
-       
 
 
     Transform spawn;    // 분열된 슬라임 생성될 위치 1
@@ -82,7 +82,8 @@ public abstract class Enemy : MonoBehaviour
     Rigidbody2D rigid;
     Animator animator;
     SpriteRenderer spriteRenderer;
-    SpriteRenderer sprite;
+    SpriteRenderer orcWaringmark;
+    SpriteRenderer sprite;  // Nec 보스의 위험마크
     RaycastHit2D rayHit;
     BoxCollider2D Bcollider;
     BoxCollider2D Box;
@@ -235,7 +236,7 @@ public abstract class Enemy : MonoBehaviour
         bossBox = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
         rigid = this.gameObject.GetComponent<Rigidbody2D>();
-        spriteRenderer = this.gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
+        orcWaringmark = this.gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
         hit_bloodTrans = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
         PbSpawn = this.gameObject.transform.GetChild(2).GetComponent<Transform>();
         Enemy_HPten = Enemy_HP * 0.1f;
@@ -440,12 +441,20 @@ public abstract class Enemy : MonoBehaviour
         posi = this.gameObject.GetComponent<Transform>();
         enemyHit = true;
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
-        spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
+        spriteRenderer = this.gameObject.transform.GetChild(1).GetComponentInChildren<SpriteRenderer>();
         rigid = this.GetComponent<Rigidbody2D>();
         this.GetComponentInChildren<EnemyUi>().ShowDamgeText(damage); //윤성권 추가함
 
-        StackBleed();
-
+        if (whatWeapon.tag == "Sword")
+        {
+            Debug.Log("출혈 할게~");
+            StackBleed();
+        }
+        else if(whatWeapon.tag != "Sword")
+        {
+            Debug.Log("출혈 못해!");
+        }
+        
         Enemy_HP -= damage;
         if(Enemy_Mod == 11)
         {
@@ -549,6 +558,7 @@ public abstract class Enemy : MonoBehaviour
         }
         else if (Enemy_HP <= 0 && Enemy_Mod == 6 && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))  // Orc보스 죽음
         {
+            Debug.Log("보스 죽음");
             Dying = true;
             this.gameObject.layer = LayerMask.NameToLayer("Dieenemy");
             Enemy_Speed = 0;
@@ -557,12 +567,14 @@ public abstract class Enemy : MonoBehaviour
             for (int i = 0; i < 10; i++)
             {
                 // 스프라이트 블링크
+                Debug.Log("블링크 시작");
                 spriteRenderer.color = new Color(1, 1, 1, 0.4f);
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.3f);
                 spriteRenderer.color = new Color(1, 1, 1, 1);
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.3f);
             }
             spriteRenderer.color = new Color(1, 1, 1, 0.4f);
+            Debug.Log("사라짐");
             enemyDestroy();
             //this.gameObject.gameObject.SetActive(false);
         }
@@ -842,28 +854,14 @@ public abstract class Enemy : MonoBehaviour
             if (collider.tag == "Player")
             {
                 collider.GetComponent<Player>().Playerhurt(Enemy_Power, Pos.position);
-                Debug.Log(collider.tag);
-                Debug.Log(BoxCollider2DSize.size + "if");
                 Debug.Log("데미지 줌");
             }
             else if (collider.tag == null);
             {
-                Debug.Log(BoxCollider2DSize.size + "else");
                 Debug.Log("데미지 못 줌");
             }
         }
-        //OnDrawGizmos();
-
     }
-    void OnDrawGizmos()
-    {
-        transformPosition = this.gameObject.transform.GetChild(0).GetComponent<Transform>();
-        BoxCollider2DSize = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transformPosition.position, BoxCollider2DSize.size);
-    }
-
     public void Bump()      // 충돌 데미지 함수
     {
         Collider2D[] collider2D = Physics2D.OverlapBoxAll(Pos.position, Boxs.size, 0);
@@ -1189,12 +1187,12 @@ public abstract class Enemy : MonoBehaviour
     {
         if(atkPattern < 5)
         {
-            spriteRenderer.enabled = true;
+            orcWaringmark.enabled = true;
         }
     }
     void offSPrite() // orc용
     {
-        spriteRenderer.enabled = false;
+        orcWaringmark.enabled = false;
     }
 
     void OrcRandomAtk()
@@ -1227,32 +1225,32 @@ public abstract class Enemy : MonoBehaviour
             case 1:
                 onSprite();
                 Invoke("Left_Hooking", 1f);
-                Invoke("GiveDamage", 0.7f);
+                Invoke("GiveDamage", 1.7f);
                 atkPattern = 0;
                 break;
             case 2:
                 onSprite();
                 Invoke("Right_Hooking", 1f);
-                Invoke("GiveDamage", 0.9f);
+                Invoke("GiveDamage", 1.9f);
                 atkPattern = 0;
                 break;
             case 3:
                 onSprite();
                 Invoke("Left_Hooking", 1f);
-                Invoke("GiveDamage", 0.7f);
+                Invoke("GiveDamage", 1.7f);
                 atkPattern = 0;
                 break;
             case 4:
                 onSprite();
                 Invoke("Right_Hooking", 1f);
-                Invoke("GiveDamage", 0.9f);
+                Invoke("GiveDamage", 1.9f);
                 atkPattern = 0;
                 break;
             case 5:
                 onSprite();
                 Invoke("Left_Hooking", 1f);
                 Invoke("GiveDamage", 1.7f);
-                //Invoke("rockSpawning", 1.7f);
+                Invoke("rockSpawning", 1.7f);
                 StartCoroutine(recoil());
                 atkPattern = 0;
                 break;
@@ -1260,7 +1258,7 @@ public abstract class Enemy : MonoBehaviour
                 onSprite();
                 Invoke("Right_Hooking", 1f);
                 Invoke("GiveDamage", 1.9f);
-                //Invoke("canineSpawning", 1.9f);
+                Invoke("canineSpawning", 1.9f);
                 StartCoroutine(recoil());
                 atkPattern = 0;
                 break;
