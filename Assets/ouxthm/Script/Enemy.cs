@@ -431,7 +431,6 @@ public abstract class Enemy : MonoBehaviour
             if (bleedLevel <= 5)     // 출혈스택 6까지 쌓임
             {
                 bleedLevel++;
-                Debug.Log("출혈스택 쌓임");
             }
             bleedingTime = Player.BleedingTime;
         }
@@ -447,7 +446,6 @@ public abstract class Enemy : MonoBehaviour
 
         if (whatWeapon.tag == "Sword")
         {
-            Debug.Log("출혈 할게~");
             StackBleed();
         }
         else if(whatWeapon.tag != "Sword")
@@ -520,12 +518,11 @@ public abstract class Enemy : MonoBehaviour
             }
             else if (Enemy_Mod == 9 && posi.localScale.y <= 1f)
             {
-                //this.gameObject.SetActive(false);   // clone slime 제거
                 enemyDestroy();
             }
             else if (Enemy_Mod != 9)
             {
-                this.gameObject.SetActive(false);
+                enemyDestroy();
             }
         }
         else if (Enemy_HP <= 0 && Enemy_Mod == 3 && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy")) // 비행 몬스터 죽음)
@@ -553,12 +550,10 @@ public abstract class Enemy : MonoBehaviour
                 rigid.isKinematic = false;
             }
             yield return new WaitForSeconds(Enemy_Dying_anim_Time);
-            //this.gameObject.gameObject.SetActive(false);
             enemyDestroy();
         }
         else if (Enemy_HP <= 0 && Enemy_Mod == 6 && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))  // Orc보스 죽음
         {
-            Debug.Log("보스 죽음");
             Dying = true;
             this.gameObject.layer = LayerMask.NameToLayer("Dieenemy");
             Enemy_Speed = 0;
@@ -567,16 +562,13 @@ public abstract class Enemy : MonoBehaviour
             for (int i = 0; i < 10; i++)
             {
                 // 스프라이트 블링크
-                Debug.Log("블링크 시작");
                 spriteRenderer.color = new Color(1, 1, 1, 0.4f);
                 yield return new WaitForSeconds(0.3f);
                 spriteRenderer.color = new Color(1, 1, 1, 1);
                 yield return new WaitForSeconds(0.3f);
             }
             spriteRenderer.color = new Color(1, 1, 1, 0.4f);
-            Debug.Log("사라짐");
             enemyDestroy();
-            //this.gameObject.gameObject.SetActive(false);
         }
         else if (Enemy_HP <= 0 && Enemy_Mod == 11 && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
         {
@@ -598,7 +590,6 @@ public abstract class Enemy : MonoBehaviour
             }
             spriteRenderer.color = new Color(1, 1, 1, 0.4f);
             enemyDestroy();
-            //this.gameObject.gameObject.SetActive(false);
         }
         enemyHit = false;
     }
@@ -882,7 +873,7 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmos() // Bump()가 적용되는 위치를 그리는 함수
     {
         Pos = GetComponent<Transform>();
         Boxs = GetComponent<BoxCollider2D>();
@@ -911,7 +902,8 @@ public abstract class Enemy : MonoBehaviour
         GiveDamage();
         this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
         yield return new WaitForSeconds(0.6f);
-        this.gameObject.SetActive(false);
+        enemyDestroy();
+        //this.gameObject.SetActive(false);
     }
 
     public IEnumerator Split()  // 슬라임 분열 함수
@@ -934,7 +926,7 @@ public abstract class Enemy : MonoBehaviour
     public void enemyDestroy()
     {
         Debug.Log("아예 삭제");
-        Destroy(gameObject); 
+        Destroy(this.gameObject); 
     }
 
     public void ProjectiveBody()    // 투사체 생성 (위치 저장)

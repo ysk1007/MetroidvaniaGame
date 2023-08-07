@@ -2301,7 +2301,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5810560}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.86, y: -3.62, z: 0}
+  m_LocalPosition: {x: 11.07, y: -3.62, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2804,7 +2804,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 422219055, guid: fc3120fa98606004fb54336f4fc80611, type: 3}
+  m_Sprite: {fileID: -1534229340, guid: fc3120fa98606004fb54336f4fc80611, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3783,6 +3783,7 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  whatWeapon: {fileID: 1809526532}
   Swordlevel: 0
   bleedLevel: 0
   bleedingDamage: 0
@@ -5483,6 +5484,7 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  whatWeapon: {fileID: 1809526532}
   Swordlevel: 0
   bleedLevel: 0
   bleedingDamage: 0
@@ -5507,7 +5509,7 @@ MonoBehaviour:
   fire: {fileID: 0}
   ProObject: {fileID: 0}
   PObject: {fileID: 0}
-  Pos: {fileID: 0}
+  Pos: {fileID: 137502402}
   arrow: {fileID: 0}
   slash: {fileID: 0}
 --- !u!1 &147203019
@@ -10075,6 +10077,7 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  whatWeapon: {fileID: 1809526532}
   Swordlevel: 0
   bleedLevel: 0
   bleedingDamage: 0
@@ -10714,7 +10717,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 509848105}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 79.52, y: -6.98, z: 0}
+  m_LocalPosition: {x: 74.2, y: -7.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -13765,7 +13768,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &690602282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13808,6 +13811,7 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  whatWeapon: {fileID: 1809526532}
   Swordlevel: 0
   bleedLevel: 0
   bleedingDamage: 0
@@ -19757,6 +19761,7 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  whatWeapon: {fileID: 1809526532}
   Swordlevel: 0
   bleedLevel: 0
   bleedingDamage: 0
@@ -21757,6 +21762,7 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  whatWeapon: {fileID: 1809526532}
   Swordlevel: 0
   bleedLevel: 0
   bleedingDamage: 0
@@ -24174,7 +24180,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1246792017
 Transform:
   m_ObjectHideFlags: 0
@@ -26554,8 +26560,8 @@ MonoBehaviour:
   torchDie: {fileID: 8300000, guid: 8e50bf1f922000d46b6727d95899e4a9, type: 3}
   torchThrow: {fileID: 0}
   wolfAtk: {fileID: 8300000, guid: 49fb94c96e3a35843b46866f097222a4, type: 3}
-  wolfHit: {fileID: 0}
-  wolfDie: {fileID: 0}
+  wolfHit: {fileID: 8300000, guid: a574eeb5d05b3b24dab20549d419a806, type: 3}
+  wolfDie: {fileID: 8300000, guid: 8c68419ddd1fb2848852f137c4c5bed4, type: 3}
 --- !u!1001 &1349834702
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27310,6 +27316,7 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  whatWeapon: {fileID: 1809526532}
   Swordlevel: 0
   bleedLevel: 0
   bleedingDamage: 0
@@ -30094,6 +30101,7 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  whatWeapon: {fileID: 1809526532}
   Swordlevel: 0
   bleedLevel: 0
   bleedingDamage: 0
@@ -31049,6 +31057,7 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  whatWeapon: {fileID: 1809526532}
   Swordlevel: 0
   bleedLevel: 0
   bleedingDamage: 0
@@ -34970,6 +34979,7 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  whatWeapon: {fileID: 1809526532}
   Swordlevel: 0
   bleedLevel: 0
   bleedingDamage: 0
@@ -36997,7 +37007,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1838800820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37040,6 +37050,7 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  whatWeapon: {fileID: 1809526532}
   Swordlevel: 0
   bleedLevel: 0
   bleedingDamage: 0
@@ -37064,7 +37075,7 @@ MonoBehaviour:
   fire: {fileID: 0}
   ProObject: {fileID: 0}
   PObject: {fileID: 0}
-  Pos: {fileID: 0}
+  Pos: {fileID: 1838800824}
   arrow: {fileID: 0}
   slash: {fileID: 0}
 --- !u!114 &1838800821
@@ -37088,7 +37099,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1838800819}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -38395,6 +38406,7 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  whatWeapon: {fileID: 1809526532}
   Swordlevel: 0
   bleedLevel: 0
   bleedingDamage: 0
@@ -39029,6 +39041,7 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  whatWeapon: {fileID: 1809526532}
   Swordlevel: 0
   bleedLevel: 0
   bleedingDamage: 0
@@ -41727,6 +41740,7 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  whatWeapon: {fileID: 1809526532}
   Swordlevel: 0
   bleedLevel: 0
   bleedingDamage: 0

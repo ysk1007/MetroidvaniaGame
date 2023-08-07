@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Hierarchy
+  m_Title: Scene
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 200}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 191
+  controlID: 6762
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -146,7 +146,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 165
+  controlID: 6864
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -224,7 +224,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 113
+  controlID: 6768
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -323,8 +323,8 @@ MonoBehaviour:
     y: 0
     width: 383
     height: 947
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 21}
   m_Panes:
   - {fileID: 21}
@@ -392,7 +392,7 @@ MonoBehaviour:
     m_VAllowExceedBaseRangeMax: 1
     m_ScaleWithWindow: 0
     m_HSlider: 0
-    m_VSlider: 1
+    m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
     m_EnableMouseInput: 1
     m_EnableSliderZoomHorizontal: 0
@@ -405,7 +405,7 @@ MonoBehaviour:
       y: 21
       width: 946
       height: 400
-    m_Scale: {x: 0.38981482, y: 0.3898148}
+    m_Scale: {x: 0.37037033, y: 0.37037036}
     m_Translation: {x: 472.99997, y: 200}
     m_MarginLeft: 0
     m_MarginRight: 0
@@ -413,12 +413,12 @@ MonoBehaviour:
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -1213.3966
-      y: -513.06415
-      width: 2426.7932
-      height: 1026.1283
+      x: -1277.1001
+      y: -540
+      width: 2554.2002
+      height: 1080
     m_MinimalGUI: 1
-  m_defaultScale: 0.38981482
+  m_defaultScale: 0.37037036
   m_LastWindowPixelSize: {x: 946, y: 421}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
@@ -677,7 +677,7 @@ MonoBehaviour:
       containerId: overlay-toolbar__top
       floating: 0
       collapsed: 0
-      displayed: 0
+      displayed: 1
       snapOffset: {x: 0, y: 0}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
@@ -717,9 +717,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 77.8232, y: -6.7527413, z: -0.0043489626}
+    m_Target: {x: 78.26083, y: -6.6834736, z: -0.6757345}
     speed: 2
-    m_Value: {x: 77.8232, y: -6.7527413, z: -0.0043489626}
+    m_Value: {x: 78.26083, y: -6.6834736, z: -0.6757345}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -770,9 +770,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 6.5116844
+    m_Target: 5.6309342
     speed: 2
-    m_Value: 6.5116844
+    m_Value: 5.6309342
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1370,23 +1370,23 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 52650000
-      m_LastClickedID: 25938
-      m_ExpandedIDs: fafaffff
+      m_SelectedIDs: 1a640000
+      m_LastClickedID: 25626
+      m_ExpandedIDs: fafaffff206100003e670000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
+        m_Name: Player
+        m_OriginalName: Player
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 0
+        m_UserData: 25266
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 11
+        m_OriginalEventType: 0
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 10}
       m_SearchString: 
@@ -1467,22 +1467,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/ouxthm/Script
+    - Assets/ouxthm/Sprite/Boss/Fat_Monster
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 75
   m_LastFolders:
-  - Assets/GameScenes
+  - Assets/ouxthm/Sprite/Boss/Fat_Monster
   m_LastFoldersGridSize: 75
   m_LastProjectPath: "C:\\Users\\aquam\\OneDrive\\\uBB38\uC11C\\GitHub\\MetroidvaniaGame"
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 03ca9a3b
-    m_LastClickedID: 1000000003
-    m_ExpandedIDs: 00000000c87c0000ca7c0000cc7c0000ce7c0000d07c0000d27c0000d47c0000d67c0000d87c0000da7c000000ca9a3b
+    m_SelectedIDs: ec7c0000
+    m_LastClickedID: 31980
+    m_ExpandedIDs: 00000000c87c0000ca7c0000cc7c0000ce7c0000d07c0000d27c0000d87c000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1510,7 +1510,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000c87c0000ca7c0000cc7c0000ce7c0000d07c0000d27c0000d47c0000d67c0000d87c0000da7c0000
+    m_ExpandedIDs: 00000000c87c0000ca7c0000cc7c0000ce7c0000d07c0000d27c0000d47c0000d67c0000d87c0000da7c000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1537,8 +1537,8 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
-    m_ExpandedInstanceIDs: ae600000d6600000e26500005e6600001465000056680000e06d0000b0680000c87f000010690000fa6d0000f46800005e690000229001002c9001002690010094690000ec70000026710000ce690000d46900007c5e01008271000000000000b87600006eaa000072aa00007aaa000076aa0000fe73000002740000227300001e7300009e740000c2730000d4730000d8730000406a0000387f00004c6a000064890000b4dd0200d86c000044920000e6940000a892000044a700009690000030720000b0b608004e94000068830000
+    m_HadKeyboardFocusLastEvent: 1
+    m_ExpandedInstanceIDs: ae600000d6600000e26500005e6600001465000056680000e06d0000b0680000c87f000010690000fa6d0000f46800005e690000229001002c9001002690010094690000ec70000026710000ce690000d46900007c5e01008271000000000000b87600006eaa000072aa00007aaa000076aa0000fe73000002740000227300001e7300009e740000c2730000d4730000d8730000406a0000387f00004c6a000064890000b4dd0200d86c000044920000e6940000a892000044a700009690000030720000b0b608004e940000688300005e720000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1565,7 +1565,7 @@ MonoBehaviour:
     m_ScrollPosition: {x: 0, y: 0}
     m_GridSize: 75
   m_SkipHiddenPackages: 0
-  m_DirectoriesAreaWidth: 191
+  m_DirectoriesAreaWidth: 205
 --- !u!114 &20
 MonoBehaviour:
   m_ObjectHideFlags: 52
