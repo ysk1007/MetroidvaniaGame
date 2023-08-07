@@ -6,9 +6,11 @@ public class EnemySounds : MonoBehaviour
 {
     public AudioSource audioSource;
     public AudioClip beeAtk;
+    public AudioClip Buzzing;
 
     public AudioClip boarHit;
     public AudioClip boarDie;
+    public AudioClip boarRun;
 
     public AudioClip lgHit;
     public AudioClip lgDie;
@@ -35,6 +37,12 @@ public class EnemySounds : MonoBehaviour
     public AudioClip wolfHit;
     public AudioClip wolfDie;
 
+    public AudioClip ratDie;
+    public AudioClip ratHit;
+
+    public AudioClip batHit;
+    public AudioClip batDie;
+
     private void Awake()
     {
         audioSource = this.gameObject.GetComponentInParent<AudioSource>();
@@ -43,6 +51,10 @@ public class EnemySounds : MonoBehaviour
     {
         Sounds("beeAtk");
     }
+    public void buzzing()
+    {
+        Sounds("Buzzing");
+    }
     public void BoarHit()
     {
         Sounds("boarHit");
@@ -50,6 +62,10 @@ public class EnemySounds : MonoBehaviour
     public void BoarDie()
     {
         Sounds("boarDie");
+    }
+    public void BoarRun()
+    {
+        Sounds("boarRun");
     }
     public void LgHit()
     {
@@ -127,6 +143,22 @@ public class EnemySounds : MonoBehaviour
     {
         Sounds("wolfDie");
     }
+    public void RatHit()
+    {
+        Sounds("ratHit");
+    }
+    public void RatDie()
+    {
+        Sounds("ratDie");
+    }
+    public void BatHit()
+    {
+        Sounds("batHit");
+    }
+    public void BatDie()
+    {
+        Sounds("batDie");
+    }
 
 
     public void Sounds(string sounds)
@@ -136,11 +168,17 @@ public class EnemySounds : MonoBehaviour
             case "beeAtk":
                 audioSource.clip = beeAtk;
                 break;
+            case "Buzzing":
+                audioSource.clip = Buzzing;
+                break;
             case "boarHit":
                 audioSource.clip = boarHit;
                 break;
             case "boarDie":
                 audioSource.clip = boarDie;
+                break;
+            case "boarRun":
+                audioSource.clip = boarRun;
                 break;
             case "lgHit":
                 audioSource.clip = lgHit;
@@ -198,6 +236,18 @@ public class EnemySounds : MonoBehaviour
                 break;
             case "wolfDie":
                 audioSource.clip = wolfDie;
+                break;
+            case "ratHit":
+                audioSource.clip = ratHit;
+                break;
+            case "ratDie":
+                audioSource.clip = ratDie;
+                break;
+            case "batHit":
+                audioSource.clip = batHit;
+                break;
+            case "batDie":
+                audioSource.clip = batDie;
                 break;
         }
         audioSource.Play();
