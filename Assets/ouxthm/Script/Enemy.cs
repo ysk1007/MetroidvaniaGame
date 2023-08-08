@@ -109,7 +109,7 @@ public abstract class Enemy : MonoBehaviour
         Gap_Distance_Y = Mathf.Abs(target.transform.position.y - transform.position.y); //Y축 거리 계산
         Sensing(target, rayHit);
         Sensor();
-        Swordlevel = Player.swordLevel;
+        Swordlevel = Player.proSelectWeapon;
         bleedingDamage = Player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
         if (bleedingTime >= 0)
@@ -144,7 +144,7 @@ public abstract class Enemy : MonoBehaviour
 
     public virtual void Boss(Transform target)  // boss용 Update문
     {
-        Swordlevel = Player.swordLevel;
+        Swordlevel = Player.proSelectWeapon;
         bleedingDamage = Player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
         playerLoc = target.position.x;
@@ -163,7 +163,7 @@ public abstract class Enemy : MonoBehaviour
 
     public virtual void OrcBoss(Transform target)
     {
-        Swordlevel = Player.swordLevel;
+        Swordlevel = Player.proSelectWeapon;
         bleedingDamage = Player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
         if (bleedingTime >= 0)
@@ -173,6 +173,14 @@ public abstract class Enemy : MonoBehaviour
 
         if (this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
         {
+            if (animator.GetBool("Idle") == true)
+            {
+                Enemy_Speed = 0f;
+            }
+            if(animator.GetBool("Idle") == false)
+            {
+                Enemy_Speed = 1f;
+            }
             orcMove(); 
             OrcAttack();
         }
@@ -187,7 +195,7 @@ public abstract class Enemy : MonoBehaviour
         }
         playerLoc = target.position.x;
         boarLoc = this.gameObject.transform.position.x;
-        Swordlevel = Player.swordLevel;
+        Swordlevel = Player.proSelectWeapon;
         bleedingDamage = Player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
         StartCoroutine(boarMove());
@@ -1304,8 +1312,8 @@ public abstract class Enemy : MonoBehaviour
     }
     IEnumerator recoil()    // 공격 반동으로 잠시 멈추는 함수
     {
+        yield return new WaitForSeconds(1f);
         animator.SetBool("Idle", true);
-        Enemy_Speed = 0f;
         yield return new WaitForSeconds(4f);
         animator.SetBool("Idle", false);
     }

@@ -43,6 +43,12 @@ public class EnemySounds : MonoBehaviour
     public AudioClip batHit;
     public AudioClip batDie;
 
+    public AudioClip orcHit;
+    public AudioClip orcDie;
+    public AudioClip orcAtk;
+    public AudioClip orcWalkL;
+    public AudioClip orcWalkR;
+
     private void Awake()
     {
         audioSource = this.gameObject.GetComponentInParent<AudioSource>();
@@ -159,8 +165,27 @@ public class EnemySounds : MonoBehaviour
     {
         Sounds("batDie");
     }
-
-
+    public void OrcHit()
+    {
+        Sounds("orcHit");
+    }
+    public void OrcDie()
+    {
+        Sounds("orcDie");
+    }
+    public void OrcAtk()
+    {
+        Sounds("orcAtk");
+    }
+    public void OrcWalkL()
+    {
+        Sounds("orcWalkL");
+    }
+    public void OrcWalkR()
+    {
+        Sounds("orcWalkR");
+    }
+    
     public void Sounds(string sounds)
     {
         switch (sounds)
@@ -248,6 +273,21 @@ public class EnemySounds : MonoBehaviour
                 break;
             case "batDie":
                 audioSource.clip = batDie;
+                break;
+            case "orcHit":
+                audioSource.clip = orcHit;
+                break;
+            case "orcDie":
+                audioSource.clip = orcDie;
+                break;
+            case "orcAtk":
+                audioSource.clip = orcAtk;
+                break;
+            case "orcWalkL":
+                audioSource.clip = orcWalkL;
+                break;
+            case "orcWalkR":
+                audioSource.clip = orcWalkR;
                 break;
         }
         audioSource.Play();
