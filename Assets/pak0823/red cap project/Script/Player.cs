@@ -46,11 +46,11 @@ public class Player : MonoBehaviour
     public float enemyPower;
 
     public static int proSelectWeapon = 0;       // 2023-07-31 추가(선택한 숙련도 무기) 0칼,1도끼,2활,4선택 X
-    public static int proLevel = 1; // 숙련도 레벨
+    public static int proLevel = 3; // 숙련도 레벨
+    public int stackbleed;  // 몬스터에 쌓인 출혈 스택
     public static float BleedingTime = 8f;  // 2023-07-31 추가(출혈 지속 시간)
     public static float bleedDamage = 0.5f; // 2023-08-01 출혈 데미지
     public static float bloodBoomDmg = 7f;  // 출혈스택 터뜨리는 데미지
-    //public float enemyBleedingTime; // 2023-08-01(몬스터의 출혈 남은 시간)
 
     //선택능력치 추가함
     public float[] selectAtkLevel = { 10f, 20f, 30f };
@@ -119,7 +119,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        //enemyBleedingTime = Enemy.bleedingTime; // 2023-08-01 추가 (적의 출혈 남은 시간 계속 계산)
+        stackbleed = Enemy.bleedLevel; // 2023-08-09 추가 
 
         Player_Move();  //Player의 이동, 점프, 속도 함수
         Player_Attack();    //Player의 공격 함수
@@ -203,11 +203,11 @@ public class Player : MonoBehaviour
             isMasterSkill = true;
             if (WeaponChage == 1)   //검
             {
-                if(proLevel > 2 && proSelectWeapon == 0)
+                if(proLevel > 2 && proSelectWeapon == 0 && stackbleed > 0)
                 {
                     enemy.bleedEff();
                 }
-                else if (proLevel <= 2 && proSelectWeapon == 0)
+                else if (proLevel <= 2 && proSelectWeapon == 0 && stackbleed == 0)
                 {
                     Debug.Log("쓸 수 없음");
                 }

@@ -43,7 +43,7 @@ public abstract class Enemy : MonoBehaviour
     public GameObject whatWeapon;  // 플레이어가 어떤 무기 상태인지 확인
     public int Swordlevel;  // 플레이어 검 숙련도
     public int selectWeapon;    // 숙련도를 올릴 무기 선택 0 = 칼, 1 = 도끼, 2 = 활, 4 = 선택 X
-    public int bleedLevel;  // 출혈 스택
+    public static int bleedLevel;  // 출혈 스택
     public float bleedingDamage;    // 출혈 데미지
     public float bleedingTime;  // 출혈 지속시간
     public float bloodBoomDmg;  // 플레이어의 출혈 스택 터뜨리는 데미지
@@ -534,7 +534,7 @@ public abstract class Enemy : MonoBehaviour
                 StartCoroutine(Split());
                 this.gameObject.SetActive(false);
             }
-            else if (Enemy_Mod == 9 && posi.localScale.y <= 1f)
+            else if (Enemy_Mod == 9 && posi.localScale.y < 1f)
             {
                 enemyDestroy();
             }

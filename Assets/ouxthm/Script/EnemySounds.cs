@@ -5,6 +5,9 @@ using UnityEngine;
 public class EnemySounds : MonoBehaviour
 {
     public AudioSource audioSource;
+
+    public AudioClip bloodEff;
+
     public AudioClip beeAtk;
     public AudioClip Buzzing;
 
@@ -28,6 +31,7 @@ public class EnemySounds : MonoBehaviour
 
     public AudioClip slimeHit;
     public AudioClip slimeDie;
+    public AudioClip slimeJump;
 
     public AudioClip torchHit;
     public AudioClip torchDie;
@@ -49,9 +53,16 @@ public class EnemySounds : MonoBehaviour
     public AudioClip orcWalkL;
     public AudioClip orcWalkR;
 
+    public AudioClip snailHit;
+    public AudioClip snailDie;
+
     private void Awake()
     {
         audioSource = this.gameObject.GetComponentInParent<AudioSource>();
+    }
+    public void BloodEff()
+    {
+        Sounds("bloodEff");
     }
     public void BeeAtk()
     {
@@ -125,6 +136,10 @@ public class EnemySounds : MonoBehaviour
     {
         Sounds("slimeDie");
     }
+    public void SlimeJump()
+    {
+        Sounds("slimeJump");
+    }
     public void TorchHit()
     {
         Sounds("torchHit");
@@ -185,11 +200,21 @@ public class EnemySounds : MonoBehaviour
     {
         Sounds("orcWalkR");
     }
-    
+    public void SnailHit()
+    {
+        Sounds("snailHit");
+    }
+    public void SnailDie()
+    {
+        Sounds("snailDie");
+    }
     public void Sounds(string sounds)
     {
         switch (sounds)
         {
+            case "bloodEff":
+                audioSource.clip = bloodEff;
+                break;
             case "beeAtk":
                 audioSource.clip = beeAtk;
                 break;
@@ -244,6 +269,9 @@ public class EnemySounds : MonoBehaviour
             case "slimeDie":
                 audioSource.clip = slimeDie;
                 break;
+            case "slimeJump":
+                audioSource.clip = slimeJump;
+                break;
             case "torchHit":
                 audioSource.clip = torchHit;
                 break;
@@ -288,6 +316,12 @@ public class EnemySounds : MonoBehaviour
                 break;
             case "orcWalkR":
                 audioSource.clip = orcWalkR;
+                break;
+            case "snailHit":
+                audioSource.clip = snailHit;
+                break;
+            case "snailDie":
+                audioSource.clip = snailDie;
                 break;
         }
         audioSource.Play();

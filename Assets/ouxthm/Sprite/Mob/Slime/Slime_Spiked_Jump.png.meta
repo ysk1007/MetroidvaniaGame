@@ -141,7 +141,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Slime_Spiked_Jump_2
+      name: 3
       rect:
         serializedVersion: 2
         x: 152
@@ -152,23 +152,17 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.15}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -5.5, y: 11.5}
-        - {x: -6.5, y: 9.5}
-        - {x: -6.5, y: -11.5}
-        - {x: 6.5, y: -11.5}
-        - {x: 6.5, y: 9.5}
-        - {x: 4.5, y: 11.5}
-      tessellationDetail: 0.6
+      physicsShape: []
+      tessellationDetail: 0
       bones: []
-      spriteID: c9b761e32f864f842a2d8c54389a43c1
-      internalID: 444740183
+      spriteID: 56a4a6951e190e547827e31ab3e57649
+      internalID: 530278048
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Slime_Spiked_Jump_3
+      name: 4
       rect:
         serializedVersion: 2
         x: 214
@@ -179,21 +173,17 @@ TextureImporter:
       pivot: {x: 0.5, y: -0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -9, y: 6.5}
-        - {x: -9, y: -6.5}
-        - {x: 9, y: -6.5}
-        - {x: 9, y: 6.5}
-      tessellationDetail: 0.42
+      physicsShape: []
+      tessellationDetail: 0
       bones: []
-      spriteID: 7bc0b586b0147624a920abad79dd3941
-      internalID: -899501819
+      spriteID: e90a841e6241ac64db7980f204cab18a
+      internalID: 130837945
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Slime_Spiked_Jump_0
+      name: 1
       rect:
         serializedVersion: 2
         x: 18
@@ -204,23 +194,17 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.91}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -8.5, y: 5}
-        - {x: -13.5, y: 1}
-        - {x: -13.5, y: -5}
-        - {x: 13.5, y: -5}
-        - {x: 13.5, y: 1}
-        - {x: 9.5, y: 5}
-      tessellationDetail: 0.24
+      physicsShape: []
+      tessellationDetail: 0
       bones: []
-      spriteID: 26541284570830a4f83458eaac4d334c
-      internalID: 1136002838
+      spriteID: 26d82c66a145eb743ac7022a90506b7a
+      internalID: 1305243758
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Slime_Spiked_Jump_1
+      name: 2
       rect:
         serializedVersion: 2
         x: 82
@@ -231,23 +215,17 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.76}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -7.5, y: 6}
-        - {x: -12.5, y: -1}
-        - {x: -12.5, y: -6}
-        - {x: 12.5, y: -6}
-        - {x: 12.5, y: -2}
-        - {x: 7.5, y: 6}
-      tessellationDetail: 0.36
+      physicsShape: []
+      tessellationDetail: 0
       bones: []
-      spriteID: 58fe8cb4eefdd1447b112f9b61e93e36
-      internalID: -600689966
+      spriteID: f83531666bac01b4d93205a747e6f471
+      internalID: -314274936
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Slime_Spiked_Jump_4
+      name: 5
       rect:
         serializedVersion: 2
         x: 23
@@ -261,14 +239,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6e4e154cd85b1d34eb8564df76aad79f
-      internalID: 1152956226
+      spriteID: bd8371805fc882a4aa43347607a6afd8
+      internalID: -1187180712
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Slime_Spiked_Jump_5
+      name: 6
       rect:
         serializedVersion: 2
         x: 89
@@ -279,22 +257,17 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -4.5, y: 10.5}
-        - {x: -6.5, y: 6.5}
-        - {x: -6.5, y: -10.5}
-        - {x: 6.5, y: -10.5}
-        - {x: 6.5, y: 10.5}
-      tessellationDetail: 0.36
+      physicsShape: []
+      tessellationDetail: 0
       bones: []
-      spriteID: f354ee660bbf467428aa56c7ecb3866a
-      internalID: -517506129
+      spriteID: d538a2548ba64c84dac6a29e0ac51518
+      internalID: 1647304064
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Slime_Spiked_Jump_6
+      name: 7
       rect:
         serializedVersion: 2
         x: 151
@@ -305,26 +278,17 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.458}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: 4.5, y: 10}
-        - {x: -6.5, y: 10}
-        - {x: -6.5, y: 4}
-        - {x: -8.5, y: 2}
-        - {x: -8.5, y: -10}
-        - {x: 6.5, y: -10}
-        - {x: 8.5, y: -8}
-        - {x: 8.5, y: 2}
-        - {x: 5.5, y: 9}
-      tessellationDetail: 0.66
+      physicsShape: []
+      tessellationDetail: 0
       bones: []
-      spriteID: fe1f0c1108b56bc4ea028d04e590a52c
-      internalID: 830099979
+      spriteID: 756057566402ba64c8ae44998f614e1f
+      internalID: -2080893575
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Slime_Spiked_Jump_7
+      name: 8
       rect:
         serializedVersion: 2
         x: 210
@@ -335,17 +299,11 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.915}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: 9, y: 5}
-        - {x: -5, y: 5}
-        - {x: -13, y: -1}
-        - {x: -13, y: -5}
-        - {x: 13, y: -5}
-        - {x: 13, y: 0}
-      tessellationDetail: 0.44
+      physicsShape: []
+      tessellationDetail: 0
       bones: []
-      spriteID: bfb193c4c9db00d41b0b665aa08ac7ed
-      internalID: 177937396
+      spriteID: 295b5a4e28f3f5346a3d769e36d320e5
+      internalID: 796190709
       vertices: []
       indices: 
       edges: []
@@ -361,16 +319,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Slime_Spiked_Jump_0: 444740183
-      Slime_Spiked_Jump_1: 1152956226
-      Slime_Spiked_Jump_2: -600689966
-      Slime_Spiked_Jump_3: -899501819
-      Slime_Spiked_Jump_4: -600689966
-      Slime_Spiked_Jump_5: 830099979
-      Slime_Spiked_Jump_6: 177937396
-      Slime_Spiked_Jump_7: 1622016639
-      Slime_Spiked_Jump_8: 2057442594
-      Slime_Spiked_Jump_9: -88056780
+      1: 1305243758
+      2: -314274936
+      3: 530278048
+      4: 130837945
+      5: -1187180712
+      6: 1647304064
+      7: -2080893575
+      8: 796190709
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
