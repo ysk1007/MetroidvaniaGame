@@ -42,6 +42,7 @@ public abstract class Enemy : MonoBehaviour
 
     public GameObject whatWeapon;  // 플레이어가 어떤 무기 상태인지 확인
     public int Swordlevel;  // 플레이어 검 숙련도
+    public int selectWeapon;    // 숙련도를 올릴 무기 선택 0 = 칼, 1 = 도끼, 2 = 활, 4 = 선택 X
     public int bleedLevel;  // 출혈 스택
     public float bleedingDamage;    // 출혈 데미지
     public float bleedingTime;  // 출혈 지속시간
@@ -109,7 +110,8 @@ public abstract class Enemy : MonoBehaviour
         Gap_Distance_Y = Mathf.Abs(target.transform.position.y - transform.position.y); //Y축 거리 계산
         Sensing(target, rayHit);
         Sensor();
-        Swordlevel = Player.proSelectWeapon;
+        Swordlevel = Player.proLevel;
+        selectWeapon = Player.proSelectWeapon;
         bleedingDamage = Player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
         if (bleedingTime >= 0)
@@ -144,7 +146,8 @@ public abstract class Enemy : MonoBehaviour
 
     public virtual void Boss(Transform target)  // boss용 Update문
     {
-        Swordlevel = Player.proSelectWeapon;
+        Swordlevel = Player.proLevel;
+        selectWeapon = Player.proSelectWeapon;
         bleedingDamage = Player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
         playerLoc = target.position.x;
@@ -163,7 +166,8 @@ public abstract class Enemy : MonoBehaviour
 
     public virtual void OrcBoss(Transform target)
     {
-        Swordlevel = Player.proSelectWeapon;
+        Swordlevel = Player.proLevel;
+        selectWeapon = Player.proSelectWeapon;
         bleedingDamage = Player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
         if (bleedingTime >= 0)
@@ -177,12 +181,17 @@ public abstract class Enemy : MonoBehaviour
             {
                 Enemy_Speed = 0f;
             }
-            if(animator.GetBool("Idle") == false)
+            if (animator.GetBool("Idle") == false)
             {
                 Enemy_Speed = 1f;
             }
-            orcMove(); 
+            orcMove();
             OrcAttack();
+        }
+        else if(this.gameObject.layer == LayerMask.NameToLayer("Dieenemy"))
+        {
+            animator.SetBool("Idle", true);
+            Enemy_Speed = 0f;
         }
         orcDie();
     }
@@ -195,7 +204,8 @@ public abstract class Enemy : MonoBehaviour
         }
         playerLoc = target.position.x;
         boarLoc = this.gameObject.transform.position.x;
-        Swordlevel = Player.proSelectWeapon;
+        Swordlevel = Player.proLevel;
+        selectWeapon = Player.proSelectWeapon;
         bleedingDamage = Player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
         StartCoroutine(boarMove());
@@ -407,7 +417,7 @@ public abstract class Enemy : MonoBehaviour
     {
         if(bleedingTime > 0)
         {
-            if (Swordlevel > 0 && Enemy_HP > 0)
+            if (selectWeapon == 0 && Swordlevel > 0 && Enemy_HP > 0)
             {
                 Enemy_HP -= (bleedLevel * bleedingDamage); // 체력을  출혈스택 * 출혈 데미지로 감소
 
@@ -434,7 +444,7 @@ public abstract class Enemy : MonoBehaviour
 
     public void StackBleed()
     {
-        if (Swordlevel > 0)  // 플레이어가 출혈 업글했을 경우
+        if (selectWeapon == 0 && Swordlevel > 0)  // 플레이어가 출혈 업글했을 경우
         {
             if (bleedLevel <= 5)     // 출혈스택 6까지 쌓임
             {
@@ -855,10 +865,6 @@ public abstract class Enemy : MonoBehaviour
                 collider.GetComponent<Player>().Playerhurt(Enemy_Power, Pos.position);
                 Debug.Log("데미지 줌");
             }
-            else if (collider.tag == null);
-            {
-                Debug.Log("데미지 못 줌");
-            }
         }
     }
     public void Bump()      // 충돌 데미지 함수
@@ -1228,8 +1234,10 @@ public abstract class Enemy : MonoBehaviour
         int randNum;
         randNum = Random.Range(4, 5); 
         atkPattern = Random.Range(1, 7);     // 패턴 번호를 1 ~ 6까지 랜덤으로 뽑음.
-
-        Invoke("OrcRandomAtk", randNum);
+        if(this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
+        {
+            Invoke("OrcRandomAtk", randNum);
+        }
     }
 
     void orcMove()  // Orc 보스의 오른쪽으로 움직이는 함수

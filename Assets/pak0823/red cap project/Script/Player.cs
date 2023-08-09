@@ -45,7 +45,8 @@ public class Player : MonoBehaviour
     public float DmgIncrease; //추가함
     public float enemyPower;
 
-    public static int proSelectWeapon = 1;       // 2023-07-31 추가(칼 숙련도)
+    public static int proSelectWeapon = 0;       // 2023-07-31 추가(선택한 숙련도 무기) 0칼,1도끼,2활,4선택 X
+    public static int proLevel = 1; // 숙련도 레벨
     public static float BleedingTime = 8f;  // 2023-07-31 추가(출혈 지속 시간)
     public static float bleedDamage = 0.5f; // 2023-08-01 출혈 데미지
     public static float bloodBoomDmg = 7f;  // 출혈스택 터뜨리는 데미지
@@ -202,8 +203,14 @@ public class Player : MonoBehaviour
             isMasterSkill = true;
             if (WeaponChage == 1)   //검
             {
-                //Debug.Log(BleedingTime);
-                enemy.bleedEff();
+                if(proLevel > 2 && proSelectWeapon == 0)
+                {
+                    enemy.bleedEff();
+                }
+                else if (proLevel <= 2 && proSelectWeapon == 0)
+                {
+                    Debug.Log("쓸 수 없음");
+                }
             }
             if (WeaponChage == 2)   //도끼
             {

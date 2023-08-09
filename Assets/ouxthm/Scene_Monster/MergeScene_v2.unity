@@ -2561,6 +2561,11 @@ MonoBehaviour:
   ratHit: {fileID: 0}
   batHit: {fileID: 0}
   batDie: {fileID: 0}
+  orcHit: {fileID: 0}
+  orcDie: {fileID: 0}
+  orcAtk: {fileID: 0}
+  orcWalkL: {fileID: 0}
+  orcWalkR: {fileID: 0}
 --- !u!1 &21647019
 GameObject:
   m_ObjectHideFlags: 0
@@ -2726,6 +2731,7 @@ GameObject:
   - component: {fileID: 36208537}
   - component: {fileID: 36208539}
   - component: {fileID: 36208538}
+  - component: {fileID: 36208540}
   m_Layer: 15
   m_Name: Boss_Img
   m_TagString: Boss
@@ -2821,6 +2827,52 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &36208540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36208536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd76e3cdd565ba34a895f3b082b62974, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
+  beeAtk: {fileID: 8300000, guid: 34c8ea8b3cc581c45884aba897438601, type: 3}
+  Buzzing: {fileID: 8300000, guid: ff5ba840345836243880dc1407e01efc, type: 3}
+  boarHit: {fileID: 8300000, guid: f8ec6ad4e9bf9b6449ccd6d8fdbf0c4a, type: 3}
+  boarDie: {fileID: 8300000, guid: ffbc07800957d4a4b87d1e1937aad870, type: 3}
+  boarRun: {fileID: 8300000, guid: ccf0dbb57b0920749a761638aaf2bcb7, type: 3}
+  lgHit: {fileID: 8300000, guid: c741accc06a1bff4cbe2a7edf2e2bc73, type: 3}
+  lgDie: {fileID: 8300000, guid: 805ca5a4f1a0a554f8433564ae72106e, type: 3}
+  lgAtk: {fileID: 8300000, guid: d595a8e71b49e8743aca213ec23c986a, type: 3}
+  mrHit: {fileID: 8300000, guid: c461dbabbc2663e4e9b4f1c7525ec1e8, type: 3}
+  mrDie: {fileID: 8300000, guid: f4c1effe6cc04fa4b8a9f06b88fbf697, type: 3}
+  mrAtk: {fileID: 8300000, guid: 8b3f676fe7b41044495a2964396b8ba3, type: 3}
+  necjump: {fileID: 8300000, guid: 478caf7388cb03c499075f90c3a2ec77, type: 3}
+  necTeleport: {fileID: 8300000, guid: 97986e0a9e152b346ab8107d44e53700, type: 3}
+  necBoom: {fileID: 8300000, guid: fd706038486fee041947a774223dc22e, type: 3}
+  necHit: {fileID: 8300000, guid: 23dd87eef4241974c9973544a1d76fac, type: 3}
+  necDie: {fileID: 8300000, guid: c6e25b5d5e662b64b85bc6e79a8fec9b, type: 3}
+  slimeHit: {fileID: 8300000, guid: 4e3524312a006c44b9461ddfbc5423ef, type: 3}
+  slimeDie: {fileID: 8300000, guid: 2f62f2b1e83eb9444962b60a5b22c86f, type: 3}
+  torchHit: {fileID: 0}
+  torchDie: {fileID: 8300000, guid: 8e50bf1f922000d46b6727d95899e4a9, type: 3}
+  torchThrow: {fileID: 0}
+  wolfAtk: {fileID: 8300000, guid: 49fb94c96e3a35843b46866f097222a4, type: 3}
+  wolfHit: {fileID: 8300000, guid: a574eeb5d05b3b24dab20549d419a806, type: 3}
+  wolfDie: {fileID: 8300000, guid: 8c68419ddd1fb2848852f137c4c5bed4, type: 3}
+  ratDie: {fileID: 8300000, guid: 263344ad4cdc7634a8c4792faa58bb8e, type: 3}
+  ratHit: {fileID: 8300000, guid: 458ddfd328f327e4d8fd34bc5ae406be, type: 3}
+  batHit: {fileID: 8300000, guid: 3ab4536aca354ac4fbf828008b1f15d8, type: 3}
+  batDie: {fileID: 8300000, guid: 742ab41fc43305c47bb13b4fcb02c2e3, type: 3}
+  orcHit: {fileID: 8300000, guid: 8b4a6302f8421764e9a2a0074381b861, type: 3}
+  orcDie: {fileID: 8300000, guid: 03f6ee2c856e78f459edb353d6444657, type: 3}
+  orcAtk: {fileID: 8300000, guid: c71d81e002b40664db93b6bf9aca67bd, type: 3}
+  orcWalkL: {fileID: 8300000, guid: 492a86b1cb683c64bacc7a954fe9358e, type: 3}
+  orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
 --- !u!1 &38280103
 GameObject:
   m_ObjectHideFlags: 0
@@ -6431,6 +6483,11 @@ MonoBehaviour:
   ratHit: {fileID: 0}
   batHit: {fileID: 0}
   batDie: {fileID: 0}
+  orcHit: {fileID: 0}
+  orcDie: {fileID: 0}
+  orcAtk: {fileID: 0}
+  orcWalkL: {fileID: 0}
+  orcWalkR: {fileID: 0}
 --- !u!1 &256642653
 GameObject:
   m_ObjectHideFlags: 0
@@ -10729,7 +10786,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 509848105}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 74.2, y: -7.59, z: 0}
+  m_LocalPosition: {x: 74, y: -7.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11871,6 +11928,11 @@ MonoBehaviour:
   ratHit: {fileID: 0}
   batHit: {fileID: 0}
   batDie: {fileID: 0}
+  orcHit: {fileID: 0}
+  orcDie: {fileID: 0}
+  orcAtk: {fileID: 0}
+  orcWalkL: {fileID: 0}
+  orcWalkR: {fileID: 0}
 --- !u!1 &545299548
 GameObject:
   m_ObjectHideFlags: 0
@@ -13578,6 +13640,11 @@ MonoBehaviour:
   ratHit: {fileID: 8300000, guid: 458ddfd328f327e4d8fd34bc5ae406be, type: 3}
   batHit: {fileID: 8300000, guid: 3ab4536aca354ac4fbf828008b1f15d8, type: 3}
   batDie: {fileID: 8300000, guid: 742ab41fc43305c47bb13b4fcb02c2e3, type: 3}
+  orcHit: {fileID: 0}
+  orcDie: {fileID: 0}
+  orcAtk: {fileID: 0}
+  orcWalkL: {fileID: 0}
+  orcWalkR: {fileID: 0}
 --- !u!1001 &671117194
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19510,6 +19577,11 @@ MonoBehaviour:
   ratHit: {fileID: 0}
   batHit: {fileID: 0}
   batDie: {fileID: 0}
+  orcHit: {fileID: 0}
+  orcDie: {fileID: 0}
+  orcAtk: {fileID: 0}
+  orcWalkL: {fileID: 0}
+  orcWalkR: {fileID: 0}
 --- !u!1 &974702464
 GameObject:
   m_ObjectHideFlags: 0
@@ -21110,6 +21182,11 @@ MonoBehaviour:
   ratHit: {fileID: 0}
   batHit: {fileID: 0}
   batDie: {fileID: 0}
+  orcHit: {fileID: 0}
+  orcDie: {fileID: 0}
+  orcAtk: {fileID: 0}
+  orcWalkL: {fileID: 0}
+  orcWalkR: {fileID: 0}
 --- !u!1 &1047837965
 GameObject:
   m_ObjectHideFlags: 0
@@ -23822,6 +23899,11 @@ MonoBehaviour:
   ratHit: {fileID: 0}
   batHit: {fileID: 0}
   batDie: {fileID: 0}
+  orcHit: {fileID: 0}
+  orcDie: {fileID: 0}
+  orcAtk: {fileID: 0}
+  orcWalkL: {fileID: 0}
+  orcWalkR: {fileID: 0}
 --- !u!1 &1243742097
 GameObject:
   m_ObjectHideFlags: 0
@@ -24007,7 +24089,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7166585528206624360, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7166585528206624360, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
       propertyPath: m_AnchorMax.x
@@ -25602,6 +25684,11 @@ MonoBehaviour:
   ratHit: {fileID: 0}
   batHit: {fileID: 0}
   batDie: {fileID: 0}
+  orcHit: {fileID: 0}
+  orcDie: {fileID: 0}
+  orcAtk: {fileID: 0}
+  orcWalkL: {fileID: 0}
+  orcWalkR: {fileID: 0}
 --- !u!1 &1293780559
 GameObject:
   m_ObjectHideFlags: 0
@@ -26652,6 +26739,11 @@ MonoBehaviour:
   ratHit: {fileID: 0}
   batHit: {fileID: 0}
   batDie: {fileID: 0}
+  orcHit: {fileID: 0}
+  orcDie: {fileID: 0}
+  orcAtk: {fileID: 0}
+  orcWalkL: {fileID: 0}
+  orcWalkR: {fileID: 0}
 --- !u!1001 &1349834702
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29362,6 +29454,11 @@ MonoBehaviour:
   ratHit: {fileID: 8300000, guid: 458ddfd328f327e4d8fd34bc5ae406be, type: 3}
   batHit: {fileID: 8300000, guid: 3ab4536aca354ac4fbf828008b1f15d8, type: 3}
   batDie: {fileID: 8300000, guid: 742ab41fc43305c47bb13b4fcb02c2e3, type: 3}
+  orcHit: {fileID: 0}
+  orcDie: {fileID: 0}
+  orcAtk: {fileID: 0}
+  orcWalkL: {fileID: 0}
+  orcWalkR: {fileID: 0}
 --- !u!1 &1540036661
 GameObject:
   m_ObjectHideFlags: 0
@@ -35865,6 +35962,11 @@ MonoBehaviour:
   ratHit: {fileID: 0}
   batHit: {fileID: 0}
   batDie: {fileID: 0}
+  orcHit: {fileID: 0}
+  orcDie: {fileID: 0}
+  orcAtk: {fileID: 0}
+  orcWalkL: {fileID: 0}
+  orcWalkR: {fileID: 0}
 --- !u!1 &1808359141
 GameObject:
   m_ObjectHideFlags: 0
@@ -36227,6 +36329,11 @@ MonoBehaviour:
   ratHit: {fileID: 8300000, guid: 458ddfd328f327e4d8fd34bc5ae406be, type: 3}
   batHit: {fileID: 0}
   batDie: {fileID: 0}
+  orcHit: {fileID: 0}
+  orcDie: {fileID: 0}
+  orcAtk: {fileID: 0}
+  orcWalkL: {fileID: 0}
+  orcWalkR: {fileID: 0}
 --- !u!1001 &1813168151
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39941,6 +40048,11 @@ MonoBehaviour:
   ratHit: {fileID: 0}
   batHit: {fileID: 0}
   batDie: {fileID: 0}
+  orcHit: {fileID: 0}
+  orcDie: {fileID: 0}
+  orcAtk: {fileID: 0}
+  orcWalkL: {fileID: 0}
+  orcWalkR: {fileID: 0}
 --- !u!1 &2012237039
 GameObject:
   m_ObjectHideFlags: 0
@@ -40468,6 +40580,11 @@ MonoBehaviour:
   ratHit: {fileID: 0}
   batHit: {fileID: 0}
   batDie: {fileID: 0}
+  orcHit: {fileID: 0}
+  orcDie: {fileID: 0}
+  orcAtk: {fileID: 0}
+  orcWalkL: {fileID: 0}
+  orcWalkR: {fileID: 0}
 --- !u!1 &2021685011
 GameObject:
   m_ObjectHideFlags: 0
