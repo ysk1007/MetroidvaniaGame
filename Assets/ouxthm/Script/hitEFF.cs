@@ -6,23 +6,31 @@ public class hitEFF : MonoBehaviour
 {
     Enemy enemy;
     SpriteRenderer spriteRenderer;
-
+    public float scalX;
     public int dir;
-
     void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();    
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        
     }
 
     void Start()
     {
-        if(dir == 1)
+        if(dir == 1 && scalX == 1)
         {
             spriteRenderer.flipX = true;
         }
-        else if(dir == -1)
+        else if(dir == -1 && scalX == 1)
         {
             spriteRenderer.flipX = false;
+        }
+        else if(dir == 1 && scalX == -1)
+        {
+            spriteRenderer.flipX = false;
+        }
+        else if(dir == -1 && scalX == -1)
+        {
+            spriteRenderer.flipX = true;
         }
         DestoryObject();
     }

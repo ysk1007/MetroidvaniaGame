@@ -40,6 +40,8 @@ public abstract class Enemy : MonoBehaviour
     public bool Attacker;  // 비행 몬스터가 공격형인지 아닌지 구분짓는 변수
     public float endTime;   // 투사체 사라지는 시간
 
+    public float scaleX; // scale X 값(hit_eff가 스케일이 -되어있으면 반대방향으로 뜨기에 설정하기 위한 변수)
+
     public GameObject whatWeapon;  // 플레이어가 어떤 무기 상태인지 확인
     public int Swordlevel;  // 플레이어 검 숙련도
     public int selectWeapon;    // 숙련도를 올릴 무기 선택 0 = 칼, 1 = 도끼, 2 = 활, 4 = 선택 X
@@ -455,6 +457,7 @@ public abstract class Enemy : MonoBehaviour
     }
     public IEnumerator Hit(float damage) // 피해 함수
     {
+        
         posi = this.gameObject.GetComponent<Transform>();
         enemyHit = true;
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
@@ -465,10 +468,6 @@ public abstract class Enemy : MonoBehaviour
         if (whatWeapon.tag == "Sword")
         {
             StackBleed();
-        }
-        else if(whatWeapon.tag != "Sword")
-        {
-            Debug.Log("출혈 못해!");
         }
         
         Enemy_HP -= damage;
@@ -529,7 +528,7 @@ public abstract class Enemy : MonoBehaviour
             this.gameObject.layer = LayerMask.NameToLayer("Dieenemy");
             yield return new WaitForSeconds(Enemy_Dying_anim_Time);
             enemyHit = false;
-            if (Enemy_Mod == 9 && posi.localScale.y > 1f)   // 분열 몬스터일 경우
+            if (Enemy_Mod == 9 && posi.localScale.y == 1f)   // 분열 몬스터일 경우
             {
                 StartCoroutine(Split());
                 this.gameObject.SetActive(false);
@@ -917,7 +916,6 @@ public abstract class Enemy : MonoBehaviour
         this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
         yield return new WaitForSeconds(0.6f);
         enemyDestroy();
-        //this.gameObject.SetActive(false);
     }
 
     public IEnumerator Split()  // 슬라임 분열 함수
@@ -1064,8 +1062,10 @@ public abstract class Enemy : MonoBehaviour
     public void hitEff()    // 피격 이펙트 
     {
         GameObject hitEff = Instantiate(hiteff, hit_bloodTrans.position, hit_bloodTrans.rotation, hit_bloodTrans);
+        scaleX = this.gameObject.transform.localScale.x;
         hitEFF hitEFF = hitEff.GetComponent<hitEFF>();
         hitEFF.dir = nextDirX;
+        hitEFF.scalX = scaleX;
     }
 
     public void bleedEff()  // 출혈 이펙트 터뜨리는 함수
@@ -1073,6 +1073,7 @@ public abstract class Enemy : MonoBehaviour
         GameObject bloodEff = Instantiate(blood, hit_bloodTrans.position, hit_bloodTrans.rotation, hit_bloodTrans);
         bloodEFF bloodEFF = bloodEff.GetComponent<bloodEFF>();
         bloodEFF.dir = nextDirX;
+        bloodEFF.scalX = scaleX;
         Enemy_HP -= bloodBoomDmg * bleedLevel;
         bleedLevel = 0;
     }

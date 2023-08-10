@@ -2533,12 +2533,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
-  bloodEff: {fileID: 0}
+  bloodEff: {fileID: 8300000, guid: 6b6653dbc2dec044b97db2e9efbd983c, type: 3}
   beeAtk: {fileID: 8300000, guid: 34c8ea8b3cc581c45884aba897438601, type: 3}
-  Buzzing: {fileID: 0}
+  Buzzing: {fileID: 8300000, guid: ff5ba840345836243880dc1407e01efc, type: 3}
   boarHit: {fileID: 8300000, guid: f8ec6ad4e9bf9b6449ccd6d8fdbf0c4a, type: 3}
   boarDie: {fileID: 8300000, guid: ffbc07800957d4a4b87d1e1937aad870, type: 3}
-  boarRun: {fileID: 0}
+  boarRun: {fileID: 8300000, guid: ccf0dbb57b0920749a761638aaf2bcb7, type: 3}
   lgHit: {fileID: 8300000, guid: c741accc06a1bff4cbe2a7edf2e2bc73, type: 3}
   lgDie: {fileID: 8300000, guid: 805ca5a4f1a0a554f8433564ae72106e, type: 3}
   lgAtk: {fileID: 8300000, guid: d595a8e71b49e8743aca213ec23c986a, type: 3}
@@ -2550,26 +2550,26 @@ MonoBehaviour:
   necBoom: {fileID: 8300000, guid: fd706038486fee041947a774223dc22e, type: 3}
   necHit: {fileID: 8300000, guid: 23dd87eef4241974c9973544a1d76fac, type: 3}
   necDie: {fileID: 8300000, guid: c6e25b5d5e662b64b85bc6e79a8fec9b, type: 3}
-  slimeHit: {fileID: 8300000, guid: 4e3524312a006c44b9461ddfbc5423ef, type: 3}
-  slimeDie: {fileID: 8300000, guid: 2f62f2b1e83eb9444962b60a5b22c86f, type: 3}
-  slimeJump: {fileID: 0}
-  torchHit: {fileID: 0}
-  torchDie: {fileID: 8300000, guid: 8e50bf1f922000d46b6727d95899e4a9, type: 3}
+  slimeHit: {fileID: 8300000, guid: 7f7c0d9925ffc4544a2ac79000abafe2, type: 3}
+  slimeDie: {fileID: 8300000, guid: 56f082d5512e8a44da73d3d54190abcc, type: 3}
+  slimeJump: {fileID: 8300000, guid: fc1164a4526496b4e97e6042b66cf928, type: 3}
+  torchHit: {fileID: 8300000, guid: 1bdb143b287563f4e887a704d0235a63, type: 3}
+  torchDie: {fileID: 8300000, guid: 5092b209323c0f24aab0d89dd8d5982b, type: 3}
   torchThrow: {fileID: 0}
   wolfAtk: {fileID: 8300000, guid: 49fb94c96e3a35843b46866f097222a4, type: 3}
-  wolfHit: {fileID: 0}
-  wolfDie: {fileID: 0}
-  ratDie: {fileID: 0}
-  ratHit: {fileID: 0}
-  batHit: {fileID: 0}
-  batDie: {fileID: 0}
-  orcHit: {fileID: 0}
-  orcDie: {fileID: 0}
-  orcAtk: {fileID: 0}
-  orcWalkL: {fileID: 0}
-  orcWalkR: {fileID: 0}
-  snailHit: {fileID: 0}
-  snailDie: {fileID: 0}
+  wolfHit: {fileID: 8300000, guid: a574eeb5d05b3b24dab20549d419a806, type: 3}
+  wolfDie: {fileID: 8300000, guid: 8c68419ddd1fb2848852f137c4c5bed4, type: 3}
+  ratDie: {fileID: 8300000, guid: 263344ad4cdc7634a8c4792faa58bb8e, type: 3}
+  ratHit: {fileID: 8300000, guid: 458ddfd328f327e4d8fd34bc5ae406be, type: 3}
+  batHit: {fileID: 8300000, guid: 3ab4536aca354ac4fbf828008b1f15d8, type: 3}
+  batDie: {fileID: 8300000, guid: 742ab41fc43305c47bb13b4fcb02c2e3, type: 3}
+  orcHit: {fileID: 8300000, guid: 8b4a6302f8421764e9a2a0074381b861, type: 3}
+  orcDie: {fileID: 8300000, guid: 03f6ee2c856e78f459edb353d6444657, type: 3}
+  orcAtk: {fileID: 8300000, guid: c71d81e002b40664db93b6bf9aca67bd, type: 3}
+  orcWalkL: {fileID: 8300000, guid: 492a86b1cb683c64bacc7a954fe9358e, type: 3}
+  orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
+  snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
+  snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
 --- !u!1 &21647019
 GameObject:
   m_ObjectHideFlags: 0
@@ -2844,7 +2844,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
-  bloodEff: {fileID: 0}
+  bloodEff: {fileID: 8300000, guid: 6b6653dbc2dec044b97db2e9efbd983c, type: 3}
   beeAtk: {fileID: 8300000, guid: 34c8ea8b3cc581c45884aba897438601, type: 3}
   Buzzing: {fileID: 8300000, guid: ff5ba840345836243880dc1407e01efc, type: 3}
   boarHit: {fileID: 8300000, guid: f8ec6ad4e9bf9b6449ccd6d8fdbf0c4a, type: 3}
@@ -2861,11 +2861,11 @@ MonoBehaviour:
   necBoom: {fileID: 8300000, guid: fd706038486fee041947a774223dc22e, type: 3}
   necHit: {fileID: 8300000, guid: 23dd87eef4241974c9973544a1d76fac, type: 3}
   necDie: {fileID: 8300000, guid: c6e25b5d5e662b64b85bc6e79a8fec9b, type: 3}
-  slimeHit: {fileID: 8300000, guid: 4e3524312a006c44b9461ddfbc5423ef, type: 3}
-  slimeDie: {fileID: 8300000, guid: 2f62f2b1e83eb9444962b60a5b22c86f, type: 3}
-  slimeJump: {fileID: 0}
-  torchHit: {fileID: 0}
-  torchDie: {fileID: 8300000, guid: 8e50bf1f922000d46b6727d95899e4a9, type: 3}
+  slimeHit: {fileID: 8300000, guid: 7f7c0d9925ffc4544a2ac79000abafe2, type: 3}
+  slimeDie: {fileID: 8300000, guid: 56f082d5512e8a44da73d3d54190abcc, type: 3}
+  slimeJump: {fileID: 8300000, guid: fc1164a4526496b4e97e6042b66cf928, type: 3}
+  torchHit: {fileID: 8300000, guid: 1bdb143b287563f4e887a704d0235a63, type: 3}
+  torchDie: {fileID: 8300000, guid: 5092b209323c0f24aab0d89dd8d5982b, type: 3}
   torchThrow: {fileID: 0}
   wolfAtk: {fileID: 8300000, guid: 49fb94c96e3a35843b46866f097222a4, type: 3}
   wolfHit: {fileID: 8300000, guid: a574eeb5d05b3b24dab20549d419a806, type: 3}
@@ -2879,8 +2879,8 @@ MonoBehaviour:
   orcAtk: {fileID: 8300000, guid: c71d81e002b40664db93b6bf9aca67bd, type: 3}
   orcWalkL: {fileID: 8300000, guid: 492a86b1cb683c64bacc7a954fe9358e, type: 3}
   orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
-  snailHit: {fileID: 0}
-  snailDie: {fileID: 0}
+  snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
+  snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
 --- !u!1 &38280103
 GameObject:
   m_ObjectHideFlags: 0
@@ -6463,7 +6463,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
-  bloodEff: {fileID: 0}
+  bloodEff: {fileID: 8300000, guid: 6b6653dbc2dec044b97db2e9efbd983c, type: 3}
   beeAtk: {fileID: 8300000, guid: 34c8ea8b3cc581c45884aba897438601, type: 3}
   Buzzing: {fileID: 8300000, guid: ff5ba840345836243880dc1407e01efc, type: 3}
   boarHit: {fileID: 8300000, guid: f8ec6ad4e9bf9b6449ccd6d8fdbf0c4a, type: 3}
@@ -6480,9 +6480,9 @@ MonoBehaviour:
   necBoom: {fileID: 8300000, guid: fd706038486fee041947a774223dc22e, type: 3}
   necHit: {fileID: 8300000, guid: 23dd87eef4241974c9973544a1d76fac, type: 3}
   necDie: {fileID: 8300000, guid: c6e25b5d5e662b64b85bc6e79a8fec9b, type: 3}
-  slimeHit: {fileID: 8300000, guid: 4e3524312a006c44b9461ddfbc5423ef, type: 3}
-  slimeDie: {fileID: 8300000, guid: 2f62f2b1e83eb9444962b60a5b22c86f, type: 3}
-  slimeJump: {fileID: 0}
+  slimeHit: {fileID: 8300000, guid: 7f7c0d9925ffc4544a2ac79000abafe2, type: 3}
+  slimeDie: {fileID: 8300000, guid: 56f082d5512e8a44da73d3d54190abcc, type: 3}
+  slimeJump: {fileID: 8300000, guid: fc1164a4526496b4e97e6042b66cf928, type: 3}
   torchHit: {fileID: 8300000, guid: 1bdb143b287563f4e887a704d0235a63, type: 3}
   torchDie: {fileID: 8300000, guid: 5092b209323c0f24aab0d89dd8d5982b, type: 3}
   torchThrow: {fileID: 0}
@@ -11913,12 +11913,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
-  bloodEff: {fileID: 0}
+  bloodEff: {fileID: 8300000, guid: 6b6653dbc2dec044b97db2e9efbd983c, type: 3}
   beeAtk: {fileID: 8300000, guid: 34c8ea8b3cc581c45884aba897438601, type: 3}
-  Buzzing: {fileID: 0}
+  Buzzing: {fileID: 8300000, guid: ff5ba840345836243880dc1407e01efc, type: 3}
   boarHit: {fileID: 8300000, guid: f8ec6ad4e9bf9b6449ccd6d8fdbf0c4a, type: 3}
   boarDie: {fileID: 8300000, guid: ffbc07800957d4a4b87d1e1937aad870, type: 3}
-  boarRun: {fileID: 0}
+  boarRun: {fileID: 8300000, guid: ccf0dbb57b0920749a761638aaf2bcb7, type: 3}
   lgHit: {fileID: 8300000, guid: c741accc06a1bff4cbe2a7edf2e2bc73, type: 3}
   lgDie: {fileID: 8300000, guid: 805ca5a4f1a0a554f8433564ae72106e, type: 3}
   lgAtk: {fileID: 8300000, guid: d595a8e71b49e8743aca213ec23c986a, type: 3}
@@ -11930,26 +11930,26 @@ MonoBehaviour:
   necBoom: {fileID: 8300000, guid: fd706038486fee041947a774223dc22e, type: 3}
   necHit: {fileID: 8300000, guid: 23dd87eef4241974c9973544a1d76fac, type: 3}
   necDie: {fileID: 8300000, guid: c6e25b5d5e662b64b85bc6e79a8fec9b, type: 3}
-  slimeHit: {fileID: 8300000, guid: 4e3524312a006c44b9461ddfbc5423ef, type: 3}
-  slimeDie: {fileID: 8300000, guid: 2f62f2b1e83eb9444962b60a5b22c86f, type: 3}
-  slimeJump: {fileID: 0}
-  torchHit: {fileID: 0}
-  torchDie: {fileID: 8300000, guid: 8e50bf1f922000d46b6727d95899e4a9, type: 3}
+  slimeHit: {fileID: 8300000, guid: 7f7c0d9925ffc4544a2ac79000abafe2, type: 3}
+  slimeDie: {fileID: 8300000, guid: 56f082d5512e8a44da73d3d54190abcc, type: 3}
+  slimeJump: {fileID: 8300000, guid: fc1164a4526496b4e97e6042b66cf928, type: 3}
+  torchHit: {fileID: 8300000, guid: 1bdb143b287563f4e887a704d0235a63, type: 3}
+  torchDie: {fileID: 8300000, guid: 5092b209323c0f24aab0d89dd8d5982b, type: 3}
   torchThrow: {fileID: 0}
   wolfAtk: {fileID: 8300000, guid: 49fb94c96e3a35843b46866f097222a4, type: 3}
-  wolfHit: {fileID: 0}
-  wolfDie: {fileID: 0}
-  ratDie: {fileID: 0}
-  ratHit: {fileID: 0}
-  batHit: {fileID: 0}
-  batDie: {fileID: 0}
-  orcHit: {fileID: 0}
-  orcDie: {fileID: 0}
-  orcAtk: {fileID: 0}
-  orcWalkL: {fileID: 0}
-  orcWalkR: {fileID: 0}
-  snailHit: {fileID: 0}
-  snailDie: {fileID: 0}
+  wolfHit: {fileID: 8300000, guid: a574eeb5d05b3b24dab20549d419a806, type: 3}
+  wolfDie: {fileID: 8300000, guid: 8c68419ddd1fb2848852f137c4c5bed4, type: 3}
+  ratDie: {fileID: 8300000, guid: 263344ad4cdc7634a8c4792faa58bb8e, type: 3}
+  ratHit: {fileID: 8300000, guid: 458ddfd328f327e4d8fd34bc5ae406be, type: 3}
+  batHit: {fileID: 8300000, guid: 3ab4536aca354ac4fbf828008b1f15d8, type: 3}
+  batDie: {fileID: 8300000, guid: 742ab41fc43305c47bb13b4fcb02c2e3, type: 3}
+  orcHit: {fileID: 8300000, guid: 8b4a6302f8421764e9a2a0074381b861, type: 3}
+  orcDie: {fileID: 8300000, guid: 03f6ee2c856e78f459edb353d6444657, type: 3}
+  orcAtk: {fileID: 8300000, guid: c71d81e002b40664db93b6bf9aca67bd, type: 3}
+  orcWalkL: {fileID: 8300000, guid: 492a86b1cb683c64bacc7a954fe9358e, type: 3}
+  orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
+  snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
+  snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
 --- !u!1 &545299548
 GameObject:
   m_ObjectHideFlags: 0
@@ -13629,12 +13629,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
-  bloodEff: {fileID: 0}
+  bloodEff: {fileID: 8300000, guid: 6b6653dbc2dec044b97db2e9efbd983c, type: 3}
   beeAtk: {fileID: 8300000, guid: 34c8ea8b3cc581c45884aba897438601, type: 3}
-  Buzzing: {fileID: 0}
+  Buzzing: {fileID: 8300000, guid: ff5ba840345836243880dc1407e01efc, type: 3}
   boarHit: {fileID: 8300000, guid: f8ec6ad4e9bf9b6449ccd6d8fdbf0c4a, type: 3}
   boarDie: {fileID: 8300000, guid: ffbc07800957d4a4b87d1e1937aad870, type: 3}
-  boarRun: {fileID: 0}
+  boarRun: {fileID: 8300000, guid: ccf0dbb57b0920749a761638aaf2bcb7, type: 3}
   lgHit: {fileID: 8300000, guid: c741accc06a1bff4cbe2a7edf2e2bc73, type: 3}
   lgDie: {fileID: 8300000, guid: 805ca5a4f1a0a554f8433564ae72106e, type: 3}
   lgAtk: {fileID: 8300000, guid: d595a8e71b49e8743aca213ec23c986a, type: 3}
@@ -13646,11 +13646,11 @@ MonoBehaviour:
   necBoom: {fileID: 8300000, guid: fd706038486fee041947a774223dc22e, type: 3}
   necHit: {fileID: 8300000, guid: 23dd87eef4241974c9973544a1d76fac, type: 3}
   necDie: {fileID: 8300000, guid: c6e25b5d5e662b64b85bc6e79a8fec9b, type: 3}
-  slimeHit: {fileID: 8300000, guid: 4e3524312a006c44b9461ddfbc5423ef, type: 3}
-  slimeDie: {fileID: 8300000, guid: 2f62f2b1e83eb9444962b60a5b22c86f, type: 3}
-  slimeJump: {fileID: 0}
-  torchHit: {fileID: 0}
-  torchDie: {fileID: 8300000, guid: 8e50bf1f922000d46b6727d95899e4a9, type: 3}
+  slimeHit: {fileID: 8300000, guid: 7f7c0d9925ffc4544a2ac79000abafe2, type: 3}
+  slimeDie: {fileID: 8300000, guid: 56f082d5512e8a44da73d3d54190abcc, type: 3}
+  slimeJump: {fileID: 8300000, guid: fc1164a4526496b4e97e6042b66cf928, type: 3}
+  torchHit: {fileID: 8300000, guid: 1bdb143b287563f4e887a704d0235a63, type: 3}
+  torchDie: {fileID: 8300000, guid: 5092b209323c0f24aab0d89dd8d5982b, type: 3}
   torchThrow: {fileID: 0}
   wolfAtk: {fileID: 8300000, guid: 49fb94c96e3a35843b46866f097222a4, type: 3}
   wolfHit: {fileID: 8300000, guid: a574eeb5d05b3b24dab20549d419a806, type: 3}
@@ -13659,13 +13659,13 @@ MonoBehaviour:
   ratHit: {fileID: 8300000, guid: 458ddfd328f327e4d8fd34bc5ae406be, type: 3}
   batHit: {fileID: 8300000, guid: 3ab4536aca354ac4fbf828008b1f15d8, type: 3}
   batDie: {fileID: 8300000, guid: 742ab41fc43305c47bb13b4fcb02c2e3, type: 3}
-  orcHit: {fileID: 0}
-  orcDie: {fileID: 0}
-  orcAtk: {fileID: 0}
-  orcWalkL: {fileID: 0}
-  orcWalkR: {fileID: 0}
-  snailHit: {fileID: 0}
-  snailDie: {fileID: 0}
+  orcHit: {fileID: 8300000, guid: 8b4a6302f8421764e9a2a0074381b861, type: 3}
+  orcDie: {fileID: 8300000, guid: 03f6ee2c856e78f459edb353d6444657, type: 3}
+  orcAtk: {fileID: 8300000, guid: c71d81e002b40664db93b6bf9aca67bd, type: 3}
+  orcWalkL: {fileID: 8300000, guid: 492a86b1cb683c64bacc7a954fe9358e, type: 3}
+  orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
+  snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
+  snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
 --- !u!1001 &671117194
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20893,10 +20893,10 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1033553362}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -21179,12 +21179,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
-  bloodEff: {fileID: 0}
+  bloodEff: {fileID: 8300000, guid: 6b6653dbc2dec044b97db2e9efbd983c, type: 3}
   beeAtk: {fileID: 8300000, guid: 34c8ea8b3cc581c45884aba897438601, type: 3}
-  Buzzing: {fileID: 0}
+  Buzzing: {fileID: 8300000, guid: ff5ba840345836243880dc1407e01efc, type: 3}
   boarHit: {fileID: 8300000, guid: f8ec6ad4e9bf9b6449ccd6d8fdbf0c4a, type: 3}
   boarDie: {fileID: 8300000, guid: ffbc07800957d4a4b87d1e1937aad870, type: 3}
-  boarRun: {fileID: 0}
+  boarRun: {fileID: 8300000, guid: ccf0dbb57b0920749a761638aaf2bcb7, type: 3}
   lgHit: {fileID: 8300000, guid: c741accc06a1bff4cbe2a7edf2e2bc73, type: 3}
   lgDie: {fileID: 8300000, guid: 805ca5a4f1a0a554f8433564ae72106e, type: 3}
   lgAtk: {fileID: 8300000, guid: d595a8e71b49e8743aca213ec23c986a, type: 3}
@@ -21196,26 +21196,26 @@ MonoBehaviour:
   necBoom: {fileID: 8300000, guid: fd706038486fee041947a774223dc22e, type: 3}
   necHit: {fileID: 8300000, guid: 23dd87eef4241974c9973544a1d76fac, type: 3}
   necDie: {fileID: 8300000, guid: c6e25b5d5e662b64b85bc6e79a8fec9b, type: 3}
-  slimeHit: {fileID: 8300000, guid: 4e3524312a006c44b9461ddfbc5423ef, type: 3}
-  slimeDie: {fileID: 8300000, guid: 2f62f2b1e83eb9444962b60a5b22c86f, type: 3}
-  slimeJump: {fileID: 0}
-  torchHit: {fileID: 0}
-  torchDie: {fileID: 8300000, guid: 8e50bf1f922000d46b6727d95899e4a9, type: 3}
+  slimeHit: {fileID: 8300000, guid: 7f7c0d9925ffc4544a2ac79000abafe2, type: 3}
+  slimeDie: {fileID: 8300000, guid: 56f082d5512e8a44da73d3d54190abcc, type: 3}
+  slimeJump: {fileID: 8300000, guid: fc1164a4526496b4e97e6042b66cf928, type: 3}
+  torchHit: {fileID: 8300000, guid: 1bdb143b287563f4e887a704d0235a63, type: 3}
+  torchDie: {fileID: 8300000, guid: 5092b209323c0f24aab0d89dd8d5982b, type: 3}
   torchThrow: {fileID: 0}
   wolfAtk: {fileID: 8300000, guid: 49fb94c96e3a35843b46866f097222a4, type: 3}
-  wolfHit: {fileID: 0}
-  wolfDie: {fileID: 0}
-  ratDie: {fileID: 0}
-  ratHit: {fileID: 0}
-  batHit: {fileID: 0}
-  batDie: {fileID: 0}
-  orcHit: {fileID: 0}
-  orcDie: {fileID: 0}
-  orcAtk: {fileID: 0}
-  orcWalkL: {fileID: 0}
-  orcWalkR: {fileID: 0}
-  snailHit: {fileID: 0}
-  snailDie: {fileID: 0}
+  wolfHit: {fileID: 8300000, guid: a574eeb5d05b3b24dab20549d419a806, type: 3}
+  wolfDie: {fileID: 8300000, guid: 8c68419ddd1fb2848852f137c4c5bed4, type: 3}
+  ratDie: {fileID: 8300000, guid: 263344ad4cdc7634a8c4792faa58bb8e, type: 3}
+  ratHit: {fileID: 8300000, guid: 458ddfd328f327e4d8fd34bc5ae406be, type: 3}
+  batHit: {fileID: 8300000, guid: 3ab4536aca354ac4fbf828008b1f15d8, type: 3}
+  batDie: {fileID: 8300000, guid: 742ab41fc43305c47bb13b4fcb02c2e3, type: 3}
+  orcHit: {fileID: 8300000, guid: 8b4a6302f8421764e9a2a0074381b861, type: 3}
+  orcDie: {fileID: 8300000, guid: 03f6ee2c856e78f459edb353d6444657, type: 3}
+  orcAtk: {fileID: 8300000, guid: c71d81e002b40664db93b6bf9aca67bd, type: 3}
+  orcWalkL: {fileID: 8300000, guid: 492a86b1cb683c64bacc7a954fe9358e, type: 3}
+  orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
+  snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
+  snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
 --- !u!1 &1047837965
 GameObject:
   m_ObjectHideFlags: 0
@@ -23796,7 +23796,7 @@ Transform:
   m_GameObject: {fileID: 1238238728}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1974481438}
@@ -23881,7 +23881,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.9, y: 1.4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -23900,7 +23900,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
-  bloodEff: {fileID: 8300000, guid: 57b0b0b36c3f1974fb9c961ebc488b17, type: 3}
+  bloodEff: {fileID: 8300000, guid: 6b6653dbc2dec044b97db2e9efbd983c, type: 3}
   beeAtk: {fileID: 8300000, guid: 34c8ea8b3cc581c45884aba897438601, type: 3}
   Buzzing: {fileID: 8300000, guid: ff5ba840345836243880dc1407e01efc, type: 3}
   boarHit: {fileID: 8300000, guid: f8ec6ad4e9bf9b6449ccd6d8fdbf0c4a, type: 3}
@@ -23917,9 +23917,9 @@ MonoBehaviour:
   necBoom: {fileID: 8300000, guid: fd706038486fee041947a774223dc22e, type: 3}
   necHit: {fileID: 8300000, guid: 23dd87eef4241974c9973544a1d76fac, type: 3}
   necDie: {fileID: 8300000, guid: c6e25b5d5e662b64b85bc6e79a8fec9b, type: 3}
-  slimeHit: {fileID: 8300000, guid: c07fbb1e30c6de14f928ce108df4fad8, type: 3}
-  slimeDie: {fileID: 8300000, guid: 7ff54d46796650c48885b8ccf2ef14b1, type: 3}
-  slimeJump: {fileID: 8300000, guid: c3986410e61f230408728cf9dec08a13, type: 3}
+  slimeHit: {fileID: 8300000, guid: 7f7c0d9925ffc4544a2ac79000abafe2, type: 3}
+  slimeDie: {fileID: 8300000, guid: 56f082d5512e8a44da73d3d54190abcc, type: 3}
+  slimeJump: {fileID: 8300000, guid: fc1164a4526496b4e97e6042b66cf928, type: 3}
   torchHit: {fileID: 8300000, guid: 1bdb143b287563f4e887a704d0235a63, type: 3}
   torchDie: {fileID: 8300000, guid: 5092b209323c0f24aab0d89dd8d5982b, type: 3}
   torchThrow: {fileID: 0}
@@ -25689,12 +25689,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
-  bloodEff: {fileID: 0}
+  bloodEff: {fileID: 8300000, guid: 6b6653dbc2dec044b97db2e9efbd983c, type: 3}
   beeAtk: {fileID: 8300000, guid: 34c8ea8b3cc581c45884aba897438601, type: 3}
-  Buzzing: {fileID: 0}
+  Buzzing: {fileID: 8300000, guid: ff5ba840345836243880dc1407e01efc, type: 3}
   boarHit: {fileID: 8300000, guid: f8ec6ad4e9bf9b6449ccd6d8fdbf0c4a, type: 3}
   boarDie: {fileID: 8300000, guid: ffbc07800957d4a4b87d1e1937aad870, type: 3}
-  boarRun: {fileID: 0}
+  boarRun: {fileID: 8300000, guid: ccf0dbb57b0920749a761638aaf2bcb7, type: 3}
   lgHit: {fileID: 8300000, guid: c741accc06a1bff4cbe2a7edf2e2bc73, type: 3}
   lgDie: {fileID: 8300000, guid: 805ca5a4f1a0a554f8433564ae72106e, type: 3}
   lgAtk: {fileID: 8300000, guid: d595a8e71b49e8743aca213ec23c986a, type: 3}
@@ -25706,26 +25706,26 @@ MonoBehaviour:
   necBoom: {fileID: 8300000, guid: fd706038486fee041947a774223dc22e, type: 3}
   necHit: {fileID: 8300000, guid: 23dd87eef4241974c9973544a1d76fac, type: 3}
   necDie: {fileID: 8300000, guid: c6e25b5d5e662b64b85bc6e79a8fec9b, type: 3}
-  slimeHit: {fileID: 8300000, guid: 4e3524312a006c44b9461ddfbc5423ef, type: 3}
-  slimeDie: {fileID: 8300000, guid: 2f62f2b1e83eb9444962b60a5b22c86f, type: 3}
-  slimeJump: {fileID: 0}
-  torchHit: {fileID: 0}
-  torchDie: {fileID: 8300000, guid: 8e50bf1f922000d46b6727d95899e4a9, type: 3}
+  slimeHit: {fileID: 8300000, guid: 7f7c0d9925ffc4544a2ac79000abafe2, type: 3}
+  slimeDie: {fileID: 8300000, guid: 56f082d5512e8a44da73d3d54190abcc, type: 3}
+  slimeJump: {fileID: 8300000, guid: fc1164a4526496b4e97e6042b66cf928, type: 3}
+  torchHit: {fileID: 8300000, guid: 1bdb143b287563f4e887a704d0235a63, type: 3}
+  torchDie: {fileID: 8300000, guid: 5092b209323c0f24aab0d89dd8d5982b, type: 3}
   torchThrow: {fileID: 0}
   wolfAtk: {fileID: 8300000, guid: 49fb94c96e3a35843b46866f097222a4, type: 3}
-  wolfHit: {fileID: 0}
-  wolfDie: {fileID: 0}
-  ratDie: {fileID: 0}
-  ratHit: {fileID: 0}
-  batHit: {fileID: 0}
-  batDie: {fileID: 0}
-  orcHit: {fileID: 0}
-  orcDie: {fileID: 0}
-  orcAtk: {fileID: 0}
-  orcWalkL: {fileID: 0}
-  orcWalkR: {fileID: 0}
-  snailHit: {fileID: 0}
-  snailDie: {fileID: 0}
+  wolfHit: {fileID: 8300000, guid: a574eeb5d05b3b24dab20549d419a806, type: 3}
+  wolfDie: {fileID: 8300000, guid: 8c68419ddd1fb2848852f137c4c5bed4, type: 3}
+  ratDie: {fileID: 8300000, guid: 263344ad4cdc7634a8c4792faa58bb8e, type: 3}
+  ratHit: {fileID: 8300000, guid: 458ddfd328f327e4d8fd34bc5ae406be, type: 3}
+  batHit: {fileID: 8300000, guid: 3ab4536aca354ac4fbf828008b1f15d8, type: 3}
+  batDie: {fileID: 8300000, guid: 742ab41fc43305c47bb13b4fcb02c2e3, type: 3}
+  orcHit: {fileID: 8300000, guid: 8b4a6302f8421764e9a2a0074381b861, type: 3}
+  orcDie: {fileID: 8300000, guid: 03f6ee2c856e78f459edb353d6444657, type: 3}
+  orcAtk: {fileID: 8300000, guid: c71d81e002b40664db93b6bf9aca67bd, type: 3}
+  orcWalkL: {fileID: 8300000, guid: 492a86b1cb683c64bacc7a954fe9358e, type: 3}
+  orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
+  snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
+  snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
 --- !u!1 &1293780559
 GameObject:
   m_ObjectHideFlags: 0
@@ -26748,12 +26748,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
-  bloodEff: {fileID: 0}
+  bloodEff: {fileID: 8300000, guid: 6b6653dbc2dec044b97db2e9efbd983c, type: 3}
   beeAtk: {fileID: 8300000, guid: 34c8ea8b3cc581c45884aba897438601, type: 3}
-  Buzzing: {fileID: 0}
+  Buzzing: {fileID: 8300000, guid: ff5ba840345836243880dc1407e01efc, type: 3}
   boarHit: {fileID: 8300000, guid: f8ec6ad4e9bf9b6449ccd6d8fdbf0c4a, type: 3}
   boarDie: {fileID: 8300000, guid: ffbc07800957d4a4b87d1e1937aad870, type: 3}
-  boarRun: {fileID: 0}
+  boarRun: {fileID: 8300000, guid: ccf0dbb57b0920749a761638aaf2bcb7, type: 3}
   lgHit: {fileID: 8300000, guid: c741accc06a1bff4cbe2a7edf2e2bc73, type: 3}
   lgDie: {fileID: 8300000, guid: 805ca5a4f1a0a554f8433564ae72106e, type: 3}
   lgAtk: {fileID: 8300000, guid: d595a8e71b49e8743aca213ec23c986a, type: 3}
@@ -26765,26 +26765,26 @@ MonoBehaviour:
   necBoom: {fileID: 8300000, guid: fd706038486fee041947a774223dc22e, type: 3}
   necHit: {fileID: 8300000, guid: 23dd87eef4241974c9973544a1d76fac, type: 3}
   necDie: {fileID: 8300000, guid: c6e25b5d5e662b64b85bc6e79a8fec9b, type: 3}
-  slimeHit: {fileID: 8300000, guid: 4e3524312a006c44b9461ddfbc5423ef, type: 3}
-  slimeDie: {fileID: 8300000, guid: 2f62f2b1e83eb9444962b60a5b22c86f, type: 3}
-  slimeJump: {fileID: 0}
-  torchHit: {fileID: 0}
-  torchDie: {fileID: 8300000, guid: 8e50bf1f922000d46b6727d95899e4a9, type: 3}
+  slimeHit: {fileID: 8300000, guid: 7f7c0d9925ffc4544a2ac79000abafe2, type: 3}
+  slimeDie: {fileID: 8300000, guid: 56f082d5512e8a44da73d3d54190abcc, type: 3}
+  slimeJump: {fileID: 8300000, guid: fc1164a4526496b4e97e6042b66cf928, type: 3}
+  torchHit: {fileID: 8300000, guid: 1bdb143b287563f4e887a704d0235a63, type: 3}
+  torchDie: {fileID: 8300000, guid: 5092b209323c0f24aab0d89dd8d5982b, type: 3}
   torchThrow: {fileID: 0}
   wolfAtk: {fileID: 8300000, guid: 49fb94c96e3a35843b46866f097222a4, type: 3}
   wolfHit: {fileID: 8300000, guid: a574eeb5d05b3b24dab20549d419a806, type: 3}
   wolfDie: {fileID: 8300000, guid: 8c68419ddd1fb2848852f137c4c5bed4, type: 3}
-  ratDie: {fileID: 0}
-  ratHit: {fileID: 0}
-  batHit: {fileID: 0}
-  batDie: {fileID: 0}
-  orcHit: {fileID: 0}
-  orcDie: {fileID: 0}
-  orcAtk: {fileID: 0}
-  orcWalkL: {fileID: 0}
-  orcWalkR: {fileID: 0}
-  snailHit: {fileID: 0}
-  snailDie: {fileID: 0}
+  ratDie: {fileID: 8300000, guid: 263344ad4cdc7634a8c4792faa58bb8e, type: 3}
+  ratHit: {fileID: 8300000, guid: 458ddfd328f327e4d8fd34bc5ae406be, type: 3}
+  batHit: {fileID: 8300000, guid: 3ab4536aca354ac4fbf828008b1f15d8, type: 3}
+  batDie: {fileID: 8300000, guid: 742ab41fc43305c47bb13b4fcb02c2e3, type: 3}
+  orcHit: {fileID: 8300000, guid: 8b4a6302f8421764e9a2a0074381b861, type: 3}
+  orcDie: {fileID: 8300000, guid: 03f6ee2c856e78f459edb353d6444657, type: 3}
+  orcAtk: {fileID: 8300000, guid: c71d81e002b40664db93b6bf9aca67bd, type: 3}
+  orcWalkL: {fileID: 8300000, guid: 492a86b1cb683c64bacc7a954fe9358e, type: 3}
+  orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
+  snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
+  snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
 --- !u!1001 &1349834702
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29467,7 +29467,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
-  bloodEff: {fileID: 0}
+  bloodEff: {fileID: 8300000, guid: 6b6653dbc2dec044b97db2e9efbd983c, type: 3}
   beeAtk: {fileID: 8300000, guid: 34c8ea8b3cc581c45884aba897438601, type: 3}
   Buzzing: {fileID: 8300000, guid: ff5ba840345836243880dc1407e01efc, type: 3}
   boarHit: {fileID: 8300000, guid: f8ec6ad4e9bf9b6449ccd6d8fdbf0c4a, type: 3}
@@ -29484,11 +29484,11 @@ MonoBehaviour:
   necBoom: {fileID: 8300000, guid: fd706038486fee041947a774223dc22e, type: 3}
   necHit: {fileID: 8300000, guid: 23dd87eef4241974c9973544a1d76fac, type: 3}
   necDie: {fileID: 8300000, guid: c6e25b5d5e662b64b85bc6e79a8fec9b, type: 3}
-  slimeHit: {fileID: 8300000, guid: 4e3524312a006c44b9461ddfbc5423ef, type: 3}
-  slimeDie: {fileID: 8300000, guid: 2f62f2b1e83eb9444962b60a5b22c86f, type: 3}
-  slimeJump: {fileID: 0}
-  torchHit: {fileID: 0}
-  torchDie: {fileID: 8300000, guid: 8e50bf1f922000d46b6727d95899e4a9, type: 3}
+  slimeHit: {fileID: 8300000, guid: 7f7c0d9925ffc4544a2ac79000abafe2, type: 3}
+  slimeDie: {fileID: 8300000, guid: 56f082d5512e8a44da73d3d54190abcc, type: 3}
+  slimeJump: {fileID: 8300000, guid: fc1164a4526496b4e97e6042b66cf928, type: 3}
+  torchHit: {fileID: 8300000, guid: 1bdb143b287563f4e887a704d0235a63, type: 3}
+  torchDie: {fileID: 8300000, guid: 5092b209323c0f24aab0d89dd8d5982b, type: 3}
   torchThrow: {fileID: 0}
   wolfAtk: {fileID: 8300000, guid: 49fb94c96e3a35843b46866f097222a4, type: 3}
   wolfHit: {fileID: 8300000, guid: a574eeb5d05b3b24dab20549d419a806, type: 3}
@@ -29497,13 +29497,13 @@ MonoBehaviour:
   ratHit: {fileID: 8300000, guid: 458ddfd328f327e4d8fd34bc5ae406be, type: 3}
   batHit: {fileID: 8300000, guid: 3ab4536aca354ac4fbf828008b1f15d8, type: 3}
   batDie: {fileID: 8300000, guid: 742ab41fc43305c47bb13b4fcb02c2e3, type: 3}
-  orcHit: {fileID: 0}
-  orcDie: {fileID: 0}
-  orcAtk: {fileID: 0}
-  orcWalkL: {fileID: 0}
-  orcWalkR: {fileID: 0}
-  snailHit: {fileID: 0}
-  snailDie: {fileID: 0}
+  orcHit: {fileID: 8300000, guid: 8b4a6302f8421764e9a2a0074381b861, type: 3}
+  orcDie: {fileID: 8300000, guid: 03f6ee2c856e78f459edb353d6444657, type: 3}
+  orcAtk: {fileID: 8300000, guid: c71d81e002b40664db93b6bf9aca67bd, type: 3}
+  orcWalkL: {fileID: 8300000, guid: 492a86b1cb683c64bacc7a954fe9358e, type: 3}
+  orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
+  snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
+  snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
 --- !u!1 &1540036661
 GameObject:
   m_ObjectHideFlags: 0
@@ -35979,7 +35979,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
-  bloodEff: {fileID: 0}
+  bloodEff: {fileID: 8300000, guid: 6b6653dbc2dec044b97db2e9efbd983c, type: 3}
   beeAtk: {fileID: 8300000, guid: 34c8ea8b3cc581c45884aba897438601, type: 3}
   Buzzing: {fileID: 8300000, guid: ff5ba840345836243880dc1407e01efc, type: 3}
   boarHit: {fileID: 8300000, guid: f8ec6ad4e9bf9b6449ccd6d8fdbf0c4a, type: 3}
@@ -35996,11 +35996,11 @@ MonoBehaviour:
   necBoom: {fileID: 8300000, guid: fd706038486fee041947a774223dc22e, type: 3}
   necHit: {fileID: 8300000, guid: 23dd87eef4241974c9973544a1d76fac, type: 3}
   necDie: {fileID: 8300000, guid: c6e25b5d5e662b64b85bc6e79a8fec9b, type: 3}
-  slimeHit: {fileID: 8300000, guid: 4e3524312a006c44b9461ddfbc5423ef, type: 3}
-  slimeDie: {fileID: 8300000, guid: 2f62f2b1e83eb9444962b60a5b22c86f, type: 3}
-  slimeJump: {fileID: 0}
-  torchHit: {fileID: 0}
-  torchDie: {fileID: 8300000, guid: 8e50bf1f922000d46b6727d95899e4a9, type: 3}
+  slimeHit: {fileID: 8300000, guid: 7f7c0d9925ffc4544a2ac79000abafe2, type: 3}
+  slimeDie: {fileID: 8300000, guid: 56f082d5512e8a44da73d3d54190abcc, type: 3}
+  slimeJump: {fileID: 8300000, guid: fc1164a4526496b4e97e6042b66cf928, type: 3}
+  torchHit: {fileID: 8300000, guid: 1bdb143b287563f4e887a704d0235a63, type: 3}
+  torchDie: {fileID: 8300000, guid: 5092b209323c0f24aab0d89dd8d5982b, type: 3}
   torchThrow: {fileID: 0}
   wolfAtk: {fileID: 8300000, guid: 49fb94c96e3a35843b46866f097222a4, type: 3}
   wolfHit: {fileID: 8300000, guid: a574eeb5d05b3b24dab20549d419a806, type: 3}
@@ -36350,12 +36350,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
-  bloodEff: {fileID: 0}
+  bloodEff: {fileID: 8300000, guid: 6b6653dbc2dec044b97db2e9efbd983c, type: 3}
   beeAtk: {fileID: 8300000, guid: 34c8ea8b3cc581c45884aba897438601, type: 3}
-  Buzzing: {fileID: 0}
+  Buzzing: {fileID: 8300000, guid: ff5ba840345836243880dc1407e01efc, type: 3}
   boarHit: {fileID: 8300000, guid: f8ec6ad4e9bf9b6449ccd6d8fdbf0c4a, type: 3}
   boarDie: {fileID: 8300000, guid: ffbc07800957d4a4b87d1e1937aad870, type: 3}
-  boarRun: {fileID: 0}
+  boarRun: {fileID: 8300000, guid: ccf0dbb57b0920749a761638aaf2bcb7, type: 3}
   lgHit: {fileID: 8300000, guid: c741accc06a1bff4cbe2a7edf2e2bc73, type: 3}
   lgDie: {fileID: 8300000, guid: 805ca5a4f1a0a554f8433564ae72106e, type: 3}
   lgAtk: {fileID: 8300000, guid: d595a8e71b49e8743aca213ec23c986a, type: 3}
@@ -36367,26 +36367,26 @@ MonoBehaviour:
   necBoom: {fileID: 8300000, guid: fd706038486fee041947a774223dc22e, type: 3}
   necHit: {fileID: 8300000, guid: 23dd87eef4241974c9973544a1d76fac, type: 3}
   necDie: {fileID: 8300000, guid: c6e25b5d5e662b64b85bc6e79a8fec9b, type: 3}
-  slimeHit: {fileID: 8300000, guid: 4e3524312a006c44b9461ddfbc5423ef, type: 3}
-  slimeDie: {fileID: 8300000, guid: 2f62f2b1e83eb9444962b60a5b22c86f, type: 3}
-  slimeJump: {fileID: 0}
-  torchHit: {fileID: 0}
-  torchDie: {fileID: 8300000, guid: 8e50bf1f922000d46b6727d95899e4a9, type: 3}
+  slimeHit: {fileID: 8300000, guid: 7f7c0d9925ffc4544a2ac79000abafe2, type: 3}
+  slimeDie: {fileID: 8300000, guid: 56f082d5512e8a44da73d3d54190abcc, type: 3}
+  slimeJump: {fileID: 8300000, guid: fc1164a4526496b4e97e6042b66cf928, type: 3}
+  torchHit: {fileID: 8300000, guid: 1bdb143b287563f4e887a704d0235a63, type: 3}
+  torchDie: {fileID: 8300000, guid: 5092b209323c0f24aab0d89dd8d5982b, type: 3}
   torchThrow: {fileID: 0}
   wolfAtk: {fileID: 8300000, guid: 49fb94c96e3a35843b46866f097222a4, type: 3}
-  wolfHit: {fileID: 0}
-  wolfDie: {fileID: 0}
+  wolfHit: {fileID: 8300000, guid: a574eeb5d05b3b24dab20549d419a806, type: 3}
+  wolfDie: {fileID: 8300000, guid: 8c68419ddd1fb2848852f137c4c5bed4, type: 3}
   ratDie: {fileID: 8300000, guid: 263344ad4cdc7634a8c4792faa58bb8e, type: 3}
   ratHit: {fileID: 8300000, guid: 458ddfd328f327e4d8fd34bc5ae406be, type: 3}
-  batHit: {fileID: 0}
-  batDie: {fileID: 0}
-  orcHit: {fileID: 0}
-  orcDie: {fileID: 0}
-  orcAtk: {fileID: 0}
-  orcWalkL: {fileID: 0}
-  orcWalkR: {fileID: 0}
-  snailHit: {fileID: 0}
-  snailDie: {fileID: 0}
+  batHit: {fileID: 8300000, guid: 3ab4536aca354ac4fbf828008b1f15d8, type: 3}
+  batDie: {fileID: 8300000, guid: 742ab41fc43305c47bb13b4fcb02c2e3, type: 3}
+  orcHit: {fileID: 8300000, guid: 8b4a6302f8421764e9a2a0074381b861, type: 3}
+  orcDie: {fileID: 8300000, guid: 03f6ee2c856e78f459edb353d6444657, type: 3}
+  orcAtk: {fileID: 8300000, guid: c71d81e002b40664db93b6bf9aca67bd, type: 3}
+  orcWalkL: {fileID: 8300000, guid: 492a86b1cb683c64bacc7a954fe9358e, type: 3}
+  orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
+  snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
+  snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
 --- !u!1001 &1813168151
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40073,12 +40073,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
-  bloodEff: {fileID: 0}
+  bloodEff: {fileID: 8300000, guid: 6b6653dbc2dec044b97db2e9efbd983c, type: 3}
   beeAtk: {fileID: 8300000, guid: 34c8ea8b3cc581c45884aba897438601, type: 3}
   Buzzing: {fileID: 8300000, guid: ff5ba840345836243880dc1407e01efc, type: 3}
   boarHit: {fileID: 8300000, guid: f8ec6ad4e9bf9b6449ccd6d8fdbf0c4a, type: 3}
   boarDie: {fileID: 8300000, guid: ffbc07800957d4a4b87d1e1937aad870, type: 3}
-  boarRun: {fileID: 0}
+  boarRun: {fileID: 8300000, guid: ccf0dbb57b0920749a761638aaf2bcb7, type: 3}
   lgHit: {fileID: 8300000, guid: c741accc06a1bff4cbe2a7edf2e2bc73, type: 3}
   lgDie: {fileID: 8300000, guid: 805ca5a4f1a0a554f8433564ae72106e, type: 3}
   lgAtk: {fileID: 8300000, guid: d595a8e71b49e8743aca213ec23c986a, type: 3}
@@ -40090,26 +40090,26 @@ MonoBehaviour:
   necBoom: {fileID: 8300000, guid: fd706038486fee041947a774223dc22e, type: 3}
   necHit: {fileID: 8300000, guid: 23dd87eef4241974c9973544a1d76fac, type: 3}
   necDie: {fileID: 8300000, guid: c6e25b5d5e662b64b85bc6e79a8fec9b, type: 3}
-  slimeHit: {fileID: 8300000, guid: 4e3524312a006c44b9461ddfbc5423ef, type: 3}
-  slimeDie: {fileID: 8300000, guid: 2f62f2b1e83eb9444962b60a5b22c86f, type: 3}
-  slimeJump: {fileID: 0}
-  torchHit: {fileID: 0}
-  torchDie: {fileID: 8300000, guid: 8e50bf1f922000d46b6727d95899e4a9, type: 3}
+  slimeHit: {fileID: 8300000, guid: 7f7c0d9925ffc4544a2ac79000abafe2, type: 3}
+  slimeDie: {fileID: 8300000, guid: 56f082d5512e8a44da73d3d54190abcc, type: 3}
+  slimeJump: {fileID: 8300000, guid: fc1164a4526496b4e97e6042b66cf928, type: 3}
+  torchHit: {fileID: 8300000, guid: 1bdb143b287563f4e887a704d0235a63, type: 3}
+  torchDie: {fileID: 8300000, guid: 5092b209323c0f24aab0d89dd8d5982b, type: 3}
   torchThrow: {fileID: 0}
   wolfAtk: {fileID: 8300000, guid: 49fb94c96e3a35843b46866f097222a4, type: 3}
-  wolfHit: {fileID: 0}
-  wolfDie: {fileID: 0}
-  ratDie: {fileID: 0}
-  ratHit: {fileID: 0}
-  batHit: {fileID: 0}
-  batDie: {fileID: 0}
-  orcHit: {fileID: 0}
-  orcDie: {fileID: 0}
-  orcAtk: {fileID: 0}
-  orcWalkL: {fileID: 0}
-  orcWalkR: {fileID: 0}
-  snailHit: {fileID: 0}
-  snailDie: {fileID: 0}
+  wolfHit: {fileID: 8300000, guid: a574eeb5d05b3b24dab20549d419a806, type: 3}
+  wolfDie: {fileID: 8300000, guid: 8c68419ddd1fb2848852f137c4c5bed4, type: 3}
+  ratDie: {fileID: 8300000, guid: 263344ad4cdc7634a8c4792faa58bb8e, type: 3}
+  ratHit: {fileID: 8300000, guid: 458ddfd328f327e4d8fd34bc5ae406be, type: 3}
+  batHit: {fileID: 8300000, guid: 3ab4536aca354ac4fbf828008b1f15d8, type: 3}
+  batDie: {fileID: 8300000, guid: 742ab41fc43305c47bb13b4fcb02c2e3, type: 3}
+  orcHit: {fileID: 8300000, guid: 8b4a6302f8421764e9a2a0074381b861, type: 3}
+  orcDie: {fileID: 8300000, guid: 03f6ee2c856e78f459edb353d6444657, type: 3}
+  orcAtk: {fileID: 8300000, guid: c71d81e002b40664db93b6bf9aca67bd, type: 3}
+  orcWalkL: {fileID: 8300000, guid: 492a86b1cb683c64bacc7a954fe9358e, type: 3}
+  orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
+  snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
+  snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
 --- !u!1 &2012237039
 GameObject:
   m_ObjectHideFlags: 0
@@ -40609,9 +40609,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
-  bloodEff: {fileID: 0}
+  bloodEff: {fileID: 8300000, guid: 6b6653dbc2dec044b97db2e9efbd983c, type: 3}
   beeAtk: {fileID: 8300000, guid: 34c8ea8b3cc581c45884aba897438601, type: 3}
-  Buzzing: {fileID: 0}
+  Buzzing: {fileID: 8300000, guid: ff5ba840345836243880dc1407e01efc, type: 3}
   boarHit: {fileID: 8300000, guid: f8ec6ad4e9bf9b6449ccd6d8fdbf0c4a, type: 3}
   boarDie: {fileID: 8300000, guid: ffbc07800957d4a4b87d1e1937aad870, type: 3}
   boarRun: {fileID: 8300000, guid: ccf0dbb57b0920749a761638aaf2bcb7, type: 3}
@@ -40626,26 +40626,26 @@ MonoBehaviour:
   necBoom: {fileID: 8300000, guid: fd706038486fee041947a774223dc22e, type: 3}
   necHit: {fileID: 8300000, guid: 23dd87eef4241974c9973544a1d76fac, type: 3}
   necDie: {fileID: 8300000, guid: c6e25b5d5e662b64b85bc6e79a8fec9b, type: 3}
-  slimeHit: {fileID: 8300000, guid: 4e3524312a006c44b9461ddfbc5423ef, type: 3}
-  slimeDie: {fileID: 8300000, guid: 2f62f2b1e83eb9444962b60a5b22c86f, type: 3}
-  slimeJump: {fileID: 0}
-  torchHit: {fileID: 0}
-  torchDie: {fileID: 8300000, guid: 8e50bf1f922000d46b6727d95899e4a9, type: 3}
+  slimeHit: {fileID: 8300000, guid: 7f7c0d9925ffc4544a2ac79000abafe2, type: 3}
+  slimeDie: {fileID: 8300000, guid: 56f082d5512e8a44da73d3d54190abcc, type: 3}
+  slimeJump: {fileID: 8300000, guid: fc1164a4526496b4e97e6042b66cf928, type: 3}
+  torchHit: {fileID: 8300000, guid: 1bdb143b287563f4e887a704d0235a63, type: 3}
+  torchDie: {fileID: 8300000, guid: 5092b209323c0f24aab0d89dd8d5982b, type: 3}
   torchThrow: {fileID: 0}
   wolfAtk: {fileID: 8300000, guid: 49fb94c96e3a35843b46866f097222a4, type: 3}
-  wolfHit: {fileID: 0}
-  wolfDie: {fileID: 0}
-  ratDie: {fileID: 0}
-  ratHit: {fileID: 0}
-  batHit: {fileID: 0}
-  batDie: {fileID: 0}
-  orcHit: {fileID: 0}
-  orcDie: {fileID: 0}
-  orcAtk: {fileID: 0}
-  orcWalkL: {fileID: 0}
-  orcWalkR: {fileID: 0}
-  snailHit: {fileID: 0}
-  snailDie: {fileID: 0}
+  wolfHit: {fileID: 8300000, guid: a574eeb5d05b3b24dab20549d419a806, type: 3}
+  wolfDie: {fileID: 8300000, guid: 8c68419ddd1fb2848852f137c4c5bed4, type: 3}
+  ratDie: {fileID: 8300000, guid: 263344ad4cdc7634a8c4792faa58bb8e, type: 3}
+  ratHit: {fileID: 8300000, guid: 458ddfd328f327e4d8fd34bc5ae406be, type: 3}
+  batHit: {fileID: 8300000, guid: 3ab4536aca354ac4fbf828008b1f15d8, type: 3}
+  batDie: {fileID: 8300000, guid: 742ab41fc43305c47bb13b4fcb02c2e3, type: 3}
+  orcHit: {fileID: 8300000, guid: 8b4a6302f8421764e9a2a0074381b861, type: 3}
+  orcDie: {fileID: 8300000, guid: 03f6ee2c856e78f459edb353d6444657, type: 3}
+  orcAtk: {fileID: 8300000, guid: c71d81e002b40664db93b6bf9aca67bd, type: 3}
+  orcWalkL: {fileID: 8300000, guid: 492a86b1cb683c64bacc7a954fe9358e, type: 3}
+  orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
+  snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
+  snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
 --- !u!1 &2021685011
 GameObject:
   m_ObjectHideFlags: 0
@@ -42300,8 +42300,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2089983839}
-  m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.2899984, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
