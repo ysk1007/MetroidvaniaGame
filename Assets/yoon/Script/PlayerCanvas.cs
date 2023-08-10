@@ -10,6 +10,7 @@ public class PlayerCanvas : MonoBehaviour
     public Player player;
     public GameObject charging_effect;
     public Animator charging_Anim;
+    public Animator LevelUp_Anim;
     public bool Full_Charge = false;
     // Start is called before the first frame update
     void Start()
@@ -44,5 +45,10 @@ public class PlayerCanvas : MonoBehaviour
     public void ChargeEnd()
     {
         axe_bar.SetActive(false);
+    }
+
+    public void LevelUpEffect()
+    {
+        LevelUp_Anim.SetTrigger("LevelUp");
     }
 }

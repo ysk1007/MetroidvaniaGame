@@ -13,6 +13,7 @@ public class SkyWalker : itemStatus
         data.itemNameEng = "SkyWalker";
         data.itemPrice = 700;
         data.color = Color.green;
+        data.Rating = "고급";
         data.itemExplanation = "착용자의 신체가 가벼워진다";
         data.itemStat = "이동속도 +50% \n공격속도 +50%";
         data.itemNumber = 1;
@@ -34,8 +35,8 @@ public class SkyWalker : itemStatus
         }
     }
 
-    public override void TextImageSettings(Image img, TextMeshProUGUI NameText, TextMeshProUGUI ExplanationText, TextMeshProUGUI StatText, TextMeshProUGUI PriceText)
+    public override void TextImageSettings(Image img, TextMeshProUGUI NameText, TextMeshProUGUI ExplanationText, TextMeshProUGUI StatText, TextMeshProUGUI PriceText, TextMeshProUGUI RatingText)
     {
-        base.TextImageSettings(img, NameText, ExplanationText, StatText, PriceText);
+        base.TextImageSettings(img, NameText, ExplanationText, StatText, PriceText, RatingText);
     }
 }

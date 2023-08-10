@@ -143,7 +143,6 @@ public class SelectUi : MonoBehaviour
     void DestroyList()
     {
         int count = SelectList.Count;
-        Debug.Log(count);
         for (int i = 0; i < count; i++)
         {
             GameObject go = SelectList[i].gameObject;

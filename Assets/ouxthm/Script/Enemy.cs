@@ -304,12 +304,15 @@ public abstract class Enemy : MonoBehaviour
     {
         Player player = Player.instance.GetComponent<Player>();
         Ui_Controller ui = GameManager.Instance.GetComponent<Ui_Controller>(); //윤성권 추가함
+        Proficiency_ui pro = GameManager.Instance.GetComponent<Proficiency_ui>(); // 숙련도 추가함
+        pro.GetProExp(Stage);
         ui.GetExp(Stage);
         ui.GetGold(Stage);
+        damage = damage * player.DmgIncrease; //딜 증가 추가
         bool cc = false; // 추가
         if (player.CCGetRandomResult()) //치명타 계산 추가
         {
-            damage *= 2;
+            damage *= player.CriDmgIncrease;
             cc = true;
         }
         if (player.CanlifeStill)

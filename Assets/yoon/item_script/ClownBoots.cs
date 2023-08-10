@@ -25,8 +25,8 @@ public class ClownBoots : itemStatus
         
     }
 
-    public override void TextImageSettings(Image img, TextMeshProUGUI NameText, TextMeshProUGUI ExplanationText, TextMeshProUGUI StatText, TextMeshProUGUI PriceText)
+    public override void TextImageSettings(Image img, TextMeshProUGUI NameText, TextMeshProUGUI ExplanationText, TextMeshProUGUI StatText, TextMeshProUGUI PriceText, TextMeshProUGUI RatingText)
     {
-        base.TextImageSettings(img, NameText, ExplanationText, StatText, PriceText);
+        base.TextImageSettings(img, NameText, ExplanationText, StatText, PriceText, RatingText);
     }
 }

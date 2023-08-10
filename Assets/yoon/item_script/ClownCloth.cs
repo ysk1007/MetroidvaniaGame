@@ -13,6 +13,7 @@ public class ClownCloth : itemStatus
         data.itemNameEng = "ClownCloth";
         data.itemPrice = 2000;
         data.color = Color.magenta;
+        data.Rating = "¿µ¿õ";
         data.itemExplanation = "\"Why so serious?\"";
         data.itemStat = "°ø°Ý·Â +5 \nÄ¡¸íÅ¸ È®·ü +25%";
         data.itemNumber = 4;
@@ -25,8 +26,8 @@ public class ClownCloth : itemStatus
         
     }
 
-    public override void TextImageSettings(Image img, TextMeshProUGUI NameText, TextMeshProUGUI ExplanationText, TextMeshProUGUI StatText, TextMeshProUGUI PriceText)
+    public override void TextImageSettings(Image img, TextMeshProUGUI NameText, TextMeshProUGUI ExplanationText, TextMeshProUGUI StatText, TextMeshProUGUI PriceText , TextMeshProUGUI RatingText)
     {
-        base.TextImageSettings(img, NameText, ExplanationText, StatText, PriceText);
+        base.TextImageSettings(img, NameText, ExplanationText, StatText, PriceText, RatingText);
     }
 }

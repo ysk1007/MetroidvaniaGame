@@ -45,7 +45,9 @@ public class WeaponSwap : MonoBehaviour
     public Image Bow_Skill_coolTime;
     public Image img_Ult_coolTime;
     public Image Tab_key;
+    public GameObject LockImage;
 
+    public GameObject Ult_onAnim;
     public Animator[] Cool_Anims;
     public Animator Ult_cool_Anim;
 
@@ -65,12 +67,21 @@ public class WeaponSwap : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (currentWeaponIndex != Player.instance.proSelectWeapon || Player.instance.proLevel != 3)
+        {
+            LockImage.SetActive(true);
+            Ult_onAnim.SetActive(false);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (currentWeaponIndex == Player.instance.proSelectWeapon && Player.instance.proLevel == 3)
+        {
+            LockImage.SetActive(false);
+            Ult_onAnim.SetActive(true);
+        }
         if (ableExe || ableBow) 
             Tab_key.enabled = true;
         if (!ableExe && !ableBow)
@@ -126,6 +137,18 @@ public class WeaponSwap : MonoBehaviour
                 }
             }
 
+
+            if (currentWeaponIndex == Player.instance.proSelectWeapon && Player.instance.proLevel == 3)
+            {
+                LockImage.SetActive(false);
+                Ult_onAnim.SetActive(true);
+            }
+            else
+            {
+                LockImage.SetActive(true);
+                Ult_onAnim.SetActive(false);
+            }
+
             StartCoroutine(FillSliderOverTime(img_Swap_coolTime, swapCool, "swap"));
         }
         if (Input.GetKeyDown(KeyCode.S) && !Weapon_skilling[currentWeaponIndex])
@@ -135,9 +158,10 @@ public class WeaponSwap : MonoBehaviour
             float cooltime = p.DeCoolTimeCarcul(p.Skill_Cools[currentWeaponIndex]);
             StartCoroutine(FillSliderOverTime(i, cooltime, "skill"));
         }
-        if (Input.GetKeyDown(KeyCode.D) && !ultting)
+        if (Input.GetKeyDown(KeyCode.D) && !ultting && currentWeaponIndex == Player.instance.proSelectWeapon && Player.instance.proLevel == 3)
         {
             StartCoroutine(FillSliderOverTime(img_Ult_coolTime, ultcool, "ult"));
+            Ult_onAnim.SetActive(false);
         }
     }
 
@@ -165,6 +189,7 @@ public class WeaponSwap : MonoBehaviour
             ultting = false;
             StartCoroutine(ReadyAnim(UltSkills[currentWeaponIndex].gameObject.GetComponent<Image>()));
             Ult_cool_Anim.SetTrigger("cooltime");
+            Ult_onAnim.SetActive(true);
         }
     }
 

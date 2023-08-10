@@ -61,7 +61,7 @@ public class EnemyUi : MonoBehaviour
         ShowHpBar();
         GameObject Text = DamagedText;
         DamagedText TextCs = Text.GetComponentInChildren<DamagedText>();
-        TextCs.DamagedValue.text = DamagedValue.ToString();
+        TextCs.DamagedValue.text = DamagedValue.ToString("F0");
         TextCs.startPosition = ThisEnemy.transform.position;
         if (isCC)
         {
@@ -79,7 +79,7 @@ public class EnemyUi : MonoBehaviour
         ShowHpBar();
         GameObject Text = BleedText;
         BleedText TextCs = Text.GetComponentInChildren<BleedText>();
-        TextCs.DamagedValue.text = DamagedValue.ToString();
+        TextCs.DamagedValue.text = DamagedValue.ToString("F0");
         TextCs.startPosition = ThisEnemy.transform.position;
         Instantiate(Text, ThisEnemy.transform.parent);
     }

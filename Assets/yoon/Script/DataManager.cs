@@ -11,7 +11,6 @@ public class SaveData
     public int PlayerLevel = 1;
     public float PlayerGold = 0f;
     public float PlayerExp = 0f;
-    public float PlayerMaxHp = 100f;
     public float PlayerCurrentHp = 100f;
     public Vector3 PlayerPos = new Vector3(-29.83f, -7.46f, 0);
 
@@ -20,21 +19,12 @@ public class SaveData
     public int proLevel = 0; //숙련도 레벨
     public float proFill = 0f; //숙련도 진행 상황
 
-    // 선택지 레벨 데이터
-    public int selectAtkLevel = 0;
-    public int selectATSLevel = 0;
-    public int selectCCLevel = 0;
-    public int selectDefLevel = 0;
-    public int selectHpLevel = 0;
-    public int selectGoldLevel = 0;
-    public int selectExpLevel = 0;
-    public int selectCoolTimeLevel = 0;
-
     // 게임 설정 데이터
     public float MasterVolume = 1f;
     public float BGMVolume = 1f;
     public float SFXVolume = 1f;
 
+    public float PlayTime = 0f;
     public List<float> getVolume()
     {
         List<float> Volumes = new List<float>();
@@ -169,12 +159,54 @@ public class DataManager : MonoBehaviour
                         {
                             Debug.Log("디버그 : 플레이어 데이터 불러오는 중");
                             Player.instance.level = saveData.PlayerLevel;
-                            Player.instance.MaxHp = saveData.PlayerMaxHp;
                             Player.instance.CurrentHp = saveData.PlayerCurrentHp;
                             Player.instance.gold = saveData.PlayerGold;
                             GameManager.Instance.GetComponent<Ui_Controller>().ExpBar.value = saveData.PlayerExp;
                             Player.instance.transform.position = saveData.PlayerPos;
+                            Player.instance.proSelectWeapon = saveData.proWeaponSellect;
+                            Player.instance.proLevel = saveData.proLevel;
+                            OptionManager.instance.TotalPlayTime = saveData.PlayTime;
+                            Proficiency_ui.instance.proWeaponIndex = saveData.proWeaponSellect;
+                            Proficiency_ui.instance.proLevel = saveData.proLevel;
+                            Proficiency_ui.instance.Profill.fillAmount = saveData.proFill;
                             Debug.Log("디버그 : 플레이어 데이터 로드 완료");
+                            Debug.Log("디버그 : 선택지 데이터 불러오는 중");
+                            for (int i = 0; i < SelectData.Selects.Length; i++)
+                            {
+                                switch (SelectData.Selects[i].SelectName)
+                                {
+                                    case "selectAtkLevel":
+                                        Player.instance.selectAtkLevel = SelectData.Selects[i].Level - 1;
+                                        break;
+                                    case "selectATSLevel":
+                                        Player.instance.selectATSLevel = SelectData.Selects[i].Level - 1;
+                                        break;
+                                    case "selectCCLevel":
+                                        Player.instance.selectCCLevel = SelectData.Selects[i].Level - 1;
+                                        break;
+                                    case "selectLifeStillLevel":
+                                        Player.instance.selectLifeStillLevel = SelectData.Selects[i].Level - 1;
+                                        break;
+                                    case "selectDefLevel":
+                                        Player.instance.selectDefLevel = SelectData.Selects[i].Level - 1;
+                                        break;
+                                    case "selectHpLevel":
+                                        Player.instance.selectHpLevel = SelectData.Selects[i].Level - 1;
+                                        break;
+                                    case "selectGoldLevel":
+                                        Player.instance.selectGoldLevel = SelectData.Selects[i].Level - 1;
+                                        break;
+                                    case "selectExpLevel":
+                                        Player.instance.selectExpLevel = SelectData.Selects[i].Level - 1;
+                                        break;
+                                    case "selectCoolTimeLevel":
+                                        Player.instance.selectCoolTimeLevel = SelectData.Selects[i].Level - 1;
+                                        break;
+                                }
+
+                            }
+                            Debug.Log("디버그 : 선택지 데이터 로드 완료");
+                            Player.instance.GetComponent<Player>().GetSelectValue("Start"); //시작시 선택지 능력치 얻음
                         }
                         break;
                     case "SliderData":
@@ -188,34 +220,39 @@ public class DataManager : MonoBehaviour
                         }
                         break;
                     case "ItemData":
-                        Debug.Log("디버그 : 아이템 데이터 불러오는 중");
-                        for (int i = 0; i < ItemData.itemEquip.Length; i++)
+                        if (GameManager.Instance != null)
                         {
-                            if (ItemData.itemEquip[i] != "")
+                            Debug.Log("디버그 : 아이템 데이터 불러오는 중");
+                            for (int i = 0; i < ItemData.itemEquip.Length; i++)
                             {
-                                GameObject prefab = Resources.Load<GameObject>("item/" + ItemData.itemEquip[i]);                 
-                                GameObject temp = Instantiate(prefab, GameManager.Instance.GetComponent<inven>().equip_slots[i].transform);
-                                temp.transform.SetParent(GameManager.Instance.GetComponent<inven>().equip_slots[i].transform);
-                                GameManager.Instance.GetComponent<inven>().equip_slots[i].GetComponentInChildren<Image>().color = Color.green;
+                                if (ItemData.itemEquip[i] != "")
+                                {
+                                    GameObject prefab = Resources.Load<GameObject>("item/" + ItemData.itemEquip[i]);
+                                    GameObject temp = Instantiate(prefab, GameManager.Instance.GetComponent<inven>().equip_slots[i].transform);
+                                    temp.transform.SetParent(GameManager.Instance.GetComponent<inven>().equip_slots[i].transform);
+                                    GameManager.Instance.GetComponent<inven>().equip_slots[i].GetComponentInChildren<Image>().color = Color.green;
+                                }
                             }
-                        }
-                        
-                        for (int i = 0; i < ItemData.itemInven.Length; i++)
-                        {
-                            if (ItemData.itemInven[i] != "")
+
+                            for (int i = 0; i < ItemData.itemInven.Length; i++)
                             {
-                                GameObject prefab = Resources.Load<GameObject>("item/" + ItemData.itemInven[i]);
-                                GameObject temp = Instantiate(prefab, GameManager.Instance.GetComponent<inven>().inven_slots[i].transform);
-                                temp.transform.SetParent(GameManager.Instance.GetComponent<inven>().inven_slots[i].transform);
+                                if (ItemData.itemInven[i] != "")
+                                {
+                                    GameObject prefab = Resources.Load<GameObject>("item/" + ItemData.itemInven[i]);
+                                    GameObject temp = Instantiate(prefab, GameManager.Instance.GetComponent<inven>().inven_slots[i].transform);
+                                    temp.transform.SetParent(GameManager.Instance.GetComponent<inven>().inven_slots[i].transform);
+                                }
                             }
+                            Debug.Log("디버그 : 아이템 데이터 로드 완료");
                         }
-                        Debug.Log("디버그 : 아이템 데이터 로드 완료");
                         break;
                     case "ProData":
                         if(Proficiency_ui.instance != null)
                         {
-                            /*                                Proficiency_ui.instance.proWeaponIndex = saveData.proWeaponSellect;
-                                                Proficiency_ui.instance.proLevel = saveData.proLevel;*/
+                            Debug.Log("프로 데이터 불러옴");
+                            Proficiency_ui.instance.proWeaponIndex = saveData.proWeaponSellect;
+                            Proficiency_ui.instance.proLevel = saveData.proLevel;
+                            Proficiency_ui.instance.Profill.fillAmount = saveData.proFill;
                         }
                         break;
 
@@ -237,11 +274,14 @@ public class DataManager : MonoBehaviour
                 {
                     Debug.Log("디버그 : 플레이어 데이터 저장 중");
                     jsonsave.PlayerLevel = Player.instance.level;
-                    jsonsave.PlayerMaxHp = Player.instance.MaxHp;
                     jsonsave.PlayerCurrentHp = Player.instance.CurrentHp;
                     jsonsave.PlayerGold = Player.instance.gold;
                     jsonsave.PlayerExp = GameManager.Instance.GetComponent<Ui_Controller>().ExpBar.value;
                     jsonsave.PlayerPos = Player.instance.transform.position;
+                    jsonsave.proWeaponSellect = Proficiency_ui.instance.proWeaponIndex;
+                    jsonsave.proLevel = Proficiency_ui.instance.proLevel;
+                    jsonsave.proFill = Proficiency_ui.instance.Profill.fillAmount;
+                    jsonsave.PlayTime = OptionManager.instance.TotalPlayTime;
                 }
                 Debug.Log("디버그 : 플레이어 데이터 저장 완료");
                 break;
@@ -286,12 +326,14 @@ public class DataManager : MonoBehaviour
                 }
                 break;
             case "ProData":
-                Debug.Log("디버그 : 숙련도 데이터 저장 중");
-                jsonsave.proWeaponSellect = Proficiency_ui.instance.proWeaponIndex;
-                jsonsave.proLevel = Proficiency_ui.instance.proLevel;
-                Debug.Log("디버그 : 숙련도 데이터 저장 완료");
+                if (Proficiency_ui.instance != null)
+                {
+                    Debug.Log("프로 데이터 저장");
+                    jsonsave.proWeaponSellect = Proficiency_ui.instance.proWeaponIndex;
+                    jsonsave.proLevel = Proficiency_ui.instance.proLevel;
+                    jsonsave.proFill = Proficiency_ui.instance.Profill.fillAmount;
+                }
                 break;
-
         }
         string Playerjson = JsonUtility.ToJson(jsonsave, true);
         string itemjson = JsonUtility.ToJson(ItemData, true);
@@ -317,9 +359,9 @@ public class DataManager : MonoBehaviour
         saveData.PlayerLevel = 1;
         saveData.PlayerGold = 0;
         saveData.PlayerExp = 0.0f;
-        saveData.PlayerMaxHp = 100.0f;
         saveData.PlayerCurrentHp = 100.0f;
         saveData.PlayerPos = new Vector3(-29.83f, -7.55f, 0.0f);
+        saveData.PlayTime = 0f;
         Debug.Log("디버그 : 플레이어 데이터 생성 완료");
         Debug.Log("디버그 : 사운드 데이터 생성 중");
         saveData.MasterVolume = 1.0f;
@@ -327,20 +369,10 @@ public class DataManager : MonoBehaviour
         saveData.SFXVolume = 1.0f;
         Debug.Log("디버그 : 사운드 데이터 생성 완료");
         Debug.Log("디버그 : 숙련도 데이터 생성 중");
-        saveData.proWeaponSellect = 0;
+        saveData.proWeaponSellect = 4;
         saveData.proLevel = 0;
         saveData.proFill = 0.0f;
         Debug.Log("디버그 : 숙련도 데이터 생성 완료");
-        Debug.Log("디버그 : 선택지 레벨 생성 중");
-        saveData.selectAtkLevel = 0;
-        saveData.selectATSLevel = 0;
-        saveData.selectCCLevel = 0;
-        saveData.selectDefLevel = 0;
-        saveData.selectHpLevel = 0;
-        saveData.selectGoldLevel = 0;
-        saveData.selectExpLevel = 0;
-        saveData.selectCoolTimeLevel = 0;
-        Debug.Log("디버그 : 선택지 레벨 생성 완료");
         string Playerjson = JsonUtility.ToJson(saveData, true);
         File.WriteAllText(PlayerPath, Playerjson);
     }
@@ -364,6 +396,7 @@ public class DataManager : MonoBehaviour
         selectLevels.Add(new SelectLevel("selectAtkLevel", 1));
         selectLevels.Add(new SelectLevel("selectATSLevel", 1));
         selectLevels.Add(new SelectLevel("selectCCLevel", 1));
+        selectLevels.Add(new SelectLevel("selectLifeStillLevel", 1));
         selectLevels.Add(new SelectLevel("selectDefLevel", 1));
         selectLevels.Add(new SelectLevel("selectHpLevel", 1));
         selectLevels.Add(new SelectLevel("selectGoldLevel", 1));
@@ -398,6 +431,11 @@ public class DataManager : MonoBehaviour
         items.Add(new DMUlcokItem("ClownGloves", false));
         items.Add(new DMUlcokItem("ClownPants", false));
         items.Add(new DMUlcokItem("ClownBoots", false));
+        items.Add(new DMUlcokItem("SymbolRich", false));
+        items.Add(new DMUlcokItem("LightningGloves", false));
+        items.Add(new DMUlcokItem("BattleBookBeginner", false));
+        items.Add(new DMUlcokItem("StrangeCandy", false));
+        items.Add(new DMUlcokItem("VampireCup", false));
 
         // 데이터를 JSON 파일로 저장
         SaveToJson(items);
@@ -454,6 +492,46 @@ public class DataManager : MonoBehaviour
             if (SelectList.Selects[i].SelectName == Name)
             {
                 SelectList.Selects[i].Level++;
+                switch (SelectList.Selects[i].SelectName)
+                {
+                    case "selectAtkLevel":
+                        Player.instance.selectAtkLevel++;
+                        Player.instance.GetSelectValue("selectAtkLevel");
+                        break;
+                    case "selectATSLevel":
+                        Player.instance.selectATSLevel++;
+                        Player.instance.GetSelectValue("selectATSLevel");
+                        break;
+                    case "selectCCLevel":
+                        Player.instance.selectCCLevel++;
+                        Player.instance.GetSelectValue("selectCCLevel");
+                        break;
+                    case "selectLifeStillLevel":
+                        Player.instance.selectLifeStillLevel++;
+                        Player.instance.GetSelectValue("selectLifeStillLevel");
+                        break;
+                    case "selectDefLevel":
+                        Player.instance.selectDefLevel++;
+                        Player.instance.GetSelectValue("selectDefLevel");
+                        break;
+                    case "selectHpLevel":
+                        Player.instance.selectHpLevel++;
+                        Player.instance.GetSelectValue("selectHpLevel");
+                        GameManager.Instance.GetComponent<Ui_Controller>().UiUpdate();
+                        break;
+                    case "selectGoldLevel":
+                        Player.instance.selectGoldLevel++;
+                        Player.instance.GetSelectValue("selectGoldLevel");
+                        break;
+                    case "selectExpLevel":
+                        Player.instance.selectExpLevel++;
+                        Player.instance.GetSelectValue("selectExpLevel");
+                        break;
+                    case "selectCoolTimeLevel":
+                        Player.instance.selectCoolTimeLevel++;
+                        Player.instance.GetSelectValue("selectCoolTimeLevel");
+                        break;
+                }
                 break;
             }
         }
@@ -469,7 +547,32 @@ public class DataManager : MonoBehaviour
         File.WriteAllText(path + "/UnlockSelectList.txt", jsonData);
     }
 
+    public GameObject ChestItem()
+    {
+        UnlockList Json;
 
+        string path = Application.dataPath + "/Resources";
+        string fromJsonData = File.ReadAllText(path + "/UnlockItemList.txt");
+        Json = JsonUtility.FromJson<UnlockList>(fromJsonData);
+
+        List<int> ItemList = new List<int> { };
+        for (int i = 0; i < Json.items.Count; i++)
+        {
+            if (Json.items[i].isUnlock == false)
+            {
+                ItemList.Add(i);
+                Debug.Log(Json.items[i].ItemName);
+            }
+        }
+        int randomNumber = Random.Range(0, ItemList.Count);
+        if (ItemList.Count == 0) //남아 있는 아이템 없으면 종료
+        {
+            GameObject Potion = Resources.Load<GameObject>("item/HpPotion");
+            return Potion;
+        }
+        GameObject randomItem = Resources.Load<GameObject>("item/" + Json.items[ItemList[randomNumber]].ItemName);
+        return randomItem;
+    }
 
     public void DeleteJson()
     {

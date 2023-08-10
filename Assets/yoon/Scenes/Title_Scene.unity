@@ -152,8 +152,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b268dfbc28cfc546b7e61fb7a16ec19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerPath: 
+  ItemPath: 
+  SelectPath: 
+  ItemUlockPath: 
   proData: {fileID: 0}
   soundData: {fileID: 1578300717}
+  sliderData: {fileID: 0}
+  playerData: {fileID: 0}
+  ItemData:
+    itemEquip:
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    itemInven:
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+  SelectData:
+    Selects: []
+  UnlockList:
+    items: []
+  SelectList:
+    Selects: []
+  selectData:
+    Selects: []
+  PlayerloadJson: 
+  ItemloadJson: 
+  SelectloadJson: 
+  PlayerDataLoadComplete: 0
+  SoundDataLoadComplete: 0
+  ItemDataLoadComplete: 0
 --- !u!4 &15813714
 Transform:
   m_ObjectHideFlags: 0
@@ -774,8 +815,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Press the button
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: df1777d234fc1544a8404e6b4ff0a660, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 49655a5ea6b96a54fa73b3c5e616153d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f588313aaf9a729488841b4bc22db1ed, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: a0c248c81a6390541a3c2ca0c5ef2255, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -815,7 +856,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}

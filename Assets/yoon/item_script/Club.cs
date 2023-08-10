@@ -13,11 +13,12 @@ public class Club : itemStatus
         data.itemNameEng = "Club";
         data.itemPrice = 300;
         data.color = Color.white;
+        data.Rating = "일반";
         data.itemExplanation = "훌륭한 대화수단";
-        data.itemStat = "공격력 +2 \n최대체력 +5";
+        data.itemStat = "공격력 +5 \n최대체력 +10";
         data.itemNumber = 2;
-        data.AtkPower = 2;
-        data.MaxHp = 5;
+        data.AtkPower = 5;
+        data.MaxHp = 10;
     }
 
     public override void SpecialPower()
@@ -25,8 +26,8 @@ public class Club : itemStatus
         
     }
 
-    public override void TextImageSettings(Image img, TextMeshProUGUI NameText, TextMeshProUGUI ExplanationText, TextMeshProUGUI StatText, TextMeshProUGUI PriceText)
+    public override void TextImageSettings(Image img, TextMeshProUGUI NameText, TextMeshProUGUI ExplanationText, TextMeshProUGUI StatText, TextMeshProUGUI PriceText, TextMeshProUGUI RatingText)
     {
-        base.TextImageSettings(img, NameText, ExplanationText, StatText, PriceText);
+        base.TextImageSettings(img, NameText, ExplanationText, StatText, PriceText, RatingText);
     }
 }

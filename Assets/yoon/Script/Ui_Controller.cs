@@ -28,6 +28,9 @@ public class Ui_Controller : MonoBehaviour
     public GameObject inven_ui;
     public GameObject inven_screen;
     public GameObject equip_screen;
+    public GameObject Status_screen;
+    public GameObject WeaponSelect_screen;
+    public GameObject DescriptionBox;
     private bool openinven = false;
     public bool openMarket = false;
     public GameObject iconObject;
@@ -76,6 +79,7 @@ public class Ui_Controller : MonoBehaviour
             {
                 inven_ui.SetActive(true);
                 openinven = true;
+                Status_screen.SetActive(false);
                 Icons[0].gameObject.GetComponent<Image>().enabled = true;
                 Icons[1].gameObject.GetComponent<Image>().enabled = false;
             }
@@ -83,6 +87,7 @@ public class Ui_Controller : MonoBehaviour
             {
                 inven_ui.SetActive(false);
                 openinven = false;
+                Destroy(DescriptionBox);
                 Icons[0].gameObject.GetComponent<Image>().enabled = false;
                 Icons[1].gameObject.GetComponent<Image>().enabled = true;
             }
@@ -100,11 +105,18 @@ public class Ui_Controller : MonoBehaviour
 
             if (!openpro)
             {
+                if (Player.instance.proSelectWeapon == 4)
+                {
+                    WeaponSelect_screen.SetActive(true);
+                    WeaponSelect_screen.GetComponent<WeaponSelect>().WeaponSelectUiOpen = true;
+                }
                 pro_ui.SetActive(true);
                 openpro = true;
             }
             else
             {
+                WeaponSelect_screen.SetActive(false);
+                WeaponSelect_screen.GetComponent<WeaponSelect>().WeaponSelectUiOpen = false;
                 pro_ui.SetActive(false);
                 openpro = false;
             }
@@ -175,6 +187,13 @@ public class Ui_Controller : MonoBehaviour
         MarketGoldText.text = player.gold.ToString();
     }
 
+    public void GetGold(float price)
+    {
+        player.gold += price * player.GoldGet;
+        GoldVelueUI.text = player.gold.ToString();
+        MarketGoldText.text = player.gold.ToString();
+    }
+
     public bool UseGold(int value)
     {
         if (player.gold - value < 0)
@@ -211,6 +230,8 @@ public class Ui_Controller : MonoBehaviour
         LevelVelueUi.text = player.level.ToString();
         GoldVelueUI.text = player.gold.ToString();
         MarketGoldText.text = player.gold.ToString();
+
+        Status_screen.GetComponent<StatusScreen>().StatusUpdate(player);
     }
 
     IEnumerator SlidingUP()

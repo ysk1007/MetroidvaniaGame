@@ -113,8 +113,9 @@ public class MouseOnItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         instance.transform.SetParent(gameObject.transform.parent.transform.parent.transform.parent.transform.parent.transform.parent);
         itemstat.InitSetting();
         Description_Setting tip = instance.GetComponent<Description_Setting>();
-        itemstat.Using(tip.ItemIcon, tip.ItemName, tip.ItemDescription, tip.ItemStatus, tip.ItemPrice);
+        itemstat.Using(tip.ItemIcon, tip.ItemName, tip.ItemDescription, tip.ItemStatus, tip.ItemPrice, tip.RateText);
         tip.tipText.text = tiptext;
+        GameManager.Instance.GetComponent<Ui_Controller>().DescriptionBox = instance;
         if (isSell)
         {
             float sellprice = float.Parse(tip.ItemPrice.text) * 0.3f;

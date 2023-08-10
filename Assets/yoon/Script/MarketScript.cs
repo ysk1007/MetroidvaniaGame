@@ -41,6 +41,10 @@ public class MarketScript : MonoBehaviour
 
     public UnlockList ItemFromJson;
 
+    public AudioClip SellSound;
+    public AudioClip BuySound;
+    public AudioSource sfx;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -67,6 +71,7 @@ public class MarketScript : MonoBehaviour
                 Ui_Controller ui = GameManager.Instance.GetComponent<Ui_Controller>();
                 ui.inven_ui.SetActive(false);
                 ui.openMarket = false;
+                Destroy(ui.DescriptionBox);
                 Time.timeScale = 1f;
             }
             else
@@ -138,9 +143,18 @@ public class MarketScript : MonoBehaviour
             //상점 품목
             GameObject list = Instantiate(marketItem) as GameObject;
             list.transform.SetParent(marketList.transform, false);
-
+            list.GetComponent<MarketItem>().market = this;
             //아이템
             GameObject randomItem = Resources.Load<GameObject>("item/" + ItemFromJson.items[randomNumber].ItemName);
+
+            Image img = randomItem.GetComponent<Image>();
+            img.SetNativeSize();
+            RectTransform rectTransform = randomItem.GetComponent<RectTransform>();
+            // 이미지의 너비와 높이 값을 가져옵니다.
+            float width = rectTransform.sizeDelta.x;
+            float height = rectTransform.sizeDelta.y;
+            rectTransform.sizeDelta = new Vector2(width * 3f, height * 3f);
+
             Instantiate(randomItem, list.GetComponent<MarketItem>().icon.transform);
             RandomList.Remove(randomNumber);
         }
@@ -151,9 +165,22 @@ public class MarketScript : MonoBehaviour
         //상점 품목
         GameObject list = Instantiate(marketItem) as GameObject;
         list.transform.SetParent(marketList.transform, false);
+        list.GetComponent<MarketItem>().market = this;
 
         //아이템
         GameObject randomItem = Resources.Load<GameObject>("item/HpPotion");
         Instantiate(randomItem, list.GetComponent<MarketItem>().icon.transform);
+    }
+
+    public void BuySoundPlay()
+    {
+        sfx.clip = BuySound;
+        sfx.Play();
+    }
+
+    public void SellSoundPlay()
+    {
+        sfx.clip = SellSound;
+        sfx.Play();
     }
 }

@@ -34,7 +34,8 @@ public class Player : MonoBehaviour
     public float attackDash = 4f; //큰 공격시 앞으로 이동하는 값
     public float slideSpeed = 13;   //슬라이딩 속도
     public int slideDir = 1;    //슬라이딩 방향값
-    public float MaxHp;    //플레이어 최대 HP
+    public float MaxHp = 100;    //플레이어 최대 HP
+    public float BaseHp = 100;    //플레이어 최대 HP
     public float CurrentHp;    //플레이어 현재 HP
     public bool ishurt = false; //피격 확인
     public bool isknockback = false;    //넉백 확인
@@ -49,31 +50,36 @@ public class Player : MonoBehaviour
     public static Player instance; //추가함
     public float gold;  //추가함
     public float AtkPower; //추가함
-    public float Def; //추가함
+    public float Def = 5; //추가함
     public float CriticalChance; //추가함 , 이속,공속 복구되는거 수정 필요
-    public float DmgIncrease; //추가함
+    public float DmgIncrease = 1f; //추가함
+    public float CriDmgIncrease = 1.5f; //추가함
     public float ATS = 1; //추가함
     public float GoldGet = 1f; //추가함
     public float EXPGet = 1f; //추가함
     public bool CanlifeStill = false; //추가함
     public float lifeStill; //추가함
     public float DecreaseCool = 0f; //추가함
+    public int proSelectWeapon = 4; //4는 숙련도를 고르지 않은 상태 0,1,2 => 칼,도끼,활
+    public int proLevel = 0;
     public float enemyPower;
 
     //선택능력치 밸류
-    public float[] selectAtkValue = { 10f, 20f, 30f };
-    public float[] selectATSValue = { 15f, 30f, 45f };
-    public float[] selectCCValue = { 5f, 10f, 20f };
+    public float[] selectAtkValue = { 0.1f, 0.2f, 0.3f };
+    public float[] selectATSValue = { 0.15f, 0.3f, 0.4f };
+    public float[] selectCCValue = { 0.05f, 0.1f, 0.2f };
+    public float[] selectLifeStillValue = {0.01f, 0.03f, 0.09f };
     public float[] selectDefValue = { 10f, 20f, 30f };
     public float[] selectHpValue = { 30f, 60f, 90f };
-    public float[] selectGoldValue = { 130f, 160f, 200f };
-    public float[] selectExpValue = { 130f, 160f, 200f };
-    public float[] selectCoolTimeValue = { 5f, 10f, 20f };
+    public float[] selectGoldValue = { 0.3f, 0.6f, 1.0f };
+    public float[] selectExpValue = { 0.3f, 0.6f, 1.0f };
+    public float[] selectCoolTimeValue = { 0.05f, 0.1f, 0.2f };
 
     //선택능력치 레벨
     public int selectAtkLevel = 0;
     public int selectATSLevel = 0;
     public int selectCCLevel = 0;
+    public int selectLifeStillLevel = 0;
     public int selectDefLevel = 0;
     public int selectHpLevel = 0;
     public int selectGoldLevel = 0;
@@ -134,6 +140,7 @@ public class Player : MonoBehaviour
     {
         DataManager.instance.JsonLoad("PlayerData");
         anim.SetFloat("AttackSpeed", ATS);
+        OptionManager.instance.Playing = true;
     }
 
     void Update()
@@ -829,10 +836,167 @@ public class Player : MonoBehaviour
         }
     }
 
-    public float DeCoolTimeCarcul(float cooltime)
+    public float DeCoolTimeCarcul(float cooltime) //쿨타임 감소 식 추가
     {
         float newCooltime;
         newCooltime = cooltime - (cooltime * DecreaseCool);
         return newCooltime;
+    }
+
+    public void GetSelectValue(string selectName) //선택 능력치 얻는 함수
+    {
+        Debug.Log("GetSelectValue: " + selectName);
+        switch (selectName)
+        {
+            case "selectAtkLevel":
+                if (selectAtkLevel > 1) // 레벨 1 이상
+                {
+                    DmgIncrease += selectAtkValue[selectAtkLevel - 1] - selectAtkValue[selectAtkLevel - 2];
+                }
+                else if (selectAtkLevel == 1) // 처음 찍을 때
+                {
+                    DmgIncrease += selectAtkValue[selectAtkLevel - 1];
+                }
+                break;
+            case "selectATSLevel":
+                if (selectATSLevel > 1) // 레벨 1 이상
+                {
+                    ATS += selectATSValue[selectATSLevel - 1] - selectATSValue[selectATSLevel - 2];
+                    delayTime = -0.4f * ATS + 1.4f;
+                    anim.SetFloat("AttackSpeed", ATS);
+                }
+                else if (selectATSLevel == 1) // 처음 찍을 때
+                {
+                    ATS += selectATSValue[selectATSLevel - 1];
+                    delayTime = -0.4f * ATS + 1.4f;
+                    anim.SetFloat("AttackSpeed", ATS);
+                }
+                break;
+            case "selectCCLevel":
+                if (selectCCLevel > 1) // 레벨 1 이상
+                {
+                    CriticalChance += selectCCValue[selectCCLevel - 1] - selectCCValue[selectCCLevel - 2];
+                }
+                else if (selectCCLevel == 1) // 처음 찍을 때
+                {
+                    CriticalChance += selectCCValue[selectCCLevel - 1];
+                }
+                    break;
+            case "selectLifeStillLevel":
+                if (selectLifeStillLevel > 1) // 레벨 1 이상
+                {
+                    lifeStill += selectLifeStillValue[selectLifeStillLevel - 1] - selectLifeStillValue[selectLifeStillLevel - 2];
+                }
+                else if (selectLifeStillLevel == 1) // 처음 찍을 때
+                {
+                    lifeStill += selectLifeStillValue[selectLifeStillLevel - 1];
+                }
+                break;
+            case "selectDefLevel":
+                if (selectDefLevel > 1) // 레벨 1 이상
+                {
+                    Def += selectDefValue[selectDefLevel - 1] - selectDefValue[selectDefLevel - 2];
+                }
+                else if (selectDefLevel == 1) // 처음 찍을 때
+                {
+                    Def += selectDefValue[selectDefLevel - 1];
+                }
+                break;
+            case "selectHpLevel":
+                if (selectHpLevel > 1) // 레벨 1 이상
+                {
+                    MaxHp += BaseHp * selectHpValue[selectHpLevel - 1] / 100 - BaseHp * selectHpValue[selectHpLevel - 2] / 100;
+                }
+                else if (selectHpLevel == 1) // 처음 찍을 때
+                {
+                    MaxHp += BaseHp * selectHpValue[selectHpLevel - 1] / 100;
+                }
+                break;
+            case "selectGoldLevel":
+                if (selectGoldLevel > 1) // 레벨 1 이상
+                {
+                    GoldGet += selectGoldValue[selectGoldLevel - 1] - selectGoldValue[selectGoldLevel - 2];
+                }
+                else if (selectGoldLevel == 1) // 처음 찍을 때
+                {
+                    GoldGet += selectGoldValue[selectGoldLevel - 1];
+                }
+                break;
+            case "selectExpLevel":
+                if (selectExpLevel > 1) // 레벨 1 이상
+                {
+                    EXPGet += selectExpValue[selectExpLevel - 1] - selectExpValue[selectExpLevel - 2];
+                }
+                else if (selectExpLevel == 1) // 처음 찍을 때
+                {
+                    EXPGet += selectExpValue[selectExpLevel - 1];
+                }
+                break;
+            case "selectCoolTimeLevel":
+                if (selectCoolTimeLevel > 1) // 레벨 1 이상
+                {
+                    DecreaseCool += selectCoolTimeValue[selectCoolTimeLevel - 1] - selectCoolTimeValue[selectCoolTimeLevel - 2];
+                }
+                else if (selectCoolTimeLevel == 1) // 처음 찍을 때
+                {
+                    DecreaseCool += selectCoolTimeValue[selectCoolTimeLevel - 1];
+                }
+                break;
+            case "Start":
+                if (selectAtkLevel - 1 >= 0)
+                {
+                    DmgIncrease += selectAtkValue[selectAtkLevel - 1];
+                }
+                if (selectATSLevel - 1 >= 0)
+                {
+                    ATS += selectATSValue[selectATSLevel - 1];
+                    delayTime = -0.4f * ATS + 1.4f;
+                    anim.SetFloat("AttackSpeed", ATS);
+                }
+                if (selectCCLevel - 1 >= 0)
+                {
+                    CriticalChance += selectCCValue[selectCCLevel - 1];
+                }
+                if (selectLifeStillLevel - 1 >= 0)
+                {
+                    lifeStill += selectLifeStillValue[selectLifeStillLevel - 1];
+                }
+                if (selectDefLevel - 1 >= 0)
+                {
+                    Def += selectDefValue[selectDefLevel - 1];
+                }
+                if (selectHpLevel - 1 >= 0)
+                {
+                    MaxHp += MaxHp * selectHpValue[selectHpLevel - 1] / 100;
+                }
+                if (selectGoldLevel - 1 >= 0)
+                {
+                    GoldGet += selectGoldValue[selectGoldLevel - 1];
+                }
+                if (selectExpLevel - 1 >= 0)
+                {
+                    EXPGet += selectExpValue[selectExpLevel - 1];
+                }
+                if (selectCoolTimeLevel - 1 >= 0)
+                {
+                    DecreaseCool += selectCoolTimeValue[selectCoolTimeLevel - 1];
+                }
+                break;
+        }
+    }
+
+    public int[] returnPlayerSelectLevel() //추가함
+    {
+        int[] SL = new int[9];
+        SL[0] = selectAtkLevel;
+        SL[1] = selectATSLevel;
+        SL[2] = selectCCLevel;
+        SL[3] = selectLifeStillLevel;
+        SL[4] = selectDefLevel;
+        SL[5] = selectHpLevel;
+        SL[6] = selectGoldLevel;
+        SL[7] = selectExpLevel;
+        SL[8] = selectCoolTimeLevel;
+        return SL;
     }
 }
