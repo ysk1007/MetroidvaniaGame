@@ -42,7 +42,7 @@ public abstract class Enemy : MonoBehaviour
 
     public float scaleX; // scale X 값(hit_eff가 스케일이 -되어있으면 반대방향으로 뜨기에 설정하기 위한 변수)
 
-    public GameObject whatWeapon;  // 플레이어가 어떤 무기 상태인지 확인
+    public string weaponTag;    // 무기 태그 ("Sword"일 때만 출혈)
     public int Swordlevel;  // 플레이어 검 숙련도
     public int selectWeapon;    // 숙련도를 올릴 무기 선택 0 = 칼, 1 = 도끼, 2 = 활, 4 = 선택 X
     public static int bleedLevel;  // 출혈 스택
@@ -78,7 +78,6 @@ public abstract class Enemy : MonoBehaviour
     public GameObject fire; // 프리펩 투사체
     public GameObject ProObject;    // 클론 투사체
 
-
     Transform spawn;    // 분열된 슬라임 생성될 위치 1
     Transform spawn2;   // 분열된 슬라임 생성될 위치 2
     public Transform PObject;    // 투사체 생성 위치
@@ -105,7 +104,8 @@ public abstract class Enemy : MonoBehaviour
     public abstract void InitSetting(); // 적의 기본 정보를 설정하는 함수(추상)
 
     public virtual void Short_Monster(Transform target) 
-    {
+    { 
+        weaponTag = Player.playerTag;
         playerLoc = target.position.x;
         enemyLoc = this.gameObject.transform.position.x;
         Gap_Distance_X = Mathf.Abs(target.transform.position.x - transform.position.x); //X축 거리 계산
@@ -148,6 +148,7 @@ public abstract class Enemy : MonoBehaviour
 
     public virtual void Boss(Transform target)  // boss용 Update문
     {
+        weaponTag = Player.playerTag;
         Swordlevel = Player.proLevel;
         selectWeapon = Player.proSelectWeapon;
         bleedingDamage = Player.bleedDamage;
@@ -168,6 +169,7 @@ public abstract class Enemy : MonoBehaviour
 
     public virtual void OrcBoss(Transform target)
     {
+        weaponTag = Player.playerTag;
         Swordlevel = Player.proLevel;
         selectWeapon = Player.proSelectWeapon;
         bleedingDamage = Player.bleedDamage;
@@ -204,6 +206,7 @@ public abstract class Enemy : MonoBehaviour
         {
             bleedingTime -= Time.deltaTime;
         }
+        weaponTag = Player.playerTag;
         playerLoc = target.position.x;
         boarLoc = this.gameObject.transform.position.x;
         Swordlevel = Player.proLevel;
@@ -465,7 +468,7 @@ public abstract class Enemy : MonoBehaviour
         rigid = this.GetComponent<Rigidbody2D>();
         this.GetComponentInChildren<EnemyUi>().ShowDamgeText(damage); //윤성권 추가함
 
-        if (whatWeapon.tag == "Sword")
+        if (weaponTag == "Sword")
         {
             StackBleed();
         }

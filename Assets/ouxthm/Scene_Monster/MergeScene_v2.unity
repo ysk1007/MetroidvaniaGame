@@ -2441,7 +2441,7 @@ Transform:
   m_GameObject: {fileID: 16365251}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1761195241}
@@ -3849,6 +3849,7 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  scaleX: 0
   whatWeapon: {fileID: 1809526532}
   Swordlevel: 0
   selectWeapon: 0
@@ -3873,6 +3874,7 @@ MonoBehaviour:
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
   ProObject: {fileID: 0}
+  weaponTag: 
   PObject: {fileID: 0}
   Pos: {fileID: 78009679}
   arrow: {fileID: 0}
@@ -3947,7 +3949,7 @@ Transform:
   m_GameObject: {fileID: 78009674}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 72.68, y: -5.72, z: -9.5280285}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1915865548}
@@ -5550,6 +5552,7 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  scaleX: 0
   whatWeapon: {fileID: 1809526532}
   Swordlevel: 0
   selectWeapon: 0
@@ -5574,6 +5577,7 @@ MonoBehaviour:
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
   ProObject: {fileID: 0}
+  weaponTag: 
   PObject: {fileID: 0}
   Pos: {fileID: 137502402}
   arrow: {fileID: 0}
@@ -6371,7 +6375,7 @@ Transform:
   m_GameObject: {fileID: 250613014}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 999857961}
@@ -10158,6 +10162,7 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  scaleX: 0
   whatWeapon: {fileID: 1809526532}
   Swordlevel: 0
   selectWeapon: 0
@@ -10182,6 +10187,7 @@ MonoBehaviour:
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
   ProObject: {fileID: 0}
+  weaponTag: 
   PObject: {fileID: 0}
   Pos: {fileID: 491972696}
   arrow: {fileID: 0}
@@ -13537,7 +13543,7 @@ Transform:
   m_GameObject: {fileID: 669087274}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 78009679}
@@ -13712,6 +13718,10 @@ PrefabInstance:
     - target: {fileID: 7166585528206624360, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
       propertyPath: m_SizeDelta.y
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7166585528206624360, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
+      propertyPath: m_LocalScale.x
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 7166585528206624360, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13959,6 +13969,7 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  scaleX: 0
   whatWeapon: {fileID: 1809526532}
   Swordlevel: 0
   selectWeapon: 0
@@ -13983,6 +13994,7 @@ MonoBehaviour:
   Split_Slime: {fileID: 0}
   fire: {fileID: 1381773150433089148, guid: 9d24de82d2bcbc740be1a891606f9949, type: 3}
   ProObject: {fileID: 0}
+  weaponTag: 
   PObject: {fileID: 0}
   Pos: {fileID: 690602286}
   arrow: {fileID: 0}
@@ -19924,6 +19936,7 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  scaleX: 0
   whatWeapon: {fileID: 1809526532}
   Swordlevel: 0
   selectWeapon: 0
@@ -19948,6 +19961,7 @@ MonoBehaviour:
   Split_Slime: {fileID: 0}
   fire: {fileID: 117786764753181504, guid: abfbb84a32e4b6043b3768c340d03021, type: 3}
   ProObject: {fileID: 0}
+  weaponTag: 
   PObject: {fileID: 0}
   Pos: {fileID: 0}
   arrow: {fileID: 0}
@@ -20022,7 +20036,7 @@ Transform:
   m_GameObject: {fileID: 999857956}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 85.49, y: -7.27, z: -9.66276}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1565722336}
@@ -21087,7 +21101,7 @@ Transform:
   m_GameObject: {fileID: 1040616769}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1100504046}
@@ -21940,6 +21954,7 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  scaleX: 0
   whatWeapon: {fileID: 1809526532}
   Swordlevel: 0
   selectWeapon: 0
@@ -21964,6 +21979,7 @@ MonoBehaviour:
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
   ProObject: {fileID: 0}
+  weaponTag: 
   PObject: {fileID: 0}
   Pos: {fileID: 1100504046}
   arrow: {fileID: 0}
@@ -22038,7 +22054,7 @@ Transform:
   m_GameObject: {fileID: 1100504041}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 68.49, y: -7.39, z: -0.024975015}
-  m_LocalScale: {x: 0.67, y: 0.67, z: 0.67}
+  m_LocalScale: {x: -0.67, y: 0.67, z: 0.67}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 814792491}
@@ -23796,7 +23812,7 @@ Transform:
   m_GameObject: {fileID: 1238238728}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1974481438}
@@ -27539,6 +27555,7 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  scaleX: 0
   whatWeapon: {fileID: 1809526532}
   Swordlevel: 0
   selectWeapon: 0
@@ -27563,6 +27580,7 @@ MonoBehaviour:
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
   ProObject: {fileID: 0}
+  weaponTag: 
   PObject: {fileID: 0}
   Pos: {fileID: 1382152231}
   arrow: {fileID: 0}
@@ -30339,6 +30357,7 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  scaleX: 0
   whatWeapon: {fileID: 1809526532}
   Swordlevel: 0
   selectWeapon: 0
@@ -30363,6 +30382,7 @@ MonoBehaviour:
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
   ProObject: {fileID: 0}
+  weaponTag: 
   PObject: {fileID: 0}
   Pos: {fileID: 1574764558}
   arrow: {fileID: 0}
@@ -30437,7 +30457,7 @@ Transform:
   m_GameObject: {fileID: 1574764553}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 63.68, y: -8.119, z: -9.511968}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1201371534}
@@ -31295,6 +31315,7 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  scaleX: 0
   whatWeapon: {fileID: 1809526532}
   Swordlevel: 0
   selectWeapon: 0
@@ -31319,6 +31340,7 @@ MonoBehaviour:
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
   ProObject: {fileID: 0}
+  weaponTag: 
   PObject: {fileID: 0}
   Pos: {fileID: 1624148424}
   arrow: {fileID: 0}
@@ -35217,6 +35239,7 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  scaleX: 0
   whatWeapon: {fileID: 1809526532}
   Swordlevel: 0
   selectWeapon: 0
@@ -35241,6 +35264,7 @@ MonoBehaviour:
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
   ProObject: {fileID: 0}
+  weaponTag: 
   PObject: {fileID: 0}
   Pos: {fileID: 0}
   arrow: {fileID: 0}
@@ -35315,7 +35339,7 @@ Transform:
   m_GameObject: {fileID: 1761195236}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 76.65, y: -7.33, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 968756883}
@@ -36258,7 +36282,7 @@ Transform:
   m_GameObject: {fileID: 1810301693}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1574764558}
@@ -37354,6 +37378,7 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  scaleX: 0
   whatWeapon: {fileID: 1809526532}
   Swordlevel: 0
   selectWeapon: 0
@@ -37378,6 +37403,7 @@ MonoBehaviour:
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
   ProObject: {fileID: 0}
+  weaponTag: 
   PObject: {fileID: 0}
   Pos: {fileID: 1838800824}
   arrow: {fileID: 0}
@@ -38710,6 +38736,7 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  scaleX: 0
   whatWeapon: {fileID: 1809526532}
   Swordlevel: 0
   selectWeapon: 0
@@ -38734,6 +38761,7 @@ MonoBehaviour:
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
   ProObject: {fileID: 0}
+  weaponTag: 
   PObject: {fileID: 0}
   Pos: {fileID: 1939571924}
   arrow: {fileID: 0}
@@ -39345,6 +39373,7 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  scaleX: 0
   whatWeapon: {fileID: 1809526532}
   Swordlevel: 0
   selectWeapon: 0
@@ -39369,6 +39398,7 @@ MonoBehaviour:
   Split_Slime: {fileID: 2044582282278339179, guid: 778767c3509229a45bd506b494a859c0, type: 3}
   fire: {fileID: 0}
   ProObject: {fileID: 0}
+  weaponTag: 
   PObject: {fileID: 0}
   Pos: {fileID: 1974481438}
   arrow: {fileID: 0}
@@ -39443,7 +39473,7 @@ Transform:
   m_GameObject: {fileID: 1974481433}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 62.59, y: -7.6, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1033553363}
@@ -39658,7 +39688,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1987344469}
   m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.3899994, y: 0, z: 0}
+  m_LocalPosition: {x: -3.36, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -42074,6 +42104,7 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  scaleX: 0
   whatWeapon: {fileID: 1809526532}
   Swordlevel: 0
   selectWeapon: 0
@@ -42098,6 +42129,7 @@ MonoBehaviour:
   Split_Slime: {fileID: 0}
   fire: {fileID: 0}
   ProObject: {fileID: 0}
+  weaponTag: 
   PObject: {fileID: 0}
   Pos: {fileID: 0}
   arrow: {fileID: 0}
@@ -42301,7 +42333,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2089983839}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.16, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

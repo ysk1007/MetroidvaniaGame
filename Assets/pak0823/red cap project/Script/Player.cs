@@ -51,6 +51,7 @@ public class Player : MonoBehaviour
     public static float BleedingTime = 8f;  // 2023-07-31 추가(출혈 지속 시간)
     public static float bleedDamage = 0.5f; // 2023-08-01 출혈 데미지
     public static float bloodBoomDmg = 7f;  // 출혈스택 터뜨리는 데미지
+    public static string playerTag;    // 2023-08-11 추가 (플레이어 무기 태그)
 
     //선택능력치 추가함
     public float[] selectAtkLevel = { 10f, 20f, 30f };
@@ -119,8 +120,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        playerTag = this.gameObject.transform.GetChild(0).tag;
         stackbleed = Enemy.bleedLevel; // 2023-08-09 추가 
-
         Player_Move();  //Player의 이동, 점프, 속도 함수
         Player_Attack();    //Player의 공격 함수
     }
