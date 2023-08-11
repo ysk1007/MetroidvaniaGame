@@ -41,7 +41,6 @@ public abstract class Enemy : MonoBehaviour
     public float endTime;   // 투사체 사라지는 시간
 
     public float scaleX; // scale X 값(hit_eff가 스케일이 -되어있으면 반대방향으로 뜨기에 설정하기 위한 변수)
-
     public string weaponTag;    // 무기 태그 ("Sword"일 때만 출혈)
     public int Swordlevel;  // 플레이어 검 숙련도
     public int selectWeapon;    // 숙련도를 올릴 무기 선택 0 = 칼, 1 = 도끼, 2 = 활, 4 = 선택 X
@@ -63,8 +62,8 @@ public abstract class Enemy : MonoBehaviour
     public float boarLoc;    // 멧돼지의 X 현재위치 
 
     public GameObject hiteff;  // 히트 이펙트 
-    Transform hit_bloodTrans; // 히트/출혈폭발 이펙트 위치
     public GameObject blood;   // 출혈 폭발 이펙트
+    Transform hit_bloodTrans; // 히트/출혈폭발 이펙트 위치
     
     Transform soulSpawn;    // 보스 바닥 터뜨리기 생성 위치
     Transform soulSpawn1;   // 보스 바닥 터뜨리기 생성 위치
@@ -535,10 +534,15 @@ public abstract class Enemy : MonoBehaviour
             {
                 StartCoroutine(Split());
                 this.gameObject.SetActive(false);
+                Invoke("enemyDestroy", 0.5f);
             }
             else if (Enemy_Mod == 9 && posi.localScale.y < 1f)
             {
                 enemyDestroy();
+                if(Enemy_Mod == 9 && posi.localScale.y == 1f)
+                {
+                    enemyDestroy();
+                }
             }
             else if (Enemy_Mod != 9)
             {
@@ -809,7 +813,6 @@ public abstract class Enemy : MonoBehaviour
             else if(Enemy_Mod == 2)
             {
                 switchCollider();
-                Debug.Log("실행");
                 onAttack();
                 Invoke("GiveDamage", 0.5f);
             }
@@ -865,7 +868,6 @@ public abstract class Enemy : MonoBehaviour
             if (collider.tag == "Player")
             {
                 collider.GetComponent<Player>().Playerhurt(Enemy_Power, Pos.position);
-                Debug.Log("데미지 줌");
             }
         }
     }
@@ -940,7 +942,6 @@ public abstract class Enemy : MonoBehaviour
 
     public void enemyDestroy()
     {
-        Debug.Log("아예 삭제");
         Destroy(this.gameObject); 
     }
 
@@ -980,9 +981,7 @@ public abstract class Enemy : MonoBehaviour
     public void rockSpawning()
     {
         GameObject rock = Instantiate(Rock, PbSpawn.position, PbSpawn.rotation);
-
         GameObject rock1 = Instantiate(Rock, PbSpawn.position, PbSpawn.rotation);
-
         GameObject rock2 = Instantiate(Rock, PbSpawn.position, PbSpawn.rotation);
 
         Rock_Eff rE = rock.GetComponent<Rock_Eff>();
@@ -1065,7 +1064,7 @@ public abstract class Enemy : MonoBehaviour
     public void hitEff()    // 피격 이펙트 
     {
         GameObject hitEff = Instantiate(hiteff, hit_bloodTrans.position, hit_bloodTrans.rotation, hit_bloodTrans);
-        scaleX = this.gameObject.transform.localScale.x;
+        scaleX = this.gameObject.transform.localScale.x;    // 오브젝트의 scale.x 값을 받아와서 -인 경우에도 이펙트가 정방향으로 뜰 수 있도록하는 변수
         hitEFF hitEFF = hitEff.GetComponent<hitEFF>();
         hitEFF.dir = nextDirX;
         hitEFF.scalX = scaleX;
@@ -1075,8 +1074,8 @@ public abstract class Enemy : MonoBehaviour
     {
         GameObject bloodEff = Instantiate(blood, hit_bloodTrans.position, hit_bloodTrans.rotation, hit_bloodTrans);
         bloodEFF bloodEFF = bloodEff.GetComponent<bloodEFF>();
-        bloodEFF.dir = nextDirX;
-        bloodEFF.scalX = scaleX;
+        bloodEFF.dir = nextDirX;    // 몬스터의 방향값
+        bloodEFF.scalX = scaleX;    // 몬스터의 scale.x 값(-가 되어있는 경우가 있음)
         Enemy_HP -= bloodBoomDmg * bleedLevel;
         bleedLevel = 0;
     }
