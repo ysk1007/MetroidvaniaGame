@@ -11,17 +11,25 @@ public struct Data
     public AudioClip equipSfx;
     public string itemName;
     public string itemNameEng;
-    public int itemPrice;
+    public float itemPrice;
     public Color color;
+    public string Rating;
     public string itemExplanation;
     public string itemStat;
     public int itemNumber;
     public int AtkPower;
+    public float DmgIncrease;
     public float AtkSpeed;
     public int Def;
     public int MaxHp;
     public float Speed;
+    public float JumpPower;
     public float CriticalChance;
+    public float CriDmgIncrease;
+    public float GoldGet;
+    public float EXPGet;
+    public float lifeStill;
+    public float DecreaseCool;
     public bool SpecialPower;
 }
 
@@ -32,12 +40,12 @@ public abstract class itemStatus : MonoBehaviour
     public abstract void InitSetting();
     public abstract void SpecialPower();
 
-    public virtual void Using(Image img,TextMeshProUGUI NameText, TextMeshProUGUI ExplanationText, TextMeshProUGUI StatText, TextMeshProUGUI PriceText)
+    public virtual void Using(Image img,TextMeshProUGUI NameText, TextMeshProUGUI ExplanationText, TextMeshProUGUI StatText, TextMeshProUGUI PriceText, TextMeshProUGUI RatingText)
     {
-        TextImageSettings(img, NameText, ExplanationText, StatText, PriceText);
+        TextImageSettings(img, NameText, ExplanationText, StatText, PriceText, RatingText);
     }
 
-    public virtual void TextImageSettings(Image img, TextMeshProUGUI NameText, TextMeshProUGUI ExplanationText, TextMeshProUGUI StatText, TextMeshProUGUI PriceText)
+    public virtual void TextImageSettings(Image img, TextMeshProUGUI NameText, TextMeshProUGUI ExplanationText, TextMeshProUGUI StatText, TextMeshProUGUI PriceText, TextMeshProUGUI RatingText)
     {
         img.sprite = this.data.itemimg.sprite;
         img.SetNativeSize();
@@ -47,30 +55,50 @@ public abstract class itemStatus : MonoBehaviour
         img.color = new Color32(255, 255, 255, 255);
         NameText.text = /*this.data.itemNumber.ToString()+". " + */this.data.itemName;
         NameText.color = this.data.color;
+        RatingText.color = this.data.color;
         ExplanationText.text = this.data.itemExplanation;
         StatText.text = this.data.itemStat;
         PriceText.text += this.data.itemPrice.ToString();
+        RatingText.text = this.data.Rating;
     }
 
     public virtual void StatusGet(Player player)
     {
         player.AtkPower += data.AtkPower;
-        player.delayTime -= data.AtkSpeed;
+        player.ATS += data.AtkSpeed;
+        player.delayTime = -0.4f * player.ATS + 1.4f;
         player.Def += data.Def;
         player.MaxHp += data.MaxHp;
-        player.CurrentHp += data.MaxHp;
         player.Speed += data.Speed;
+        player.jumpPower += data.JumpPower;
+        player.SpeedChange += data.Speed;
         player.CriticalChance += data.CriticalChance;
+        player.anim.SetFloat("AttackSpeed", player.ATS);
+        player.GoldGet += data.GoldGet;
+        player.EXPGet += data.EXPGet;
+        player.CriDmgIncrease += data.CriDmgIncrease;
+        player.DmgIncrease += data.DmgIncrease;
+        player.DecreaseCool += data.DecreaseCool;
+        player.lifeStill += data.lifeStill;
     }
 
     public virtual void StatusReturn(Player player)
     {
         player.AtkPower -= data.AtkPower;
-        player.delayTime += data.AtkSpeed;
+        player.ATS -= data.AtkSpeed;
+        player.delayTime = -0.4f * player.ATS + 1.4f;
         player.Def -= data.Def;
         player.MaxHp -= data.MaxHp;
-        player.CurrentHp -= data.MaxHp;
         player.Speed -= data.Speed;
+        player.jumpPower -= data.JumpPower;
+        player.SpeedChange -= data.Speed;
         player.CriticalChance -= data.CriticalChance;
+        player.anim.SetFloat("AttackSpeed", player.ATS);
+        player.GoldGet -= data.GoldGet;
+        player.EXPGet -= data.EXPGet;
+        player.CriDmgIncrease -= data.CriDmgIncrease;
+        player.DmgIncrease -= data.DmgIncrease;
+        player.DecreaseCool -= data.DecreaseCool;
+        player.lifeStill -= data.lifeStill;
     }
 }

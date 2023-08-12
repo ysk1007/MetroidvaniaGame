@@ -13,6 +13,7 @@ public class ClownGloves : itemStatus
         data.itemNameEng = "ClownGloves";
         data.itemPrice = 1200;
         data.color = Color.magenta;
+        data.Rating = "영웅";
         data.itemExplanation = "\"똑똑\"";
         data.itemStat = "공격력 +3 \n치명타 확률 +25%";
         data.itemNumber = 6;
@@ -25,8 +26,8 @@ public class ClownGloves : itemStatus
         
     }
 
-    public override void TextImageSettings(Image img, TextMeshProUGUI NameText, TextMeshProUGUI ExplanationText, TextMeshProUGUI StatText, TextMeshProUGUI PriceText)
+    public override void TextImageSettings(Image img, TextMeshProUGUI NameText, TextMeshProUGUI ExplanationText, TextMeshProUGUI StatText, TextMeshProUGUI PriceText , TextMeshProUGUI RatingText)
     {
-        base.TextImageSettings(img, NameText, ExplanationText, StatText, PriceText);
+        base.TextImageSettings(img, NameText, ExplanationText, StatText, PriceText, RatingText);
     }
 }

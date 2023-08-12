@@ -9,82 +9,87 @@ using static UnityEngine.GraphicsBuffer;
 
 public abstract class Enemy : MonoBehaviour
 {
-    public int Enemy_Mod;   // 1: ´ÞÆØÀÌ, 2: ±ÙÁ¢°ø°Ý °¡´É ¸ó½ºÅÍ, 3:ºñÇà¸ó½ºÅÍ, 4:Á¦¶ó½º, 5: ÀÚÆø, 7: Åõ»çÃ¼ ¿ø°Å¸®, 9: ºÐ¿­, 11: µ¹ÁøÇÏ¿© Ãæµ¹
-    public bool iamBoss;    // º¸½ºÀÎÁö ÆÇ´Ü
-    public float Enemy_HP;  // ÀûÀÇ Ã¼·Â
-    public float Enemy_HPten;   // ÀûÀÇ Ã¼·ÂÀÇ 10%
-    public float Enemy_Power;   //ÀûÀÇ °ø°Ý·Â
-    public float Enemy_Speed;   // ÀûÀÇ ÀÌµ¿¼Óµµ
-    public float Enemy_Atk_Speed;    // ÀûÀÇ °ø°Ý¼Óµµ
-    public bool Attacking = false;  // °ø°Ý ÁßÀÎÀÌ È®ÀÎÇÏ´Â º¯¼ö
-    public float Gap_Distance_X;  // Àû°ú Player X °Å¸®Â÷ÀÌ
-    public float Gap_Distance_Y;  // Àû°ú Player Y °Å¸®Â÷ÀÌ
-    public float Enemy_Sensing_X;  // ÀûÀÇ XÃà °¨Áö »ç°Å¸®
-    public float Enemy_Sensing_Y;  // ÀûÀÇ YÃà °¨Áö »ç°Å¸®
-    public float Enemy_Range_X; //ÀûÀÇ XÃà °ø°Ý »ç°Å¸®
-    public float Enemy_Range_Y; //ÀûÀÇ YÃà °ø°Ý »ç°Å¸®
-    public float Pdamage;   // ¸ó½ºÅÍ°¡ ¹Þ´Â µ¥¹ÌÁö
-    public float Bump_Power;    // ÇÃ·¹ÀÌ¾î¿Í Ãæµ¹ ½Ã ÁÙ µ¥¹ÌÁö
-    public float atkDelay;  // °ø°Ý µô·¹ÀÌ
-    public int nextDirX;    // ºñÇà ¸ó½ºÅÍÀÇ X ¹æÇâ
-    public int nextDirY;    // ºñÇà ¸ó½ºÅÍÀÇ Y ¹æÇâ  
-    public bool Dying = false; // Á×´Â ÁßÀ» È®ÀÎÇÏ´Â º¯¼ö
-    public float Enemy_Dying_anim_Time;     // Á×´Â ¾Ö´Ï¸ÞÀÌ¼Ç ½Ã°£ º¯¼ö
-    public float atkX;  // °ø°Ý ÄÝ¶óÀÌ´õÀÇ x°ª
-    public float atkFlipx; // °ø°Ý ÄÝ¶óÀÌ´õÀÇ x°ª(´Á´ë ¿ë)
-    public float atkY;  // °ø°Ý ÄÝ¶óÀÌ´õÀÇ y°ª
-    public bool enemyHit = false;   // ÀûÀÌ ÇÇÇØÀÔÀº »óÅÂÀÎÁö È®ÀÎÇÏ´Â º¯¼ö
-    public float old_Speed;     // ¼Óµµ °ª º¯ÇÏ±â Àü ¼Óµµ °ª
+    public string Enemy_Name; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½
+    public bool AmIBoss = false; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½
+    public int BossHpLine; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½
+    public int Stage;
+
+    public int Enemy_Mod;   // 1: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, 2: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, 3:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, 4:ï¿½ï¿½ï¿½ï¿½, 5: ï¿½ï¿½ï¿½ï¿½, 7: ï¿½ï¿½ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½Å¸ï¿½, 9: ï¿½Ð¿ï¿½, 11: ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½æµ¹
+    public bool iamBoss;    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç´ï¿½
+    public float Enemy_HP;  // ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½
+    public float Enemy_HPten;   // ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½ï¿½ï¿½ 10%
+    public float Enemy_Power;   //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý·ï¿½
+    public float Enemy_Speed;   // ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½Óµï¿½
+    public float Enemy_Atk_Speed;    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý¼Óµï¿½
+    public bool Attacking = false;  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float Gap_Distance_X;  // ï¿½ï¿½ï¿½ï¿½ Player X ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ï¿½
+    public float Gap_Distance_Y;  // ï¿½ï¿½ï¿½ï¿½ Player Y ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ï¿½
+    public float Enemy_Sensing_X;  // ï¿½ï¿½ï¿½ï¿½ Xï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½
+    public float Enemy_Sensing_Y;  // ï¿½ï¿½ï¿½ï¿½ Yï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½
+    public float Enemy_Range_X; //ï¿½ï¿½ï¿½ï¿½ Xï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½
+    public float Enemy_Range_Y; //ï¿½ï¿½ï¿½ï¿½ Yï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½
+    public float Pdamage;   // ï¿½ï¿½ï¿½Í°ï¿½ ï¿½Þ´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public float Bump_Power;    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½æµ¹ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public float atkDelay;  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public int nextDirX;    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ X ï¿½ï¿½ï¿½ï¿½
+    public int nextDirY;    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Y ï¿½ï¿½ï¿½ï¿½  
+    public bool Dying = false; // ï¿½×´ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float Enemy_Dying_anim_Time;     // ï¿½×´ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float atkX;  // ï¿½ï¿½ï¿½ï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ xï¿½ï¿½
+    public float atkFlipx; // ï¿½ï¿½ï¿½ï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ xï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½)
+    public float atkY;  // ï¿½ï¿½ï¿½ï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ yï¿½ï¿½
+    public bool enemyHit = false;   // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float old_Speed;     // ï¿½Óµï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ ï¿½Óµï¿½ ï¿½ï¿½
     public float dTime;
-    public float atkTime;   // °ø°Ý ¸ð¼Ç ½Ã°£
-    public bool Attacker;  // ºñÇà ¸ó½ºÅÍ°¡ °ø°ÝÇüÀÎÁö ¾Æ´ÑÁö ±¸ºÐÁþ´Â º¯¼ö
-    public float endTime;   // Åõ»çÃ¼ »ç¶óÁö´Â ½Ã°£
+    public float atkTime;   // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
+    public bool Attacker;  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float endTime;   // ï¿½ï¿½ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
 
-    public float scaleX; // scale X °ª(hit_eff°¡ ½ºÄÉÀÏÀÌ -µÇ¾îÀÖÀ¸¸é ¹Ý´ë¹æÇâÀ¸·Î ¶ß±â¿¡ ¼³Á¤ÇÏ±â À§ÇÑ º¯¼ö)
-    public string weaponTag;    // ¹«±â ÅÂ±× ("Sword"ÀÏ ¶§¸¸ ÃâÇ÷)
-    public int Swordlevel;  // ÇÃ·¹ÀÌ¾î °Ë ¼÷·Ãµµ
-    public int selectWeapon;    // ¼÷·Ãµµ¸¦ ¿Ã¸± ¹«±â ¼±ÅÃ 0 = Ä®, 1 = µµ³¢, 2 = È°, 4 = ¼±ÅÃ X
-    public static int bleedLevel;  // ÃâÇ÷ ½ºÅÃ
-    public float bleedingDamage;    // ÃâÇ÷ µ¥¹ÌÁö
-    public float bleedingTime;  // ÃâÇ÷ Áö¼Ó½Ã°£
-    public float bloodBoomDmg;  // ÇÃ·¹ÀÌ¾îÀÇ ÃâÇ÷ ½ºÅÃ ÅÍ¶ß¸®´Â µ¥¹ÌÁö
+    public float scaleX; // scale X ï¿½ï¿½(hit_effï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ý´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß±â¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
+    public string weaponTag;    // ï¿½ï¿½ï¿½ï¿½ ï¿½Â±ï¿½ ("Sword"ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
+    public int Swordlevel;  // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ãµï¿½
+    public int selectWeapon;    // ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ ï¿½Ã¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 0 = Ä®, 1 = ï¿½ï¿½ï¿½ï¿½, 2 = È°, 4 = ï¿½ï¿½ï¿½ï¿½ X
+    public static int bleedLevel;  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float bleedingDamage;    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public float bleedingTime;  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ó½Ã°ï¿½
+    public float bloodBoomDmg;  // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Í¶ß¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-    public bool turning;    // º¸½º°¡ µÚµ¹ ¼ö ÀÖ´Â »óÈ²ÀÎÁö È®ÀÎÇÏ´Â º¯¼ö
-    public int atkPattern;  // bossÀÇ °ø°Ý ÆÐÅÏ ¹øÈ£
-    public float playerLoc; // playerÀÇ XÁÂÇ¥
-    public float enemyLoc;  // ¸ó½ºÅÍÀÇ XÁÂÇ¥
-    public float bossLoc;   // bossÀÇ XÁÂÇ¥
-    public float myLocY;    // bossÀÇ y°ª
-    public bool bossMoving;  // boss°¡ ¿òÁ÷ÀÌµµ·Ï rock Ç¯
+    public bool turning;    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½È²ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public int atkPattern;  // bossï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£
+    public float playerLoc; // playerï¿½ï¿½ Xï¿½ï¿½Ç¥
+    public float enemyLoc;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Xï¿½ï¿½Ç¥
+    public float bossLoc;   // bossï¿½ï¿½ Xï¿½ï¿½Ç¥
+    public float myLocY;    // bossï¿½ï¿½ yï¿½ï¿½
+    public bool bossMoving;  // bossï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½ rock Ç¯
 
-    public bool Enemy_Left; // ÀûÀÇ ¹æÇâ
-    public bool Hit_Set;    // ¸ó½ºÅÍ¸¦ ±ú¿ì´Â º¯¼ö
-    public float boarLoc;    // ¸äµÅÁöÀÇ X ÇöÀçÀ§Ä¡ 
+    public bool Enemy_Left; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public bool Hit_Set;    // ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float boarLoc;    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ X ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¡ 
 
-    public GameObject hiteff;  // È÷Æ® ÀÌÆåÆ® 
-    public GameObject blood;   // ÃâÇ÷ Æø¹ß ÀÌÆåÆ®
-    Transform hit_bloodTrans; // È÷Æ®/ÃâÇ÷Æø¹ß ÀÌÆåÆ® À§Ä¡
+    public GameObject hiteff;  // ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½Æ® 
+    public GameObject blood;   // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
+    Transform hit_bloodTrans; // ï¿½ï¿½Æ®/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½Ä¡
     
-    Transform soulSpawn;    // º¸½º ¹Ù´Ú ÅÍ¶ß¸®±â »ý¼º À§Ä¡
-    Transform soulSpawn1;   // º¸½º ¹Ù´Ú ÅÍ¶ß¸®±â »ý¼º À§Ä¡
-    Transform soulSpawn2;   // º¸½º ¹Ù´Ú ÅÍ¶ß¸®±â »ý¼º À§Ä¡
-    Transform PbSpawn;    // º¸½º°¡ ´øÁö´Â µ¹ »ý¼º À§Ä¡
+    Transform soulSpawn;    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ù´ï¿½ ï¿½Í¶ß¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
+    Transform soulSpawn1;   // ï¿½ï¿½ï¿½ï¿½ ï¿½Ù´ï¿½ ï¿½Í¶ß¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
+    Transform soulSpawn2;   // ï¿½ï¿½ï¿½ï¿½ ï¿½Ù´ï¿½ ï¿½Í¶ß¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
+    Transform PbSpawn;    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
 
-    public GameObject SoulFloor; // º¸½º ¿µÈ¥ °ø°Ý
-    public GameObject Rock; // º¸½º°¡ ´øÁö´Â µ¹
-    public GameObject CaninePb; // º¸½º°¡ ´øÁö´Â ¸ó½ºÅÍ
-    public GameObject Split_Slime;  // ºÐ¿­ ½½¶óÀÓ
-    public GameObject fire; // ÇÁ¸®Æé Åõ»çÃ¼
-    public GameObject ProObject;    // Å¬·Ð Åõ»çÃ¼
+    public GameObject SoulFloor; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¥ ï¿½ï¿½ï¿½ï¿½
+    public GameObject Rock; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+    public GameObject CaninePb; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public GameObject Split_Slime;  // ï¿½Ð¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public GameObject fire; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼
+    public GameObject ProObject;    // Å¬ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼
 
-    Transform spawn;    // ºÐ¿­µÈ ½½¶óÀÓ »ý¼ºµÉ À§Ä¡ 1
-    Transform spawn2;   // ºÐ¿­µÈ ½½¶óÀÓ »ý¼ºµÉ À§Ä¡ 2
-    public Transform PObject;    // Åõ»çÃ¼ »ý¼º À§Ä¡
+    Transform spawn;    // ï¿½Ð¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ 1
+    Transform spawn2;   // ï¿½Ð¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ 2
+    public Transform PObject;    // ï¿½ï¿½ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
     Rigidbody2D rigid;
     Animator animator;
     SpriteRenderer spriteRenderer;
     SpriteRenderer orcWaringmark;
-    SpriteRenderer sprite;  // Nec º¸½ºÀÇ À§Çè¸¶Å©
+    SpriteRenderer sprite;  // Nec ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½è¸¶Å©
     RaycastHit2D rayHit;
     BoxCollider2D Bcollider;
     BoxCollider2D Box;
@@ -93,22 +98,22 @@ public abstract class Enemy : MonoBehaviour
     BoxCollider2D BoxCollider2DSize;
 
     BoxCollider2D Boxs;
-    BoxCollider2D bossBox;  // º¸½º °ø°Ý ÄÝ¶óÀÌ´õ Ä×´Ù ²ô´Â º¯¼ö
-    BoxCollider2D BossSpriteBox;    // º¸½º ÀÌ¹ÌÁö ÄÝ¶óÀÌ´õ
+    BoxCollider2D bossBox;  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ ï¿½×´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    BoxCollider2D BossSpriteBox;    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½
 
     public Transform Pos;
     public Arrow arrow;
     public Effect slash;
     
-    public abstract void InitSetting(); // ÀûÀÇ ±âº» Á¤º¸¸¦ ¼³Á¤ÇÏ´Â ÇÔ¼ö(Ãß»ó)
+    public abstract void InitSetting(); // ï¿½ï¿½ï¿½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½(ï¿½ß»ï¿½)
 
     public virtual void Short_Monster(Transform target) 
     { 
         weaponTag = Player.playerTag;
         playerLoc = target.position.x;
         enemyLoc = this.gameObject.transform.position.x;
-        Gap_Distance_X = Mathf.Abs(target.transform.position.x - transform.position.x); //XÃà °Å¸® °è»ê
-        Gap_Distance_Y = Mathf.Abs(target.transform.position.y - transform.position.y); //YÃà °Å¸® °è»ê
+        Gap_Distance_X = Mathf.Abs(target.transform.position.x - transform.position.x); //Xï¿½ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½
+        Gap_Distance_Y = Mathf.Abs(target.transform.position.y - transform.position.y); //Yï¿½ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½
         Sensing(target, rayHit);
         Sensor();
         Swordlevel = Player.proLevel;
@@ -119,7 +124,7 @@ public abstract class Enemy : MonoBehaviour
         {
             bleedingTime -= Time.deltaTime;
         }
-        if (nextDirX != 0)   // Æ¯Á¤ ¸ó½ºÅÍ¿¡¸¸ Run ¾Ö´Ï¸ÞÀÌ¼ÇÀÌ ÀÖ±â ¶§¹®¿¡ ÁöÁ¤ÇØÁà¾ß ÇÔ
+        if (nextDirX != 0)   // Æ¯ï¿½ï¿½ ï¿½ï¿½ï¿½Í¿ï¿½ï¿½ï¿½ Run ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
         {
             animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
             if (Enemy_Mod != 1 && Enemy_Mod != 3 && Enemy_Mod != 4)
@@ -145,7 +150,7 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    public virtual void Boss(Transform target)  // boss¿ë Update¹®
+    public virtual void Boss(Transform target)  // bossï¿½ï¿½ Updateï¿½ï¿½
     {
         weaponTag = Player.playerTag;
         Swordlevel = Player.proLevel;
@@ -199,7 +204,7 @@ public abstract class Enemy : MonoBehaviour
         orcDie();
     }
 
-    public virtual void Boar(Transform target)  // boar¿ë
+    public virtual void Boar(Transform target)  // boarï¿½ï¿½
     {
         if (bleedingTime >= 0)
         {
@@ -215,7 +220,7 @@ public abstract class Enemy : MonoBehaviour
         boarMove();
     }
     
-    public virtual void onetime()   // Awake¿¡ Àû¿ë
+    public virtual void onetime()   // Awakeï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         Enemy_HPten = Enemy_HP * 0.1f;
         bleedingTime = 0f;
@@ -229,7 +234,7 @@ public abstract class Enemy : MonoBehaviour
         bleeding();
     }
 
-    public virtual void bossOnetime()   // boss¿ë Awake¹®
+    public virtual void bossOnetime()   // bossï¿½ï¿½ Awakeï¿½ï¿½
     {
         Enemy_HPten = Enemy_HP * 0.1f;
         bleedingTime = 0f;
@@ -271,7 +276,7 @@ public abstract class Enemy : MonoBehaviour
     {
         Enemy_HPten = Enemy_HP * 0.1f;
         bleedingTime = 0f;
-        Hit_Set = false;    // ÇÃ·¹ÀÌ¾î¿¡°Ô ¸ÂÁö ¾ÊÀº »óÅÂ
+        Hit_Set = false;    // ï¿½Ã·ï¿½ï¿½Ì¾î¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
         hit_bloodTrans = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -320,7 +325,7 @@ public abstract class Enemy : MonoBehaviour
             }
         }
     }
-    void switchCollider()   // Á¦¶ó½º ¹Ú½º ÄÝ¶óÀÌ´õ À§Ä¡ ¿Å°ÜÁÖ´Â ÇÔ¼ö
+    void switchCollider()   // ï¿½ï¿½ï¿½ï¿½ ï¿½Ú½ï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½Ä¡ ï¿½Å°ï¿½ï¿½Ö´ï¿½ ï¿½Ô¼ï¿½
     {
         if (Enemy_Mod == 4)
         {
@@ -340,37 +345,37 @@ public abstract class Enemy : MonoBehaviour
         }
         if(Enemy_Mod == 2 || Enemy_Mod == 3)
         {
-            Bcollider = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();    // º»ÀÎ ¿ÀºêÁ§Æ®ÀÇ Ã¹¹øÂ° ÀÚ½Ä ¿ÀºêÁ§Æ®¿¡ Æ÷ÇÔµÈ BoxCollider2D¸¦ °¡Á®¿È.
+            Bcollider = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Ã¹ï¿½ï¿½Â° ï¿½Ú½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½Ôµï¿½ BoxCollider2Dï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
             spriteRenderer = this.gameObject.transform.GetChild(1).GetComponent<SpriteRenderer>();
             posi = this.gameObject.transform.GetChild(0).GetComponent<Transform>();
-            Bcollider.enabled = true;   // °ø°Ý ¹Ú½º ÄÝ¶óÀÌ´õ »ý¼º
+            Bcollider.enabled = true;   // ï¿½ï¿½ï¿½ï¿½ ï¿½Ú½ï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (Enemy_Mod == 2)
             {
-                if (spriteRenderer.flipX == true)   // ÀÌ¹ÌÁö ÇÃ¸³ÇßÀ» ¶§ °ø°Ý ¹üÀ§ x°ª ÀüÈ¯ Á¶°Ç¹®
+                if (spriteRenderer.flipX == true)   // ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ xï¿½ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½ï¿½Ç¹ï¿½
                 {
-                    posi.localPosition = new Vector3(atkFlipx, atkY);   // ¸ó½ºÅÍÀÇ °ø°Ý ÄÝ¶óÀÌ´õ ¹Ú½ºÀÇ xÁÂÇ¥¿Í yÁÂÇ¥
+                    posi.localPosition = new Vector3(atkFlipx, atkY);   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ xï¿½ï¿½Ç¥ï¿½ï¿½ yï¿½ï¿½Ç¥
                 }
-                else if (spriteRenderer.flipX == false) // ¿ÞÂÊÀ» º¼ ¶§
+                else if (spriteRenderer.flipX == false) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½
                 {
-                    posi.localPosition = new Vector3(atkX, atkY);  // ¸ó½ºÅÍÀÇ °ø°Ý ÄÝ¶óÀÌ´õ ¹Ú½ºÀÇ -xÁÂÇ¥¿Í yÁÂÇ¥
+                    posi.localPosition = new Vector3(atkX, atkY);  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ -xï¿½ï¿½Ç¥ï¿½ï¿½ yï¿½ï¿½Ç¥
                 }
             }
             else if (Enemy_Mod == 3)
             {
-                if (spriteRenderer.flipX == true)   // ÀÌ¹ÌÁö ÇÃ¸³ÇßÀ» ¶§ °ø°Ý ¹üÀ§ x°ª ÀüÈ¯ Á¶°Ç¹®
+                if (spriteRenderer.flipX == true)   // ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ xï¿½ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½ï¿½Ç¹ï¿½
                 {
-                    posi.localPosition = new Vector3(atkX, atkY);   // ¸ó½ºÅÍÀÇ °ø°Ý ÄÝ¶óÀÌ´õ ¹Ú½ºÀÇ xÁÂÇ¥¿Í yÁÂÇ¥
+                    posi.localPosition = new Vector3(atkX, atkY);   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ xï¿½ï¿½Ç¥ï¿½ï¿½ yï¿½ï¿½Ç¥
                 }
-                else if (spriteRenderer.flipX == false) // ¿ÞÂÊÀ» º¼ ¶§
+                else if (spriteRenderer.flipX == false) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½
                 {
-                    posi.localPosition = new Vector3(-atkX, atkY);  // ¸ó½ºÅÍÀÇ °ø°Ý ÄÝ¶óÀÌ´õ ¹Ú½ºÀÇ -xÁÂÇ¥¿Í yÁÂÇ¥
+                    posi.localPosition = new Vector3(-atkX, atkY);  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ -xï¿½ï¿½Ç¥ï¿½ï¿½ yï¿½ï¿½Ç¥
                 }
             }
         }
         
 
     }
-    void Move() // ÀÌµ¿
+    void Move() // ï¿½Ìµï¿½
     {
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
         gameObject.transform.Translate(new Vector2(nextDirX, 0) * Time.deltaTime * Enemy_Speed);
@@ -385,47 +390,47 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    void Think() // ÀÚµ¿À¸·Î ´ÙÀ½ ¹æÇâÀ» Á¤ÇÏ´Â ÄÚ·çÆ¾
+    void Think() // ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ú·ï¿½Æ¾
     {
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
 
-        nextDirX = Random.Range(-1, 2);     // ÀûÀÇ X¹æÇâ ·£´ý( -1 ~ 1)
+        nextDirX = Random.Range(-1, 2);     // ï¿½ï¿½ï¿½ï¿½ Xï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½( -1 ~ 1)
         if(Enemy_Mod == 3)
         {
-        nextDirY = Random.Range(-1, 2);     // ÀûÀÇ Y¹æÇâ ·£´ý( -1 ~ 1)
+        nextDirY = Random.Range(-1, 2);     // ï¿½ï¿½ï¿½ï¿½ Yï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½( -1 ~ 1)
         }
         
-        if (nextDirX == 1 && Gap_Distance_X > Enemy_Sensing_X)    // Gap_Distance > Enemy_Attack_Range¸¦ Ãß°¡ÇÏÁö ¾ÊÀ¸¸é ÇÃ·¹ÀÌ¾î°¡ »ç°Å¸® ³»¿¡ ÀÖ°í rayHit=nullÀÌ¶ó¸é Á¦ÀÚ¸® µ¹±âÇÔ
+        if (nextDirX == 1 && Gap_Distance_X > Enemy_Sensing_X)    // Gap_Distance > Enemy_Attack_Rangeï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö°ï¿½ rayHit=nullï¿½Ì¶ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         {
-            spriteRenderer.flipX = true;       // nextDirXÀÇ °ªÀÌ 1ÀÌ¸é xÃàÀ» flipÇÔ
+            spriteRenderer.flipX = true;       // nextDirXï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 1ï¿½Ì¸ï¿½ xï¿½ï¿½ï¿½ï¿½ flipï¿½ï¿½
         }
-        // Àç±Í
+        // ï¿½ï¿½ï¿½
         float nextThinkTime = Random.Range(2f, 5f);
         Invoke("Think", nextThinkTime);
     }
 
-    void Turn() // ÀÌ¹ÌÁö¸¦ µÚÁý´Â ÄÚ·çÆ¾
+    void Turn() // ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½Æ¾
     {
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
 
-        nextDirX *= -1;   // nextDirX¿¡ -1À» °öÇØ ¹æÇâÀüÈ¯
-        if (nextDirX == 1 && Gap_Distance_X > Enemy_Sensing_X)  // Gap_Distance > Enemy_Attack_Range¸¦ Ãß°¡ÇÏÁö ¾ÊÀ¸¸é ÇÃ·¹ÀÌ¾î°¡ »ç°Å¸® ³»¿¡ ÀÖ°í rayHit=nullÀÌ¶ó¸é Á¦ÀÚ¸® µ¹±âÇÔ
+        nextDirX *= -1;   // nextDirXï¿½ï¿½ -1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¯
+        if (nextDirX == 1 && Gap_Distance_X > Enemy_Sensing_X)  // Gap_Distance > Enemy_Attack_Rangeï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö°ï¿½ rayHit=nullï¿½Ì¶ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         {
-            spriteRenderer.flipX = true; // nextDirX °ªÀÌ 1ÀÌ¸é xÃàÀ» flipÇÔ
+            spriteRenderer.flipX = true; // nextDirX ï¿½ï¿½ï¿½ï¿½ 1ï¿½Ì¸ï¿½ xï¿½ï¿½ï¿½ï¿½ flipï¿½ï¿½
         }
         StopAllCoroutines();
         Think();
     }
 
-    public void bleeding()  // µµÆ®µ¥¹ÌÁö ÁÖ´Â ÇÔ¼ö
+    public void bleeding()  // ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Ô¼ï¿½
     {
         if(bleedingTime > 0)
         {
             if (selectWeapon == 0 && Swordlevel > 0 && Enemy_HP > 0)
             {
-                Enemy_HP -= (bleedLevel * bleedingDamage); // Ã¼·ÂÀ»  ÃâÇ÷½ºÅÃ * ÃâÇ÷ µ¥¹ÌÁö·Î °¨¼Ò
+                Enemy_HP -= (bleedLevel * bleedingDamage); // Ã¼ï¿½ï¿½ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ * ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-                if (Swordlevel > 1 && Enemy_HP <= Enemy_HPten && iamBoss == false)  // °Ë ¼÷·Ãµµ°¡ 1 ÀÌ»ó ÀÏÁ¤ Ã¼·Â ÀÌÇÏÀÇ ¸ó½ºÅÍ°¡ ÃâÇ÷ ÁßÀÌ¸é Áï»ç(º¸½º Á¦¿Ü)
+                if (Swordlevel > 1 && Enemy_HP <= Enemy_HPten && iamBoss == false)  // ï¿½ï¿½ ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ 1 ï¿½Ì»ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
                 {
                     Enemy_HP = 0f;
                 }
@@ -448,30 +453,51 @@ public abstract class Enemy : MonoBehaviour
 
     public void StackBleed()
     {
-        if (selectWeapon == 0 && Swordlevel > 0)  // ÇÃ·¹ÀÌ¾î°¡ ÃâÇ÷ ¾÷±ÛÇßÀ» °æ¿ì
+        if (selectWeapon == 0 && Swordlevel > 0)  // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         {
-            if (bleedLevel <= 5)     // ÃâÇ÷½ºÅÃ 6±îÁö ½×ÀÓ
+            if (bleedLevel <= 5)     // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 6ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             {
                 bleedLevel++;
             }
             bleedingTime = Player.BleedingTime;
         }
     }
-    public IEnumerator Hit(float damage) // ÇÇÇØ ÇÔ¼ö
+    public IEnumerator Hit(float damage) // ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     {
         
+        Player player = Player.instance.GetComponent<Player>();
+        Ui_Controller ui = GameManager.Instance.GetComponent<Ui_Controller>(); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½
+        Proficiency_ui pro = GameManager.Instance.GetComponent<Proficiency_ui>(); // ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ß°ï¿½ï¿½ï¿½
+        pro.GetProExp(Stage);
+        ui.GetExp(Stage);
+        ui.GetGold(Stage);
+        damage = damage * player.DmgIncrease; //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
+        bool cc = false; // ï¿½ß°ï¿½
+        if (player.CCGetRandomResult()) //Ä¡ï¿½ï¿½Å¸ ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
+        {
+            damage *= player.CriDmgIncrease;
+            cc = true;
+        }
+        if (player.CanlifeStill)
+        {
+            ui.Heal(player.lifeStill * damage);
+        }
         posi = this.gameObject.GetComponent<Transform>();
         enemyHit = true;
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
         spriteRenderer = this.gameObject.transform.GetChild(1).GetComponentInChildren<SpriteRenderer>();
         rigid = this.GetComponent<Rigidbody2D>();
-        this.GetComponentInChildren<EnemyUi>().ShowDamgeText(damage); //À±¼º±Ç Ãß°¡ÇÔ
-
         if (weaponTag == "Sword")
         {
             StackBleed();
         }
         
+        this.GetComponentInChildren<EnemyUi>().ShowDamgeText(damage, cc); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½
+        if (AmIBoss)
+        {
+            GameManager.Instance.GetComponent<BossHpController>().BossHit(damage);
+        }
+        this.GetComponentInChildren<EnemyUi>().ShowBleedText(damage); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         Enemy_HP -= damage;
         if(Enemy_Mod == 11)
         {
@@ -479,7 +505,7 @@ public abstract class Enemy : MonoBehaviour
             StartCoroutine(Rush());
         }
 
-        if (Enemy_HP > 0) // EnemyÀÇ Ã¼·ÂÀÌ 0 ÀÌ»óÀÏ ¶§
+        if (Enemy_HP > 0) // Enemyï¿½ï¿½ Ã¼ï¿½ï¿½ï¿½ï¿½ 0 ï¿½Ì»ï¿½ï¿½ï¿½ ï¿½ï¿½
         {
             if (!animator.GetBool("Hit") && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
             {
@@ -491,12 +517,12 @@ public abstract class Enemy : MonoBehaviour
                     }
                 if (Enemy_Speed > 0)
                 {
-                    old_Speed = Enemy_Speed;  // ÀÌÀü ¼Óµµ °ªÀ¸·Î µ¹¸®±â À§ÇØ ´Ù¸¥ º¯¼ö¿¡ ¼Óµµ °ªÀ» ÀúÀå
+                    old_Speed = Enemy_Speed;  // ï¿½ï¿½ï¿½ï¿½ ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 }
                 animator.SetTrigger("Hit");
                 Enemy_Speed = 0;
                 yield return new WaitForSeconds(0.5f);
-                Enemy_Speed = old_Speed;    // ÀÌÀü ¼Óµµ °ªÀ¸·Î º¹±¸
+                Enemy_Speed = old_Speed;    // ï¿½ï¿½ï¿½ï¿½ ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 enemyHit = true;
             }
         }
@@ -507,11 +533,11 @@ public abstract class Enemy : MonoBehaviour
 
         enemyHit = false;
     }
-    public IEnumerator Die()    // Á×´Â ÄÚ·çÆ¾
+    public IEnumerator Die()    // ï¿½×´ï¿½ ï¿½Ú·ï¿½Æ¾
     {
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
 
-        if (Enemy_HP <= 0 && Enemy_Mod != 3 && Enemy_Mod != 11 && Enemy_Mod != 6 && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy")) // EnemyÀÇ Ã¼·ÂÀÌ 0°ú °°°Å³ª ÀÌÇÏÀÏ ¶§(Á×À½)
+        if (Enemy_HP <= 0 && Enemy_Mod != 3 && Enemy_Mod != 11 && Enemy_Mod != 6 && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy")) // Enemyï¿½ï¿½ Ã¼ï¿½ï¿½ï¿½ï¿½ 0ï¿½ï¿½ ï¿½ï¿½ï¿½Å³ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½)
         {
             Dying = true;
             if (Enemy_Mod != 1 && Enemy_Mod != 3 && Enemy_Mod != 4 && Enemy_Mod != 11)
@@ -530,7 +556,7 @@ public abstract class Enemy : MonoBehaviour
             this.gameObject.layer = LayerMask.NameToLayer("Dieenemy");
             yield return new WaitForSeconds(Enemy_Dying_anim_Time);
             enemyHit = false;
-            if (Enemy_Mod == 9 && posi.localScale.y == 1f)   // ºÐ¿­ ¸ó½ºÅÍÀÏ °æ¿ì
+            if (Enemy_Mod == 9 && posi.localScale.y == 1f)   // ï¿½Ð¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
             {
                 Split();
                 this.gameObject.SetActive(false);
@@ -549,7 +575,7 @@ public abstract class Enemy : MonoBehaviour
                 enemyDestroy();
             }
         }
-        else if (Enemy_HP <= 0 && Enemy_Mod == 3 && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy")) // ºñÇà ¸ó½ºÅÍ Á×À½)
+        else if (Enemy_HP <= 0 && Enemy_Mod == 3 && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy")) // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
         {
             Dying = true;
             this.gameObject.layer = LayerMask.NameToLayer("Dieenemy");
@@ -560,7 +586,7 @@ public abstract class Enemy : MonoBehaviour
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    // ½ºÇÁ¶óÀÌÆ® ºí¸µÅ©
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½Å©
                     spriteRenderer.color = new Color(1, 1, 1, 0.4f);
                     yield return new WaitForSeconds(0.1f);
                     spriteRenderer.color = new Color(1, 1, 1, 1);
@@ -576,7 +602,7 @@ public abstract class Enemy : MonoBehaviour
             yield return new WaitForSeconds(Enemy_Dying_anim_Time);
             enemyDestroy();
         }
-        else if (Enemy_HP <= 0 && Enemy_Mod == 6 && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))  // Orcº¸½º Á×À½
+        else if (Enemy_HP <= 0 && Enemy_Mod == 6 && this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))  // Orcï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         {
             Dying = true;
             this.gameObject.layer = LayerMask.NameToLayer("Dieenemy");
@@ -585,7 +611,7 @@ public abstract class Enemy : MonoBehaviour
             nextDirX = 0;
             for (int i = 0; i < 10; i++)
             {
-                // ½ºÇÁ¶óÀÌÆ® ºí¸µÅ©
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½Å©
                 spriteRenderer.color = new Color(1, 1, 1, 0.4f);
                 yield return new WaitForSeconds(0.2f);
                 spriteRenderer.color = new Color(1, 1, 1, 1);
@@ -605,7 +631,7 @@ public abstract class Enemy : MonoBehaviour
 
             for (int i = 0; i < 4; i++)
             {
-                // ½ºÇÁ¶óÀÌÆ® ºí¸µÅ©
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½Å©
                 spriteRenderer.color = new Color(1, 1, 1, 0.4f);
                 yield return new WaitForSeconds(0.1f);
                 spriteRenderer.color = new Color(1, 1, 1, 1);
@@ -617,21 +643,21 @@ public abstract class Enemy : MonoBehaviour
         enemyHit = false;
     }
 
-    void Sensing(Transform target, RaycastHit2D rayHit)  // ÇÃ·¹ÀÌ¾î ÃßÀû
+    void Sensing(Transform target, RaycastHit2D rayHit)  // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         rigid = this.GetComponent<Rigidbody2D>();
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
-        if (Gap_Distance_X <= Enemy_Sensing_X && Gap_Distance_Y <= Enemy_Sensing_Y)      // EnemyÀÇ XÃà »ç°Å¸®¿¡ ÀÖÀ» ¶§, YÃà »ç°Å¸®¿¡ ÀÖÀ» ¶§
+        if (Gap_Distance_X <= Enemy_Sensing_X && Gap_Distance_Y <= Enemy_Sensing_Y)      // Enemyï¿½ï¿½ Xï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, Yï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
         {
-            if (transform.position.x < target.position.x)            // ¿À¸¥ÂÊ ¹æÇâ
+            if (transform.position.x < target.position.x)            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             {
                 nextDirX = 1;
-                if (Enemy_Mod != 3)  // ¸ó½ºÅÍ°¡ ºñÇàÅ¸ÀÔÀÌ ¾Æ´Ò ¶§
+                if (Enemy_Mod != 3)  // ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½
                 {
-                    if (nextDirX == 1 && rayHit.collider != null)  // nextDirX°¡ 1ÀÏ ¶§ ±×¸®°í ·¹ÀÌÄ³½ºÆ® °ªÀÌ nullÀÌ ¾Æ´Ò ¶§
+                    if (nextDirX == 1 && rayHit.collider != null)  // nextDirXï¿½ï¿½ 1ï¿½ï¿½ ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ nullï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½
                     {
                         spriteRenderer.flipX = true;
-                        if(Enemy_Mod == 5)  // ÀÚÆø ¸ó½ºÅÍ°¡ ÀÚÆøÇÒ ¶§ Á¦ÀÚ¸®¿¡ ÀÖ±â À§ÇÑ ÄÚµå
+                        if(Enemy_Mod == 5)  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½ï¿½ï¿½ ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½
                         {
                             Enemy_Speed = 5f;
                             if (Attacking == true)
@@ -639,19 +665,19 @@ public abstract class Enemy : MonoBehaviour
                                 Enemy_Speed = 0f;
                             }
                         }
-                        transform.Translate(new Vector2(1, 0).normalized * Time.deltaTime * Enemy_Speed);   //EnemyÀÇ º¤ÅÍ °ªÀ» (1,0)¿¡¼­ speed¿¡ ÀúÀåµÈ °ªÀ» °öÇÑ À§Ä¡·Î ÀÌµ¿, Translate´Â À§Ä¡·Î ºÎµå·´°Ô ÀÌµ¿½ÃÅ´
+                        transform.Translate(new Vector2(1, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemyï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (1,0)ï¿½ï¿½ï¿½ï¿½ speedï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ìµï¿½, Translateï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Îµå·´ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½Å´
                         if(Enemy_Mod != 1)
                         {
                             if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false)
                             {
                                 Attacking = true;
-                                if (Enemy_Mod == 5) // ÀÚÆøÀÌ¶ó µô·¹ÀÌ ¾øÀÌ ¹Ù·Î °ø°ÝÇØ¾ß ÇÔ.
+                                if (Enemy_Mod == 5) // ï¿½ï¿½ï¿½ï¿½ï¿½Ì¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ ï¿½ï¿½.
                                 {
                                     Attack();
                                 }
                                 else
                                 {
-                                    Invoke("Attack", atkDelay); // °ø°Ý ÄðÅ¸ÀÓ Àû¿ë
+                                    Invoke("Attack", atkDelay); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                                 }
 
                             }
@@ -659,29 +685,29 @@ public abstract class Enemy : MonoBehaviour
                     }
                     else if (nextDirX == 1 && rayHit.collider == null)
                     {
-                        transform.Translate(new Vector2(0, 0).normalized * Time.deltaTime * Enemy_Speed);   //EnemyÀÇ º¤ÅÍ °ªÀ» (0,0)¿¡¼­ speed¿¡ ÀúÀåµÈ °ªÀ» °öÇÑ À§Ä¡·Î ÀÌµ¿, Translate´Â À§Ä¡·Î ºÎµå·´°Ô ÀÌµ¿½ÃÅ´
+                        transform.Translate(new Vector2(0, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemyï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (0,0)ï¿½ï¿½ï¿½ï¿½ speedï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ìµï¿½, Translateï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Îµå·´ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½Å´
                         if(Enemy_Mod != 1)
                         {
                             if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false)
                             {
                                 Attacking = true;
-                                Invoke("Attack", atkDelay); // °ø°Ý ÄðÅ¸ÀÓ Àû¿ë
+                                Invoke("Attack", atkDelay); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                             }
                         }
                     }
                 }
-                else if (nextDirX == 1 && Enemy_Mod == 3)  // ºñÇà ¸ó½ºÅÍÀÇ ÇÃ·¹ÀÌ¾î ÃßÀû
+                else if (nextDirX == 1 && Enemy_Mod == 3)  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½
                 {
                     spriteRenderer.flipX = true;
                     if (Attacker)
                     {
                         Vector2 resHeight = new Vector2(-1.5f, 1f);
-                        Vector2 playerPoint = (Vector2)target.transform.position + resHeight;   // ÇÃ·¹ÀÌ¾î¿Í °ãÃÄ¼­ °ø°ÝÇÏ´Â °ÍÀ» ¹æÁöÇÏ±â À§ÇØ »õ·Î¿î ÁöÁ¡À» Á¤ÀÇÇÔ
-                        transform.position = Vector2.MoveTowards(transform.position, playerPoint, Enemy_Speed * Time.deltaTime);   // resHeight¸¦ ´õÇØÁÖ¾î ÇÃ·¹ÀÌ¾îÀÇ ¾Æ·¡¿¡¼­ °ø°ÝÇÏÁö ¾Êµµ·Ï ÇßÀ½
+                        Vector2 playerPoint = (Vector2)target.transform.position + resHeight;   // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½ï¿½ï¿½Ä¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                        transform.position = Vector2.MoveTowards(transform.position, playerPoint, Enemy_Speed * Time.deltaTime);   // resHeightï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö¾ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Êµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                         if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && target.position.y + 1 <= transform.position.y)
                         {
                             Attacking = true;
-                            Invoke("Attack", atkDelay); // °ø°Ý ÄðÅ¸ÀÓ Àû¿ë
+                            Invoke("Attack", atkDelay); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                         }
                     }
                     else if (!Attacker) 
@@ -690,12 +716,12 @@ public abstract class Enemy : MonoBehaviour
                     }
                 }
             }
-            else if (transform.position.x > target.position.x)      // ¿ÞÂÊ ¹æÇâ
+            else if (transform.position.x > target.position.x)      // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             {
                 nextDirX = -1;
-                if (Enemy_Mod != 3) // ¸ó½ºÅÍ°¡ ºñÇàÅ¸ÀÔÀÌ ¾Æ´Ò ¶§
+                if (Enemy_Mod != 3) // ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½
                 {
-                    if (nextDirX == -1 && rayHit.collider != null) // nextDirX°¡ -1ÀÏ ¶§ ±×¸®°í ·¹ÀÌÄ³½ºÆ® °ªÀÌ nullÀÌ ¾Æ´Ò ¶§
+                    if (nextDirX == -1 && rayHit.collider != null) // nextDirXï¿½ï¿½ -1ï¿½ï¿½ ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ nullï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½
                     {
                         spriteRenderer.flipX = false;
                         if (Enemy_Mod == 5)
@@ -706,7 +732,7 @@ public abstract class Enemy : MonoBehaviour
                                 Enemy_Speed = 0f;
                             }
                         }
-                        transform.Translate(new Vector2(-1, 0).normalized * Time.deltaTime * Enemy_Speed);   //EnemyÀÇ º¤ÅÍ °ªÀ» (1,0)¿¡¼­ speed¿¡ ÀúÀåµÈ °ªÀ» °öÇÑ À§Ä¡·Î ÀÌµ¿, Translate´Â À§Ä¡·Î ºÎµå·´°Ô ÀÌµ¿½ÃÅ´
+                        transform.Translate(new Vector2(-1, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemyï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (1,0)ï¿½ï¿½ï¿½ï¿½ speedï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ìµï¿½, Translateï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Îµå·´ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½Å´
                         if(Enemy_Mod != 1)
                         {
                             if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false)
@@ -718,36 +744,36 @@ public abstract class Enemy : MonoBehaviour
                                 }
                                 else
                                 {
-                                    Invoke("Attack", atkDelay); // °ø°Ý ÄðÅ¸ÀÓ Àû¿ë
+                                    Invoke("Attack", atkDelay); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                                 }
                             }
                         }
                     }
                     else if (nextDirX == -1 && rayHit.collider == null)
                     {
-                        transform.Translate(new Vector2(0, 0).normalized * Time.deltaTime * Enemy_Speed);   //EnemyÀÇ º¤ÅÍ °ªÀ» (1,0)¿¡¼­ speed¿¡ ÀúÀåµÈ °ªÀ» °öÇÑ À§Ä¡·Î ÀÌµ¿, Translate´Â À§Ä¡·Î ºÎµå·´°Ô ÀÌµ¿½ÃÅ´
+                        transform.Translate(new Vector2(0, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemyï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (1,0)ï¿½ï¿½ï¿½ï¿½ speedï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ìµï¿½, Translateï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Îµå·´ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½Å´
                         if (Enemy_Mod != 1)
                         {
                             if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false)
                             {
                                 Attacking = true;
-                                Invoke("Attack", atkDelay); // °ø°Ý ÄðÅ¸ÀÓ Àû¿ë
+                                Invoke("Attack", atkDelay); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                             }
                         }
                     }
                 }
-                else if (nextDirX == -1 && Enemy_Mod == 3)  // ºñÇà ¸ó½ºÅÍÀÇ ÇÃ·¹ÀÌ¾î ÃßÀû
+                else if (nextDirX == -1 && Enemy_Mod == 3)  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½
                 {
                     spriteRenderer.flipX = false;
                     if (Attacker)
                     {
                         Vector2 resHeight = new Vector2(1.5f, 1f);
-                        Vector2 playerPoint = (Vector2)target.transform.position + resHeight;       // ÇÃ·¹ÀÌ¾î¿Í °ãÃÄ¼­ °ø°ÝÇÏ´Â °ÍÀ» ¹æÁöÇÏ±â À§ÇØ »õ·Î¿î ÁöÁ¡À» Á¤ÀÇÇÔ(Vector2¸¦ Á¤ÀÇÇÏ¿© +¸¦ ¾µ ¶§ Vector2ÀÎÁö 3ÀÎÁö ¸ðÈ£ÇÏÁö ¾Ê°Ô ÇÔ)
+                        Vector2 playerPoint = (Vector2)target.transform.position + resHeight;       // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½ï¿½ï¿½Ä¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(Vector2ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ +ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ Vector2ï¿½ï¿½ï¿½ï¿½ 3ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ï¿½ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ ï¿½ï¿½)
                         transform.position = Vector2.MoveTowards(transform.position, playerPoint, Enemy_Speed * Time.deltaTime);
-                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && target.position.y + 1 <= transform.position.y) // Å¸°ÙÀÇ À§Ä¡¿¡ 2.5f¸¦ ´õÇØ¼­ Bee°¡ ÇÃ·¹ÀÌ¾îÀÇ ¾Æ·¡ÂÊ¿¡¼­ °ø°ÝÇÏ´Â °ÍÀ» ¹æÁö
+                        if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && target.position.y + 1 <= transform.position.y) // Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ 2.5fï¿½ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ Beeï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½Æ·ï¿½ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                         {
                             Attacking = true;
-                            Invoke("Attack", atkDelay); // °ø°Ý ÄðÅ¸ÀÓ Àû¿ë
+                            Invoke("Attack", atkDelay); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                         }
                     }
                     else if (!Attacker)
@@ -761,22 +787,22 @@ public abstract class Enemy : MonoBehaviour
         {
             if (Enemy_Mod != 3)
             {
-                Move();     // Move ÇÔ¼ö ½ÇÇà
+                Move();     // Move ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½
             }
         }
     }
 
-    public void Sensor()    // ÇÃ·§Æû °¨Áö ÇÔ¼ö
+    public void Sensor()    // ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     {
         rigid = this.GetComponent<Rigidbody2D>();
         if (Enemy_Mod != 3)
         {
-            // EnemyÀÇ ÇÑ Ä­ ¾ÕÀÇ °ªÀ» ¾ò±â À§ÇØ ÀÚ±â ÀÚ½ÅÀÇ À§Ä¡ °ª¿¡ (x)¿¡ + nextDirX°ªÀ» ´õÇÏ°í 1.2f¸¦ °öÇÑ´Ù.
+            // Enemyï¿½ï¿½ ï¿½ï¿½ Ä­ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú±ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ (x)ï¿½ï¿½ + nextDirXï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï°ï¿½ 1.2fï¿½ï¿½ ï¿½ï¿½ï¿½Ñ´ï¿½.
             Vector2 frontVec = new Vector2(rigid.position.x + nextDirX * 1.2f, rigid.position.y);
 
             Debug.DrawRay(frontVec, Vector3.down * 1.2f, new Color(0, 1, 0));
 
-            // ·¹ÀÌÀú¸¦ ¾Æ·¡·Î ½î¾Æ¼­ ½ÇÁúÀûÀÎ ·¹ÀÌÀú »ý¼º(¹°¸®±â¹Ý), LayMask.GetMask("")´Â ÇØ´çÇÏ´Â ·¹ÀÌ¾î¸¸ ½ºÄµÇÔ
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½ï¿½Æ¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½), LayMask.GetMask("")ï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½Ì¾î¸¸ ï¿½ï¿½Äµï¿½ï¿½
             rayHit = Physics2D.Raycast(frontVec, Vector3.down, 2, LayerMask.GetMask("Tilemap", "Pad", "wall"));
             if (rayHit.collider == null)
             {
@@ -785,7 +811,7 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    public void Attack() //°ø°Ý ÇÔ¼ö
+    public void Attack() //ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     {
         animator = this.GetComponentInChildren<Animator>();
         if (!Dying && Enemy_Mod != 5)
@@ -793,9 +819,9 @@ public abstract class Enemy : MonoBehaviour
             if (Enemy_Mod == 3)
             {
                 switchCollider();
-                GiveDamage();       // ÇÃ·¹ÀÌ¾î¿¡°Ô µ¥¹ÌÁö ÁÖ´Â ÇÔ¼ö ½ÇÇà    
-                animator.SetTrigger("Attack");  // ¹ú °ø°Ý¿ë
-                animator.SetBool("Attacking", true);    // ¹ú °ø°Ý È®ÀÎÇÏ´Â ¿ëÀÎ µí(³Ê¹« ¿À·¡µÇ¼­ ±â¾ï ¾È ³²)
+                GiveDamage();       // ï¿½Ã·ï¿½ï¿½Ì¾î¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½    
+                animator.SetTrigger("Attack");  // ï¿½ï¿½ ï¿½ï¿½ï¿½Ý¿ï¿½
+                animator.SetBool("Attacking", true);    // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½(ï¿½Ê¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¼ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½)
                 Enemy_Speed = 0;
             }
             else if (Enemy_Mod != 3 && Enemy_Mod != 7 && Enemy_Mod != 2)
@@ -834,11 +860,11 @@ public abstract class Enemy : MonoBehaviour
         animator.SetBool("Run", false); 
         this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
     }
-    public void offAttkack() // °ø°Ý Á¾·á ÇÔ¼ö
+    public void offAttkack() // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     {
         if(Enemy_Mod == 3)
         {
-            Bcollider = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();    // º»ÀÎ ¿ÀºêÁ§Æ®ÀÇ Ã¹¹øÂ° ÀÚ½Ä ¿ÀºêÁ§Æ®¿¡ Æ÷ÇÔµÈ BoxCollider2D¸¦ °¡Á®¿È. 
+            Bcollider = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Ã¹ï¿½ï¿½Â° ï¿½Ú½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½Ôµï¿½ BoxCollider2Dï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½. 
             animator.SetBool("Attacking", false);
             Enemy_Speed = 3f;
             Bcollider.enabled = false;
@@ -855,7 +881,7 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    public void GiveDamage()    // ÇÃ·¹ÀÌ¾î¿¡°Ô µ¥¹ÌÁö¸¦ ÁÖ´Â ÇÔ¼ö
+    public void GiveDamage()    // ï¿½Ã·ï¿½ï¿½Ì¾î¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Ô¼ï¿½
     {
         transformPosition = this.gameObject.transform.GetChild(0).GetComponent<Transform>();
         BoxCollider2DSize = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();
@@ -870,7 +896,7 @@ public abstract class Enemy : MonoBehaviour
             }
         }
     }
-    public void Bump()      // Ãæµ¹ µ¥¹ÌÁö ÇÔ¼ö
+    public void Bump()      // ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     {
         Vector3 vector3;
         if(Enemy_Mod == 6)
@@ -890,7 +916,7 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos() // Bump()°¡ Àû¿ëµÇ´Â À§Ä¡¸¦ ±×¸®´Â ÇÔ¼ö
+    private void OnDrawGizmos() // Bump()ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     {
         Pos = GetComponent<Transform>();
         Boxs = GetComponent<BoxCollider2D>();
@@ -909,7 +935,7 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    public IEnumerator Boom()  // Æø¹ß ÇÔ¼ö
+    public IEnumerator Boom()  // ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     {
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
 
@@ -922,7 +948,7 @@ public abstract class Enemy : MonoBehaviour
         enemyDestroy();
     }
 
-    public void Split()  // ½½¶óÀÓ ºÐ¿­ ÇÔ¼ö
+    public void Split()  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¿ï¿½ ï¿½Ô¼ï¿½
     {
         spawn = this.gameObject.transform.GetChild(2).GetComponent<Transform>();
         spawn2 = this.gameObject.transform.GetChild(3).GetComponent<Transform>();
@@ -931,7 +957,7 @@ public abstract class Enemy : MonoBehaviour
     }
 
 
-    public void slimeJump() //½½¶óÀÓ Á¡ÇÁ°ø°Ý
+    public void slimeJump() //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     {
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
         animator.SetTrigger("Attacking");
@@ -943,7 +969,7 @@ public abstract class Enemy : MonoBehaviour
         Destroy(this.gameObject); 
     }
 
-    public void ProjectiveBody()    // Åõ»çÃ¼ »ý¼º (À§Ä¡ ÀúÀå)
+    public void ProjectiveBody()    // ï¿½ï¿½ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½)
     {
         Rigidbody2D rigid = PObject.GetComponent<Rigidbody2D>();
         if(Enemy_Mod != 2)
@@ -972,7 +998,7 @@ public abstract class Enemy : MonoBehaviour
         ProObject = Instantiate(fire, PObject.position, PObject.rotation);
 
         Projective_Body Pb = ProObject.GetComponent<Projective_Body>();
-        Pb.Dir = nextDirX;   // Projective_Body ½ºÅ©¸³Æ®¿¡ ÀÖ´Â Dir º¯¼ö¿¡ ÇöÀç ½ºÅ©¸³Æ®ÀÇ º¯¼ö nextDirX¸¦ ÀúÀå
+        Pb.Dir = nextDirX;   // Projective_Body ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ö´ï¿½ Dir ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ nextDirXï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Pb.Power = Enemy_Power;
         Pb.Time = endTime;
     }
@@ -1002,10 +1028,10 @@ public abstract class Enemy : MonoBehaviour
         rE2.Dir = nextDirX;
     }
 
-    public void canineSpawning()    // º¸½º°¡ ¸ó½ºÅÍ¸¦ ´øÁö´Â ÇÔ¼ö
+    public void canineSpawning()    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     {
         GameObject canine = Instantiate(CaninePb, PbSpawn.position, PbSpawn.rotation);
-        canine.transform.eulerAngles = new Vector3(0, 0, 10); // ¹ß»ç°¢ Á¤ÇÏ±â
+        canine.transform.eulerAngles = new Vector3(0, 0, 10); // ï¿½ß»ç°¢ ï¿½ï¿½ï¿½Ï±ï¿½
 
         GameObject canine1 = Instantiate(CaninePb, PbSpawn.position, PbSpawn.rotation);
         canine1.transform.eulerAngles = new Vector3(0, 0, 15);
@@ -1059,28 +1085,28 @@ public abstract class Enemy : MonoBehaviour
         Se2.Dir = nextDirX;
         turning = true;
     }
-    public void hitEff()    // ÇÇ°Ý ÀÌÆåÆ® 
+    public void hitEff()    // ï¿½Ç°ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® 
     {
         GameObject hitEff = Instantiate(hiteff, hit_bloodTrans.position, hit_bloodTrans.rotation, hit_bloodTrans);
-        scaleX = this.gameObject.transform.localScale.x;    // ¿ÀºêÁ§Æ®ÀÇ scale.x °ªÀ» ¹Þ¾Æ¿Í¼­ -ÀÎ °æ¿ì¿¡µµ ÀÌÆåÆ®°¡ Á¤¹æÇâÀ¸·Î ¶ã ¼ö ÀÖµµ·ÏÇÏ´Â º¯¼ö
+        scaleX = this.gameObject.transform.localScale.x;    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ scale.x ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿Í¼ï¿½ -ï¿½ï¿½ ï¿½ï¿½ì¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½
         hitEFF hitEFF = hitEff.GetComponent<hitEFF>();
         hitEFF.dir = nextDirX;
         hitEFF.scalX = scaleX;
     }
 
-    public void bleedEff()  // ÃâÇ÷ ÀÌÆåÆ® ÅÍ¶ß¸®´Â ÇÔ¼ö
+    public void bleedEff()  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Í¶ß¸ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     {
         GameObject bloodEff = Instantiate(blood, hit_bloodTrans.position, hit_bloodTrans.rotation, hit_bloodTrans);
         bloodEFF bloodEFF = bloodEff.GetComponent<bloodEFF>();
-        bloodEFF.dir = nextDirX;    // ¸ó½ºÅÍÀÇ ¹æÇâ°ª
-        bloodEFF.scalX = scaleX;    // ¸ó½ºÅÍÀÇ scale.x °ª(-°¡ µÇ¾îÀÖ´Â °æ¿ì°¡ ÀÖÀ½)
+        bloodEFF.dir = nextDirX;    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½â°ª
+        bloodEFF.scalX = scaleX;    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ scale.x ï¿½ï¿½(-ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ì°¡ ï¿½ï¿½ï¿½ï¿½)
         Enemy_HP -= bloodBoomDmg * bleedLevel;
         bleedLevel = 0;
     }
 
     public void BossAtk()
     {
-        if (turning == true)    // µ¹±â °¡´ÉÇÒ ¶§¸¸
+        if (turning == true)    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         {
             if (playerLoc < bossLoc)
             {
@@ -1123,14 +1149,14 @@ public abstract class Enemy : MonoBehaviour
         }
     }
  
-    public void bossMove()  // bossÀÇ ¿òÁ÷ÀÌµµ·Ï ÇÏ´Â ÇÔ¼ö
+    public void bossMove()  // bossï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     {
         if (bossMoving)
         {
             gameObject.transform.Translate(new Vector2(nextDirX, 0) * Time.deltaTime * Enemy_Speed);   
         }
     }
-    public void randomAtk() // °ø°Ý ÆÐÅÏ ·£´ýÀ¸·Î Á¤ÇÏ±â
+    public void randomAtk() // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï±ï¿½
     {
         int nextNum;
 
@@ -1139,12 +1165,12 @@ public abstract class Enemy : MonoBehaviour
         Invoke("randomAtk", nextNum);
     }
 
-    public void bossSoul()      // ¿µÈ¥ ¹ß»ç
+    public void bossSoul()      // ï¿½ï¿½È¥ ï¿½ß»ï¿½
     {
         animator.SetTrigger("Attacking");
     }
 
-    public IEnumerator bossJump()       // ¸öÅë¹ÚÄ¡±â
+    public IEnumerator bossJump()       // ï¿½ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½
     {
         animator.SetTrigger("Jump");
         Enemy_Speed = 12f;
@@ -1153,7 +1179,7 @@ public abstract class Enemy : MonoBehaviour
         bossMoving = false;
     }
 
-    public void bossFloor()     // ¹Ù´Ú ÅÍ¶ß¸®´Â ±â¼ú
+    public void bossFloor()     // ï¿½Ù´ï¿½ ï¿½Í¶ß¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     {
         Enemy_Speed = 1f;
         animator.SetTrigger("Run");
@@ -1162,7 +1188,7 @@ public abstract class Enemy : MonoBehaviour
         
     }
 
-    public void offFloor()  // º¸½º ¹Ù´Ú ÅÍ¶ß¸®´Â °ø°Ý ¸¶¹«¸® ÇÔ¼ö
+    public void offFloor()  // ï¿½ï¿½ï¿½ï¿½ ï¿½Ù´ï¿½ ï¿½Í¶ß¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     {
         myLocY = this.gameObject.transform.position.y;
         onSpriteNec();
@@ -1188,7 +1214,7 @@ public abstract class Enemy : MonoBehaviour
             Invoke("soulSpawning2", 1.6f);    
         }
     }
-    public void locBox() // º¸½º °ø°Ý ÄÝ¶óÀÌ´õ À§Ä¡ÇÔ¼ö
+    public void locBox() // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½Ä¡ï¿½Ô¼ï¿½
     {
         if(spriteRenderer.flipX == true)
         {
@@ -1201,7 +1227,7 @@ public abstract class Enemy : MonoBehaviour
         onBox();
         offBox();
     }
-    public void onBox() // º¸½º °ø°Ý ÄÝ¶óÀÌ´õ on ÇÔ¼ö
+    public void onBox() // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ on ï¿½Ô¼ï¿½
     {
         bossBox.enabled = false;
         GiveDamage();
@@ -1210,22 +1236,22 @@ public abstract class Enemy : MonoBehaviour
     {
         bossBox.enabled = true;
     }
-    void onSpriteNec()  // Nec¿ë
+    void onSpriteNec()  // Necï¿½ï¿½
     {
         sprite.enabled = true;
     }
-    void offSpriteNec() // Nec¿ë
+    void offSpriteNec() // Necï¿½ï¿½
     {
         sprite.enabled = false;
     }
-    void onSprite() // orc¿ë
+    void onSprite() // orcï¿½ï¿½
     {
         if(atkPattern < 5)
         {
             orcWaringmark.enabled = true;
         }
     }
-    void offSPrite() // orc¿ë
+    void offSPrite() // orcï¿½ï¿½
     {
         orcWaringmark.enabled = false;
     }
@@ -1234,18 +1260,18 @@ public abstract class Enemy : MonoBehaviour
     {
         int randNum;
         randNum = Random.Range(4, 5); 
-        atkPattern = Random.Range(1, 7);     // ÆÐÅÏ ¹øÈ£¸¦ 1 ~ 6±îÁö ·£´ýÀ¸·Î »ÌÀ½.
+        atkPattern = Random.Range(1, 7);     // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ï¿½ï¿½ 1 ~ 6ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
         if(this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
         {
             Invoke("OrcRandomAtk", randNum);
         }
     }
 
-    void orcMove()  // Orc º¸½ºÀÇ ¿À¸¥ÂÊÀ¸·Î ¿òÁ÷ÀÌ´Â ÇÔ¼ö
+    void orcMove()  // Orc ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½Ô¼ï¿½
     {
         gameObject.transform.Translate(Vector2.right * Time.deltaTime * Enemy_Speed);
     }
-    void orcDie()   // Orc º¸½ºÀÇ Á×´Â ¾Ö´Ï¸ÞÀÌ¼Ç
+    void orcDie()   // Orc ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×´ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
     {
         if (Dying)
         {
@@ -1255,7 +1281,7 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    void OrcAttack()    // orc º¸½ºÀÇ °ø°Ý ÆÐÅÏ
+    void OrcAttack()    // orc ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         switch (atkPattern)
         {
@@ -1309,7 +1335,7 @@ public abstract class Enemy : MonoBehaviour
         Enemy_Speed = 1f;
         animator.SetTrigger("Left_Hooking");
         Invoke("offSPrite", 0.4f);
-        Attacking = false;  // °ø°ÝÁß ²ô±â
+        Attacking = false;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 
     void Right_Hooking()
@@ -1317,9 +1343,9 @@ public abstract class Enemy : MonoBehaviour
         Enemy_Speed = 1f;
         animator.SetTrigger("Right_Hooking");
         Invoke("offSPrite", 0.2f);
-        Attacking = false;  // °ø°Ý Áß ²ô±â.
+        Attacking = false;  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
     }
-    IEnumerator recoil()    // °ø°Ý ¹Ýµ¿À¸·Î Àá½Ã ¸ØÃß´Â ÇÔ¼ö
+    IEnumerator recoil()    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ýµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ß´ï¿½ ï¿½Ô¼ï¿½
     {
         yield return new WaitForSeconds(1f);
         animator.SetBool("Idle", true);
@@ -1330,44 +1356,44 @@ public abstract class Enemy : MonoBehaviour
 
     void boarMove()
     {
-        if (Hit_Set == true)    // ÇÃ·¹ÀÌ¾î¿¡°Ô ¸Â¾Ò´Ù¸é
+        if (Hit_Set == true)    // ï¿½Ã·ï¿½ï¿½Ì¾î¿¡ï¿½ï¿½ ï¿½Â¾Ò´Ù¸ï¿½
         {
-            if (animator.GetBool("Rush") && Enemy_Left == true)       // ¶Ù´Â ¾Ö´Ï¸ÞÀÌ¼ÇÀÌ ½ÇÇà ÁßÀÌ°í, Fat_LeftÀÇ °ªÀÌ true¶ó¸é
+            if (animator.GetBool("Rush") && Enemy_Left == true)       // ï¿½Ù´ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì°ï¿½, Fat_Leftï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ trueï¿½ï¿½ï¿½
             {
-                gameObject.transform.Translate(new Vector2(-1, 0) * Time.deltaTime * Enemy_Speed);   // º¤ÅÍ °ªÀ» (1,0)¿¡¼­ speed¿¡ ÀúÀåµÈ °ªÀ» °öÇÑ À§Ä¡·Î ÀÌµ¿, Translate´Â À§Ä¡·Î ºÎµå·´°Ô ÀÌµ¿½ÃÅ´.
+                gameObject.transform.Translate(new Vector2(-1, 0) * Time.deltaTime * Enemy_Speed);   // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (1,0)ï¿½ï¿½ï¿½ï¿½ speedï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ìµï¿½, Translateï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Îµå·´ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½Å´.
                 spriteRenderer.flipX = false;
             }
-            else if (animator.GetBool("Rush") && Enemy_Left == false)  // Running ¾Ö´Ï¸ÞÀÌ¼ÇÀÌ ½ÇÇà ÁßÀÌ°í Fat_LeftÀÇ °ªÀÌ false¶ó¸é
+            else if (animator.GetBool("Rush") && Enemy_Left == false)  // Running ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì°ï¿½ Fat_Leftï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ falseï¿½ï¿½ï¿½
             {
-                gameObject.transform.Translate(new Vector2(1, 0) * Time.deltaTime * Enemy_Speed);   // º¤ÅÍ °ªÀ» (1,0)¿¡¼­ speed¿¡ ÀúÀåµÈ °ªÀ» °öÇÑ À§Ä¡·Î ÀÌµ¿, Translate´Â À§Ä¡·Î ºÎµå·´°Ô ÀÌµ¿½ÃÅ´.           
+                gameObject.transform.Translate(new Vector2(1, 0) * Time.deltaTime * Enemy_Speed);   // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (1,0)ï¿½ï¿½ï¿½ï¿½ speedï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ìµï¿½, Translateï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Îµå·´ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½Å´.           
                 spriteRenderer.flipX = true;
             }
         }
     }
 
-    IEnumerator Rush()   // µ¹Áø ÄÚ·çÆ¾.
+    IEnumerator Rush()   // ï¿½ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½Æ¾.
     {
-        if (playerLoc < boarLoc) // ÇÃ·¹ÀÌ¾î°¡ ¿ÞÂÊ¿¡ ÀÖ´Ù¸é.
+        if (playerLoc < boarLoc) // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½Ê¿ï¿½ ï¿½Ö´Ù¸ï¿½.
         {
             Enemy_Left = true;
         }
-        else if (playerLoc > boarLoc)    // ÇÃ·¹ÀÌ¾î°¡ ¿À¸¥ÂÊ¿¡ ÀÖ´Ù¸é.
+        else if (playerLoc > boarLoc)    // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ê¿ï¿½ ï¿½Ö´Ù¸ï¿½.
         {
             Enemy_Left = false;
         }
-        yield return new WaitForSeconds(1f);    // ÇÃ·¹ÀÌ¾î ÀÎÁö ÈÄ ´Þ·Á°¡±â À§ÇÑ ±â ¸ðÀ½ 1ÃÊ
+        yield return new WaitForSeconds(1f);    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Þ·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½
         Attacking = true;
 
         animator.SetBool("Rush", true);
 
-        Enemy_Speed = 10f;        //  ¼Óµµ 10 ¼³Á¤.
+        Enemy_Speed = 10f;        //  ï¿½Óµï¿½ 10 ï¿½ï¿½ï¿½ï¿½.
     }
 
     void StopRush()
     {
         animator.SetBool("Rush", false);
         animator.SetTrigger("Hit");
-        Attacking = false;  // °ø°Ý Áß ²ô±â
+        Attacking = false;  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (Enemy_Left == true)
         {
             Enemy_Left = false;

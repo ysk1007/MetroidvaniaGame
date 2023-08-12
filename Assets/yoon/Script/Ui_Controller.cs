@@ -16,7 +16,7 @@ public class Ui_Controller : MonoBehaviour
     public TextMeshProUGUI AtkPowerValueText;
     public TextMeshProUGUI DefValueText;
     public TextMeshProUGUI AtkSpeedValueText;
-    public TextMeshProUGUI DmgIncreaseValueText;
+    public TextMeshProUGUI CriticalChanceText;
     public TextMeshProUGUI MarketTextBox;
     public TextMeshProUGUI MarketGoldText;
     public Image BloodScreen;
@@ -28,6 +28,9 @@ public class Ui_Controller : MonoBehaviour
     public GameObject inven_ui;
     public GameObject inven_screen;
     public GameObject equip_screen;
+    public GameObject Status_screen;
+    public GameObject WeaponSelect_screen;
+    public GameObject DescriptionBox;
     private bool openinven = false;
     public bool openMarket = false;
     public GameObject iconObject;
@@ -47,6 +50,8 @@ public class Ui_Controller : MonoBehaviour
 
     public bool isDown = false;
 
+    public float[] ExpValue = {10f,20f,30f}; // 1,2,3 스테이지 값
+    public float[] GoldValue = {50f,75f,90f}; // 1,2,3 스테이지 값
     private void Awake()
     {
 
@@ -62,6 +67,7 @@ public class Ui_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        AtkPowerValueText.text = (player.AtkPower + player.DmgChange + player.GridPower).ToString("F0");
         if (Input.GetKeyDown(KeyCode.I))
         {
             if (openpro)
@@ -74,6 +80,7 @@ public class Ui_Controller : MonoBehaviour
             {
                 inven_ui.SetActive(true);
                 openinven = true;
+                Status_screen.SetActive(false);
                 Icons[0].gameObject.GetComponent<Image>().enabled = true;
                 Icons[1].gameObject.GetComponent<Image>().enabled = false;
             }
@@ -81,6 +88,7 @@ public class Ui_Controller : MonoBehaviour
             {
                 inven_ui.SetActive(false);
                 openinven = false;
+                Destroy(DescriptionBox);
                 Icons[0].gameObject.GetComponent<Image>().enabled = false;
                 Icons[1].gameObject.GetComponent<Image>().enabled = true;
             }
@@ -98,27 +106,42 @@ public class Ui_Controller : MonoBehaviour
 
             if (!openpro)
             {
+                if (Player.instance.proSelectWeapon == 4)
+                {
+                    WeaponSelect_screen.SetActive(true);
+                    WeaponSelect_screen.GetComponent<WeaponSelect>().WeaponSelectUiOpen = true;
+                }
                 pro_ui.SetActive(true);
                 openpro = true;
             }
             else
             {
+                WeaponSelect_screen.SetActive(false);
+                WeaponSelect_screen.GetComponent<WeaponSelect>().WeaponSelectUiOpen = false;
                 pro_ui.SetActive(false);
                 openpro = false;
             }
         }
     }
 
-    public void GetExp(float value)
+    public void GetExp(int stage)
     {
-        float Expvalue = value * 0.01f;
+        float MaxExp = player.ExpBarValue[player.level - 1];
+        float value = ExpValue[stage - 1];
+        float Expvalue = Mathf.Lerp(0f, 1f, value * player.EXPGet / MaxExp);
         if (ExpBar.value + Expvalue > 1f) //오버 경험치 계산
         {
             float OverExp = (ExpBar.value + Expvalue - 1f)*100f;
             LevelUp();
-            GetExp(OverExp);
+            RemainGetExp(OverExp);
         }
         else ExpBar.value += Expvalue;
+    }
+
+    public void RemainGetExp(float value)
+    {
+        float Expvalue = value * 0.01f;
+        ExpBar.value += Expvalue;
     }
 
     public void LevelUp()
@@ -148,6 +171,7 @@ public class Ui_Controller : MonoBehaviour
     {
         PlayerHp.Heal(value);
         PlayerCurrentHpText.text = PlayerHp.currentHp.ToString("F0");
+        player.CurrentHp = int.Parse(PlayerCurrentHpText.text);
     }
 
     public void Sliding()
@@ -155,9 +179,18 @@ public class Ui_Controller : MonoBehaviour
         StartCoroutine(SlidingUP());
     }
 
-    public void GetGold(int value)
+    public void GetGold(int stage)
     {
-        player.gold += value;
+        float value = GoldValue[stage - 1];
+        Debug.Log("골드획득 :" + value);
+        player.gold += value * player.GoldGet;
+        GoldVelueUI.text = player.gold.ToString();
+        MarketGoldText.text = player.gold.ToString();
+    }
+
+    public void GetGold(float price)
+    {
+        player.gold += price * player.GoldGet;
         GoldVelueUI.text = player.gold.ToString();
         MarketGoldText.text = player.gold.ToString();
     }
@@ -188,16 +221,18 @@ public class Ui_Controller : MonoBehaviour
         PlayerCurrentHpText.text = PlayerHp.currentHp.ToString("F0");
 
         //인벤토리 갱신
-        AtkPowerValueText.text = player.AtkPower.ToString();
+        AtkPowerValueText.text = (player.AtkPower + player.DmgChange + player.GridPower).ToString("F0");
         DefValueText.text = player.Def.ToString();
-        AtkSpeedValueText.text = player.delayTime.ToString();
-        DmgIncreaseValueText.text = player.DmgIncrease.ToString("F0")+"%";
+        AtkSpeedValueText.text = player.ATS.ToString("F1");
+        CriticalChanceText.text = (player.CriticalChance * 100f).ToString() + "%";
 
         //레벨 골드 갱신
         PlayerLevel = player.level;
         LevelVelueUi.text = player.level.ToString();
         GoldVelueUI.text = player.gold.ToString();
         MarketGoldText.text = player.gold.ToString();
+
+        Status_screen.GetComponent<StatusScreen>().StatusUpdate(player);
     }
 
     IEnumerator SlidingUP()

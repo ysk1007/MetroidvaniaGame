@@ -4,25 +4,28 @@ using UnityEngine;
 
 public class Snail : Enemy
 {
-    public override void InitSetting()  // ÀûÀÇ ±âº» Á¤º¸¸¦ ¼³Á¤ÇÏ´Â ÇÔ¼ö
+    public override void InitSetting()  // ï¿½ï¿½ï¿½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     {
+        Stage = 1; //ï¿½ß°ï¿½ï¿½ï¿½
         Enemy_Mod = 1;
-        Enemy_HP = 20f;  // ÀûÀÇ Ã¼·Â
-        Enemy_Speed = 1.5f;    // ÀûÀÇ ÀÌµ¿¼Óµµ
-        Gap_Distance_X = 99f;  // Enemy¿Í PlayerÀÇ X °Å¸®Â÷ÀÌ
-        Gap_Distance_Y = 99f;  // Enemy¿Í PlayerÀÇ Y °Å¸®Â÷ÀÌ
-        nextDirX = 1;  // ¹æÇâÀ» ¼ýÀÚ·Î Ç¥Çö
-        Enemy_Dying_anim_Time = 1.1f;   // Á×´Â ¾Ö´Ï¸ÞÀÌ¼Ç ½ÇÇà ½Ã°£
-        Enemy_Sensing_X = 10f; // ÇÃ·¹ÀÌ¾î ÀÎÁö X°ª
-        Enemy_Sensing_Y = 5f;  // ÇÃ·¹ÀÌ¾î ÀÎÁö Y°ª
-        Bump_Power = 2f; // Ãæµ¹ ½Ã ÁÙ µ¥¹ÌÁö
-        bleedLevel = 0; // ¹ÞÀº ÃâÇ÷·®
-        iamBoss = false;    // º¸½º°¡ ¾Æ´Ô
+        Enemy_HP = 2000f;  // ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½
+        Enemy_Speed = 1.5f;    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½Óµï¿½
+        Gap_Distance_X = 99f;  // Enemyï¿½ï¿½ Playerï¿½ï¿½ X ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ï¿½
+        Gap_Distance_Y = 99f;  // Enemyï¿½ï¿½ Playerï¿½ï¿½ Y ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ï¿½
+        nextDirX = 1;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú·ï¿½ Ç¥ï¿½ï¿½
+        Enemy_Dying_anim_Time = 1.1f;   // ï¿½×´ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
+        Enemy_Sensing_X = 10f; // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ Xï¿½ï¿½
+        Enemy_Sensing_Y = 5f;  // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ Yï¿½ï¿½
+        Bump_Power = 2f; // ï¿½æµ¹ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        bleedLevel = 0; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        iamBoss = false;    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½
     }
+        Bump_Power = 10; // ï¿½æµ¹ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+
 
     public override void Short_Monster(Transform target)
     {
-        base.Short_Monster(target);   // ºÎ¸ð ½ºÅ©¸³Æ®¿¡¼­ »ó¼Ó¹Þ¾Æ¿È.
+        base.Short_Monster(target);   // ï¿½Î¸ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ó¹Þ¾Æ¿ï¿½.
     }
 
 

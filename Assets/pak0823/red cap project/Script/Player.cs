@@ -3,78 +3,110 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public int level;   // ÇÃ·¹ÀÌ¾î ·¹º§
-    public float jumpPower; //Jump ³ôÀÌ ÀúÀå º¯¼ö
-    public float Speed; //Move ¼Óµµ ÀúÀå º¯¼ö
-    public float SpeedChange; // Move ¼Óµµº¯°æ ÀúÀå º¯¼ö
-    public float curTime, coolTime = 2;  // ¿¬¼Ó°ø°ÝÀÌ °¡´ÉÇÑ ½Ã°£
-    public float skcoolTime;  // ½ºÅ³ ÄðÅ¸ÀÓ
-    public float Sword_SkTime, Axe_SkTime, Bow_SkTime;   // ¹«±âº° ½ºÅ³ ÄðÅ¸ÀÓ
-    public bool isdelay = false;    //°ø°Ý µô·¹ÀÌ Ã¼Å©
-    public bool isSlide = false;     //½½¶óÀÌµù Ã¼Å©
-    public bool isGround = true;    //Player°¡ ¶¥ÀÎÁö ¾Æ´ÑÁö Ã¼Å©
-    public bool isjump = false;     //Á¡ÇÁÁßÀÎÁö Ã¼Å©
-    public bool isSkill = false;    //½ºÅ³ È®ÀÎ
-    public bool isMasterSkill = false;  //¼÷·Ãµµ ½ºÅ³ È®ÀÎ
-    public bool isAttacking = false; //°ø°Ý»óÅÂ È®ÀÎ
-    public bool isShield = false;   //¹æ¾î¸· »óÅÂ È®ÀÎ
-    public float delayTime = 1f;    //°ø°Ý µô·¹ÀÌ ±âº» ½Ã°£
-    public int WeaponChage = 1;     //¹«±â º¯°æ ÀúÀå º¯¼ö
-    public int JumpCnt, JumpCount = 2;  //2´ÜÁ¡ÇÁÀÇ ¼ö¸¦ Ä«¿îÅÍ ÇØÁÖ´Â º¯¼ö
-    public int SwdCnt, AxeCnt;  //°ø°Ý¸ð¼ÇÀÇ ¼ø¼­
-    public float Direction; //¹æÇâ°ª
-    public float attackDash = 4f; //Å« °ø°Ý½Ã ¾ÕÀ¸·Î ÀÌµ¿ÇÏ´Â °ª
-    public float slideSpeed = 13;   //½½¶óÀÌµù ¼Óµµ
-    public int slideDir = 1;    //½½¶óÀÌµù ¹æÇâ°ª
-    public float MaxHp;    //ÇÃ·¹ÀÌ¾î ÃÖ´ë HP
-    public float CurrentHp;    //ÇÃ·¹ÀÌ¾î ÇöÀç HP
-    public bool ishurt = false; //ÇÇ°Ý È®ÀÎ
-    public bool isknockback = false;    //³Ë¹é È®ÀÎ
-    public float Dmg;  // ´ë¹ÌÁö Àû¿ë º¯¼ö
-    public float DmgChange; // ´ë¹ÌÁö º¯°æ ÀúÀå º¯¼ö
-    public float ShieldTime; // µµ³¢ ½ºÅ³ ¹æ¾î¸· Áö¼Ó½Ã°£
-    public float chargingTime = 2f; // Â÷Â¡ ½Ã°£
-    public bool isCharging = false; // Â÷Â¡ »óÅÂ ¿©ºÎ
-    public float chargeTimer = 0f; // Â÷Â¡ ½Ã°£À» ÃøÁ¤ÇÏ´Â Å¸ÀÌ¸Ó
+    public int level;   // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float[] ExpBarValue = {
+        100f, 150f, 200f, 250f, 300f, 
+        350f, 400f, 450f, 500f, 550f, 
+        600f, 650f, 700f, 750f, 800f,
+        850f, 900f, 950f, 1000f, 1050f,
+        1100f, 1150f, 1200f, 1250f, 1300f,
+        1350f, 1400f};   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï´Âµï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ ï¿½ß°ï¿½ï¿½ï¿½
+    public float jumpPower; //Jump ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float Speed; //Move ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float SpeedChange; // Move ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float curTime, coolTime = 2;  // ï¿½ï¿½ï¿½Ó°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
+    public float skcoolTime;  // ï¿½ï¿½Å³ ï¿½ï¿½Å¸ï¿½ï¿½
+    public float Sword_SkTime, Axe_SkTime, Bow_SkTime;   // ï¿½ï¿½ï¿½âº° ï¿½ï¿½Å³ ï¿½ï¿½Å¸ï¿½ï¿½
+    public float[] Skill_Cools = { 10f, 20f, 10f }; //ï¿½ï¿½Å³ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
+    public bool isdelay = false;    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼Å©
+    public bool isSlide = false;     //ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ Ã¼Å©
+    public bool isGround = true;    //Playerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ï¿½ï¿½ Ã¼Å©
+    public bool isjump = false;     //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼Å©
+    public bool isSkill = false;    //ï¿½ï¿½Å³ È®ï¿½ï¿½
+    public bool isMasterSkill = false;  //ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ï¿½Å³ È®ï¿½ï¿½
+    public bool isAttacking = false; //ï¿½ï¿½ï¿½Ý»ï¿½ï¿½ï¿½ È®ï¿½ï¿½
+    public bool isShield = false;   //ï¿½ï¿½î¸· ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
+    public float delayTime = 1f;    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½âº» ï¿½Ã°ï¿½
+    public int WeaponChage = 1;     //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public int JumpCnt, JumpCount = 2;  //2ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public int SwdCnt, AxeCnt;  //ï¿½ï¿½ï¿½Ý¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float Direction; //ï¿½ï¿½ï¿½â°ª
+    public float attackDash = 4f; //Å« ï¿½ï¿½ï¿½Ý½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½Ï´ï¿½ ï¿½ï¿½
+    public float slideSpeed = 13;   //ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Óµï¿½
+    public int slideDir = 1;    //ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½â°ª
+    public float MaxHp = 100;    //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ö´ï¿½ HP
+    public float BaseHp = 100;    //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ö´ï¿½ HP
+    public float CurrentHp;    //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ HP
+    public bool ishurt = false; //ï¿½Ç°ï¿½ È®ï¿½ï¿½
+    public bool isknockback = false;    //ï¿½Ë¹ï¿½ È®ï¿½ï¿½
+    public float Dmg;  // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float DmgChange; // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float ShieldTime; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³ ï¿½ï¿½î¸· ï¿½ï¿½ï¿½Ó½Ã°ï¿½
+    public float chargingTime = 2f; // ï¿½ï¿½Â¡ ï¿½Ã°ï¿½
+    public bool isCharging = false; // ï¿½ï¿½Â¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float chargeTimer = 0f; // ï¿½ï¿½Â¡ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ Å¸ï¿½Ì¸ï¿½
+    public PlayerCanvas playerCanvas; //ï¿½ß°ï¿½ï¿½ï¿½
 
-    public static Player instance; //Ãß°¡ÇÔ
-    public int gold;  //Ãß°¡ÇÔ
-    public int AtkPower; //Ãß°¡ÇÔ
-    public int Def; //Ãß°¡ÇÔ
-    public float CriticalChance; //Ãß°¡ÇÔ , ÀÌ¼Ó,°ø¼Ó º¹±¸µÇ´Â°Å ¼öÁ¤ ÇÊ¿ä
-    public float DmgIncrease; //Ãß°¡ÇÔ
+    public static Player instance; //ï¿½ß°ï¿½ï¿½ï¿½
+    public float gold;  //ï¿½ß°ï¿½ï¿½ï¿½
+    public float AtkPower; //ï¿½ß°ï¿½ï¿½ï¿½
+    public float Def = 5; //ï¿½ß°ï¿½ï¿½ï¿½
+    public float CriticalChance; //ï¿½ß°ï¿½ï¿½ï¿½ , ï¿½Ì¼ï¿½,ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç´Â°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½
+    public float DmgIncrease = 1f; //ï¿½ß°ï¿½ï¿½ï¿½
+    public float CriDmgIncrease = 1.5f; //ï¿½ß°ï¿½ï¿½ï¿½
+    public float ATS = 1; //ï¿½ß°ï¿½ï¿½ï¿½
+    public float GoldGet = 1f; //ï¿½ß°ï¿½ï¿½ï¿½
+    public float EXPGet = 1f; //ï¿½ß°ï¿½ï¿½ï¿½
+    public bool CanlifeStill = false; //ï¿½ß°ï¿½ï¿½ï¿½
+    public float lifeStill; //ï¿½ß°ï¿½ï¿½ï¿½
+    public float DecreaseCool = 0f; //ï¿½ß°ï¿½ï¿½ï¿½
+    public int proSelectWeapon = 4; //4ï¿½ï¿½ ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 0,1,2 => Ä®,ï¿½ï¿½ï¿½ï¿½,È°
+    public int proLevel = 0;
     public float enemyPower;
 
-    public static int proSelectWeapon = 0;       // 2023-07-31 Ãß°¡(¼±ÅÃÇÑ ¼÷·Ãµµ ¹«±â) 0Ä®,1µµ³¢,2È°,4¼±ÅÃ X
-    public static int proLevel = 3; // ¼÷·Ãµµ ·¹º§
-    public int stackbleed;  // ¸ó½ºÅÍ¿¡ ½×ÀÎ ÃâÇ÷ ½ºÅÃ
-    public static float BleedingTime = 8f;  // 2023-07-31 Ãß°¡(ÃâÇ÷ Áö¼Ó ½Ã°£)
-    public static float bleedDamage = 0.5f; // 2023-08-01 ÃâÇ÷ µ¥¹ÌÁö
-    public static float bloodBoomDmg = 7f;  // ÃâÇ÷½ºÅÃ ÅÍ¶ß¸®´Â µ¥¹ÌÁö
-    public static string playerTag;    // 2023-08-11 Ãß°¡ (ÇÃ·¹ÀÌ¾î ¹«±â ÅÂ±×)
+    public static int proSelectWeapon = 0;       // 2023-07-31 ï¿½ß°ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ï¿½ï¿½ï¿½) 0Ä®,1ï¿½ï¿½ï¿½ï¿½,2È°,4ï¿½ï¿½ï¿½ï¿½ X
+    public static int proLevel = 3; // ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ï¿½ï¿½ï¿½
+    public int stackbleed;  // ï¿½ï¿½ï¿½Í¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public static float BleedingTime = 8f;  // 2023-07-31 ï¿½ß°ï¿½(ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½)
+    public static float bleedDamage = 0.5f; // 2023-08-01 ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public static float bloodBoomDmg = 7f;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í¶ß¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public static string playerTag;    // 2023-08-11 ï¿½ß°ï¿½ (ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Â±ï¿½)
 
-    //¼±ÅÃ´É·ÂÄ¡ Ãß°¡ÇÔ
-    public float[] selectAtkLevel = { 10f, 20f, 30f };
-    public float[] selectATSLevel = { 15f, 30f, 45f };
-    public float[] selectCCLevel = { 5f, 10f, 20f };
-    public float[] selectDefLevel = { 10f, 20f, 30f };
-    public float[] selectHpLevel = { 30f, 60f, 90f };
-    public float[] selectGoldLevel = { 130f, 160f, 200f };
-    public float[] selectExpLevel = { 130f, 160f, 200f };
-    public float[] selectCoolTimeLevel = { 5f, 10f, 20f };
 
-    public GameObject GameManager;  //°ÔÀÓ ¸Å´ÏÀú
-    public GameObject attackRange;  //±ÙÁ¢°ø°Ý À§Ä¡
-    public GameObject Arrow; //È­»ì ¿ÀºêÁ§Æ®
-    public GameObject Arrow2; //È­»ì Áõ°¡ ¿ÀºêÁ§Æ®
-    public GameObject Slash;  // °Ë ±âº»½ºÅ³ ¿ÀºêÁ§Æ®
-    public GameObject BowSkill;  // È° ±âº»½ºÅ³ ¿ÀºêÁ§Æ®
-    public GameObject BowMaster; // È° ¼÷·Ãµµ È­»ì ¿ÀºêÁ§Æ®
+    //ï¿½ï¿½ï¿½Ã´É·ï¿½Ä¡ ï¿½ï¿½ï¿½
+    public float[] selectAtkValue = { 0.1f, 0.2f, 0.3f };
+    public float[] selectATSValue = { 0.15f, 0.3f, 0.4f };
+    public float[] selectCCValue = { 0.05f, 0.1f, 0.2f };
+    public float[] selectLifeStillValue = {0.01f, 0.03f, 0.09f };
+    public float[] selectDefValue = { 10f, 20f, 30f };
+    public float[] selectHpValue = { 30f, 60f, 90f };
+    public float[] selectGoldValue = { 0.3f, 0.6f, 1.0f };
+    public float[] selectExpValue = { 0.3f, 0.6f, 1.0f };
+    public float[] selectCoolTimeValue = { 0.05f, 0.1f, 0.2f };
 
-    public Transform Arrowpos; //È­»ì »ý¼º ¿ÀºêÁ§Æ®
-    public Transform Arrowpos2; //Áõ°¡µÈ È­»ì  ¿ÀºêÁ§Æ®
-    public Transform Attackpos;   //°ø°Ý¹Ú½º À§Ä¡
-    public Transform Skillpos;  // ½ºÅ³ »ý¼º ¿ÀºêÁ§Æ®
+    //ï¿½ï¿½ï¿½Ã´É·ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
+    public int selectAtkLevel = 0;
+    public int selectATSLevel = 0;
+    public int selectCCLevel = 0;
+    public int selectLifeStillLevel = 0;
+    public int selectDefLevel = 0;
+    public int selectHpLevel = 0;
+    public int selectGoldLevel = 0;
+    public int selectExpLevel = 0;
+    public int selectCoolTimeLevel = 0;
+
+    public GameObject GameManager;  //ï¿½ï¿½ï¿½ï¿½ ï¿½Å´ï¿½ï¿½ï¿½
+    public GameObject attackRange;  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
+    public GameObject Arrow; //È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+    public GameObject Arrow2; //È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+    public GameObject Slash;  // ï¿½ï¿½ ï¿½âº»ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+    public GameObject BowSkill;  // È° ï¿½âº»ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+    public GameObject BowMaster; // È° ï¿½ï¿½ï¿½Ãµï¿½ È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+
+    public Transform Arrowpos; //È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+    public Transform Arrowpos2; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+    public Transform Attackpos;   //ï¿½ï¿½ï¿½Ý¹Ú½ï¿½ ï¿½ï¿½Ä¡
+    public Transform Skillpos;  // ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
 
     public AudioClip SwordSkillSound;
     public AudioClip SwordAtkSound;
@@ -88,61 +120,70 @@ public class Player : MonoBehaviour
     public AudioClip SlideingSound;
 
 
-    public BoxCollider2D box; //±ÙÁ¢ °ø°Ý ¹üÀ§
+    public BoxCollider2D box; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public SpriteRenderer spriteRenderer;
     public Enemy enemy;
     Projective_Body PBody;
 
     Rigidbody2D rigid;
-    Animator anim;
+    public Animator anim; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ûºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     new AudioSource audio;
+
+    public bool UseGridSword = false;
+    public float GridPower = 0f;
     void Awake()
     {
-        instance = this; //Ãß°¡ÇÔ
+        instance = this; //ï¿½ß°ï¿½ï¿½ï¿½
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-        JumpCnt = JumpCount;    //½ÃÀÛ½Ã Á¡ÇÁ °¡´É È½¼ö Àû¿ë
-        SpeedChange = 4;  //½ÃÀÛ½Ã ±âº» ÀÌµ¿¼Óµµ
-        jumpPower = 15; //±âº» Á¡ÇÁ³ôÀÌ
-        DmgChange = 7; // ±âº» °ø°Ý ´ë¹ÌÁö
+        JumpCnt = JumpCount;    //ï¿½ï¿½ï¿½Û½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        SpeedChange = 4;  //ï¿½ï¿½ï¿½Û½ï¿½ ï¿½âº» ï¿½Ìµï¿½ï¿½Óµï¿½
+        jumpPower = 15; //ï¿½âº» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        DmgChange = 7; // ï¿½âº» ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
         audio = GetComponent<AudioSource>();
-        Attackpos = transform.GetChild(0).GetComponentInChildren<Transform>(); //attackRangeÀÇ À§Ä¡°ªÀ» pos¿¡ ÀúÀå
-        Arrowpos = transform.GetChild(1).GetComponentInChildren<Transform>(); //ArrowposÀÇ À§Ä¡°ªÀ» pos¿¡ ÀúÀå
-        Arrowpos2 = transform.GetChild(2).GetComponentInChildren<Transform>(); //Arrowpos2ÀÇ À§Ä¡°ªÀ» pos¿¡ ÀúÀå
-        Skillpos = transform.GetChild(3).GetComponentInChildren<Transform>(); //SkillposÀÇ À§Ä¡°ªÀ» pos¿¡ ÀúÀå
+        Attackpos = transform.GetChild(0).GetComponentInChildren<Transform>(); //attackRangeï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ posï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        Arrowpos = transform.GetChild(1).GetComponentInChildren<Transform>(); //Arrowposï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ posï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        Arrowpos2 = transform.GetChild(2).GetComponentInChildren<Transform>(); //Arrowpos2ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ posï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        Skillpos = transform.GetChild(3).GetComponentInChildren<Transform>(); //Skillposï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ posï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 
-    void Start() //Ãß°¡ÇÔ
+    void Start() //ï¿½ß°ï¿½ï¿½ï¿½
     {
         DataManager.instance.JsonLoad("PlayerData");
+        anim.SetFloat("AttackSpeed", ATS);
+        OptionManager.instance.Playing = true;
     }
 
     void Update()
     {
         playerTag = this.gameObject.transform.GetChild(0).tag;
-        stackbleed = Enemy.bleedLevel; // 2023-08-09 Ãß°¡ 
-        Player_Move();  //PlayerÀÇ ÀÌµ¿, Á¡ÇÁ, ¼Óµµ ÇÔ¼ö
-        Player_Attack();    //PlayerÀÇ °ø°Ý ÇÔ¼ö
+        stackbleed = Enemy.bleedLevel; // 2023-08-09 ï¿½ß°ï¿½ 
+        Player_Move();  //Playerï¿½ï¿½ ï¿½Ìµï¿½, ï¿½ï¿½ï¿½ï¿½, ï¿½Óµï¿½ ï¿½Ô¼ï¿½
+        Player_Attack();    //Playerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
+        if (UseGridSword) //ï¿½ß°ï¿½ï¿½ï¿½
+        {
+            GridsSword();
+        }
     }
 
-    void Player_Move() //Player ÀÌµ¿, Á¡ÇÁ
+    void Player_Move() //Player ï¿½Ìµï¿½, ï¿½ï¿½ï¿½ï¿½
     {
         //Move
-        Direction = Input.GetAxisRaw("Horizontal");   // ÁÂ¿ì ¹æÇâ°ªÀ» Á¤¼ö·Î °¡Á®¿À±â
-        if (!isdelay && Direction != 0 && gameObject.CompareTag("Player") && !isSkill)    //°ø°Ý µô·¹ÀÌÁßÀÏ½Ã ÀÌµ¿ ºÒ°¡´É
+        Direction = Input.GetAxisRaw("Horizontal");   // ï¿½Â¿ï¿½ ï¿½ï¿½ï¿½â°ªï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        if (!isdelay && Direction != 0 && gameObject.CompareTag("Player") && !isSkill)    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï½ï¿½ ï¿½Ìµï¿½ ï¿½Ò°ï¿½ï¿½ï¿½
         {
             Speed = SpeedChange;
-           Transform AtkRangeTransform = transform.GetChild(1);   // AttackRange À§Ä¡°ª º¯°æÀ» À§ÇØ ÀÚ½Ä¿ÀºêÁ§Æ® À§Ä¡°ª ºÒ·¯¿È
+           Transform AtkRangeTransform = transform.GetChild(1);   // AttackRange ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½
             anim.SetBool("Player_Walk", true);
-            if (Direction < 0) //¿ÞÂÊ ¹Ù¶óº¸±â
+            if (Direction < 0) //ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¶óº¸±ï¿½
             {
                 spriteRenderer.flipX = false;
                 transform.Translate(new Vector2(-1, 0) * Speed * Time.deltaTime);
                 slideDir = -1;
-                AtkRangeTransform.localPosition = new Vector3(-3, 0); // AttackRange À§Ä¡°ª º¯°æ
+                AtkRangeTransform.localPosition = new Vector3(-3, 0); // AttackRange ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             }
-            else if (Direction > 0) //¿À¸¥ÂÊ ¹Ù¶óº¸±â
+            else if (Direction > 0) //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¶óº¸±ï¿½
             {
                 spriteRenderer.flipX = true;
                 transform.Translate(new Vector2(1, 0) * Speed * Time.deltaTime);
@@ -160,7 +201,7 @@ public class Player : MonoBehaviour
         }
 
         //Jump
-        if (Input.GetKey(KeyCode.DownArrow) && !anim.GetBool("Sliding") && !anim.GetBool("Wall_slide")) //¹ßÆÇ¿¡¼­ ¹ØÀ¸·Î Á¡ÇÁ½Ã ³»·Á°¡±â
+        if (Input.GetKey(KeyCode.DownArrow) && !anim.GetBool("Sliding") && !anim.GetBool("Wall_slide")) //ï¿½ï¿½ï¿½Ç¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         {
             if(Input.GetKeyDown(KeyCode.Space))
                 StartCoroutine(PadJump());
@@ -177,9 +218,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void Player_Attack() //Player °ø°Ý¸ðÀ½
+    public void Player_Attack() //Player ï¿½ï¿½ï¿½Ý¸ï¿½ï¿½ï¿½
     {
-        if (Input.GetKeyDown(KeyCode.Tab) && GameManager.GetComponent<WeaponSwap>().swaping != true)    // ¹«±â º¯°æ
+        if (Input.GetKeyDown(KeyCode.Tab) && GameManager.GetComponent<WeaponSwap>().swaping != true)    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         {
             WeaponChage += 1;      
             if(WeaponChage == 2)
@@ -199,17 +240,17 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.D) && !anim.GetBool("Sliding"))    //¸¶½ºÅÍ½ºÅ³ ½ÇÇà
+        if (Input.GetKeyDown(KeyCode.D) && !anim.GetBool("Sliding"))    //ï¿½ï¿½ï¿½ï¿½ï¿½Í½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½
         {
             isMasterSkill = true;
-            if (WeaponChage == 1)   //°Ë
+            if (WeaponChage == 1)   //ï¿½ï¿½
             {
                 if(proLevel > 2 && proSelectWeapon == 0 && stackbleed > 0)
                 {
                     enemy.bleedEff();
                 }
             }
-            if (WeaponChage == 2)   //µµ³¢
+            if (WeaponChage == 2)   //ï¿½ï¿½ï¿½ï¿½
             {
 
             }
@@ -219,34 +260,34 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.S) && !anim.GetBool("Sliding"))  //½ºÅ³ ½ÇÇà
+        if (Input.GetKeyDown(KeyCode.S) && !anim.GetBool("Sliding"))  //ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½
         {
-            if (WeaponChage == 1 && Sword_SkTime <= 0)    //Sword ½ºÅ³ ½ÇÇà
+            if (WeaponChage == 1 && Sword_SkTime <= 0)    //Sword ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½
             {
-                skcoolTime = 10f;
+                skcoolTime = DeCoolTimeCarcul(Skill_Cools[0]); //ï¿½ï¿½Å³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 Sword_SkTime = skcoolTime;
                 isSkill = true;
                 SwdCnt = 2;
                 anim.SetTrigger("sword_atk");
-                anim.SetFloat("Sword", SwdCnt); // ¾Ö´Ï¸ÞÀÌ¼Ç¿¡ ½ºÅ³ ½ÇÇàÇÔ¼ö¸¦ ³Ö¾îµ×À½
+                anim.SetFloat("Sword", SwdCnt); // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼Ç¿ï¿½ ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½
             }
-            if (WeaponChage == 2 && Axe_SkTime <= 0)    //Axe ½ºÅ³ ½ÇÇà
+            if (WeaponChage == 2 && Axe_SkTime <= 0)    //Axe ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½
             {
                 StartCoroutine(Skill());
-                skcoolTime = 20f;
+                skcoolTime = DeCoolTimeCarcul(Skill_Cools[1]); //ï¿½ï¿½Å³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 Axe_SkTime = skcoolTime;
             }
-            if (WeaponChage == 3 && Bow_SkTime <= 0)    //Bow ½ºÅ³ ½ÇÇà
+            if (WeaponChage == 3 && Bow_SkTime <= 0)    //Bow ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½
             {
                 StartCoroutine(Skill());
-                skcoolTime = 10f;
+                skcoolTime = DeCoolTimeCarcul(Skill_Cools[2]); //ï¿½ï¿½Å³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 Bow_SkTime = skcoolTime;
                 isSkill = true;
             }
         }
         else
         {
-            if(Sword_SkTime >= 0)   // ±×³É 0ÃÊ ¾Æ·¡·Î °è¼Ó °¨¼ÒµÇ´Â ÀÛ¾÷ ¾ø¾Ö·Á°í Ãß°¡
+            if(Sword_SkTime >= 0)   // ï¿½×³ï¿½ 0ï¿½ï¿½ ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ÒµÇ´ï¿½ ï¿½Û¾ï¿½ ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
                 Sword_SkTime -= Time.deltaTime;
             if (Axe_SkTime >= 0)
                 Axe_SkTime -= Time.deltaTime;
@@ -254,23 +295,25 @@ public class Player : MonoBehaviour
                 Bow_SkTime -= Time.deltaTime;
         }
             
-        if(Input.GetKey(KeyCode.A) && !anim.GetBool("Sliding") && !isSkill) // Axe Â÷Â¡ °ø°Ý
+        if(Input.GetKey(KeyCode.A) && !anim.GetBool("Sliding") && !isSkill) // Axe ï¿½ï¿½Â¡ ï¿½ï¿½ï¿½ï¿½
         {
             if(WeaponChage == 2)
             {
                 if (!isCharging)
                 {
                     isCharging = true;
-                    print("Â÷Â¡ ½ÃÀÛ");
+                    print("ï¿½ï¿½Â¡ ï¿½ï¿½ï¿½ï¿½");
                     chargeTimer = 0f;
+                    playerCanvas.ChargeStart(); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½
                 }
-                else // ÀÌ¹Ì Â÷Â¡ ÁßÀÎ °æ¿ì
+                else // ï¿½Ì¹ï¿½ ï¿½ï¿½Â¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
                 {
                     chargeTimer += Time.deltaTime;
+                    playerCanvas.GuageIncrease(chargeTimer/chargingTime); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½
                     if (chargeTimer >= chargingTime)
                     {
-                        chargeTimer = chargingTime; // Â÷Â¡ ½Ã°£ÀÌ ÃÖ´ë ½Ã°£À» ³Ñ¾î°¡Áö ¾Êµµ·Ï Á¦ÇÑ
-                        print("Â÷Â¡¿Ï·á");
+                        chargeTimer = chargingTime; // ï¿½ï¿½Â¡ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½Ñ¾î°¡ï¿½ï¿½ ï¿½Êµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                        print("ï¿½ï¿½Â¡ï¿½Ï·ï¿½");
                     }
 
                 }
@@ -279,6 +322,7 @@ public class Player : MonoBehaviour
         else
         {
             isCharging = false;
+            playerCanvas.ChargeEnd(); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½
             if (chargeTimer >= chargingTime && chargeTimer != 0)
             {
                 Axe_chargeing();
@@ -288,24 +332,24 @@ public class Player : MonoBehaviour
         }
 
 
-        if (Input.GetKeyUp(KeyCode.A) && !anim.GetBool("Sliding") && !isSkill)    //±âº» °ø°Ý
+        if (Input.GetKeyUp(KeyCode.A) && !anim.GetBool("Sliding") && !isSkill)    //ï¿½âº» ï¿½ï¿½ï¿½ï¿½
         {
-            if (!isdelay)   //µô·¹ÀÌ°¡ falseÀÏ¶§ °ø°Ý °¡´É
+            if (!isdelay)   //ï¿½ï¿½ï¿½ï¿½ï¿½Ì°ï¿½ falseï¿½Ï¶ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             {
-                if (WeaponChage == 1)    //Sword °ø°Ý
+                if (WeaponChage == 1)    //Sword ï¿½ï¿½ï¿½ï¿½
                 {
                     Sword_attack();
                 }
-                if (WeaponChage == 2)    //Axe °ø°Ý
+                if (WeaponChage == 2)    //Axe ï¿½ï¿½ï¿½ï¿½
                 {
                     Axe_attack();
                 }
-                if (WeaponChage == 3)    //Bow °ø°Ý
+                if (WeaponChage == 3)    //Bow ï¿½ï¿½ï¿½ï¿½
                 {
                     isdelay = true;
                     anim.SetTrigger("arrow_atk");
                 }
-                StartCoroutine(Attack_delay());    //°ø°ÝÈÄ ´ÙÀ½ °ø°Ý±îÁö µô·¹ÀÌ
+                StartCoroutine(Attack_delay());    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             }
         }
         else
@@ -314,7 +358,7 @@ public class Player : MonoBehaviour
                 curTime -= Time.deltaTime;
             if(ShieldTime >= 0)
                 ShieldTime -= Time.deltaTime;
-            if (ShieldTime <= 0 && !ishurt && !isSlide && !isjump) //¹æ¾î¸· Áö¼Ó½Ã°£ÀÌ ³¡³µ´Ù¸é ¹æ¾î¸· ·¹ÀÌ¾î ÇØÁ¦
+            if (ShieldTime <= 0 && !ishurt && !isSlide && !isjump) //ï¿½ï¿½î¸· ï¿½ï¿½ï¿½Ó½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ù¸ï¿½ ï¿½ï¿½î¸· ï¿½ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½
             {
                 StartCoroutine(Blink());
                 gameObject.layer = LayerMask.NameToLayer("Player");
@@ -323,13 +367,13 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void AttackDamage()// Player °ø°Ý½Ã Àû¿¡°Ô ´ë¹ÌÁö°ª ³Ñ°ÜÁÖ±â
+    public void AttackDamage()// Player ï¿½ï¿½ï¿½Ý½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ°ï¿½ï¿½Ö±ï¿½
     {
-        Dmg = DmgChange;
+        Dmg = DmgChange + AtkPower + GridPower;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         box = transform.GetChild(0).GetComponentInChildren<BoxCollider2D>();
-        if (box != null)    //°ø°Ý ¹üÀ§ ¾È¿¡ null°ªÀÌ ¾Æ´Ò¶§¸¸
+        if (box != null)    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½È¿ï¿½ nullï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ò¶ï¿½ï¿½ï¿½
         {
-            Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(Attackpos.position, box.size, 0); //°ø°Ý ¹üÀ§ ¾È¿¡ ÄÝ¶óÀÌ´õ¸¦ 
+            Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(Attackpos.position, box.size, 0); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½È¿ï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ 
             foreach (Collider2D collider in collider2Ds)
             {
                 if (collider != null && collider.tag == "Enemy" || collider.tag == "Boss")
@@ -346,14 +390,14 @@ public class Player : MonoBehaviour
             }
         }
     } 
-    IEnumerator Skill()//½ºÅ³ ÀÛµ¿½Ã ½ÇÇà(¾ÆÁ÷ ¼öÁ¤Áß)
+    IEnumerator Skill()//ï¿½ï¿½Å³ ï¿½Ûµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
     {
         //yield return null;
-        if (WeaponChage == 1) //sword ½ºÅ³
+        if (WeaponChage == 1) //sword ï¿½ï¿½Å³
         {
             StartCoroutine(SkillTime());
-            Transform SkillTransform = transform.GetChild(3);   //°Ë ½ºÅ³ ¿ÀºêÁ§Æ® À§Ä¡°ª ÀúÀå
-            if (slideDir == 1)   //°ø°Ý ¹æÇâº° Arrowpos À§Ä¡°ª º¯°æ
+            Transform SkillTransform = transform.GetChild(3);   //ï¿½ï¿½ ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            if (slideDir == 1)   //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½âº° Arrowpos ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             {
                 SkillTransform.localPosition = new Vector3(2, 0.2f);
             }
@@ -361,20 +405,20 @@ public class Player : MonoBehaviour
             {
                 SkillTransform.localPosition = new Vector3(-2, 0.2f);
             }
-            Instantiate(Slash, Skillpos.position, transform.rotation); // °Ë±â º¹»ç »ý¼º
+            Instantiate(Slash, Skillpos.position, transform.rotation); // ï¿½Ë±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             PlaySound("SwordSkill");
             yield return new WaitForSeconds(0.2f);
             SwdCnt = 1;
         }
-        if (WeaponChage == 2) //Axe ½ºÅ³
+        if (WeaponChage == 2) //Axe ï¿½ï¿½Å³
         {
-            gameObject.layer = LayerMask.NameToLayer("Shield"); //¹æ¾î¸· È°¼ºÈ­ ÈÄ 10ÃÊ°£ Áö¼Ó
-            this.transform.GetChild(6).gameObject.SetActive(true);  //¹æ¾î¸· ÀÌÆåÆ® ÄÑ±â
+            gameObject.layer = LayerMask.NameToLayer("Shield"); //ï¿½ï¿½î¸· È°ï¿½ï¿½È­ ï¿½ï¿½ 10ï¿½Ê°ï¿½ ï¿½ï¿½ï¿½ï¿½
+            this.transform.GetChild(6).gameObject.SetActive(true);  //ï¿½ï¿½î¸· ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ñ±ï¿½
             PlaySound("AxeSkill");
             isShield = true;
             ShieldTime = 10f;
         }
-        if (WeaponChage == 3) //Arrow ½ºÅ³
+        if (WeaponChage == 3) //Arrow ï¿½ï¿½Å³
         {
             anim.SetTrigger("arrow_atk");
             StartCoroutine(SkillTime());
@@ -392,7 +436,7 @@ public class Player : MonoBehaviour
     }
 
     //Wall_Slide
-    void OnCollisionStay2D(Collision2D collision)   // º® ÄÝ¶óÀÌÁ¯ÀÌ Player¿¡ ´ê°í ÀÖÀ¸¸é ½ÇÇà, Á¡ÇÁÂøÁö ½Ã ÄÝ¶óÀÌÁ¯ ´êÀ» ½Ã Á¡ÇÁ ÇØÁ¦
+    void OnCollisionStay2D(Collision2D collision)   // ï¿½ï¿½ ï¿½Ý¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Playerï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ý¶ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         RaycastHit2D rayHitDown = Physics2D.Raycast(rigid.position, Vector3.down, 1f, LayerMask.GetMask("Tilemap", "Pad"));
         //Debug.DrawRay(rigid.position, Vector3.down * 1f, Color.red);
@@ -413,15 +457,15 @@ public class Player : MonoBehaviour
             JumpCnt = JumpCount;
         }
     }
-    private void OnCollisionExit2D(Collision2D collision)   //Player°¡ º®¿¡ ´êÁö ¾ÊÀ»¶§
+    private void OnCollisionExit2D(Collision2D collision)   //Playerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     {
-        if (collision.gameObject.tag == "Wall") //º®¿¡ ºÙ¾î¼­ ³»·Á°¥ ¶§
+        if (collision.gameObject.tag == "Wall") //ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¾î¼­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
         {
             anim.SetBool("Wall_slide", false);
             rigid.drag = 0;
         }
        
-        if (collision.gameObject.tag == "Wall" && Input.GetKey(KeyCode.Space)) //º®¿¡¼­ Á¡ÇÁ½Ã ¹Ý´ë·Î ÆÃ°Ü°¨
+        if (collision.gameObject.tag == "Wall" && Input.GetKey(KeyCode.Space)) //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ý´ï¿½ï¿½ ï¿½Ã°Ü°ï¿½
         {
             if (Direction > 0)
                 rigid.velocity = new Vector2(1, 1) * 10f;
@@ -430,7 +474,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)  // ÇÔÁ¤ ±¸¸Û¿¡ ¶³¾îÁ³À» °æ¿ì ´Ù½Ã ¸®½ºÆù(ÀÓ½Ã)
+    private void OnTriggerEnter2D(Collider2D collision)  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Û¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½Ó½ï¿½)
     {
         if(collision.gameObject.tag == "Respawn")
         {
@@ -439,7 +483,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private IEnumerator Sliding() //½½¶óÀÌµù ½ÇÇà
+    private IEnumerator Sliding() //ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         GameManager.GetComponent<Ui_Controller>().Sliding();
         Transform SlideTransform = transform.GetChild(4);
@@ -449,20 +493,20 @@ public class Player : MonoBehaviour
         gameObject.layer = LayerMask.NameToLayer("Sliding");
         anim.SetBool("Sliding", true);
         PlaySound("Slideing");
-        if (slideDir == 1) //¿À¸¥ÂÊÀ¸·Î ½½¶óÀÌµù
+        if (slideDir == 1) //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½
         {
             rigid.velocity = new Vector2(transform.localScale.x * slideSpeed, Time.deltaTime);
-            SlideTransform.localPosition = new Vector3((float)-1.1, (float)-0.4); // Smoke À§Ä¡°ª º¯°æ
+            SlideTransform.localPosition = new Vector3((float)-1.1, (float)-0.4); // Smoke ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             SlideTransform.eulerAngles = new Vector3(0, 0, 0);
         }    
-        if (slideDir == -1) //¿ÞÂÊÀ¸·Î ½½¶óÀÌµù
+        if (slideDir == -1) //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½
         {
             rigid.velocity = new Vector2((transform.localScale.x * -1 * slideSpeed), Time.deltaTime);
-            SlideTransform.localPosition = new Vector3((float)1.1, (float)-0.4); // Smoke À§Ä¡°ª º¯°æ
+            SlideTransform.localPosition = new Vector3((float)1.1, (float)-0.4); // Smoke ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             SlideTransform.eulerAngles = new Vector3(0, 180, 0);
         }
         this.transform.GetChild(4).gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.5f); //¹«Àû ½Ã°£
+        yield return new WaitForSeconds(0.5f); //ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
         anim.SetBool("Sliding", false);
         gameObject.tag = "Player";
         this.transform.GetChild(4).gameObject.SetActive(false);
@@ -471,18 +515,18 @@ public class Player : MonoBehaviour
         else
             gameObject.layer = LayerMask.NameToLayer("Player");
         Speed = SpeedChange;
-        yield return new WaitForSeconds(2f); //½½¶óÀÌµù ÄðÅ¸ÀÓ
+        yield return new WaitForSeconds(2f); //ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½Å¸ï¿½ï¿½
         isSlide = false;
 
     }
 
-    public void Playerhurt(float Damage, Vector2 pos) // Player°¡ °ø°Ý¹ÞÀ» ½Ã
+    public void Playerhurt(float Damage, Vector2 pos) // Playerï¿½ï¿½ ï¿½ï¿½ï¿½Ý¹ï¿½ï¿½ï¿½ ï¿½ï¿½
     {
         if (!ishurt)
         {
-            if (gameObject.layer != LayerMask.NameToLayer("Shield"))    // ¹æ¾î¸·ÀÌ ¾øÀ¸¸é ÇÇ°ÝµÊ
+            if (gameObject.layer != LayerMask.NameToLayer("Shield"))    // ï¿½ï¿½î¸·ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç°Ýµï¿½
             {
-
+                Damage = DefDamgeCarculation(Damage); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
                 ishurt = true;
                 CurrentHp = CurrentHp - Damage;
                 PlaySound("Damaged");
@@ -516,39 +560,39 @@ public class Player : MonoBehaviour
 
     }
 
-    IEnumerator Attack_delay() //¿¬¼Ó°ø°Ý µô·¹ÀÌ
+    IEnumerator Attack_delay() //ï¿½ï¿½ï¿½Ó°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     {
         yield return new WaitForSeconds(delayTime);
         isdelay = false;
     }
 
-    void Sword_attack() //Sword °ø°Ý °ü·Ã Á¤º¸
+    void Sword_attack() //Sword ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         isdelay = true;
         DmgChange = 7;
         box.size = new Vector2(3.5f, 2.5f);
         box.offset = new Vector2(1.5f, 0);
-        anim.SetFloat("Sword", SwdCnt); //Blend¸¦ ÀÌ¿ëÇØ ÀÏ¹Ý°ø°Ý°ú ½ºÅ³ ¾Ö´Ï¸ÞÀÌ¼Ç ±¸ºÐ ½ÇÇà
-        anim.SetTrigger("sword_atk"); //°ø°Ý ´ë¹ÌÁö ÇÔ¼ö ½ÇÇàÀº ¾Ö´Ï¸ÞÀÌ¼Ç ºÎºÐ¿¡ µé¾îÀÖÀ½
+        anim.SetFloat("Sword", SwdCnt); //Blendï¿½ï¿½ ï¿½Ì¿ï¿½ï¿½ï¿½ ï¿½Ï¹Ý°ï¿½ï¿½Ý°ï¿½ ï¿½ï¿½Å³ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        anim.SetTrigger("sword_atk"); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ÎºÐ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     }   
 
-    void Axe_attack()   //Axe °ø°Ý °ü·Ã Á¤º¸
+    void Axe_attack()   //Axe ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         isdelay = true;
-        if (curTime > 0)    //Ã¹¹øÂ° °ø°ÝÈÄ ÄðÅ¸ÀÓ ³»¿¡ °ø°Ý½Ã °­°ø°Ý ¹ßµ¿
+        if (curTime > 0)    //Ã¹ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ßµï¿½
             AxeCnt++;
         else
             AxeCnt = 1;
 
-        if(AxeCnt == 1) // µ¿ÀÛº° ´ë¹ÌÁö º¯°æ
+        if(AxeCnt == 1) // ï¿½ï¿½ï¿½Ûºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         {
             DmgChange = 10;
             box.size = new Vector2(5f, 2.5f);
-            if(slideDir == 1)   //°ø°Ý ¹æÇâº° box.offset°ªÀ» ´Ù¸£°Ô Àû¿ë
+            if(slideDir == 1)   //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½âº° box.offsetï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 box.offset = new Vector2(2, 0);
             else
                 box.offset = new Vector2(1, 0);
-            //PlaySound("AxeAtk1");     À¯´ÏÆ¼ ¾Ö´Ï¸ÞÀÌ¼Ç¿¡ ½ÇÇàµÇ°Ô Ãß°¡ÇØµ×À½
+            //PlaySound("AxeAtk1");     ï¿½ï¿½ï¿½ï¿½Æ¼ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼Ç¿ï¿½ ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ ï¿½ß°ï¿½ï¿½Øµï¿½ï¿½ï¿½
         }
         else if (AxeCnt == 2)    
         {
@@ -558,7 +602,7 @@ public class Player : MonoBehaviour
                 box.offset = new Vector2(2.5f, 0);
             else
                 box.offset = new Vector2(0.5f, 0);
-            //PlaySound("AxeAtk1");     À¯´ÏÆ¼ ¾Ö´Ï¸ÞÀÌ¼Ç¿¡ ½ÇÇàµÇ°Ô Ãß°¡ÇØµ×À½
+            //PlaySound("AxeAtk1");     ï¿½ï¿½ï¿½ï¿½Æ¼ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼Ç¿ï¿½ ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ ï¿½ß°ï¿½ï¿½Øµï¿½ï¿½ï¿½
         }
         else if (AxeCnt == 3)
         {
@@ -569,18 +613,18 @@ public class Player : MonoBehaviour
                 box.offset = new Vector2(3.5f, 0);
             else
                 box.offset = new Vector2(-0.5f, 0);
-            //PlaySound("AxeAtk3");     À¯´ÏÆ¼ ¾Ö´Ï¸ÞÀÌ¼Ç¿¡ ½ÇÇàµÇ°Ô Ãß°¡ÇØµ×À½
+            //PlaySound("AxeAtk3");     ï¿½ï¿½ï¿½ï¿½Æ¼ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼Ç¿ï¿½ ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ ï¿½ß°ï¿½ï¿½Øµï¿½ï¿½ï¿½
         }
-        anim.SetFloat("Axe", AxeCnt); //Blend¸¦ ÀÌ¿ëÇØ ¿¬¼Ó°ø°ÝÀÇ ¾Ö´Ï¸ÞÀÌ¼Ç ¼øÂ÷Àû ½ÇÇà
+        anim.SetFloat("Axe", AxeCnt); //Blendï¿½ï¿½ ï¿½Ì¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ó°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         anim.SetTrigger("axe_atk");
 
-        if (AxeCnt > 2)     //¿¬¼Ó°ø°ÝÀÌ ³¡³­ÈÄ ´Ù½Ã Ã¹¹øÂ° °ø°Ý°ªÀ¸·Î º¯°æ
+        if (AxeCnt > 2)     //ï¿½ï¿½ï¿½Ó°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ Ã¹ï¿½ï¿½Â° ï¿½ï¿½ï¿½Ý°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             AxeCnt = 0;
 
-        curTime = coolTime + 0.5f;  // ÄÞº¸ °ø°Ý Á¦ÇÑ½Ã°£
+        curTime = coolTime + 0.5f;  // ï¿½Þºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ñ½Ã°ï¿½
     }       
     
-    void Axe_chargeing()  //Axe Â÷Â¡ ½ºÅ³ °ü·Ã
+    void Axe_chargeing()  //Axe ï¿½ï¿½Â¡ ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½
     {
         isdelay = true;
         Speed = 0;
@@ -588,16 +632,16 @@ public class Player : MonoBehaviour
         DmgChange = 30;
         isCharging = false;
         chargeTimer = 0f;
-        anim.SetFloat("Axe", AxeCnt); //Â÷Â¡ °ø°ÝÀº 3¹ø ¾Ö´Ï¸ÞÀÌ¼ÇÀ¸·Î ½ÇÇà
+        anim.SetFloat("Axe", AxeCnt); //ï¿½ï¿½Â¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 3ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         anim.SetTrigger("axe_atk");
     }   
-    IEnumerator Bow_attack() //È­»ì ÀÏ¹Ý°ø°Ý ¹× ½ºÅ³ - ¾Ö´Ï¸ÞÀÌ¼Ç Æ¯Á¤ ºÎºÐ¿¡¼­ ½ÇÇàµÇ°Ô À¯´ÏÆ¼¿¡¼­ ¼³Á¤ÇÔ
+    IEnumerator Bow_attack() //È­ï¿½ï¿½ ï¿½Ï¹Ý°ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Å³ - ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ Æ¯ï¿½ï¿½ ï¿½ÎºÐ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ ï¿½ï¿½ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     {
         yield return null;
-        Transform ArrowposTransform = transform.GetChild(1);  // ±âº» È­»ì
-        Transform Arrowpos2Transform = transform.GetChild(2); // Áõ°¡ È­»ì
+        Transform ArrowposTransform = transform.GetChild(1);  // ï¿½âº» È­ï¿½ï¿½
+        Transform Arrowpos2Transform = transform.GetChild(2); // ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½
 
-        if (slideDir == 1)   //°ø°Ý ¹æÇâº° Arrowpos À§Ä¡°ª º¯°æ
+        if (slideDir == 1)   //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½âº° Arrowpos ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         {
             ArrowposTransform.localPosition = new Vector3(1, 0.2f);
             Arrowpos2Transform.localPosition = new Vector3(1, -0.5f);
@@ -610,30 +654,30 @@ public class Player : MonoBehaviour
 
         if(isSkill)
         {
-            Instantiate(BowSkill, Arrowpos.position, transform.rotation);   //½ºÅ³ ÀÌÆåÆ® È­»ì »ý¼º
+            Instantiate(BowSkill, Arrowpos.position, transform.rotation);   //ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½Æ® È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             PlaySound("BowSkill");
         }
         else if(isMasterSkill)
         {
-            Instantiate(BowMaster, Arrowpos.position, transform.rotation);  //¸¶½ºÅÍ ½ºÅ³ ÀÌÆåÆ® È­»ì »ý¼º
+            Instantiate(BowMaster, Arrowpos.position, transform.rotation);  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½Æ® È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
         else
         {
-            Instantiate(Arrow, Arrowpos.position, transform.rotation); // ±âº» È­»ì º¹»ç »ý¼º
+            Instantiate(Arrow, Arrowpos.position, transform.rotation); // ï¿½âº» È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             if(level == 2)
-                Instantiate(Arrow2, Arrowpos2.position, transform.rotation);  // Áõ°¡µÈ È­»ì º¹»ç »ý¼º
+                Instantiate(Arrow2, Arrowpos2.position, transform.rotation);  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             PlaySound("BowAtk");
         }
 
 
-        if (slideDir == 1)  //ÇÃ·¹ÀÌ¾î°¡ ¹Ù¶óº¸´Â ¹æÇâ ¿ÞÂÊ
+        if (slideDir == 1)  //ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½Ù¶óº¸´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         {
             if (!isSkill)
-                rigid.velocity = new Vector2(transform.localScale.x - 5f, Time.deltaTime); // È° °ø°Ý½Ã ¾à°£ÀÇ µÚ·Î ¹Ð¸²
+                rigid.velocity = new Vector2(transform.localScale.x - 5f, Time.deltaTime); // È° ï¿½ï¿½ï¿½Ý½ï¿½ ï¿½à°£ï¿½ï¿½ ï¿½Ú·ï¿½ ï¿½Ð¸ï¿½
             else
                 rigid.velocity = new Vector2(transform.localScale.x - 10f, Time.deltaTime);
         }
-        else  //ÇÃ·¹ÀÌ¾î°¡ ¹Ù¶óº¸´Â ¹æÇâ ¿À¸¥ÂÊ
+        else  //ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½Ù¶óº¸´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         {
             if (!isSkill)
                 rigid.velocity = new Vector2(transform.localScale.x + 5f, Time.deltaTime);
@@ -642,7 +686,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    IEnumerator SkillTime() //½ºÅ³ Á¾·á ½Ã°£
+    IEnumerator SkillTime() //ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
     {
         if(WeaponChage == 1)
             yield return new WaitForSeconds(0.6f);
@@ -653,7 +697,7 @@ public class Player : MonoBehaviour
         isMasterSkill = false;
     }
 
-    IEnumerator Dash() //ÀÏºÎ °ø°Ý½Ã ¾ÕÀ¸·Î ´ë½¬ ÀÌµ¿ - ¾Ö´Ï¸ÞÀÌ¼Ç Æ¯Á¤ ºÎºÐ¿¡¼­ ½ÇÇàµÇ°Ô À¯´ÏÆ¼¿¡¼­ ¼³Á¤ÇÔ
+    IEnumerator Dash() //ï¿½Ïºï¿½ ï¿½ï¿½ï¿½Ý½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ë½¬ ï¿½Ìµï¿½ - ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ Æ¯ï¿½ï¿½ ï¿½ÎºÐ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ ï¿½ï¿½ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     {
         yield return null;
         if (slideDir == -1)
@@ -666,12 +710,12 @@ public class Player : MonoBehaviour
         }
     }
 
-    IEnumerator Knockback(float dir) //ÇÇÇØÀÔÀ»½Ã ³Ë¹é
+    IEnumerator Knockback(float dir) //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë¹ï¿½
     {
         isknockback = true;
         float ctime = 0;
 
-        while (ctime < 0.4f) //³Ë¹é Áö¼Ó½Ã°£
+        while (ctime < 0.4f) //ï¿½Ë¹ï¿½ ï¿½ï¿½ï¿½Ó½Ã°ï¿½
         {
             Vector2 vector2 = new Vector2(dir, 1);
             transform.Translate(vector2.normalized * Speed * 3 * Time.deltaTime);
@@ -681,18 +725,18 @@ public class Player : MonoBehaviour
         isknockback = false;
     }
 
-    IEnumerator Routine() // ÇÇÇØÀÔÀ»½Ã Àá±ñµ¿¾È ¹«Àû
+    IEnumerator Routine() // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ñµ¿¾ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         gameObject.layer = LayerMask.NameToLayer("Invincible");
         yield return new WaitForSeconds(2f);
         ishurt = false;
-        if(ShieldTime > 0)  // ÇÇ°Ý ¹«ÀûÁß ¹æ¾î¸· ½ºÅ³À» ½ÇÇàÇÏ¸é ÇÃ·¹ÀÌ¾î ·¹ÀÌ¾î·Î ¹Ù²îÁö¾Ê°í ¹Ù·Î ¹æ¾î¸·À¸·Î º¯°æ
+        if(ShieldTime > 0)  // ï¿½Ç°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î¸· ï¿½ï¿½Å³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½ï¿½ï¿½Ê°ï¿½ ï¿½Ù·ï¿½ ï¿½ï¿½î¸·ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             gameObject.layer = LayerMask.NameToLayer("Shield");
         else
             gameObject.layer = LayerMask.NameToLayer("Player");
     }
 
-    IEnumerator Blink() // ¹«Àû½Ã°£µ¿¾È Åõ¸í È¿°ú
+    IEnumerator Blink() // ï¿½ï¿½ï¿½ï¿½ï¿½Ã°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È¿ï¿½ï¿½
     {
         while (ishurt)
         {
@@ -727,24 +771,24 @@ public class Player : MonoBehaviour
         gameObject.layer = LayerMask.NameToLayer("Jump");
         
         yield return new WaitForSeconds(0.3f);
-        if (ShieldTime >= 0 && !ishurt && !isSlide) //¹æ¾î¸· Áö¼Ó½Ã°£ÀÌ ³¡³µ´Ù¸é ¹æ¾î¸· ·¹ÀÌ¾î ÇØÁ¦
+        if (ShieldTime >= 0 && !ishurt && !isSlide) //ï¿½ï¿½î¸· ï¿½ï¿½ï¿½Ó½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ù¸ï¿½ ï¿½ï¿½î¸· ï¿½ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½
             gameObject.layer = LayerMask.NameToLayer("Shield");
         else
             gameObject.layer = LayerMask.NameToLayer("Player");
         this.transform.GetChild(5).gameObject.SetActive(false);
-    } //¹ßÆÇ ¹«½Ã °ü·Ã
+    } //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-    void Die() //Player »ç¸Á½Ã ½ºÇÁ¶óÀÌÆ® »èÁ¦
+    void Die() //Player ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
     {
         Destroy(gameObject);
     }
 
-    void PlayerReposition() // ¸®½ºÆù À§Ä¡ ÁöÁ¤(ÀÓ½Ã)
+    void PlayerReposition() // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½(ï¿½Ó½ï¿½)
     {
         transform.position = new Vector3(-30, -7.5f, 0);
     }
 
-    void PlaySound(string action) // »ç¿îµå °ü·Ã ÇÔ¼ö
+    void PlaySound(string action) // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     {
         switch (action)
         {
@@ -783,5 +827,208 @@ public class Player : MonoBehaviour
                 break;
         }
         audio.Play();
+    }
+
+    public bool CCGetRandomResult() //Ä¡ï¿½ï¿½Å¸ ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ ï¿½ß°ï¿½
+    {
+        // 0ï¿½ï¿½ 1 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        float randomValue = Random.Range(0f, 1f);
+
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Û°Å³ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ trueï¿½ï¿½ ï¿½ï¿½È¯, ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ falseï¿½ï¿½ ï¿½ï¿½È¯
+        return randomValue <= CriticalChance;
+    }
+
+    public float DefDamgeCarculation(float damage) //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ ï¿½ß°ï¿½
+    {
+        float NewDmg;
+        if (Def > 0)
+        {
+            NewDmg = damage - (damage * (0.007f * Def));
+            return NewDmg;
+        }
+        else if (Def == 0)
+        {
+            return damage;
+        }
+        else
+        {
+            NewDmg = damage + (damage / (-0.05f * Def));
+            return NewDmg;
+        }
+    }
+
+    public float DeCoolTimeCarcul(float cooltime) //ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ß°ï¿½
+    {
+        float newCooltime;
+        newCooltime = cooltime - (cooltime * DecreaseCool);
+        return newCooltime;
+    }
+
+    public void GetSelectValue(string selectName) //ï¿½ï¿½ï¿½ï¿½ ï¿½É·ï¿½Ä¡ ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
+    {
+        Debug.Log("GetSelectValue: " + selectName);
+        switch (selectName)
+        {
+            case "selectAtkLevel":
+                if (selectAtkLevel > 1) // ï¿½ï¿½ï¿½ï¿½ 1 ï¿½Ì»ï¿½
+                {
+                    DmgIncrease += selectAtkValue[selectAtkLevel - 1] - selectAtkValue[selectAtkLevel - 2];
+                }
+                else if (selectAtkLevel == 1) // Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+                {
+                    DmgIncrease += selectAtkValue[selectAtkLevel - 1];
+                }
+                break;
+            case "selectATSLevel":
+                if (selectATSLevel > 1) // ï¿½ï¿½ï¿½ï¿½ 1 ï¿½Ì»ï¿½
+                {
+                    ATS += selectATSValue[selectATSLevel - 1] - selectATSValue[selectATSLevel - 2];
+                    delayTime = -0.4f * ATS + 1.4f;
+                    anim.SetFloat("AttackSpeed", ATS);
+                }
+                else if (selectATSLevel == 1) // Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+                {
+                    ATS += selectATSValue[selectATSLevel - 1];
+                    delayTime = -0.4f * ATS + 1.4f;
+                    anim.SetFloat("AttackSpeed", ATS);
+                }
+                break;
+            case "selectCCLevel":
+                if (selectCCLevel > 1) // ï¿½ï¿½ï¿½ï¿½ 1 ï¿½Ì»ï¿½
+                {
+                    CriticalChance += selectCCValue[selectCCLevel - 1] - selectCCValue[selectCCLevel - 2];
+                }
+                else if (selectCCLevel == 1) // Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+                {
+                    CriticalChance += selectCCValue[selectCCLevel - 1];
+                }
+                    break;
+            case "selectLifeStillLevel":
+                if (selectLifeStillLevel > 1) // ï¿½ï¿½ï¿½ï¿½ 1 ï¿½Ì»ï¿½
+                {
+                    lifeStill += selectLifeStillValue[selectLifeStillLevel - 1] - selectLifeStillValue[selectLifeStillLevel - 2];
+                }
+                else if (selectLifeStillLevel == 1) // Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+                {
+                    lifeStill += selectLifeStillValue[selectLifeStillLevel - 1];
+                }
+                break;
+            case "selectDefLevel":
+                if (selectDefLevel > 1) // ï¿½ï¿½ï¿½ï¿½ 1 ï¿½Ì»ï¿½
+                {
+                    Def += selectDefValue[selectDefLevel - 1] - selectDefValue[selectDefLevel - 2];
+                }
+                else if (selectDefLevel == 1) // Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+                {
+                    Def += selectDefValue[selectDefLevel - 1];
+                }
+                break;
+            case "selectHpLevel":
+                if (selectHpLevel > 1) // ï¿½ï¿½ï¿½ï¿½ 1 ï¿½Ì»ï¿½
+                {
+                    MaxHp += BaseHp * selectHpValue[selectHpLevel - 1] / 100 - BaseHp * selectHpValue[selectHpLevel - 2] / 100;
+                }
+                else if (selectHpLevel == 1) // Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+                {
+                    MaxHp += BaseHp * selectHpValue[selectHpLevel - 1] / 100;
+                }
+                break;
+            case "selectGoldLevel":
+                if (selectGoldLevel > 1) // ï¿½ï¿½ï¿½ï¿½ 1 ï¿½Ì»ï¿½
+                {
+                    GoldGet += selectGoldValue[selectGoldLevel - 1] - selectGoldValue[selectGoldLevel - 2];
+                }
+                else if (selectGoldLevel == 1) // Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+                {
+                    GoldGet += selectGoldValue[selectGoldLevel - 1];
+                }
+                break;
+            case "selectExpLevel":
+                if (selectExpLevel > 1) // ï¿½ï¿½ï¿½ï¿½ 1 ï¿½Ì»ï¿½
+                {
+                    EXPGet += selectExpValue[selectExpLevel - 1] - selectExpValue[selectExpLevel - 2];
+                }
+                else if (selectExpLevel == 1) // Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+                {
+                    EXPGet += selectExpValue[selectExpLevel - 1];
+                }
+                break;
+            case "selectCoolTimeLevel":
+                if (selectCoolTimeLevel > 1) // ï¿½ï¿½ï¿½ï¿½ 1 ï¿½Ì»ï¿½
+                {
+                    DecreaseCool += selectCoolTimeValue[selectCoolTimeLevel - 1] - selectCoolTimeValue[selectCoolTimeLevel - 2];
+                }
+                else if (selectCoolTimeLevel == 1) // Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+                {
+                    DecreaseCool += selectCoolTimeValue[selectCoolTimeLevel - 1];
+                }
+                break;
+            case "Start":
+                if (selectAtkLevel - 1 >= 0)
+                {
+                    DmgIncrease += selectAtkValue[selectAtkLevel - 1];
+                }
+                if (selectATSLevel - 1 >= 0)
+                {
+                    ATS += selectATSValue[selectATSLevel - 1];
+                    delayTime = -0.4f * ATS + 1.4f;
+                    anim.SetFloat("AttackSpeed", ATS);
+                }
+                if (selectCCLevel - 1 >= 0)
+                {
+                    CriticalChance += selectCCValue[selectCCLevel - 1];
+                }
+                if (selectLifeStillLevel - 1 >= 0)
+                {
+                    lifeStill += selectLifeStillValue[selectLifeStillLevel - 1];
+                }
+                if (selectDefLevel - 1 >= 0)
+                {
+                    Def += selectDefValue[selectDefLevel - 1];
+                }
+                if (selectHpLevel - 1 >= 0)
+                {
+                    MaxHp += MaxHp * selectHpValue[selectHpLevel - 1] / 100;
+                }
+                if (selectGoldLevel - 1 >= 0)
+                {
+                    GoldGet += selectGoldValue[selectGoldLevel - 1];
+                }
+                if (selectExpLevel - 1 >= 0)
+                {
+                    EXPGet += selectExpValue[selectExpLevel - 1];
+                }
+                if (selectCoolTimeLevel - 1 >= 0)
+                {
+                    DecreaseCool += selectCoolTimeValue[selectCoolTimeLevel - 1];
+                }
+                break;
+        }
+    }
+
+    public int[] returnPlayerSelectLevel() //ï¿½ß°ï¿½ï¿½ï¿½
+    {
+        int[] SL = new int[9];
+        SL[0] = selectAtkLevel;
+        SL[1] = selectATSLevel;
+        SL[2] = selectCCLevel;
+        SL[3] = selectLifeStillLevel;
+        SL[4] = selectDefLevel;
+        SL[5] = selectHpLevel;
+        SL[6] = selectGoldLevel;
+        SL[7] = selectExpLevel;
+        SL[8] = selectCoolTimeLevel;
+        return SL;
+    }
+
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Æ¯ï¿½ï¿½È¿ï¿½ï¿½ ï¿½Ô¼ï¿½
+    public void GridsSword()
+    {
+        GridPower = (gold / 777) * 7;
+        if (!UseGridSword)
+        {
+            GameManager.GetComponent<Ui_Controller>().UiUpdate();
+            UseGridSword = true;
+        }
     }
 }

@@ -9,8 +9,11 @@ using Random = UnityEngine.Random;
 public class BossHpController : MonoBehaviour
 {
     public GameObject ShakeObject;
+    public GameObject CameraObject;
     Vector3 ShakeObjectPos;
+    Vector3 CameraObjectPos;
     [SerializeField] [Range(1f, 5f)] float shakeRange = 2.5f;
+    [SerializeField] [Range(0.1f, 2f)] float CamerashakeRange = 1f;
     [SerializeField] [Range(0.1f, 1f)] float duration = 0.5f;
 
     public float Animduration = 1f; // 애니메이션 시간 (초)
@@ -24,13 +27,15 @@ public class BossHpController : MonoBehaviour
     public HpBar[] HpSliders = { };
     public TextMeshProUGUI LineCount;
 
+    public TextMeshProUGUI BossName;
     public float BossTotalHp = 500f;
     public int BossHpLine = 5;
     private float DivisionHp;
     public int currentHpLine = 0;
 
+    public Enemy boss;
     // Start is called before the first frame update
-    void Start()
+    void BossStart()
     {
         startPosition = ShakeObject.transform.position;
         targetPosition = startPosition + new Vector3(0f, targetHeight, 0f);
@@ -65,8 +70,14 @@ public class BossHpController : MonoBehaviour
         }
     }
 
-    public void BossSpawn()
+    public void BossSpawn(Enemy enemy)
     {
+        boss = enemy;
+        BossName.text = boss.Enemy_Name;
+        BossTotalHp = boss.Enemy_HP;
+        BossHpLine = boss.BossHpLine;
+        BossStart();
+        TotalBar.SetActive(true);
         StartCoroutine(BossHpUi_Up());
     }
 
@@ -89,6 +100,7 @@ public class BossHpController : MonoBehaviour
         if (HpSliders[0].currentHp <= 0)
         {
             Invoke("BossDead", 2f);
+            CameraShake();
             Time.timeScale = 0.5f;
         }
     }
@@ -156,5 +168,28 @@ public class BossHpController : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    public void CameraShake()
+    {
+        InvokeRepeating("StartCameraShake", 0f, 0.005f); //InvokeRepeating 일정 간격 호출
+        Invoke("StopCameraShake", 2f); //지연 시간 후 멈추는 함수 호출
+    }
+
+    public void StartCameraShake() //흔들림 효과
+    {
+        CameraObjectPos = CameraObject.transform.position;
+        float ObjectPosX = Random.value * CamerashakeRange * 2 - CamerashakeRange;
+        float ObjectPosY = Random.value * CamerashakeRange * 2 - CamerashakeRange;
+        Vector3 ShakeObjectPos = CameraObject.transform.position;
+        ShakeObjectPos.x += ObjectPosX;
+        ShakeObjectPos.y += ObjectPosY;
+        CameraObject.transform.position = ShakeObjectPos; //바뀐 위치 적용
+    }
+
+    public void StopCameraShake() //흔들림 멈추는 함수
+    {
+        CancelInvoke("StartCameraShake"); //현재 Invoke 실행되는 함수 있으면 취소
+        CameraObject.transform.position = CameraObjectPos; //처음 지정했던 곳으로 ui 원위치
     }
 }

@@ -4,32 +4,37 @@ using UnityEngine;
 
 public class Nec_Boss : Enemy
 {
-    public override void InitSetting()  // ÀûÀÇ ±âº» Á¤º¸¸¦ ¼³Á¤ÇÏ´Â ÇÔ¼ö
+    public override void InitSetting()  // ï¿½ï¿½ï¿½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     {
-        Enemy_Mod = 2;  // º¸½º
-        Enemy_Power = 12f; //ÀûÀÇ °ø°Ý·Â
-        Bump_Power = 10f;    // Ãæµ¹ °ø°Ý·Â
-        Enemy_HP = 35f;  // ÀûÀÇ Ã¼·Â
-        Enemy_Speed = 1f;    // ÀûÀÇ ÀÌµ¿¼Óµµ
-        Gap_Distance_X = 99f;  // Enemy¿Í PlayerÀÇ X °Å¸®Â÷ÀÌ
-        Gap_Distance_Y = 99f;  // Enemy¿Í PlayerÀÇ Y °Å¸®Â÷ÀÌ
-        nextDirX = 1;  // ¹æÇâÀ» ¼ýÀÚ·Î Ç¥Çö
-        Enemy_Dying_anim_Time = 4.2f;   // Á×´Â ¾Ö´Ï¸ÞÀÌ¼Ç ½ÇÇà ½Ã°£
-        Enemy_Sensing_X = 10f; // ÇÃ·¹ÀÌ¾î ÀÎÁö X°ª
-        Enemy_Sensing_Y = 5f;  // ÇÃ·¹ÀÌ¾î ÀÎÁö Y°ª
-        Enemy_Range_X = 2f; //ÀûÀÇ XÃà °ø°Ý »ç°Å¸®
-        Enemy_Range_Y = 1f; //ÀûÀÇ YÃà °ø°Ý »ç°Å¸®
-        atkDelay = 1f; // °ø°Ý µô·¹ÀÌ
-        atkTime = 0.6f; // °ø°Ý ¸ð¼Ç ½Ã°£
-        endTime = 0.8f; // Åõ»çÃ¼ »ç¶óÁö´Â ½Ã°£
-        bleedLevel = 0; // ¹ÞÀº ÃâÇ÷·®
-        turning = true; // µ¹±â °¡´É
+        Enemy_Name = "ï¿½ï¿½Å©ï¿½Î¸Ç¼ï¿½"; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½
+        AmIBoss = true; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½
+        BossHpLine = 4; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½
+        Stage = 2; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½
+        Enemy_Mod = 2;  // ï¿½ï¿½ï¿½ï¿½
+        Enemy_Power = 12f; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý·ï¿½
+        Bump_Power = 10f;    // ï¿½æµ¹ ï¿½ï¿½ï¿½Ý·ï¿½
+        Enemy_HP = 200f;  // ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½
+        Enemy_Speed = 1f;    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½Óµï¿½
+        Gap_Distance_X = 99f;  // Enemyï¿½ï¿½ Playerï¿½ï¿½ X ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ï¿½
+        Gap_Distance_Y = 99f;  // Enemyï¿½ï¿½ Playerï¿½ï¿½ Y ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ï¿½
+        nextDirX = 1;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú·ï¿½ Ç¥ï¿½ï¿½
+        Enemy_Dying_anim_Time = 4.2f;   // ï¿½×´ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
+        Enemy_Sensing_X = 10f; // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ Xï¿½ï¿½
+        Enemy_Sensing_Y = 5f;  // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ Yï¿½ï¿½
+        Enemy_Range_X = 2f; //ï¿½ï¿½ï¿½ï¿½ Xï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½
+        Enemy_Range_Y = 1f; //ï¿½ï¿½ï¿½ï¿½ Yï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½
+        atkDelay = 1f; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        atkTime = 0.6f; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
+        endTime = 0.8f; // ï¿½ï¿½ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
+        bleedLevel = 0; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        turning = true; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Attacking = false;
-        iamBoss = true;    //  º¸½ºÀÓ
+        iamBoss = true;    //  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        GameManager.Instance.GetComponent<BossHpController>().BossSpawn(this); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½
     }
 
     public override void Boss(Transform target)
     {
-        base.Boss(target);   // ºÎ¸ð ½ºÅ©¸³Æ®¿¡¼­ »ó¼Ó¹Þ¾Æ¿È.
+        base.Boss(target);   // ï¿½Î¸ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ó¹Þ¾Æ¿ï¿½.
     }
 }

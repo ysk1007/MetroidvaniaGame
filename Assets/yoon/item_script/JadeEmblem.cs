@@ -13,6 +13,7 @@ public class JadeEmblem : itemStatus
         data.itemNameEng = "JadeEmblem";
         data.itemPrice = 1000;
         data.color = Color.magenta;
+        data.Rating = "영웅";
         data.itemExplanation = "도무지 읽을 수 없다..\n지니고 있으면 활력이 느껴진다";
         data.itemStat = "방어력 10 \n최대체력 +33";
         data.itemNumber = 3;
@@ -25,8 +26,8 @@ public class JadeEmblem : itemStatus
         
     }
 
-    public override void TextImageSettings(Image img, TextMeshProUGUI NameText, TextMeshProUGUI ExplanationText, TextMeshProUGUI StatText, TextMeshProUGUI PriceText)
+    public override void TextImageSettings(Image img, TextMeshProUGUI NameText, TextMeshProUGUI ExplanationText, TextMeshProUGUI StatText, TextMeshProUGUI PriceText, TextMeshProUGUI RatingText)
     {
-        base.TextImageSettings(img, NameText, ExplanationText, StatText, PriceText);
+        base.TextImageSettings(img, NameText, ExplanationText, StatText, PriceText , RatingText);
     }
 }

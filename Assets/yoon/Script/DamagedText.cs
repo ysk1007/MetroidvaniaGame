@@ -7,6 +7,8 @@ using TMPro;
 public class DamagedText : MonoBehaviour
 {
     public TextMeshProUGUI DamagedValue;
+    public TMP_ColorGradient criColor;
+    public TMP_ColorGradient NormalColor;
     public float speed = 10f;
     public float height = 5f;
 

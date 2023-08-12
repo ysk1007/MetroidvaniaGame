@@ -20,6 +20,7 @@ public class inven : MonoBehaviour
     public itemStatus[] itemStatus_list_equip;
 
     public AudioClip Equip_clip;
+    public AudioClip Sell_clip;
     private void Awake()
     {
         inven_slots = slots_obj.GetComponentsInChildren<Button>();
@@ -94,13 +95,38 @@ public class inven : MonoBehaviour
         if (inven_slots[select_slot_index].GetComponentInChildren<itemStatus>() != null)
         {
             itemStatus item = inven_slots[select_slot_index].GetComponentInChildren<itemStatus>();
-            float sellprice = (float)item.data.itemPrice * 0.3f;
-            int newprice = (int)sellprice;
-            GameManager.Instance.GetComponent<Ui_Controller>().GetGold(newprice);
+            float sellprice = item.data.itemPrice * 0.3f;
+            GameManager.Instance.GetComponent<Ui_Controller>().GetGold(sellprice);
             Destroy(item.transform.gameObject);
         }
+        SoundManager.instance.SFXPlay("Sell_", Sell_clip);
         updateUi();
         select_slot_index = -1;
+    }
+
+    public bool PickUpItem(itemStatus item) //줍기
+    {
+        bool FindEmptySlot = false;
+        for (int i = 0; i < inven_slots.Length; i++)
+        {
+            if (inven_slots[i].GetComponentInChildren<itemStatus>() == null)
+            {
+                item.transform.localScale = new Vector3(1, 1, 1);
+                //줍는 사운드 필요
+                /*SoundManager.instance.SFXPlay("Equip_", Equip_clip);*/
+                GameManager.Instance.GetComponent<Ui_Controller>().UiUpdate();
+                Instantiate(item, inven_slots[i].transform);
+                FindEmptySlot = true;
+                break;
+            }
+        }
+        if (!FindEmptySlot)
+        {
+            return FindEmptySlot;
+        }
+        updateUi();
+        equip_slot_index = -1;
+        return FindEmptySlot;
     }
 
     public void updateUi() // 전부 갱신
@@ -147,6 +173,7 @@ public class inven : MonoBehaviour
             if (append[i] != null)
             {
                 append[i].InitSetting();
+                append[i].StatusGet(Player.instance.GetComponent<Player>());
                 append[i].data.SpecialPower = true;
                 append[i].SpecialPower();
             }
