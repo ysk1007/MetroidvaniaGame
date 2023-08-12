@@ -208,10 +208,6 @@ public class Player : MonoBehaviour
                 {
                     enemy.bleedEff();
                 }
-                else if (proLevel <= 2 && proSelectWeapon == 0 && stackbleed == 0)
-                {
-                    Debug.Log("쓸 수 없음");
-                }
             }
             if (WeaponChage == 2)   //도끼
             {

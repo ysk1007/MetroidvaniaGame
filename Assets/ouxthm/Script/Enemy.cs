@@ -212,7 +212,7 @@ public abstract class Enemy : MonoBehaviour
         selectWeapon = Player.proSelectWeapon;
         bleedingDamage = Player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
-        StartCoroutine(boarMove());
+        boarMove();
     }
     
     public virtual void onetime()   // Awake에 적용
@@ -292,7 +292,7 @@ public abstract class Enemy : MonoBehaviour
     {
         if (Enemy_Mod == 11 && collision.gameObject.CompareTag("Wall"))
         {
-            StartCoroutine(StopRush());
+            StopRush();
         }
     }
 
@@ -532,7 +532,7 @@ public abstract class Enemy : MonoBehaviour
             enemyHit = false;
             if (Enemy_Mod == 9 && posi.localScale.y == 1f)   // 분열 몬스터일 경우
             {
-                StartCoroutine(Split());
+                Split();
                 this.gameObject.SetActive(false);
                 Invoke("enemyDestroy", 0.5f);
             }
@@ -587,9 +587,9 @@ public abstract class Enemy : MonoBehaviour
             {
                 // 스프라이트 블링크
                 spriteRenderer.color = new Color(1, 1, 1, 0.4f);
-                yield return new WaitForSeconds(0.3f);
+                yield return new WaitForSeconds(0.2f);
                 spriteRenderer.color = new Color(1, 1, 1, 1);
-                yield return new WaitForSeconds(0.3f);
+                yield return new WaitForSeconds(0.2f);
             }
             spriteRenderer.color = new Color(1, 1, 1, 0.4f);
             enemyDestroy();
@@ -610,7 +610,6 @@ public abstract class Enemy : MonoBehaviour
                 yield return new WaitForSeconds(0.1f);
                 spriteRenderer.color = new Color(1, 1, 1, 1);
                 yield return new WaitForSeconds(0.1f);
-                Debug.Log("반짝반짝");
             }
             spriteRenderer.color = new Color(1, 1, 1, 0.4f);
             enemyDestroy();
@@ -923,13 +922,12 @@ public abstract class Enemy : MonoBehaviour
         enemyDestroy();
     }
 
-    public IEnumerator Split()  // 슬라임 분열 함수
+    public void Split()  // 슬라임 분열 함수
     {
         spawn = this.gameObject.transform.GetChild(2).GetComponent<Transform>();
         spawn2 = this.gameObject.transform.GetChild(3).GetComponent<Transform>();
         GameObject splitSlime = Instantiate(Split_Slime, spawn.position, spawn.rotation);
         GameObject splitSlime2 = Instantiate(Split_Slime, spawn2.position, spawn2.rotation);
-        yield return null;
     }
 
 
@@ -1031,7 +1029,7 @@ public abstract class Enemy : MonoBehaviour
         CPb2.Dir = nextDirX;
         CPb2.Time = 7f;
     }
-    public void soulSpawning()
+    public void soulSpawning() // Nec Boss floor explosion
     {
         GameObject Soul = Instantiate(SoulFloor, soulSpawn.position, soulSpawn.rotation);
         SoulEff Se = Soul.GetComponent<SoulEff>();
@@ -1330,7 +1328,7 @@ public abstract class Enemy : MonoBehaviour
     }
 
 
-    IEnumerator boarMove()
+    void boarMove()
     {
         if (Hit_Set == true)    // 플레이어에게 맞았다면
         {
@@ -1345,7 +1343,6 @@ public abstract class Enemy : MonoBehaviour
                 spriteRenderer.flipX = true;
             }
         }
-        yield return null;
     }
 
     IEnumerator Rush()   // 돌진 코루틴.
@@ -1366,7 +1363,7 @@ public abstract class Enemy : MonoBehaviour
         Enemy_Speed = 10f;        //  속도 10 설정.
     }
 
-    IEnumerator StopRush()
+    void StopRush()
     {
         animator.SetBool("Rush", false);
         animator.SetTrigger("Hit");
@@ -1379,7 +1376,6 @@ public abstract class Enemy : MonoBehaviour
         {
             Enemy_Left = true;
         }
-        yield return null; 
         Hit_Set = false;
     }
 
