@@ -135,7 +135,7 @@ public class Player : MonoBehaviour
     {
         //Move
         Direction = Input.GetAxisRaw("Horizontal");   // 좌우 방향값을 정수로 가져오기
-        if (!isdelay && Direction != 0 && gameObject.CompareTag("Player") && !isSkill)    //공격 딜레이중일시 이동 불가능
+        if (!isdelay && Direction != 0 && gameObject.CompareTag("Player") && !isSkill && !isMasterSkill)    //공격 딜레이중일시 이동 불가능
         {
             Speed = SpeedChange;
            Transform AtkRangeTransform = transform.GetChild(0);   // AttackRange 위치값 변경을 위해 자식오브젝트 위치값 불러옴
