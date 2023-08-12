@@ -49,7 +49,7 @@ public abstract class Enemy : MonoBehaviour
     public string weaponTag;    // 무기 태그 ("Sword"일 때만 출혈)
     public int Swordlevel;  // 플레이어 검 숙련도
     public int selectWeapon;    // 숙련도를 올릴 무기 선택 0 = 칼, 1 = 도끼, 2 = 활, 4 = 선택 X
-    public static int bleedLevel;  // 출혈 스택
+    public int bleedLevel;  // 출혈 스택
     public float bleedingDamage;    // 출혈 데미지
     public float bleedingTime;  // 출혈 지속시간
     public float bloodBoomDmg;  // 플레이어의 출혈 스택 터뜨리는 데미지
@@ -110,7 +110,6 @@ public abstract class Enemy : MonoBehaviour
     public void Start()
     {
         player = Player.instance.GetComponent<Player>();
-        Debug.Log("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
     }
 
     public virtual void Short_Monster(Transform target) 
@@ -434,7 +433,9 @@ public abstract class Enemy : MonoBehaviour
         {
             if (selectWeapon == 0 && Swordlevel > 0 && Enemy_HP > 0)
             {
-                Enemy_HP -= (bleedLevel * bleedingDamage); // 체력을  출혈스택 * 출혈 데미지로 감소
+                float damage = (bleedLevel * bleedingDamage);
+                this.GetComponentInChildren<EnemyUi>().ShowBleedText(damage); //윤성권 추가함 출혈딜
+                Enemy_HP -= damage; // 체력을  출혈스택 * 출혈 데미지로 감소
 
                 if (Swordlevel > 1 && Enemy_HP <= Enemy_HPten && AmIBoss == false)  // 검 숙련도가 1 이상 일정 체력 이하의 몬스터가 출혈 중이면 즉사(보스 제외)
                 {
@@ -473,9 +474,6 @@ public abstract class Enemy : MonoBehaviour
         Player player = Player.instance.GetComponent<Player>();
         Ui_Controller ui = GameManager.Instance.GetComponent<Ui_Controller>(); //윤성권 추가함
         Proficiency_ui pro = GameManager.Instance.GetComponent<Proficiency_ui>(); // 숙련도 추가함
-        pro.GetProExp(Stage);
-        ui.GetExp(Stage);
-        ui.GetGold(Stage);
         damage = damage * player.DmgIncrease; //딜 증가 추가
         bool cc = false; // 추가
         if (player.CCGetRandomResult()) //치명타 계산 추가
@@ -501,8 +499,7 @@ public abstract class Enemy : MonoBehaviour
         {
             GameManager.Instance.GetComponent<BossHpController>().BossHit(damage);
         }
-        this.GetComponentInChildren<EnemyUi>().ShowDamgeText(damage,cc);
-        this.GetComponentInChildren<EnemyUi>().ShowBleedText(damage); //윤성권 추가함 출혈딜
+        this.GetComponentInChildren<EnemyUi>().ShowDamgeText(damage,cc); //딜 폰트
         if(Enemy_Mod == 11)
         {
             Hit_Set = true;
@@ -533,6 +530,9 @@ public abstract class Enemy : MonoBehaviour
         else if(Enemy_HP < 0)
         {
             StartCoroutine(Die());
+            pro.GetProExp(Stage);
+            ui.GetExp(Stage);
+            ui.GetGold(Stage);
         }
 
         enemyHit = false;
@@ -1106,8 +1106,11 @@ public abstract class Enemy : MonoBehaviour
         bloodEFF bloodEFF = bloodEff.GetComponent<bloodEFF>();
         bloodEFF.dir = nextDirX;    // 몬스터의 방향값
         bloodEFF.scalX = scaleX;    // 몬스터의 scale.x 값(-가 되어있는 경우가 있음)
-        Enemy_HP -= bloodBoomDmg * bleedLevel;
+        float Damage = bloodBoomDmg * bleedLevel;
+        Enemy_HP -= Damage;
+        this.GetComponentInChildren<EnemyUi>().ShowBleedText(Damage);
         bleedLevel = 0;
+        bleedingTime = 0;
     }
 
     public void BossAtk()

@@ -155,7 +155,7 @@ public class WeaponSwap : MonoBehaviour
         {
             Player p = Player.instance.GetComponent<Player>();
             Image i = SkillCools[currentWeaponIndex].GetComponent<Image>();
-            float cooltime = p.DeCoolTimeCarcul(p.Skill_Cools[currentWeaponIndex]);
+            float cooltime = p.DeCoolTimeCarcul(p.SkillTime[currentWeaponIndex]);
             StartCoroutine(FillSliderOverTime(i, cooltime, "skill"));
         }
         if (Input.GetKeyDown(KeyCode.D) && !ultting && currentWeaponIndex == Player.instance.proSelectWeapon && Player.instance.proLevel == 3)

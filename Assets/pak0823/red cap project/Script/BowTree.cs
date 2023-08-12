@@ -1,90 +1,65 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BowTree : MonoBehaviour
 {
-    public float deleteTime = 5f;
-    public float Attackdelay = 0;
+    public float deleteTime = 10f;
     public float Dmg = 5;
     public float speed = 1f;
-    public Enemy enemy;
-    public GameObject Tree;  // 숙련도 오브젝트
-    private List<Collider2D> enemyColliders = new List<Collider2D>();
-    public ParticleSystemRenderer particleRenderer;
-    public bool flip = false;
+    public int maxEnemies = 5;  // 최대 몬스터 수
+    public float delay; // 공격 딜레이 시간
+    private List<Collider2D> enemyColliders = new List<Collider2D>();   //공격 몬스터 중복 체크
+    private List<Enemy> enemiesInRange = new List<Enemy>(); // Enemy 타입 리스트로 변경
+    new AudioSource audio;
+    public AudioClip TreeSound;
 
-    private void Start()
+    private void Awake()
     {
-        particleRenderer = this.gameObject.GetComponent<ParticleSystemRenderer>();
-        leafFlip();
+        audio = GetComponent<AudioSource>();
     }
     void Update()
     {
         deleteTime -= Time.deltaTime;
         if (deleteTime <= 0)
         {
-            Desrtory();
+            Destroy(gameObject);
         }
-            
-    }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision != null && collision.tag == "Enemy" && Attackdelay <= 0)
+        if (delay <= 0)
         {
-            ApplyAOEDamage();
-            if (!enemyColliders.Contains(collision))
-            {
-                enemyColliders.Add(collision); // 처음 감지된 collider면 리스트에 추가
-            }
+            TreeDamage();
         }
         else
-            Attackdelay -= Time.deltaTime;
+            delay -= Time.deltaTime;
+
     }
 
-    void ApplyAOEDamage()
+    private void OnTriggerEnter2D(Collider2D other) // OnEnter 함수 사용
     {
-        foreach (Collider2D enemyCollider in enemyColliders)
-        {
-            if (enemyCollider != null)
-            {
-                Enemy enemy = enemyCollider.GetComponent<Enemy>();
-                if (enemy != null)
-                {
-                    StartCoroutine(enemy.Hit(Dmg));
-                    Attackdelay = 1f;
-                }
-            }
-        }
-        enemyColliders.Clear(); // 리스트 비우기
-    }
-    void Desrtory()
-    {
-        Destroy(gameObject);
+        enemyColliders.Add(other);
+        audio.clip = TreeSound;
+        audio.Play();
     }
 
-    void leafFlip()
+    private void OnTriggerExit2D(Collider2D other) // OnExit 함수 사용
     {
-        if (particleRenderer == null)
+        enemyColliders.Remove(other);
+    }
+
+    void TreeDamage()
+    {
+        enemiesInRange = enemyColliders
+            .Where(x => x != null && x.tag == "Enemy") // 존재하면서 "Enemy" 태그인 게임오브젝트를 추출
+            .Select(x => x.GetComponent<Enemy>()) // 추출된 게임오브젝트에서 Enemy 스크립트 컴포넌트를 가져와 리스트에 저장
+            .Distinct() // 중복된 Enemy 컴포넌트 제거
+            .ToList();
+
+        foreach (Enemy enemy in enemiesInRange) // 감지된 모든 적에게 데미지 입힘
         {
-            return;
+            StartCoroutine(enemy.Hit(Dmg));
         }
-        else if (particleRenderer != null)
-        {
-            if (!flip)
-            {
-                Vector3 vc = new Vector3(1, 0, 0);
-                particleRenderer.flip = vc;
-                flip = true;
-            }
-            else if (flip)
-            {
-                Vector3 vc = new Vector3(0, 0, 0);
-                particleRenderer.flip = vc;
-                flip = false;
-            }
-            Invoke("leafFlip", 1.5f);
-        }
+        delay = 1f;
     }
 }

@@ -17,8 +17,6 @@ public class EnemyUi : MonoBehaviour
     public Color NormarColor = new Color32(255, 255, 255, 255);
     public GameObject BleedIcon;
     public TextMeshProUGUI BleedStack;
-    public bool bleed = false;
-    public int bleedstack;
     Transform pos;
     // Start is called before the first frame update
     void Start()
@@ -36,14 +34,14 @@ public class EnemyUi : MonoBehaviour
     {
         CurrentHp = ThisEnemy.Enemy_HP;
         HpBar.fillAmount = CurrentHp / MaxHp;
-        if (bleed/*ThisEnemy.bleed?*/)
+        if (ThisEnemy.bleedingTime > 0)
         {
             HpBar.color = BleedColor;
             BleedIcon.SetActive(true);
             /*BleedStack.text = ThisEnemy.bleedStack.ToString();*/
-            BleedStack.text = bleedstack.ToString();
+            BleedStack.text = ThisEnemy.bleedLevel.ToString();
         }
-        else if (!bleed/*ThisEnemy.bleed?*/)
+        else if (ThisEnemy.bleedingTime < 0)
         {
             HpBar.color = NormarColor;
             BleedIcon.SetActive(false);
