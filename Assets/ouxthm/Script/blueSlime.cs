@@ -24,7 +24,7 @@ public class blueSlime : Enemy
         atkTime = 0.4f; // 공격 모션 시간
         bleedLevel = 0; // 받은 출혈량
         Attacking = false;
-        iamBoss = false;    //  보스가 아님
+        AmIBoss = false;    //  보스가 아님
     }
 
     public override void Short_Monster(Transform target)

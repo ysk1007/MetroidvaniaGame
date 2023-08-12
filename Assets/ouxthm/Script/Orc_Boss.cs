@@ -18,7 +18,7 @@ public class Orc_Boss : Enemy
         endTime = 5f; // 투사체 사라지는 시간
         bleedLevel = 0; // 받은 출혈량
         Attacking = false;
-        iamBoss = true;    //  보스임
+        AmIBoss = true;    //  보스임
         Dying = false;
     }
 

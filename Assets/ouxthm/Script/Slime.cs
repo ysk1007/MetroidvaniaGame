@@ -6,6 +6,7 @@ public class Slime : Enemy
 {
     public override void InitSetting()  // 적의 기본 정보를 설정하는 함수
     {
+        Stage = 1;
         Enemy_Mod = 9;  // 분열
         Enemy_Power = 5f; //적의 공격력
         Enemy_HP = 20f;  // 적의 체력
@@ -21,7 +22,7 @@ public class Slime : Enemy
         atkDelay = 1f; // 공격 딜레이
         atkTime = 0.7f; // 공격 모션 시간
         bleedLevel = 0; // 받은 출혈량
-        iamBoss = false;    //  보스가 아님
+        AmIBoss = false;    //  보스가 아님
         Attacking = false;
     }
 

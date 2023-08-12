@@ -63,9 +63,6 @@ public class Player : MonoBehaviour
     public int proSelectWeapon = 4; //4는 숙련도를 고르지 않은 상태 0,1,2 => 칼,도끼,활
     public int proLevel = 0;
     public float enemyPower;
-
-    public static int proSelectWeapon = 0;       // 2023-07-31 추가(선택한 숙련도 무기) 0칼,1도끼,2활,4선택 X
-    public static int proLevel = 3; // 숙련도 레벨
     public int stackbleed;  // 몬스터에 쌓인 출혈 스택
     public static float BleedingTime = 8f;  // 2023-07-31 추가(출혈 지속 시간)
     public static float bleedDamage = 0.5f; // 2023-08-01 출혈 데미지

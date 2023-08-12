@@ -28,7 +28,7 @@ public class Canine : Enemy
         bleedLevel = 0; // 받은 출혈량
         Attacking = false;
         Dying = false;
-        iamBoss = false;    //  보스가 아님
+        AmIBoss = false;    //  보스가 아님
     }
 
     public override void Short_Monster(Transform target)

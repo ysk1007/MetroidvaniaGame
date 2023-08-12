@@ -9,13 +9,13 @@ using static UnityEngine.GraphicsBuffer;
 
 public abstract class Enemy : MonoBehaviour
 {
+    public Player player;
     public string Enemy_Name; //윤성권 추가함
     public bool AmIBoss = false; //윤성권 추가함
     public int BossHpLine; //윤성권 추가함
     public int Stage;
 
     public int Enemy_Mod;   // 1: 달팽이, 2: 근접공격 가능 몬스터, 3:비행몬스터, 4:제라스, 5: 자폭, 7: 투사체 원거리, 9: 분열, 11: 돌진하여 충돌
-    public bool iamBoss;    // 보스인지 판단
     public float Enemy_HP;  // 적의 체력
     public float Enemy_HPten;   // 적의 체력의 10%
     public float Enemy_Power;   //적의 공격력
@@ -107,6 +107,12 @@ public abstract class Enemy : MonoBehaviour
     
     public abstract void InitSetting(); // 적의 기본 정보를 설정하는 함수(추상)
 
+    public void Start()
+    {
+        player = Player.instance.GetComponent<Player>();
+        Debug.Log("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
+    }
+
     public virtual void Short_Monster(Transform target) 
     { 
         weaponTag = Player.playerTag;
@@ -116,8 +122,8 @@ public abstract class Enemy : MonoBehaviour
         Gap_Distance_Y = Mathf.Abs(target.transform.position.y - transform.position.y); //Y축 거리 계산
         Sensing(target, rayHit);
         Sensor();
-        Swordlevel = Player.proLevel;
-        selectWeapon = Player.proSelectWeapon;
+        Swordlevel = player.proLevel;
+        selectWeapon = player.proSelectWeapon;
         bleedingDamage = Player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
         if (bleedingTime >= 0)
@@ -153,8 +159,8 @@ public abstract class Enemy : MonoBehaviour
     public virtual void Boss(Transform target)  // boss용 Update문
     {
         weaponTag = Player.playerTag;
-        Swordlevel = Player.proLevel;
-        selectWeapon = Player.proSelectWeapon;
+        Swordlevel = player.proLevel;
+        selectWeapon = player.proSelectWeapon;
         bleedingDamage = Player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
         playerLoc = target.position.x;
@@ -174,8 +180,8 @@ public abstract class Enemy : MonoBehaviour
     public virtual void OrcBoss(Transform target)
     {
         weaponTag = Player.playerTag;
-        Swordlevel = Player.proLevel;
-        selectWeapon = Player.proSelectWeapon;
+        Swordlevel = player.proLevel;
+        selectWeapon = player.proSelectWeapon;
         bleedingDamage = Player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
         if (bleedingTime >= 0)
@@ -213,8 +219,8 @@ public abstract class Enemy : MonoBehaviour
         weaponTag = Player.playerTag;
         playerLoc = target.position.x;
         boarLoc = this.gameObject.transform.position.x;
-        Swordlevel = Player.proLevel;
-        selectWeapon = Player.proSelectWeapon;
+        Swordlevel = player.proLevel;
+        selectWeapon = player.proSelectWeapon;
         bleedingDamage = Player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
         StartCoroutine(boarMove());
@@ -430,7 +436,7 @@ public abstract class Enemy : MonoBehaviour
             {
                 Enemy_HP -= (bleedLevel * bleedingDamage); // 체력을  출혈스택 * 출혈 데미지로 감소
 
-                if (Swordlevel > 1 && Enemy_HP <= Enemy_HPten && iamBoss == false)  // 검 숙련도가 1 이상 일정 체력 이하의 몬스터가 출혈 중이면 즉사(보스 제외)
+                if (Swordlevel > 1 && Enemy_HP <= Enemy_HPten && AmIBoss == false)  // 검 숙련도가 1 이상 일정 체력 이하의 몬스터가 출혈 중이면 즉사(보스 제외)
                 {
                     Enemy_HP = 0f;
                 }
@@ -486,7 +492,7 @@ public abstract class Enemy : MonoBehaviour
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
         spriteRenderer = this.gameObject.transform.GetChild(1).GetComponentInChildren<SpriteRenderer>();
         rigid = this.GetComponent<Rigidbody2D>();
-
+        Enemy_HP -= damage;
         if (weaponTag == "Sword")
         {
             StackBleed();
@@ -495,6 +501,7 @@ public abstract class Enemy : MonoBehaviour
         {
             GameManager.Instance.GetComponent<BossHpController>().BossHit(damage);
         }
+        this.GetComponentInChildren<EnemyUi>().ShowDamgeText(damage,cc);
         this.GetComponentInChildren<EnemyUi>().ShowBleedText(damage); //윤성권 추가함 출혈딜
         if(Enemy_Mod == 11)
         {

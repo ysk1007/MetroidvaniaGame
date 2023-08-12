@@ -22,7 +22,7 @@ public class TorchEnemy : Enemy
         atkTime = 1.1f; // 공격 모션 시간
         endTime = 1f;   //투사체 사라지는 시간
         bleedLevel = 0; // 받은 출혈량
-        iamBoss = false;    // 보스가 아님
+        AmIBoss = false;    // 보스가 아님
         Attacking = false;
     }
 
