@@ -4,20 +4,21 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LightningGloves : itemStatus
+public class GlassSword : itemStatus
 {
     public override void InitSetting()
     {
         data.itemimg = this.GetComponent<Image>();
-        data.itemName = "번개 장갑";
-        data.itemNameEng = "LightningGloves";
-        data.itemPrice = 900;
-        data.color = Color.green;
-        data.Rating = "고급";
-        data.itemStat = "공격속도 +75% \n피해량 증가 -15%";
-        data.itemNumber = 1;
-        data.DmgIncrease = -0.15f;
-        data.AtkSpeed = 0.75f;
+        data.itemName = "유리 검";
+        data.itemNameEng = "GlassSword";
+        data.itemPrice = 3600;
+        data.color = Color.red;
+        data.Rating = "전설";
+        data.itemExplanation = "스치기만 해도 치명타!";
+        data.itemStat = "피해량 증가 +100%\n 방어력 -50";
+        data.itemNumber = 17;
+        data.DmgIncrease = 1f;
+        data.Def = -50;
     }
 
     public override void SpecialPower()

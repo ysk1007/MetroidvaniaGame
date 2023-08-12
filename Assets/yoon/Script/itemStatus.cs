@@ -23,6 +23,7 @@ public struct Data
     public int Def;
     public int MaxHp;
     public float Speed;
+    public float JumpPower;
     public float CriticalChance;
     public float CriDmgIncrease;
     public float GoldGet;
@@ -68,8 +69,8 @@ public abstract class itemStatus : MonoBehaviour
         player.delayTime = -0.4f * player.ATS + 1.4f;
         player.Def += data.Def;
         player.MaxHp += data.MaxHp;
-        player.CurrentHp += data.MaxHp;
         player.Speed += data.Speed;
+        player.jumpPower += data.JumpPower;
         player.SpeedChange += data.Speed;
         player.CriticalChance += data.CriticalChance;
         player.anim.SetFloat("AttackSpeed", player.ATS);
@@ -88,8 +89,8 @@ public abstract class itemStatus : MonoBehaviour
         player.delayTime = -0.4f * player.ATS + 1.4f;
         player.Def -= data.Def;
         player.MaxHp -= data.MaxHp;
-        player.CurrentHp -= data.MaxHp;
         player.Speed -= data.Speed;
+        player.jumpPower -= data.JumpPower;
         player.SpeedChange -= data.Speed;
         player.CriticalChance -= data.CriticalChance;
         player.anim.SetFloat("AttackSpeed", player.ATS);

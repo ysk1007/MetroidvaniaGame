@@ -26,7 +26,7 @@ public class StatusScreen : MonoBehaviour
     public void StatusUpdate(Player player)
     {
         MaxHpValue.text = player.MaxHp.ToString("F1");
-        DamageValue.text = player.DmgChange.ToString("F0");
+        DamageValue.text = (player.AtkPower + player.DmgChange + player.GridPower).ToString("F0");
         DmgIncValue.text = (player.DmgIncrease * 100f).ToString("F0") + "%";
         ATSValue.text = player.ATS.ToString("F1");
         SpeedValue.text = (player.SpeedChange * 100f).ToString("F0") + "%";

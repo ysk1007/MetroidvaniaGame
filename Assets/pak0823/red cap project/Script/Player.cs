@@ -119,6 +119,9 @@ public class Player : MonoBehaviour
     Rigidbody2D rigid;
     public Animator anim; //윤성권 퍼블릭으로 변경
     new AudioSource audio;
+
+    public bool UseGridSword = false;
+    public float GridPower = 0f;
     void Awake()
     {
         instance = this; //추가함
@@ -147,6 +150,10 @@ public class Player : MonoBehaviour
     {
         Player_Move();  //Player의 이동, 점프, 속도 함수
         Player_Attack();    //Player의 공격 함수
+        if (UseGridSword) //추가함
+        {
+            GridsSword();
+        }
     }
 
     void Player_Move() //Player 이동, 점프
@@ -348,7 +355,7 @@ public class Player : MonoBehaviour
 
     public void AttackDamage()// Player 공격시 적에게 대미지값 넘겨주기
     {
-        Dmg = DmgChange;
+        Dmg = DmgChange + AtkPower + GridPower;//변경함
         box = transform.GetChild(0).GetComponentInChildren<BoxCollider2D>();
         if (box != null)    //공격 범위 안에 null값이 아닐때만
         {
@@ -998,5 +1005,16 @@ public class Player : MonoBehaviour
         SL[7] = selectExpLevel;
         SL[8] = selectCoolTimeLevel;
         return SL;
+    }
+
+    //아이템 특수효과 함수
+    public void GridsSword()
+    {
+        GridPower = (gold / 777) * 7;
+        if (!UseGridSword)
+        {
+            GameManager.GetComponent<Ui_Controller>().UiUpdate();
+            UseGridSword = true;
+        }
     }
 }

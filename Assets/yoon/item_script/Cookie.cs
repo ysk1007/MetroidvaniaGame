@@ -4,20 +4,21 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LightningGloves : itemStatus
+public class Cookie : itemStatus
 {
     public override void InitSetting()
     {
         data.itemimg = this.GetComponent<Image>();
-        data.itemName = "번개 장갑";
-        data.itemNameEng = "LightningGloves";
-        data.itemPrice = 900;
-        data.color = Color.green;
-        data.Rating = "고급";
-        data.itemStat = "공격속도 +75% \n피해량 증가 -15%";
-        data.itemNumber = 1;
-        data.DmgIncrease = -0.15f;
-        data.AtkSpeed = 0.75f;
+        data.itemName = "달콤한 초코 쿠키";
+        data.itemNameEng = "Cookie";
+        data.itemPrice = 300;
+        data.color = Color.white;
+        data.Rating = "일반";
+        data.itemExplanation = "내가 만든 쿠키~";
+        data.itemStat = "최대 체력 +30\n 방어력 +10";
+        data.itemNumber = 14;
+        data.MaxHp = 30;
+        data.Def = 10;
     }
 
     public override void SpecialPower()

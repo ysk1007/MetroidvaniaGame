@@ -4,20 +4,22 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LightningGloves : itemStatus
+public class RootOfTree : itemStatus
 {
     public override void InitSetting()
     {
         data.itemimg = this.GetComponent<Image>();
-        data.itemName = "번개 장갑";
-        data.itemNameEng = "LightningGloves";
-        data.itemPrice = 900;
-        data.color = Color.green;
-        data.Rating = "고급";
-        data.itemStat = "공격속도 +75% \n피해량 증가 -15%";
-        data.itemNumber = 1;
-        data.DmgIncrease = -0.15f;
-        data.AtkSpeed = 0.75f;
+        data.itemName = "세계수의 뿌리";
+        data.itemNameEng = "RootOfTree";
+        data.itemPrice = 3100;
+        data.color = Color.red;
+        data.Rating = "전설";
+        data.itemExplanation = "모든 지병을 낫게 해준다는 전설의 약초";
+        data.itemStat = "최대 체력 +111\n 방어력 +33\n 이동속도 -30%";
+        data.itemNumber = 16;
+        data.MaxHp = 111;
+        data.Def = 33;
+        data.Speed = -5;
     }
 
     public override void SpecialPower()
