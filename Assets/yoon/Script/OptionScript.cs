@@ -46,6 +46,9 @@ public class OptionScript : MonoBehaviour
         DataManager.instance.JsonSave("PlayerData");
         DataManager.instance.JsonSave("SliderData");
         DataManager.instance.JsonSave("ItemData");
+        OptionManager.instance.Playing = false;
+        OptionManager.instance.Timer.SetActive(false);
+        OptionManager.instance.Stacks.SetActive(false);
         Application.Quit();
     }
 }

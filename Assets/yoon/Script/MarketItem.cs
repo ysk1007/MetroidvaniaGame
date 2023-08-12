@@ -10,6 +10,7 @@ public class MarketItem : MonoBehaviour
     public TextMeshProUGUI itemname;
     public TextMeshProUGUI price;
     public itemStatus randomitem;
+    public MarketScript market;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +41,7 @@ public class MarketItem : MonoBehaviour
             {
                 GameManager.Instance.GetComponent<Ui_Controller>().Heal(Player.instance.GetComponent<Player>().MaxHp / 2);
                 Destroy(this.gameObject);
+                market.BuySoundPlay();
             }
             else
             {
@@ -51,6 +53,7 @@ public class MarketItem : MonoBehaviour
                         EmptySloatSearch = true;
                         DataManager.instance.GetComponent<DataManager>().UnlockListUpdate(itemNumber);
                         Instantiate(randomitem, iv.inven_slots[i].transform);
+                        GameManager.Instance.GetComponent<inven>().updateUi();
                         Destroy(this.gameObject);
                         break;
                     }
@@ -58,8 +61,10 @@ public class MarketItem : MonoBehaviour
                 if (!EmptySloatSearch)
                 {
                     ui.MarketTextBox.text = "\"가방이 가득 찼다!\"";
-                    ui.GetGold(int.Parse(price.text)); //환불
+                    ui.GetGold(int.Parse(price.text) / Player.instance.GoldGet); //환불
+                    return;
                 }
+                market.BuySoundPlay();
             }
         }
         else

@@ -4,12 +4,20 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public int level;   // 플레이어 레벨
+    public float[] ExpBarValue = {
+        100f, 150f, 200f, 250f, 300f, 
+        350f, 400f, 450f, 500f, 550f, 
+        600f, 650f, 700f, 750f, 800f,
+        850f, 900f, 950f, 1000f, 1050f,
+        1100f, 1150f, 1200f, 1250f, 1300f,
+        1350f, 1400f};   // 레벨업 하는데 필요한 경험치 추가함
     public float jumpPower; //Jump 높이 저장 변수
     public float Speed; //Move 속도 저장 변수
     public float SpeedChange; // Move 속도변경 저장 변수
     public float curTime, coolTime = 2;  // 연속공격이 가능한 시간
     public float skcoolTime;  // 스킬 쿨타임
     public float Sword_SkTime, Axe_SkTime, Bow_SkTime;   // 무기별 스킬 쿨타임
+    public float[] Skill_Cools = { 10f, 20f, 10f }; //스킬 쿨 리스트
     public bool isdelay = false;    //공격 딜레이 체크
     public bool isSlide = false;     //슬라이딩 체크
     public bool isGround = true;    //Player가 땅인지 아닌지 체크
@@ -26,7 +34,8 @@ public class Player : MonoBehaviour
     public float attackDash = 4f; //큰 공격시 앞으로 이동하는 값
     public float slideSpeed = 13;   //슬라이딩 속도
     public int slideDir = 1;    //슬라이딩 방향값
-    public float MaxHp;    //플레이어 최대 HP
+    public float MaxHp = 100;    //플레이어 최대 HP
+    public float BaseHp = 100;    //플레이어 최대 HP
     public float CurrentHp;    //플레이어 현재 HP
     public bool ishurt = false; //피격 확인
     public bool isknockback = false;    //넉백 확인
@@ -36,13 +45,23 @@ public class Player : MonoBehaviour
     public float chargingTime = 2f; // 차징 시간
     public bool isCharging = false; // 차징 상태 여부
     public float chargeTimer = 0f; // 차징 시간을 측정하는 타이머
+    public PlayerCanvas playerCanvas; //추가함
 
     public static Player instance; //추가함
-    public int gold;  //추가함
-    public int AtkPower; //추가함
-    public int Def; //추가함
+    public float gold;  //추가함
+    public float AtkPower; //추가함
+    public float Def = 5; //추가함
     public float CriticalChance; //추가함 , 이속,공속 복구되는거 수정 필요
-    public float DmgIncrease; //추가함
+    public float DmgIncrease = 1f; //추가함
+    public float CriDmgIncrease = 1.5f; //추가함
+    public float ATS = 1; //추가함
+    public float GoldGet = 1f; //추가함
+    public float EXPGet = 1f; //추가함
+    public bool CanlifeStill = false; //추가함
+    public float lifeStill; //추가함
+    public float DecreaseCool = 0f; //추가함
+    public int proSelectWeapon = 4; //4는 숙련도를 고르지 않은 상태 0,1,2 => 칼,도끼,활
+    public int proLevel = 0;
     public float enemyPower;
 
     public static int proSelectWeapon = 0;       // 2023-07-31 추가(선택한 숙련도 무기) 0칼,1도끼,2활,4선택 X
@@ -52,16 +71,27 @@ public class Player : MonoBehaviour
     public static float bleedDamage = 0.5f; // 2023-08-01 출혈 데미지
     public static float bloodBoomDmg = 7f;  // 출혈스택 터뜨리는 데미지
     public static string playerTag;    // 2023-08-11 추가 (플레이어 무기 태그)
+    //선택능력치 밸류
+    public float[] selectAtkValue = { 0.1f, 0.2f, 0.3f };
+    public float[] selectATSValue = { 0.15f, 0.3f, 0.4f };
+    public float[] selectCCValue = { 0.05f, 0.1f, 0.2f };
+    public float[] selectLifeStillValue = {0.01f, 0.03f, 0.09f };
+    public float[] selectDefValue = { 10f, 20f, 30f };
+    public float[] selectHpValue = { 30f, 60f, 90f };
+    public float[] selectGoldValue = { 0.3f, 0.6f, 1.0f };
+    public float[] selectExpValue = { 0.3f, 0.6f, 1.0f };
+    public float[] selectCoolTimeValue = { 0.05f, 0.1f, 0.2f };
 
-    //선택능력치 추가함
-    public float[] selectAtkLevel = { 10f, 20f, 30f };
-    public float[] selectATSLevel = { 15f, 30f, 45f };
-    public float[] selectCCLevel = { 5f, 10f, 20f };
-    public float[] selectDefLevel = { 10f, 20f, 30f };
-    public float[] selectHpLevel = { 30f, 60f, 90f };
-    public float[] selectGoldLevel = { 130f, 160f, 200f };
-    public float[] selectExpLevel = { 130f, 160f, 200f };
-    public float[] selectCoolTimeLevel = { 5f, 10f, 20f };
+    //선택능력치 레벨
+    public int selectAtkLevel = 0;
+    public int selectATSLevel = 0;
+    public int selectCCLevel = 0;
+    public int selectLifeStillLevel = 0;
+    public int selectDefLevel = 0;
+    public int selectHpLevel = 0;
+    public int selectGoldLevel = 0;
+    public int selectExpLevel = 0;
+    public int selectCoolTimeLevel = 0;
 
     public GameObject GameManager;  //게임 매니저
     public GameObject attackRange;  //근접공격 위치
@@ -94,8 +124,11 @@ public class Player : MonoBehaviour
     Projective_Body PBody;
 
     Rigidbody2D rigid;
-    Animator anim;
+    public Animator anim; //윤성권 퍼블릭으로 변경
     new AudioSource audio;
+
+    public bool UseGridSword = false;
+    public float GridPower = 0f;
     void Awake()
     {
         instance = this; //추가함
@@ -116,6 +149,8 @@ public class Player : MonoBehaviour
     void Start() //추가함
     {
         DataManager.instance.JsonLoad("PlayerData");
+        anim.SetFloat("AttackSpeed", ATS);
+        OptionManager.instance.Playing = true;
     }
 
     void Update()
@@ -124,6 +159,10 @@ public class Player : MonoBehaviour
         stackbleed = Enemy.bleedLevel; // 2023-08-09 추가 
         Player_Move();  //Player의 이동, 점프, 속도 함수
         Player_Attack();    //Player의 공격 함수
+        if (UseGridSword) //추가함
+        {
+            GridsSword();
+        }
     }
 
     void Player_Move() //Player 이동, 점프
@@ -227,7 +266,7 @@ public class Player : MonoBehaviour
         {
             if (WeaponChage == 1 && Sword_SkTime <= 0)    //Sword 스킬 실행
             {
-                skcoolTime = 10f;
+                skcoolTime = DeCoolTimeCarcul(Skill_Cools[0]); //스킬쿨 수정함
                 Sword_SkTime = skcoolTime;
                 isSkill = true;
                 SwdCnt = 2;
@@ -237,13 +276,13 @@ public class Player : MonoBehaviour
             if (WeaponChage == 2 && Axe_SkTime <= 0)    //Axe 스킬 실행
             {
                 StartCoroutine(Skill());
-                skcoolTime = 20f;
+                skcoolTime = DeCoolTimeCarcul(Skill_Cools[1]); //스킬쿨 수정함
                 Axe_SkTime = skcoolTime;
             }
             if (WeaponChage == 3 && Bow_SkTime <= 0)    //Bow 스킬 실행
             {
                 StartCoroutine(Skill());
-                skcoolTime = 10f;
+                skcoolTime = DeCoolTimeCarcul(Skill_Cools[2]); //스킬쿨 수정함
                 Bow_SkTime = skcoolTime;
                 isSkill = true;
             }
@@ -267,10 +306,12 @@ public class Player : MonoBehaviour
                     isCharging = true;
                     print("차징 시작");
                     chargeTimer = 0f;
+                    playerCanvas.ChargeStart(); //도끼 게이지 추가함
                 }
                 else // 이미 차징 중인 경우
                 {
                     chargeTimer += Time.deltaTime;
+                    playerCanvas.GuageIncrease(chargeTimer/chargingTime); //도끼 게이지 추가함
                     if (chargeTimer >= chargingTime)
                     {
                         chargeTimer = chargingTime; // 차징 시간이 최대 시간을 넘어가지 않도록 제한
@@ -283,6 +324,7 @@ public class Player : MonoBehaviour
         else
         {
             isCharging = false;
+            playerCanvas.ChargeEnd(); //도끼 게이지 추가함
             if (chargeTimer >= chargingTime && chargeTimer != 0)
             {
                 Axe_chargeing();
@@ -329,7 +371,7 @@ public class Player : MonoBehaviour
 
     public void AttackDamage()// Player 공격시 적에게 대미지값 넘겨주기
     {
-        Dmg = DmgChange;
+        Dmg = DmgChange + AtkPower + GridPower;//변경함
         box = transform.GetChild(0).GetComponentInChildren<BoxCollider2D>();
         if (box != null)    //공격 범위 안에 null값이 아닐때만
         {
@@ -486,7 +528,7 @@ public class Player : MonoBehaviour
         {
             if (gameObject.layer != LayerMask.NameToLayer("Shield"))    // 방어막이 없으면 피격됨
             {
-
+                Damage = DefDamgeCarculation(Damage); //방어력 계산식 추가
                 ishurt = true;
                 CurrentHp = CurrentHp - Damage;
                 PlaySound("Damaged");
@@ -787,5 +829,208 @@ public class Player : MonoBehaviour
                 break;
         }
         audio.Play();
+    }
+
+    public bool CCGetRandomResult() //치명타 계산 함수 추가
+    {
+        // 0과 1 사이의 랜덤한 값을 생성
+        float randomValue = Random.Range(0f, 1f);
+
+        // 랜덤 값이 확률보다 작거나 같으면 true를 반환, 그렇지 않으면 false를 반환
+        return randomValue <= CriticalChance;
+    }
+
+    public float DefDamgeCarculation(float damage) //방어력 계산 함수 추가
+    {
+        float NewDmg;
+        if (Def > 0)
+        {
+            NewDmg = damage - (damage * (0.007f * Def));
+            return NewDmg;
+        }
+        else if (Def == 0)
+        {
+            return damage;
+        }
+        else
+        {
+            NewDmg = damage + (damage / (-0.05f * Def));
+            return NewDmg;
+        }
+    }
+
+    public float DeCoolTimeCarcul(float cooltime) //쿨타임 감소 식 추가
+    {
+        float newCooltime;
+        newCooltime = cooltime - (cooltime * DecreaseCool);
+        return newCooltime;
+    }
+
+    public void GetSelectValue(string selectName) //선택 능력치 얻는 함수
+    {
+        Debug.Log("GetSelectValue: " + selectName);
+        switch (selectName)
+        {
+            case "selectAtkLevel":
+                if (selectAtkLevel > 1) // 레벨 1 이상
+                {
+                    DmgIncrease += selectAtkValue[selectAtkLevel - 1] - selectAtkValue[selectAtkLevel - 2];
+                }
+                else if (selectAtkLevel == 1) // 처음 찍을 때
+                {
+                    DmgIncrease += selectAtkValue[selectAtkLevel - 1];
+                }
+                break;
+            case "selectATSLevel":
+                if (selectATSLevel > 1) // 레벨 1 이상
+                {
+                    ATS += selectATSValue[selectATSLevel - 1] - selectATSValue[selectATSLevel - 2];
+                    delayTime = -0.4f * ATS + 1.4f;
+                    anim.SetFloat("AttackSpeed", ATS);
+                }
+                else if (selectATSLevel == 1) // 처음 찍을 때
+                {
+                    ATS += selectATSValue[selectATSLevel - 1];
+                    delayTime = -0.4f * ATS + 1.4f;
+                    anim.SetFloat("AttackSpeed", ATS);
+                }
+                break;
+            case "selectCCLevel":
+                if (selectCCLevel > 1) // 레벨 1 이상
+                {
+                    CriticalChance += selectCCValue[selectCCLevel - 1] - selectCCValue[selectCCLevel - 2];
+                }
+                else if (selectCCLevel == 1) // 처음 찍을 때
+                {
+                    CriticalChance += selectCCValue[selectCCLevel - 1];
+                }
+                    break;
+            case "selectLifeStillLevel":
+                if (selectLifeStillLevel > 1) // 레벨 1 이상
+                {
+                    lifeStill += selectLifeStillValue[selectLifeStillLevel - 1] - selectLifeStillValue[selectLifeStillLevel - 2];
+                }
+                else if (selectLifeStillLevel == 1) // 처음 찍을 때
+                {
+                    lifeStill += selectLifeStillValue[selectLifeStillLevel - 1];
+                }
+                break;
+            case "selectDefLevel":
+                if (selectDefLevel > 1) // 레벨 1 이상
+                {
+                    Def += selectDefValue[selectDefLevel - 1] - selectDefValue[selectDefLevel - 2];
+                }
+                else if (selectDefLevel == 1) // 처음 찍을 때
+                {
+                    Def += selectDefValue[selectDefLevel - 1];
+                }
+                break;
+            case "selectHpLevel":
+                if (selectHpLevel > 1) // 레벨 1 이상
+                {
+                    MaxHp += BaseHp * selectHpValue[selectHpLevel - 1] / 100 - BaseHp * selectHpValue[selectHpLevel - 2] / 100;
+                }
+                else if (selectHpLevel == 1) // 처음 찍을 때
+                {
+                    MaxHp += BaseHp * selectHpValue[selectHpLevel - 1] / 100;
+                }
+                break;
+            case "selectGoldLevel":
+                if (selectGoldLevel > 1) // 레벨 1 이상
+                {
+                    GoldGet += selectGoldValue[selectGoldLevel - 1] - selectGoldValue[selectGoldLevel - 2];
+                }
+                else if (selectGoldLevel == 1) // 처음 찍을 때
+                {
+                    GoldGet += selectGoldValue[selectGoldLevel - 1];
+                }
+                break;
+            case "selectExpLevel":
+                if (selectExpLevel > 1) // 레벨 1 이상
+                {
+                    EXPGet += selectExpValue[selectExpLevel - 1] - selectExpValue[selectExpLevel - 2];
+                }
+                else if (selectExpLevel == 1) // 처음 찍을 때
+                {
+                    EXPGet += selectExpValue[selectExpLevel - 1];
+                }
+                break;
+            case "selectCoolTimeLevel":
+                if (selectCoolTimeLevel > 1) // 레벨 1 이상
+                {
+                    DecreaseCool += selectCoolTimeValue[selectCoolTimeLevel - 1] - selectCoolTimeValue[selectCoolTimeLevel - 2];
+                }
+                else if (selectCoolTimeLevel == 1) // 처음 찍을 때
+                {
+                    DecreaseCool += selectCoolTimeValue[selectCoolTimeLevel - 1];
+                }
+                break;
+            case "Start":
+                if (selectAtkLevel - 1 >= 0)
+                {
+                    DmgIncrease += selectAtkValue[selectAtkLevel - 1];
+                }
+                if (selectATSLevel - 1 >= 0)
+                {
+                    ATS += selectATSValue[selectATSLevel - 1];
+                    delayTime = -0.4f * ATS + 1.4f;
+                    anim.SetFloat("AttackSpeed", ATS);
+                }
+                if (selectCCLevel - 1 >= 0)
+                {
+                    CriticalChance += selectCCValue[selectCCLevel - 1];
+                }
+                if (selectLifeStillLevel - 1 >= 0)
+                {
+                    lifeStill += selectLifeStillValue[selectLifeStillLevel - 1];
+                }
+                if (selectDefLevel - 1 >= 0)
+                {
+                    Def += selectDefValue[selectDefLevel - 1];
+                }
+                if (selectHpLevel - 1 >= 0)
+                {
+                    MaxHp += MaxHp * selectHpValue[selectHpLevel - 1] / 100;
+                }
+                if (selectGoldLevel - 1 >= 0)
+                {
+                    GoldGet += selectGoldValue[selectGoldLevel - 1];
+                }
+                if (selectExpLevel - 1 >= 0)
+                {
+                    EXPGet += selectExpValue[selectExpLevel - 1];
+                }
+                if (selectCoolTimeLevel - 1 >= 0)
+                {
+                    DecreaseCool += selectCoolTimeValue[selectCoolTimeLevel - 1];
+                }
+                break;
+        }
+    }
+
+    public int[] returnPlayerSelectLevel() //추가함
+    {
+        int[] SL = new int[9];
+        SL[0] = selectAtkLevel;
+        SL[1] = selectATSLevel;
+        SL[2] = selectCCLevel;
+        SL[3] = selectLifeStillLevel;
+        SL[4] = selectDefLevel;
+        SL[5] = selectHpLevel;
+        SL[6] = selectGoldLevel;
+        SL[7] = selectExpLevel;
+        SL[8] = selectCoolTimeLevel;
+        return SL;
+    }
+
+    //아이템 특수효과 함수
+    public void GridsSword()
+    {
+        GridPower = (gold / 777) * 7;
+        if (!UseGridSword)
+        {
+            GameManager.GetComponent<Ui_Controller>().UiUpdate();
+            UseGridSword = true;
+        }
     }
 }

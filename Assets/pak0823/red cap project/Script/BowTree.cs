@@ -11,7 +11,14 @@ public class BowTree : MonoBehaviour
     public Enemy enemy;
     public GameObject Tree;  // 숙련도 오브젝트
     private List<Collider2D> enemyColliders = new List<Collider2D>();
+    public ParticleSystemRenderer particleRenderer;
+    public bool flip = false;
 
+    private void Start()
+    {
+        particleRenderer = this.gameObject.GetComponent<ParticleSystemRenderer>();
+        leafFlip();
+    }
     void Update()
     {
         deleteTime -= Time.deltaTime;
@@ -55,5 +62,29 @@ public class BowTree : MonoBehaviour
     void Desrtory()
     {
         Destroy(gameObject);
+    }
+
+    void leafFlip()
+    {
+        if (particleRenderer == null)
+        {
+            return;
+        }
+        else if (particleRenderer != null)
+        {
+            if (!flip)
+            {
+                Vector3 vc = new Vector3(1, 0, 0);
+                particleRenderer.flip = vc;
+                flip = true;
+            }
+            else if (flip)
+            {
+                Vector3 vc = new Vector3(0, 0, 0);
+                particleRenderer.flip = vc;
+                flip = false;
+            }
+            Invoke("leafFlip", 1.5f);
+        }
     }
 }

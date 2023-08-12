@@ -9,6 +9,11 @@ using static UnityEngine.GraphicsBuffer;
 
 public abstract class Enemy : MonoBehaviour
 {
+    public string Enemy_Name; //윤성권 추가함
+    public bool AmIBoss = false; //윤성권 추가함
+    public int BossHpLine; //윤성권 추가함
+    public int Stage;
+
     public int Enemy_Mod;   // 1: 달팽이, 2: 근접공격 가능 몬스터, 3:비행몬스터, 4:제라스, 5: 자폭, 7: 투사체 원거리, 9: 분열, 11: 돌진하여 충돌
     public bool iamBoss;    // 보스인지 판단
     public float Enemy_HP;  // 적의 체력
@@ -459,20 +464,38 @@ public abstract class Enemy : MonoBehaviour
     }
     public IEnumerator Hit(float damage) // 피해 함수
     {
-        
+        Player player = Player.instance.GetComponent<Player>();
+        Ui_Controller ui = GameManager.Instance.GetComponent<Ui_Controller>(); //윤성권 추가함
+        Proficiency_ui pro = GameManager.Instance.GetComponent<Proficiency_ui>(); // 숙련도 추가함
+        pro.GetProExp(Stage);
+        ui.GetExp(Stage);
+        ui.GetGold(Stage);
+        damage = damage * player.DmgIncrease; //딜 증가 추가
+        bool cc = false; // 추가
+        if (player.CCGetRandomResult()) //치명타 계산 추가
+        {
+            damage *= player.CriDmgIncrease;
+            cc = true;
+        }
+        if (player.CanlifeStill)
+        {
+            ui.Heal(player.lifeStill * damage);
+        }
         posi = this.gameObject.GetComponent<Transform>();
         enemyHit = true;
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
         spriteRenderer = this.gameObject.transform.GetChild(1).GetComponentInChildren<SpriteRenderer>();
         rigid = this.GetComponent<Rigidbody2D>();
-        this.GetComponentInChildren<EnemyUi>().ShowDamgeText(damage); //윤성권 추가함
 
         if (weaponTag == "Sword")
         {
             StackBleed();
         }
-        
-        Enemy_HP -= damage;
+        if (AmIBoss)
+        {
+            GameManager.Instance.GetComponent<BossHpController>().BossHit(damage);
+        }
+        this.GetComponentInChildren<EnemyUi>().ShowBleedText(damage); //윤성권 추가함 출혈딜
         if(Enemy_Mod == 11)
         {
             Hit_Set = true;

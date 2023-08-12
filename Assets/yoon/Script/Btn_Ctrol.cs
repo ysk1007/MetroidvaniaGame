@@ -53,7 +53,7 @@ public class Btn_Ctrol : MonoBehaviour
     void select_btn(int index)
     {
         TextMeshProUGUI text = buttons[index].GetComponentInChildren<TextMeshProUGUI>();
-        text.fontSize = 50;
+        text.fontSize = 36;
         text.color = new Color32(226, 190, 50, 255);
     }
 
@@ -67,7 +67,7 @@ public class Btn_Ctrol : MonoBehaviour
         {
             SoundManager.instance.SFXPlay("Seleect", clip);
             TextMeshProUGUI text = buttons[currentIndex].GetComponentInChildren<TextMeshProUGUI>();
-            text.fontSize = 40;
+            text.fontSize = 30;
             text.color = new Color32(255, 255, 255, 255);
             currentIndex = index;
         }

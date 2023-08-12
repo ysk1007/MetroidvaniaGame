@@ -7,6 +7,7 @@ using TMPro;
 public class Proficiency_ui : MonoBehaviour
 {
     public static Proficiency_ui instance;
+    public Player player;
 
     public GameObject ProWeaponUi;
     public Image[] Weaponimages;
@@ -34,24 +35,22 @@ public class Proficiency_ui : MonoBehaviour
     public TextMeshProUGUI Pro3SkillName;
     public Image Pro3UnlockImage;
 
+    public float[] ProValue = { 0.01f, 0.02f, 0.03f }; // 1,2,3 스테이지 값
     private void Awake()
     {
         instance = this;
-        Weaponimages = ProWeaponUi.GetComponentsInChildren<Image>();
-        Pro1Skillimages = Pro1_Skill.GetComponentsInChildren<Image>();
-        Pro2Skillimages = Pro2_Skill.GetComponentsInChildren<Image>();
-        Pro3Skillimages = Pro3_Skill.GetComponentsInChildren<Image>();
-        pro_text_setting(proWeaponIndex);
-        if (true) //<- 차후 어떤 무기를 선택했는지 매개변수에 적절한 인덱스 전달 필요
-        {
-            pro_image_setting(Weaponimages, Pro1Skillimages, Pro2Skillimages, Pro3Skillimages, proWeaponIndex);
-        }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        player = Player.instance;
+        Weaponimages = ProWeaponUi.GetComponentsInChildren<Image>();
+        Pro1Skillimages = Pro1_Skill.GetComponentsInChildren<Image>();
+        Pro2Skillimages = Pro2_Skill.GetComponentsInChildren<Image>();
+        Pro3Skillimages = Pro3_Skill.GetComponentsInChildren<Image>();
+        pro_text_setting(proWeaponIndex);
+        pro_image_setting(Weaponimages, Pro1Skillimages, Pro2Skillimages, Pro3Skillimages, proWeaponIndex);
     }
 
     // Update is called once per frame
@@ -60,14 +59,17 @@ public class Proficiency_ui : MonoBehaviour
         ProText.text = (Profill.fillAmount * 100).ToString("F0") + "%";
         if (Profill.fillAmount == 1f)
         {
+            player.proLevel = 3;
             proLevel = 3;
         }
         else if (Profill.fillAmount >= 0.66f)
         {
+            player.proLevel = 2;
             proLevel = 2;
         }
         else if(Profill.fillAmount >= 0.33f)
         {
+            player.proLevel = 1;
             proLevel = 1;
         }
         pro_fill_setting(proLevel);
@@ -117,18 +119,30 @@ public class Proficiency_ui : MonoBehaviour
         switch (level)
         {
             case 1:
+                if (proWeaponIndex == 4)
+                {
+                    break;
+                }
                 Color color1;
                 ColorUtility.TryParseHtmlString("#63AB3F", out color1);
                 Profill.color = color1;
                 Weaponimages[proWeaponIndex].gameObject.GetComponent<Image>().color = Color.green;
                 break;
             case 2:
+                if (proWeaponIndex == 4)
+                {
+                    break;
+                }
                 Color color2;
                 ColorUtility.TryParseHtmlString("#4FA4B8", out color2);
                 Profill.color = color2;
                 Weaponimages[proWeaponIndex].gameObject.GetComponent<Image>().color = new Color(0, 0.5f, 1, 1);
                 break;
             case 3:
+                if (proWeaponIndex == 4)
+                {
+                    break;
+                }
                 Color color3;
                 ColorUtility.TryParseHtmlString("#E64539", out color3);
                 Profill.color = color3;
@@ -207,5 +221,24 @@ public class Proficiency_ui : MonoBehaviour
         {
             text.alignment = TextAlignmentOptions.TopLeft;
         }
+    }
+
+    public void GetProExp(int stage)
+    {
+        if (proWeaponIndex == 4)
+        {
+            return;
+        }
+        Profill.fillAmount += ProValue[stage];
+    }
+
+    public void DoStart()
+    {
+        Weaponimages = ProWeaponUi.GetComponentsInChildren<Image>();
+        Pro1Skillimages = Pro1_Skill.GetComponentsInChildren<Image>();
+        Pro2Skillimages = Pro2_Skill.GetComponentsInChildren<Image>();
+        Pro3Skillimages = Pro3_Skill.GetComponentsInChildren<Image>();
+        pro_text_setting(proWeaponIndex);
+        pro_image_setting(Weaponimages, Pro1Skillimages, Pro2Skillimages, Pro3Skillimages, proWeaponIndex);
     }
 }
