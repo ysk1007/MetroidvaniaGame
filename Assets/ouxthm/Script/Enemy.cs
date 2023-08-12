@@ -9,6 +9,8 @@ using static UnityEngine.GraphicsBuffer;
 
 public abstract class Enemy : MonoBehaviour
 {
+    Player player;
+
     public string Enemy_Name; //������ �߰���
     public bool AmIBoss = false; //������ �߰���
     public int BossHpLine; //������ �߰���
@@ -107,6 +109,11 @@ public abstract class Enemy : MonoBehaviour
     
     public abstract void InitSetting(); // ���� �⺻ ������ �����ϴ� �Լ�(�߻�)
 
+    public void Awake()
+    {
+        player = Player.instance;
+
+    }
     public virtual void Short_Monster(Transform target) 
     { 
         weaponTag = Player.playerTag;
@@ -116,8 +123,8 @@ public abstract class Enemy : MonoBehaviour
         Gap_Distance_Y = Mathf.Abs(target.transform.position.y - transform.position.y); //Y�� �Ÿ� ���
         Sensing(target, rayHit);
         Sensor();
-        Swordlevel = Player.proLevel;
-        selectWeapon = Player.proSelectWeapon;
+        Swordlevel = player.proLevel;
+        selectWeapon = player.proSelectWeapon;
         bleedingDamage = Player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
         if (bleedingTime >= 0)
@@ -153,8 +160,8 @@ public abstract class Enemy : MonoBehaviour
     public virtual void Boss(Transform target)  // boss�� Update��
     {
         weaponTag = Player.playerTag;
-        Swordlevel = Player.proLevel;
-        selectWeapon = Player.proSelectWeapon;
+        Swordlevel = player.proLevel;
+        selectWeapon = player.proSelectWeapon;
         bleedingDamage = Player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
         playerLoc = target.position.x;
@@ -174,8 +181,8 @@ public abstract class Enemy : MonoBehaviour
     public virtual void OrcBoss(Transform target)
     {
         weaponTag = Player.playerTag;
-        Swordlevel = Player.proLevel;
-        selectWeapon = Player.proSelectWeapon;
+        Swordlevel = player.proLevel;
+        selectWeapon = player.proSelectWeapon;
         bleedingDamage = Player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
         if (bleedingTime >= 0)
@@ -213,8 +220,8 @@ public abstract class Enemy : MonoBehaviour
         weaponTag = Player.playerTag;
         playerLoc = target.position.x;
         boarLoc = this.gameObject.transform.position.x;
-        Swordlevel = Player.proLevel;
-        selectWeapon = Player.proSelectWeapon;
+        Swordlevel = player.proLevel;
+        selectWeapon = player.proSelectWeapon;
         bleedingDamage = Player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
         boarMove();
@@ -222,6 +229,7 @@ public abstract class Enemy : MonoBehaviour
     
     public virtual void onetime()   // Awake�� ����
     {
+
         Enemy_HPten = Enemy_HP * 0.1f;
         bleedingTime = 0f;
         hit_bloodTrans = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
@@ -375,7 +383,7 @@ public abstract class Enemy : MonoBehaviour
         
 
     }
-    void Move() // �̵�
+    void Move() // 움직임
     {
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
         gameObject.transform.Translate(new Vector2(nextDirX, 0) * Time.deltaTime * Enemy_Speed);

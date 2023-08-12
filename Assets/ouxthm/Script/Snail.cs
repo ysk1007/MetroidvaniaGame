@@ -16,11 +16,10 @@ public class Snail : Enemy
         Enemy_Dying_anim_Time = 1.1f;   // �״� �ִϸ��̼� ���� �ð�
         Enemy_Sensing_X = 10f; // �÷��̾� ���� X��
         Enemy_Sensing_Y = 5f;  // �÷��̾� ���� Y��
-        Bump_Power = 2f; // �浹 �� �� ������
+        Bump_Power = 10f; // �浹 �� �� ������
         bleedLevel = 0; // ���� ������
         iamBoss = false;    // ������ �ƴ�
     }
-        Bump_Power = 10; // �浹 �� �� ������
 
 
     public override void Short_Monster(Transform target)

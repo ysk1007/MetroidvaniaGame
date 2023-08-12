@@ -60,12 +60,10 @@ public class Player : MonoBehaviour
     public bool CanlifeStill = false; //�߰���
     public float lifeStill; //�߰���
     public float DecreaseCool = 0f; //�߰���
-    public int proSelectWeapon = 4; //4�� ���õ��� ������ ���� ���� 0,1,2 => Į,����,Ȱ
-    public int proLevel = 0;
     public float enemyPower;
 
-    public static int proSelectWeapon = 0;       // 2023-07-31 �߰�(������ ���õ� ����) 0Į,1����,2Ȱ,4���� X
-    public static int proLevel = 3; // ���õ� ����
+    public int proSelectWeapon = 0;       // 2023-07-31 �߰�(������ ���õ� ����) 0Į,1����,2Ȱ,4���� X
+    public int proLevel = 3; // ���õ� ����
     public int stackbleed;  // ���Ϳ� ���� ���� ����
     public static float BleedingTime = 8f;  // 2023-07-31 �߰�(���� ���� �ð�)
     public static float bleedDamage = 0.5f; // 2023-08-01 ���� ������
