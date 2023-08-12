@@ -77,7 +77,7 @@ public class WeaponSwap : MonoBehaviour
             skills[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = true;
             UltSkills[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = true;
         }
-        if (Input.GetKeyDown(KeyCode.Tab) && !swaping && ableExe)
+        if (Input.GetKeyDown(KeyCode.Tab) && !swaping && ableExe && player.isSkill == false && player.isMasterSkill == false && player.isCharging == false)   // 8/6 플레이어의 스킬사용 유무확인 추가
         {
             currentWeaponIndex++;
 
@@ -148,7 +148,7 @@ public class WeaponSwap : MonoBehaviour
     {
         while (time < 1f)
         {
-        Debug.Log("시작");
+        //Debug.Log("시작");
         if (time <= _upSizeTime)
             {
                 img.rectTransform.localScale = Vector3.one * (1 + _size * time);
