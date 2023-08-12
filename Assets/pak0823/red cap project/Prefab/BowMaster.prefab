@@ -147,9 +147,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77a68d98bc1f6534ea6c418be98bf120, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deleteTime: 2
-  Dmg: 1
-  speed: 15
+  deleteTime: 1
+  Dmg: 10
+  speed: 20
+  PlayerWeapon: 0
   isMasterSkill: 0
   TreeCnt: 0
   player: {fileID: 0}

@@ -16,8 +16,6 @@ public class Player : MonoBehaviour
     public float SpeedChange; // Move �ӵ����� ���� ����
     public float curTime, coolTime = 2;  // ���Ӱ����� ������ �ð�
     public float skcoolTime;  // ��ų ��Ÿ��
-    public float Sword_SkTime, Axe_SkTime, Bow_SkTime;   // ���⺰ ��ų ��Ÿ��
-    public float[] Skill_Cools = { 10f, 20f, 10f }; //��ų �� ����Ʈ
     public bool isdelay = false;    //���� ������ üũ
     public bool isSlide = false;     //�����̵� üũ
     public bool isGround = true;    //Player�� ������ �ƴ��� üũ
@@ -31,7 +29,6 @@ public class Player : MonoBehaviour
     public int JumpCnt, JumpCount = 2;  //2�������� ���� ī���� ���ִ� ����
     public int SwdCnt, AxeCnt;  //���ݸ���� ����
     public float Direction; //���Ⱚ
-    public float attackDash = 4f; //ū ���ݽ� ������ �̵��ϴ� ��
     public float slideSpeed = 13;   //�����̵� �ӵ�
     public int slideDir = 1;    //�����̵� ���Ⱚ
     public float MaxHp = 100;    //�÷��̾� �ִ� HP
@@ -46,6 +43,11 @@ public class Player : MonoBehaviour
     public bool isCharging = false; // ��¡ ���� ����
     public float chargeTimer = 0f; // ��¡ �ð��� �����ϴ� Ÿ�̸�
     public PlayerCanvas playerCanvas; //�߰���
+    public float[] MasterSkillTime = { 10, 10, 10 };   //���⺰ ���õ� ��ų ��Ÿ��
+    public float Sword_MsTime, Axe_MsTime, Bow_MsTime;  // ���⺰ ���õ� ��ų ��Ÿ�� ����
+    public float[] SkillTime = { 10, 20, 10 }; // ���⺰ �⺻��ų ��Ÿ��
+    public float Sword_SkTime, Axe_SkTime, Bow_SkTime;  // ���⺰ �⺻��ų ��Ÿ�� ����
+    public float attackDash = 4f; //ū ���ݽ� ������ �̵��ϴ� ��
 
     public static Player instance; //�߰���
     public float gold;  //�߰���
@@ -61,6 +63,9 @@ public class Player : MonoBehaviour
     public float lifeStill; //�߰���
     public float DecreaseCool = 0f; //�߰���
     public float enemyPower;
+    public int proSelectWeapon = 4; //4�� ���õ��� ������ ���� ���� 0,1,2 => Į,����,Ȱ
+    public int proLevel = 0;
+    public int stackbleed; // ���Ϳ� ���� ���� ����
 
     public int proSelectWeapon = 0;       // 2023-07-31 �߰�(������ ���õ� ����) 0Į,1����,2Ȱ,4���� X
     public int proLevel = 3; // ���õ� ����
@@ -98,6 +103,7 @@ public class Player : MonoBehaviour
     public GameObject Arrow; //ȭ�� ������Ʈ
     public GameObject Arrow2; //ȭ�� ���� ������Ʈ
     public GameObject Slash;  // �� �⺻��ų ������Ʈ
+    public GameObject AxeSkill;  //���� �����ͽ�ų ������Ʈ
     public GameObject BowSkill;  // Ȱ �⺻��ų ������Ʈ
     public GameObject BowMaster; // Ȱ ���õ� ȭ�� ������Ʈ
 
@@ -105,20 +111,25 @@ public class Player : MonoBehaviour
     public Transform Arrowpos2; //������ ȭ��  ������Ʈ
     public Transform Attackpos;   //���ݹڽ� ��ġ
     public Transform Skillpos;  // ��ų ���� ������Ʈ
+    public Transform Axepos;   //��ų ���� ��ġ
 
-    public AudioClip SwordSkillSound;
     public AudioClip SwordAtkSound;
+    public AudioClip SwordSkillSound;
+    //public AudioClip SwordMasterSound;
     public AudioClip AxeAtk1Sound;
     public AudioClip AxeAtk2Sound;
+    public AudioClip AxeSkillSound;
+    public AudioClip AxeMasterSound;
     public AudioClip BowAtkSound;
     public AudioClip BowSkillSound;
-    public AudioClip DamagedSound;
-    public AudioClip AxeSkillSound;
+    public AudioClip BowMasterSound;
+    public AudioClip DamagedSound;  
     public AudioClip JumpSound;
     public AudioClip SlideingSound;
-
+    public AudioClip DieSound;
 
     public BoxCollider2D box; //���� ���� ����
+    public BoxCollider2D Axebox; //���� ���õ� ����
     public SpriteRenderer spriteRenderer;
     public Enemy enemy;
     Projective_Body PBody;
@@ -132,6 +143,7 @@ public class Player : MonoBehaviour
     void Awake()
     {
         instance = this; //�߰���
+        attackRange = transform.GetChild(0).gameObject; // �÷��̾��� 0��° ������Ʈ�� attackRange�� ����
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
@@ -144,6 +156,7 @@ public class Player : MonoBehaviour
         Arrowpos = transform.GetChild(1).GetComponentInChildren<Transform>(); //Arrowpos�� ��ġ���� pos�� ����
         Arrowpos2 = transform.GetChild(2).GetComponentInChildren<Transform>(); //Arrowpos2�� ��ġ���� pos�� ����
         Skillpos = transform.GetChild(3).GetComponentInChildren<Transform>(); //Skillpos�� ��ġ���� pos�� ����
+        Axepos = transform.GetChild(7).GetComponentInChildren<Transform>(); //Axepos�� ��ġ���� pos�� ����
     }
 
     void Start() //�߰���
@@ -172,7 +185,8 @@ public class Player : MonoBehaviour
         if (!isdelay && Direction != 0 && gameObject.CompareTag("Player") && !isSkill)    //���� ���������Ͻ� �̵� �Ұ���
         {
             Speed = SpeedChange;
-           Transform AtkRangeTransform = transform.GetChild(1);   // AttackRange ��ġ�� ������ ���� �ڽĿ�����Ʈ ��ġ�� �ҷ���
+           Transform AtkRangeTransform = transform.GetChild(0);   // AttackRange ��ġ�� ������ ���� �ڽĿ�����Ʈ ��ġ�� �ҷ���
+           Transform AxeposTransform = transform.GetChild(7);   //Axepos ��ġ�� ���� ���� �ڽĿ�����Ʈ ��ġ�� ������
             anim.SetBool("Player_Walk", true);
             if (Direction < 0) //���� �ٶ󺸱�
             {
@@ -180,6 +194,7 @@ public class Player : MonoBehaviour
                 transform.Translate(new Vector2(-1, 0) * Speed * Time.deltaTime);
                 slideDir = -1;
                 AtkRangeTransform.localPosition = new Vector3(-3, 0); // AttackRange ��ġ�� ����
+                AxeposTransform.localPosition = new Vector3(-3, -(0.8f));   //Axepos ��ġ�� ����
             }
             else if (Direction > 0) //������ �ٶ󺸱�
             {
@@ -187,6 +202,7 @@ public class Player : MonoBehaviour
                 transform.Translate(new Vector2(1, 0) * Speed * Time.deltaTime);
                 slideDir = 1;
                 AtkRangeTransform.localPosition = new Vector3(0, 0);
+                AxeposTransform.localPosition = new Vector3(3, -(0.8f));
             }
         }
         else
@@ -201,23 +217,27 @@ public class Player : MonoBehaviour
         //Jump
         if (Input.GetKey(KeyCode.DownArrow) && !anim.GetBool("Sliding") && !anim.GetBool("Wall_slide")) //���ǿ��� ������ ������ ��������
         {
-            if(Input.GetKeyDown(KeyCode.Space))
-                StartCoroutine(PadJump());
+            RaycastHit2D rayHitDown = Physics2D.Raycast(rigid.position, Vector3.down, 1.5f, LayerMask.GetMask("Pad"));
+            //Debug.DrawRay(rigid.position, Vector3.down * 1.5f, Color.red);
+            if (Input.GetKeyDown(KeyCode.Space))
+                StartCoroutine(PadJump(0));
         }
         else if (Input.GetKeyDown(KeyCode.Space) && !anim.GetBool("Sliding") && !anim.GetBool("Wall_slide") && JumpCnt > 0)
         {
             rigid.velocity = Vector2.up * jumpPower;
-            StartCoroutine(PadJump());
+            StartCoroutine(PadJump(1));
         }
         if (Input.GetKeyUp(KeyCode.Space))
         {
-            JumpCnt--;
+            if(!Input.GetKey(KeyCode.DownArrow))
+                JumpCnt--;
             isGround = false;
         }
     }
 
     public void Player_Attack() //Player ���ݸ���
     {
+
         if (Input.GetKeyDown(KeyCode.Tab) && GameManager.GetComponent<WeaponSwap>().swaping != true)    // ���� ����
         {
             WeaponChage += 1;      
@@ -238,69 +258,78 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.D) && !anim.GetBool("Sliding"))    //�����ͽ�ų ����
+        if (Input.GetKeyDown(KeyCode.D) && proSelectWeapon != 4 && proLevel == 3)    //���õ� ��ų ����
         {
-            isMasterSkill = true;
-            if (WeaponChage == 1)   //��
-            {
-                if(proLevel > 2 && proSelectWeapon == 0 && stackbleed > 0)
-                {
-                    enemy.bleedEff();
-                }
-            }
-            if (WeaponChage == 2)   //����
-            {
-
-            }
-            if (WeaponChage == 3)   //Ȱ
+            if (!anim.GetBool("Sliding") && !isMasterSkill && !isSkill && !isCharging)
             {
                 StartCoroutine(MasterSkill());
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.S) && !anim.GetBool("Sliding"))  //��ų ����
+        
+        if (Sword_MsTime >= 0)   //Sword ���õ� ��ų ��Ÿ�� 
         {
-            if (WeaponChage == 1 && Sword_SkTime <= 0)    //Sword ��ų ����
+            Sword_MsTime -= Time.deltaTime;
+        }
+        if (Axe_MsTime >= 0)     //Axe ���õ� ��ų ��Ÿ��
+        {
+            Axe_MsTime -= Time.deltaTime;
+        }
+        if (Bow_MsTime >= 0)     //Bow ���õ� ��ų ��Ÿ��
+        {
+            Bow_MsTime -= Time.deltaTime;
+        }
+
+        if (Input.GetKeyDown(KeyCode.S) && !anim.GetBool("Sliding") && !isSkill && !isMasterSkill)  //�⺻ ��ų ����
+        {
+            if (WeaponChage == 1 && Sword_SkTime <= 0)    //Sword
             {
                 skcoolTime = DeCoolTimeCarcul(Skill_Cools[0]); //��ų�� ������
-                Sword_SkTime = skcoolTime;
-                isSkill = true;
+                sSkill = true;
                 SwdCnt = 2;
                 anim.SetTrigger("sword_atk");
                 anim.SetFloat("Sword", SwdCnt); // �ִϸ��̼ǿ� ��ų �����Լ��� �־����
             }
-            if (WeaponChage == 2 && Axe_SkTime <= 0)    //Axe ��ų ����
+            if (WeaponChage == 2 && Axe_SkTime <= 0)    //Axe
             {
-                StartCoroutine(Skill());
-                skcoolTime = DeCoolTimeCarcul(Skill_Cools[1]); //��ų�� ������
-                Axe_SkTime = skcoolTime;
-            }
-            if (WeaponChage == 3 && Bow_SkTime <= 0)    //Bow ��ų ����
-            {
-                StartCoroutine(Skill());
-                skcoolTime = DeCoolTimeCarcul(Skill_Cools[2]); //��ų�� ������
-                Bow_SkTime = skcoolTime;
                 isSkill = true;
+                skcoolTime = DeCoolTimeCarcul(Skill_Cools[1]); //��ų�� ������
+                StartCoroutine(Skill());
+            }
+            if (WeaponChage == 3 && Bow_SkTime <= 0)    //Bow
+            {
+                isSkill = true;
+                skcoolTime = DeCoolTimeCarcul(Skill_Cools[2]); //��ų�� ������
+                StartCoroutine(Skill());
             }
         }
-        else
+        if(Sword_SkTime >= 0)   //Sword ��ų ��Ÿ�� 
         {
-            if(Sword_SkTime >= 0)   // �׳� 0�� �Ʒ��� ��� ���ҵǴ� �۾� ���ַ��� �߰�
-                Sword_SkTime -= Time.deltaTime;
-            if (Axe_SkTime >= 0)
-                Axe_SkTime -= Time.deltaTime;
-            if (Bow_SkTime >= 0)
-                Bow_SkTime -= Time.deltaTime;
+            Sword_SkTime -= Time.deltaTime;
         }
-            
-        if(Input.GetKey(KeyCode.A) && !anim.GetBool("Sliding") && !isSkill) // Axe ��¡ ����
+        if(Axe_SkTime >= 0)     //Axe ��ų ��Ÿ��
+        {
+            Axe_SkTime -= Time.deltaTime;
+        }
+        if(Bow_SkTime >= 0)     //Bow ��ų ��Ÿ��
+        {
+            Bow_SkTime -= Time.deltaTime;
+        }
+        if (ShieldTime >= 0) //�� ���ӽð��� ������ �� ����
+        {
+            ShieldTime -= Time.deltaTime;
+            if (ShieldTime <= 0)
+            {
+                StartCoroutine(Blink());
+            }
+        }
+
+        if (Input.GetKey(KeyCode.A) && !anim.GetBool("Sliding") && !isSkill && !isMasterSkill) // Axe ��¡ ����
         {
             if(WeaponChage == 2)
             {
                 if (!isCharging)
                 {
                     isCharging = true;
-                    print("��¡ ����");
                     chargeTimer = 0f;
                     playerCanvas.ChargeStart(); //���� ������ �߰���
                 }
@@ -311,7 +340,6 @@ public class Player : MonoBehaviour
                     if (chargeTimer >= chargingTime)
                     {
                         chargeTimer = chargingTime; // ��¡ �ð��� �ִ� �ð��� �Ѿ�� �ʵ��� ����
-                        print("��¡�Ϸ�");
                     }
 
                 }
@@ -329,8 +357,7 @@ public class Player : MonoBehaviour
            
         }
 
-
-        if (Input.GetKeyUp(KeyCode.A) && !anim.GetBool("Sliding") && !isSkill)    //�⺻ ����
+        if (Input.GetKeyUp(KeyCode.A) && !anim.GetBool("Sliding") && !isSkill && !isMasterSkill)    //�⺻ ����
         {
             if (!isdelay)   //�����̰� false�϶� ���� ����
             {
@@ -357,10 +384,28 @@ public class Player : MonoBehaviour
             if(ShieldTime >= 0)
                 ShieldTime -= Time.deltaTime;
             if (ShieldTime <= 0 && !ishurt && !isSlide && !isjump) //�� ���ӽð��� �����ٸ� �� ���̾� ����
+        }
+
+        if (Input.GetKeyDown(KeyCode.Tab) && GameManager.GetComponent<WeaponSwap>().swaping != true)    // ���� ����
+        {
+            if(!isCharging && !isSkill && !isMasterSkill)
             {
-                StartCoroutine(Blink());
-                gameObject.layer = LayerMask.NameToLayer("Player");
-                isShield = false;
+                WeaponChage += 1;
+                if (WeaponChage == 2)
+                {
+                    attackRange.tag = "Axe";
+                }
+                else if (WeaponChage == 3)
+                {
+                    attackRange.tag = "Arrow";
+                    this.transform.GetChild(0).gameObject.SetActive(false);
+                }
+                else
+                {
+                    attackRange.tag = "Sword";
+                    WeaponChage = 1;
+                    this.transform.GetChild(0).gameObject.SetActive(true);
+                }
             }
         }
     }
@@ -379,23 +424,20 @@ public class Player : MonoBehaviour
                     enemy = collider.GetComponent<Enemy>();
                     if (enemy != null)
                     {
-                        //StopCoroutine(enemy.Hit(Dmg));
                         StartCoroutine(enemy.Hit(Dmg));
-                        //enemy.Hit(Dmg);
                         Debug.Log(Dmg + "Player");
                     }
                 }
             }
         }
     } 
-    IEnumerator Skill()//��ų �۵��� ����(���� ������)
+    IEnumerator Skill()//��ų �۵��� ����
     {
-        //yield return null;
         if (WeaponChage == 1) //sword ��ų
         {
-            StartCoroutine(SkillTime());
+            StartCoroutine(SkillDelay());
             Transform SkillTransform = transform.GetChild(3);   //�� ��ų ������Ʈ ��ġ�� ����
-            if (slideDir == 1)   //���� ���⺰ Arrowpos ��ġ�� ����
+            if (slideDir == 1)
             {
                 SkillTransform.localPosition = new Vector3(2, 0.2f);
             }
@@ -407,30 +449,65 @@ public class Player : MonoBehaviour
             PlaySound("SwordSkill");
             yield return new WaitForSeconds(0.2f);
             SwdCnt = 1;
+            Sword_SkTime = SkillTime[0];
         }
         if (WeaponChage == 2) //Axe ��ų
         {
-            gameObject.layer = LayerMask.NameToLayer("Shield"); //�� Ȱ��ȭ �� 10�ʰ� ����
+
+            //gameObject.layer = LayerMask.NameToLayer("Shield"); //�� Ȱ��ȭ �� 10�ʰ� ����
             this.transform.GetChild(6).gameObject.SetActive(true);  //�� ����Ʈ �ѱ�
             PlaySound("AxeSkill");
             isShield = true;
             ShieldTime = 10f;
+            Axe_SkTime = SkillTime[1];
+            isSkill = false;
         }
         if (WeaponChage == 3) //Arrow ��ų
         {
             anim.SetTrigger("arrow_atk");
-            StartCoroutine(SkillTime());
+            StartCoroutine(SkillDelay());
+            Bow_SkTime = SkillTime[2];
         }
     }
 
     IEnumerator MasterSkill()
     {
-        if(WeaponChage == 3)
+        if (WeaponChage == 1 && proSelectWeapon == 0 && Sword_MsTime <= 0) //Sword ���õ� ��ų
         {
-            anim.SetTrigger("arrow_atk");
-            StartCoroutine(SkillTime());
+            if (stackbleed > 0)
+            {
+                isMasterSkill = true;
+                //enemy.bleedEff();
+                Sword_MsTime = MasterSkillTime[0];
+            }
+            else
+            {
+                Debug.Log("�� �� ����");
+            }
+            isMasterSkill = false;
         }
-        yield return null;
+        if (WeaponChage == 2 && proSelectWeapon == 1 && Axe_MsTime <= 0)    //Axe ���õ� ��ų
+        {
+            isMasterSkill = true;
+            AxeCnt = 4;
+            anim.SetFloat("Axe", AxeCnt); //���õ� ��ų�� Axe_atk3 ��� �ִϸ��̼����� ����
+            anim.SetTrigger("axe_atk");
+            yield return new WaitForSeconds(1.5f);
+            //PlaySound("AxeMasterSkill"); // �ִϸ��̼ǿ� ���� ����
+            Instantiate(AxeSkill, Axepos.position, transform.rotation);
+            Axe_MsTime = MasterSkillTime[1];
+            yield return new WaitForSeconds(1f);
+            isMasterSkill = false;
+        }
+        if(WeaponChage == 3 && proSelectWeapon == 2 && Bow_MsTime <= 0) //Bow ���õ� ��ų
+        {
+            isMasterSkill = true;
+            anim.SetTrigger("arrow_atk");
+            StartCoroutine(SkillDelay());
+            yield return new WaitForSeconds(0.5f);
+            PlaySound("BowMasterSkill");
+            Bow_MsTime = MasterSkillTime[2];
+        }
     }
 
     //Wall_Slide
@@ -508,10 +585,7 @@ public class Player : MonoBehaviour
         anim.SetBool("Sliding", false);
         gameObject.tag = "Player";
         this.transform.GetChild(4).gameObject.SetActive(false);
-        if (ShieldTime >= 0)
-            gameObject.layer = LayerMask.NameToLayer("Shield");
-        else
-            gameObject.layer = LayerMask.NameToLayer("Player");
+        gameObject.layer = LayerMask.NameToLayer("Player");
         Speed = SpeedChange;
         yield return new WaitForSeconds(2f); //�����̵� ��Ÿ��
         isSlide = false;
@@ -522,7 +596,7 @@ public class Player : MonoBehaviour
     {
         if (!ishurt)
         {
-            if (gameObject.layer != LayerMask.NameToLayer("Shield"))    // ���� ������ �ǰݵ�
+            if (!isShield)    // ���� ������ �ǰݵ�
             {
                 Damage = DefDamgeCarculation(Damage); //���� ���� �߰�
                 ishurt = true;
@@ -531,7 +605,7 @@ public class Player : MonoBehaviour
 
                 if (CurrentHp <= 0)
                 {
-                    //Invoke("Die", 3f);
+                    StartCoroutine(Die(pos));
                 }
                 else
                 {
@@ -549,10 +623,8 @@ public class Player : MonoBehaviour
             }
             else
             {
-                StartCoroutine(Blink());
-                gameObject.layer = LayerMask.NameToLayer("Player");
-                isShield = false;
                 ShieldTime = 0;
+                StartCoroutine(Blink());
             }
         }
 
@@ -584,39 +656,23 @@ public class Player : MonoBehaviour
 
         if(AxeCnt == 1) // ���ۺ� ����� ����
         {
-            DmgChange = 10;
-            box.size = new Vector2(5f, 2.5f);
-            if(slideDir == 1)   //���� ���⺰ box.offset���� �ٸ��� ����
-                box.offset = new Vector2(2, 0);
-            else
-                box.offset = new Vector2(1, 0);
-            //PlaySound("AxeAtk1");     ����Ƽ �ִϸ��̼ǿ� ����ǰ� �߰��ص���
+           DmgChange = 15;
         }
         else if (AxeCnt == 2)    
         {
-            DmgChange = 15;
-            box.size = new Vector2(4.5f, 2.5f);
-            if (slideDir == 1)
-                box.offset = new Vector2(2.5f, 0);
-            else
-                box.offset = new Vector2(0.5f, 0);
-            //PlaySound("AxeAtk1");     ����Ƽ �ִϸ��̼ǿ� ����ǰ� �߰��ص���
-        }
-        else if (AxeCnt == 3)
-        {
             DmgChange = 20;
-            attackDash = 6;
-            box.size = new Vector2(5.5f, 2.5f);
-            if (slideDir == 1)
-                box.offset = new Vector2(3.5f, 0);
-            else
-                box.offset = new Vector2(-0.5f, 0);
-            //PlaySound("AxeAtk3");     ����Ƽ �ִϸ��̼ǿ� ����ǰ� �߰��ص���
         }
+        box.size = new Vector2(4f, 2.5f);
+        if (slideDir == 1)   //���� ���⺰ box.offset���� �ٸ��� ����
+            box.offset = new Vector2(2, 0);
+        else
+            box.offset = new Vector2(1, 0);
+        //PlaySound("AxeAtk1");     ����Ƽ �ִϸ��̼ǿ� ����ǰ� �߰��ص���
+
         anim.SetFloat("Axe", AxeCnt); //Blend�� �̿��� ���Ӱ����� �ִϸ��̼� ������ ����
         anim.SetTrigger("axe_atk");
 
-        if (AxeCnt > 2)     //���Ӱ����� ������ �ٽ� ù��° ���ݰ����� ����
+        if (AxeCnt > 1)     //���Ӱ����� ������ �ٽ� ù��° ���ݰ����� ����
             AxeCnt = 0;
 
         curTime = coolTime + 0.5f;  // �޺� ���� ���ѽð�
@@ -630,7 +686,7 @@ public class Player : MonoBehaviour
         DmgChange = 30;
         isCharging = false;
         chargeTimer = 0f;
-        anim.SetFloat("Axe", AxeCnt); //��¡ ������ 3�� �ִϸ��̼����� ����
+        anim.SetFloat("Axe", AxeCnt); //��¡ ������ Axe_atk3 ª�� �ִϸ��̼����� ����
         anim.SetTrigger("axe_atk");
     }   
     IEnumerator Bow_attack() //ȭ�� �Ϲݰ��� �� ��ų - �ִϸ��̼� Ư�� �κп��� ����ǰ� ����Ƽ���� ������
@@ -655,14 +711,14 @@ public class Player : MonoBehaviour
             Instantiate(BowSkill, Arrowpos.position, transform.rotation);   //��ų ����Ʈ ȭ�� ����
             PlaySound("BowSkill");
         }
-        else if(isMasterSkill)
+        else if(isMasterSkill && proLevel >= 3 && proSelectWeapon == 2)
         {
             Instantiate(BowMaster, Arrowpos.position, transform.rotation);  //������ ��ų ����Ʈ ȭ�� ����
         }
         else
         {
             Instantiate(Arrow, Arrowpos.position, transform.rotation); // �⺻ ȭ�� ���� ����
-            if(level == 2)
+            if(proLevel >= 2 && proSelectWeapon == 2)
                 Instantiate(Arrow2, Arrowpos2.position, transform.rotation);  // ������ ȭ�� ���� ����
             PlaySound("BowAtk");
         }
@@ -684,11 +740,13 @@ public class Player : MonoBehaviour
         }
     }
 
-    IEnumerator SkillTime() //��ų ���� �ð�
+    IEnumerator SkillDelay() //��ų ���� �ð� - �ִϸ��̼� �ӵ��� �����ַ��� �߰���
     {
         if(WeaponChage == 1)
             yield return new WaitForSeconds(0.6f);
-        if(WeaponChage == 3)
+        else if(WeaponChage == 2)
+            yield return new WaitForSeconds(0.5f);
+        else
             yield return new WaitForSeconds(1.3f);
 
         isSkill = false;
@@ -728,10 +786,6 @@ public class Player : MonoBehaviour
         gameObject.layer = LayerMask.NameToLayer("Invincible");
         yield return new WaitForSeconds(2f);
         ishurt = false;
-        if(ShieldTime > 0)  // �ǰ� ������ �� ��ų�� �����ϸ� �÷��̾� ���̾�� �ٲ����ʰ� �ٷ� ������ ����
-            gameObject.layer = LayerMask.NameToLayer("Shield");
-        else
-            gameObject.layer = LayerMask.NameToLayer("Player");
     }
 
     IEnumerator Blink() // �����ð����� ���� ȿ��
@@ -741,44 +795,61 @@ public class Player : MonoBehaviour
             spriteRenderer.color = new Color(1, 1, 1, 0.5f);
             yield return new WaitForSeconds(2f);
         }
-        if(isShield)
+        if(isShield && ShieldTime <= 0)
         {
             Transform childTransform = this.transform.GetChild(6);
             SpriteRenderer childSpriteRenderer = childTransform.GetComponent<SpriteRenderer>();
 
-            childSpriteRenderer.color = new Color(1, 1, 1, 0);
-            yield return new WaitForSeconds(0.1f);
-            childSpriteRenderer.color = new Color(1, 1, 1, 1);
-            yield return new WaitForSeconds(0.1f);
-            childSpriteRenderer.color = new Color(1, 1, 1, 0);
-            yield return new WaitForSeconds(0.1f);
-            childSpriteRenderer.color = new Color(1, 1, 1, 1);
-            yield return new WaitForSeconds(0.1f);
+            for(int i = 0; i < 2; i++)
+            {
+                childSpriteRenderer.color = new Color(1, 1, 1, 0);
+                yield return new WaitForSeconds(0.1f);
+                childSpriteRenderer.color = new Color(1, 1, 1, 1);
+                yield return new WaitForSeconds(0.1f);
+            }
             this.transform.GetChild(6).gameObject.SetActive(false);
+            yield return new WaitForSeconds(0.2f);
+            isShield = false;
         }
         spriteRenderer.color = new Color(1, 1, 1, 1f);
     }
 
-    IEnumerator PadJump()
+    IEnumerator PadJump(int up)
     {
         PlaySound("Jump");
-        if (JumpCnt == 1)
+        if (JumpCnt >= 0 && up == 1)
             this.transform.GetChild(5).gameObject.SetActive(true);
         isjump = true;
         anim.SetBool("Player_Jump", true);
-        gameObject.layer = LayerMask.NameToLayer("Jump");
-        
-        yield return new WaitForSeconds(0.3f);
-        if (ShieldTime >= 0 && !ishurt && !isSlide) //�� ���ӽð��� �����ٸ� �� ���̾� ����
-            gameObject.layer = LayerMask.NameToLayer("Shield");
-        else
-            gameObject.layer = LayerMask.NameToLayer("Player");
+        if(up == 1)
+        {
+            gameObject.layer = LayerMask.NameToLayer("Jump");
+            yield return new WaitForSeconds(0.5f);
+        }
+        else if(up == 0)
+        {
+            gameObject.layer = LayerMask.NameToLayer("Jump");
+            yield return new WaitForSeconds(0.3f);
+        }
+        gameObject.layer = LayerMask.NameToLayer("Player");
+
         this.transform.GetChild(5).gameObject.SetActive(false);
     } //���� ���� ����
 
-    void Die() //Player ����� ��������Ʈ ����
+    IEnumerator Die(Vector2 pos) //Player ����� ��������Ʈ ����
     {
-        Destroy(gameObject);
+        PlaySound("Die");
+        float x = transform.position.x - pos.x;
+        if (transform.position.x > pos.x)
+            x = 1;
+        else
+            x = -1;
+        StartCoroutine(Knockback(x));
+        anim.SetTrigger("Die");
+        gameObject.tag = "DiePlayer";
+        //gameObject.layer = LayerMask.NameToLayer("DiePlayer");
+        yield return new WaitForSeconds(2.2f);
+        this.transform.gameObject.SetActive(false);
     }
 
     void PlayerReposition() // ������ ��ġ ����(�ӽ�)
@@ -800,7 +871,7 @@ public class Player : MonoBehaviour
                 audio.clip = DamagedSound;
                 break;
             case "Die":
-                //audio.clip =
+                audio.clip = DieSound;
                 break;
             case "SwordAtk":
                 audio.clip = SwordAtkSound;
@@ -817,11 +888,20 @@ public class Player : MonoBehaviour
             case "SwordSkill":
                 audio.clip = SwordSkillSound;
                 break;
+            case "SwordMasterSkill":
+                //audio.clip = SwordMasterSound;
+                break;
             case "AxeSkill":
                 audio.clip = AxeSkillSound;
                 break;
+            case "AxeMasterSkill":
+                audio.clip = AxeMasterSound;
+                break;
             case "BowSkill":
                 audio.clip = BowSkillSound;
+                break;
+            case "BowMasterSkill":
+                audio.clip = BowMasterSound;
                 break;
         }
         audio.Play();

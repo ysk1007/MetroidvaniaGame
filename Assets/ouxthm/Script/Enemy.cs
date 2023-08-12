@@ -319,7 +319,7 @@ public abstract class Enemy : MonoBehaviour
                 if (arrow != null)
                 {
                     Pdamage = arrow.Dmg;
-                    StartCoroutine(Hit(Pdamage));
+                    StartCoroutine(Hit(Pdamage));  
                 }
             }
             else if (collision.tag == "Slash")

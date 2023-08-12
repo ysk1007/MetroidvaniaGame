@@ -1,67 +1,77 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BowTree : MonoBehaviour
 {
-    public float deleteTime = 5f;
-    public float Attackdelay = 0;
+    public float deleteTime = 10f;
     public float Dmg = 5;
     public float speed = 1f;
     public Enemy enemy;
-    public GameObject Tree;  // ¼÷·Ãµµ ¿ÀºêÁ§Æ®
-    private List<Collider2D> enemyColliders = new List<Collider2D>();
+    public GameObject Tree;  // ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
     public ParticleSystemRenderer particleRenderer;
     public bool flip = false;
-
+    public int maxEnemies = 5;  // ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+    public float delay; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
+    private List<Collider2D> enemyColliders = new List<Collider2D>();   //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ßºï¿½ Ã¼Å©
+    private List<Enemy> enemiesInRange = new List<Enemy>(); // Enemy Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    new AudioSource audio;
+    public AudioClip TreeSound;
+    
     private void Start()
     {
         particleRenderer = this.gameObject.GetComponent<ParticleSystemRenderer>();
         leafFlip();
+    }
+    
+
+    private void Awake()
+    {
+        audio = GetComponent<AudioSource>();
     }
     void Update()
     {
         deleteTime -= Time.deltaTime;
         if (deleteTime <= 0)
         {
-            Desrtory();
+            Destroy(gameObject);
         }
-            
-    }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision != null && collision.tag == "Enemy" && Attackdelay <= 0)
+        if(delay <= 0)
         {
-            ApplyAOEDamage();
-            if (!enemyColliders.Contains(collision))
-            {
-                enemyColliders.Add(collision); // Ã³À½ °¨ÁöµÈ collider¸é ¸®½ºÆ®¿¡ Ãß°¡
-            }
+            TreeDamage();
         }
         else
-            Attackdelay -= Time.deltaTime;
+            delay -= Time.deltaTime;
+
     }
 
-    void ApplyAOEDamage()
+    private void OnTriggerEnter2D(Collider2D other) // OnEnter ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½
     {
-        foreach (Collider2D enemyCollider in enemyColliders)
-        {
-            if (enemyCollider != null)
-            {
-                Enemy enemy = enemyCollider.GetComponent<Enemy>();
-                if (enemy != null)
-                {
-                    StartCoroutine(enemy.Hit(Dmg));
-                    Attackdelay = 1f;
-                }
-            }
-        }
-        enemyColliders.Clear(); // ¸®½ºÆ® ºñ¿ì±â
+        enemyColliders.Add(other);
+        audio.clip = TreeSound;
+        audio.Play();
     }
-    void Desrtory()
+
+    private void OnTriggerExit2D(Collider2D other) // OnExit ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½
     {
-        Destroy(gameObject);
+        enemyColliders.Remove(other);
+    }
+
+    void TreeDamage()
+    {
+        enemiesInRange = enemyColliders
+            .Where(x => x != null && x.tag == "Enemy") // ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸é¼­ "Enemy" ï¿½Â±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            .Select(x => x.GetComponent<Enemy>()) // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ Enemy ï¿½ï¿½Å©ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            .Distinct() // ï¿½ßºï¿½ï¿½ï¿½ Enemy ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
+            .ToList();
+
+        foreach (Enemy enemy in enemiesInRange) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        {
+            StartCoroutine(enemy.Hit(Dmg));
+        }
+        delay = 1f;
     }
 
     void leafFlip()

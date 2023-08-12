@@ -95,7 +95,7 @@ public class WeaponSwap : MonoBehaviour
             skills[currentWeaponIndex].SetActive(true);
             UltSkills[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = true;
         }
-        if (Input.GetKeyDown(KeyCode.Tab) && !swaping && ableExe)
+        if (Input.GetKeyDown(KeyCode.Tab) && !swaping && ableExe && player.isSkill == false && player.isMasterSkill == false && player.isCharging == false)   // 8/6 ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½Å³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È®ï¿½ï¿½ ï¿½ß°ï¿½
         {
             currentWeaponIndex++;
 
@@ -103,13 +103,13 @@ public class WeaponSwap : MonoBehaviour
             {
                 currentWeaponIndex = 0;
             }
-            // ÀÎµ¦½º °ªÀÌ ÀÌ¹ÌÁö °³¼ö¸¦ ÃÊ°úÇÏ¸é Ã³À½ ÀÌ¹ÌÁö·Î µ¹¾Æ°©´Ï´Ù.
+            // ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ï¿½Ï¸ï¿½ Ã³ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½Ï´ï¿½.
             if (currentWeaponIndex >= images.Length)
             {
                 currentWeaponIndex = 0;
             }
 
-            // ¸ðµç ÀÌ¹ÌÁö¸¦ ºñÈ°¼ºÈ­ÇÏ°í, ¼±ÅÃÇÑ ÀÌ¹ÌÁö¸¸ È°¼ºÈ­ÇÕ´Ï´Ù.
+            // ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­ï¿½Ï°ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­ï¿½Õ´Ï´ï¿½.
             for (int i = 0; i < images.Length; i++)
             {
                 if (i == currentWeaponIndex)
