@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1669364bfe75e084ea23c9fa17660d82
+guid: a1ea9598123bbc449ab806fbea49501a
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 25
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -141,169 +141,64 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Smoke VFX 1_
+      name: Time & weather_0
       rect:
         serializedVersion: 2
-        x: 19
-        y: 0
-        width: 29
-        height: 17
+        x: 150
+        y: 321
+        width: 31
+        height: 10
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 633d40bf635030c45a24ed5c61b9c09f
-      internalID: -1655080577
+      spriteID: f3480626db683994a8bba6879e0e5357
+      internalID: 902416613
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Smoke VFX 1_2
+      name: case1
       rect:
         serializedVersion: 2
-        x: 64
-        y: 0
-        width: 29
-        height: 19
+        x: 224
+        y: 270
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a1148bcc314a8e548984b670c7a97966
-      internalID: 487662253
+      spriteID: 74a5072ad0da9d54ea1937dcab4ce8bb
+      internalID: -926677430
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Smoke VFX 1_3
+      name: Time & weather_3
       rect:
         serializedVersion: 2
-        x: 108
-        y: 0
-        width: 24
-        height: 20
+        x: 144
+        y: 161
+        width: 47
+        height: 10
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: baf21520ee0078e4fa715e1008ad1ba3
-      internalID: 1795233018
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Smoke VFX 1_4
-      rect:
-        serializedVersion: 2
-        x: 155
-        y: 0
-        width: 23
-        height: 20
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 581ca0f2a0ca4c84faa6ffcd09b4a8cf
-      internalID: 471361520
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Smoke VFX 1_5
-      rect:
-        serializedVersion: 2
-        x: 202
-        y: 0
-        width: 25
-        height: 21
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ed694cb6a89ac3246b85ea87589ed553
-      internalID: 1433156711
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Smoke VFX 1_6
-      rect:
-        serializedVersion: 2
-        x: 249
-        y: 0
-        width: 24
-        height: 22
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5fb67beef89fab646ae442ecce8cde5f
-      internalID: 1701725484
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Smoke VFX 1_7
-      rect:
-        serializedVersion: 2
-        x: 296
-        y: 0
-        width: 10
-        height: 23
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dcea0d8993597ca4f88915657b7cf604
-      internalID: 1986322340
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Smoke VFX 1_8
-      rect:
-        serializedVersion: 2
-        x: 343
-        y: 0
-        width: 9
-        height: 22
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f033a87f405a2104e88ad7eb3aa2dc5f
-      internalID: -1473867086
+      spriteID: 1ea62a18de3fdb64f9ee3a9a0fd65b7d
+      internalID: 382286947
       vertices: []
       indices: 
       edges: []
@@ -319,15 +214,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Smoke VFX 1_: -1655080577
-      Smoke VFX 1_2: 487662253
-      Smoke VFX 1_3: 1795233018
-      Smoke VFX 1_4: 471361520
-      Smoke VFX 1_5: 1433156711
-      Smoke VFX 1_6: 1701725484
-      Smoke VFX 1_7: 1986322340
-      Smoke VFX 1_8: -1473867086
-      Smoke VFX 1_9: 2005634011
+      Time & weather_0: 902416613
+      Time & weather_1: 224462806
+      Time & weather_3: 382286947
+      Time & weather_4: 2115877398
+      Time & weather_5: -1053797303
+      case1: -926677430
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

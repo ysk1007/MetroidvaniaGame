@@ -325,6 +325,7 @@ public abstract class Enemy : MonoBehaviour
                 if (slash != null)
                 {
                     Pdamage = slash.Dmg;
+                    bleedLevel++;
                     StartCoroutine(Hit(Pdamage));
                 }
             }
