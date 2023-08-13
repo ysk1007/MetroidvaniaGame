@@ -6,6 +6,7 @@ using TMPro;
 
 public class WeaponSwap : MonoBehaviour
 {
+    public Player player;
     public GameObject WeaponUi;
     public Image[] images;
     public TextMeshProUGUI SwapCoolRemain;
@@ -67,7 +68,8 @@ public class WeaponSwap : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (currentWeaponIndex != Player.instance.proSelectWeapon || Player.instance.proLevel != 3)
+        player = Player.instance;
+        if (currentWeaponIndex != player.proSelectWeapon || player.proLevel != 3)
         {
             LockImage.SetActive(true);
             Ult_onAnim.SetActive(false);
@@ -77,7 +79,7 @@ public class WeaponSwap : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentWeaponIndex == Player.instance.proSelectWeapon && Player.instance.proLevel == 3)
+        if (currentWeaponIndex == player.proSelectWeapon && player.proLevel == 3)
         {
             LockImage.SetActive(false);
             Ult_onAnim.SetActive(true);
@@ -95,7 +97,7 @@ public class WeaponSwap : MonoBehaviour
             skills[currentWeaponIndex].SetActive(true);
             UltSkills[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = true;
         }
-        if (Input.GetKeyDown(KeyCode.Tab) && !swaping && ableExe)
+        if (Input.GetKeyDown(KeyCode.Tab) && !swaping && ableExe && !player.isCharging && !player.isSkill && !player.isMasterSkill)
         {
             currentWeaponIndex++;
 
@@ -138,7 +140,7 @@ public class WeaponSwap : MonoBehaviour
             }
 
 
-            if (currentWeaponIndex == Player.instance.proSelectWeapon && Player.instance.proLevel == 3)
+            if (currentWeaponIndex == player.proSelectWeapon && player.proLevel == 3)
             {
                 LockImage.SetActive(false);
                 Ult_onAnim.SetActive(true);
@@ -153,12 +155,11 @@ public class WeaponSwap : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.S) && !Weapon_skilling[currentWeaponIndex])
         {
-            Player p = Player.instance.GetComponent<Player>();
             Image i = SkillCools[currentWeaponIndex].GetComponent<Image>();
-            float cooltime = p.DeCoolTimeCarcul(p.SkillTime[currentWeaponIndex]);
+            float cooltime = player.DeCoolTimeCarcul(player.SkillTime[currentWeaponIndex]);
             StartCoroutine(FillSliderOverTime(i, cooltime, "skill"));
         }
-        if (Input.GetKeyDown(KeyCode.D) && !ultting && currentWeaponIndex == Player.instance.proSelectWeapon && Player.instance.proLevel == 3)
+        if (Input.GetKeyDown(KeyCode.D) && !ultting && currentWeaponIndex == player.proSelectWeapon && player.proLevel == 3)
         {
             StartCoroutine(FillSliderOverTime(img_Ult_coolTime, ultcool, "ult"));
             Ult_onAnim.SetActive(false);

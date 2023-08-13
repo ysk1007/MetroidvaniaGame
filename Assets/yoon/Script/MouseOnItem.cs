@@ -86,7 +86,7 @@ public class MouseOnItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         {
             GameManager.Instance.GetComponent<inven>().select_slot_index = thisIndex;
             vc.x = -380;
-            vc.y = 120;
+            vc.y = 60;
             tiptext = "우클릭 하여 장착";
             pricetext = "판매가 : ";
             isSell = true;
@@ -94,8 +94,8 @@ public class MouseOnItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         else if (slot_type == "Market")
         {
             GameManager.Instance.GetComponent<inven>().equip_slot_index = thisIndex;
-            vc.x = 700;
-            vc.y = 120;
+            vc.x = 480;
+            vc.y = 60;
             tiptext = "우클릭 하여 구매";
             pricetext = "구매가 : ";
         }
@@ -103,7 +103,7 @@ public class MouseOnItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         {
             GameManager.Instance.GetComponent<inven>().equip_slot_index = thisIndex;
             vc.x = 380;
-            vc.y = -120;
+            vc.y = -60;
             tiptext = "우클릭 하여 장착 해제";
             pricetext = "판매가 : ";
             isSell = true;

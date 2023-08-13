@@ -58,9 +58,11 @@ public class Player : MonoBehaviour
     public float ATS = 1; //추가함
     public float GoldGet = 1f; //추가함
     public float EXPGet = 1f; //추가함
-    public bool CanlifeStill = false; //추가함
+    public bool CanlifeStill = true; //추가함
     public float lifeStill; //추가함
     public float DecreaseCool = 0f; //추가함
+    public float LifeRegen = 0f; //추가함
+    public float SlidingCool = 2f;
     public int proSelectWeapon = 4; //4는 숙련도를 고르지 않은 상태 0,1,2 => 칼,도끼,활
     public int proLevel = 0;
     public float enemyPower;
@@ -92,6 +94,7 @@ public class Player : MonoBehaviour
     public int selectCoolTimeLevel = 0;
 
     public GameObject GameManager;  //게임 매니저
+    public Ui_Controller Ui;  //ui 컨트롤러
     public GameObject attackRange;  //근접공격 위치
     public GameObject Arrow; //화살 오브젝트
     public GameObject Arrow2; //화살 증가 오브젝트
@@ -99,6 +102,7 @@ public class Player : MonoBehaviour
     public GameObject AxeSkill;  //도끼 마스터스킬 오브젝트
     public GameObject BowSkill;  // 활 기본스킬 오브젝트
     public GameObject BowMaster; // 활 숙련도 화살 오브젝트
+    public GameObject HolyArrow; // 활 숙련도 화살 오브젝트
 
     public Transform Arrowpos; //화살 생성 오브젝트
     public Transform Arrowpos2; //증가된 화살  오브젝트
@@ -131,7 +135,11 @@ public class Player : MonoBehaviour
     public Animator anim;
     new AudioSource audio;
 
+    //특수 아이템 변수
     public bool UseGridSword = false;
+    public bool DivinePower = false;
+    public bool UsePastErase = false;
+    public GameObject PastErase;
     public float GridPower = 0f;
     void Awake()
     {
@@ -150,6 +158,7 @@ public class Player : MonoBehaviour
         Arrowpos2 = transform.GetChild(2).GetComponentInChildren<Transform>(); //Arrowpos2의 위치값을 pos에 저장
         Skillpos = transform.GetChild(3).GetComponentInChildren<Transform>(); //Skillpos의 위치값을 pos에 저장
         Axepos = transform.GetChild(7).GetComponentInChildren<Transform>(); //Axepos의 위치값을 pos에 저장
+        Ui = GameManager.GetComponent<Ui_Controller>();
     }
 
     void Start() //추가함
@@ -157,6 +166,7 @@ public class Player : MonoBehaviour
         DataManager.instance.JsonLoad("PlayerData");
         anim.SetFloat("AttackSpeed", ATS);
         OptionManager.instance.Playing = true;
+        Invoke("HpRegen", 1f);
     }
 
     void Update()
@@ -208,6 +218,10 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isSlide && !isjump && !isdelay && !isSkill)
         {
             StartCoroutine(Sliding());
+            if (DivinePower)
+            {
+                Instantiate(HolyArrow, Arrowpos.position, transform.rotation);  //신성화살 발사
+            }
         }
 
         //Jump
@@ -559,7 +573,7 @@ public class Player : MonoBehaviour
         this.transform.GetChild(4).gameObject.SetActive(false);
         gameObject.layer = LayerMask.NameToLayer("Player");
         Speed = SpeedChange;
-        yield return new WaitForSeconds(2f); //슬라이딩 쿨타임
+        yield return new WaitForSeconds(SlidingCool); //슬라이딩 쿨타임
         isSlide = false;
 
     }
@@ -577,7 +591,15 @@ public class Player : MonoBehaviour
 
                 if (CurrentHp <= 0)
                 {
-                    StartCoroutine(Die(pos));
+                    if (!UsePastErase)
+                    {
+                        StartCoroutine(Die(pos));
+                    }
+                    else
+                    {
+                        Destroy(PastErase);
+                        Ui.Heal(MaxHp);
+                    }
                 }
                 else
                 {
@@ -1080,5 +1102,11 @@ public class Player : MonoBehaviour
             GameManager.GetComponent<Ui_Controller>().UiUpdate();
             UseGridSword = true;
         }
+    }
+
+    public void HpRegen()
+    {
+        Ui.Heal(LifeRegen);
+        Invoke("HpRegen", 1.5f);
     }
 }

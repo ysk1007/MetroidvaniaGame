@@ -169,9 +169,18 @@ public class Ui_Controller : MonoBehaviour
 
     public void Heal(float value)
     {
-        PlayerHp.Heal(value);
-        PlayerCurrentHpText.text = PlayerHp.currentHp.ToString("F0");
-        player.CurrentHp = int.Parse(PlayerCurrentHpText.text);
+        if (player.CurrentHp + value <= 0)
+        {
+            PlayerHp.currentHp = 1;
+            PlayerCurrentHpText.text = 1.ToString("F0");
+            player.CurrentHp = int.Parse(PlayerCurrentHpText.text);
+        }
+        else
+        {
+            PlayerHp.Heal(value);
+            PlayerCurrentHpText.text = PlayerHp.currentHp.ToString("F0");
+            player.CurrentHp = int.Parse(PlayerCurrentHpText.text);
+        }
     }
 
     public void Sliding()
@@ -237,7 +246,7 @@ public class Ui_Controller : MonoBehaviour
 
     IEnumerator SlidingUP()
     {
-        float duration = 2.5f; //애니메이션 시간 (1초)
+        float duration = player.SlidingCool + 0.5f; //애니메이션 시간 (0.5는 무적시간)
         float elapsedTime = 0f; //경과 시간
 
         while (elapsedTime < duration)

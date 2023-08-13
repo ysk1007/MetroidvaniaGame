@@ -101,11 +101,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deleteTime: 10
-  Dmg: 5
+  Dmg: 10
   speed: 1
   maxEnemies: 5
   delay: 0
   TreeSound: {fileID: 8300000, guid: b970a97637b5f5b4483641d85bce6de3, type: 3}
+  player: {fileID: 0}
 --- !u!50 &8440114037744898285
 Rigidbody2D:
   serializedVersion: 4

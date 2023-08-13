@@ -442,6 +442,9 @@ public class DataManager : MonoBehaviour
         items.Add(new DMUlcokItem("NightofCountingtheStars", false));
         items.Add(new DMUlcokItem("GlassSword", false));
         items.Add(new DMUlcokItem("GridsSword", false));
+        items.Add(new DMUlcokItem("PastThatWantToErase", false));
+        items.Add(new DMUlcokItem("ReproductionOfMassacre", false));
+        items.Add(new DMUlcokItem("DivinePower", false));
 
         // 데이터를 JSON 파일로 저장
         SaveToJson(items);
