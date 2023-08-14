@@ -17,13 +17,13 @@ public class Dialogue
 
 public class OwnerTalk : MonoBehaviour
 {
-    //[SerializeField] private
-    public GameObject blackBox;
-    public GameObject portrait;
-    public TextMeshProUGUI txt_name;
-    public TextMeshProUGUI txt_dialogue;
-    public bool isDialogue = false;
-    public bool isShow = false;
+
+    [SerializeField] private GameObject blackBox; // 검은 배경, 검은 대화박스 부모 오브젝트
+    [SerializeField] private GameObject portrait; // 초상화 icon
+    [SerializeField] private TextMeshProUGUI txt_name;    // 초상화 이름
+    [SerializeField] private TextMeshProUGUI txt_dialogue;    // 대화 내용
+    public bool isDialogue = false; 
+    public bool isShow = false;     // 잠깐 보이게 하려 제작
     private int count = 0;
 
     [SerializeField] private Dialogue[] dialogue;
@@ -61,7 +61,7 @@ public class OwnerTalk : MonoBehaviour
     {
         if (isDialogue)
         {
-            if (isShow)
+            if (isShow) // 잠시 추가한 조건
             {
                 ShowDialogue();
                 isShow = false;

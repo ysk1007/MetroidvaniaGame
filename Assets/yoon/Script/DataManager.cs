@@ -136,12 +136,12 @@ public class DataManager : MonoBehaviour
         SaveData saveData = new SaveData();
         if (!File.Exists(PlayerPath)) //초기값 생성
         {
-            Debug.Log("디버그 : 사용자 데이터 없음");
+            //Debug.Log("디버그 : 사용자 데이터 없음");
             CreateJson();
         }
         else 
         {
-            Debug.Log("디버그 : 사용자 데이터 불러오는 중");
+            //Debug.Log("디버그 : 사용자 데이터 불러오는 중");
             PlayerloadJson = File.ReadAllText(PlayerPath);
             ItemloadJson = File.ReadAllText(ItemPath);
             SelectloadJson = File.ReadAllText(SelectPath);
@@ -157,7 +157,7 @@ public class DataManager : MonoBehaviour
                     case "PlayerData":
                         if (Player.instance != null)
                         {
-                            Debug.Log("디버그 : 플레이어 데이터 불러오는 중");
+                            //Debug.Log("디버그 : 플레이어 데이터 불러오는 중");
                             Player.instance.level = saveData.PlayerLevel;
                             Player.instance.CurrentHp = saveData.PlayerCurrentHp;
                             Player.instance.gold = saveData.PlayerGold;
@@ -169,8 +169,8 @@ public class DataManager : MonoBehaviour
                             Proficiency_ui.instance.proWeaponIndex = saveData.proWeaponSellect;
                             Proficiency_ui.instance.proLevel = saveData.proLevel;
                             Proficiency_ui.instance.Profill.fillAmount = saveData.proFill;
-                            Debug.Log("디버그 : 플레이어 데이터 로드 완료");
-                            Debug.Log("디버그 : 선택지 데이터 불러오는 중");
+                            //Debug.Log("디버그 : 플레이어 데이터 로드 완료");
+                            //Debug.Log("디버그 : 선택지 데이터 불러오는 중");
                             for (int i = 0; i < SelectData.Selects.Length; i++)
                             {
                                 switch (SelectData.Selects[i].SelectName)
@@ -205,24 +205,24 @@ public class DataManager : MonoBehaviour
                                 }
 
                             }
-                            Debug.Log("디버그 : 선택지 데이터 로드 완료");
+                            //Debug.Log("디버그 : 선택지 데이터 로드 완료");
                             Player.instance.GetComponent<Player>().GetSelectValue("Start"); //시작시 선택지 능력치 얻음
                         }
                         break;
                     case "SliderData":
                         if (SoundSlider.instance != null)
                         {
-                            Debug.Log("디버그 : 사운드 데이터 불러오는 중");
+                            //Debug.Log("디버그 : 사운드 데이터 불러오는 중");
                             SoundSlider.instance.master_slider.value = saveData.MasterVolume;
                             SoundSlider.instance.bgm_slider.value = saveData.BGMVolume;
                             SoundSlider.instance.sfx_slider.value = saveData.SFXVolume;
-                            Debug.Log("디버그 : 사운드 데이터 로드 완료");
+                            //Debug.Log("디버그 : 사운드 데이터 로드 완료");
                         }
                         break;
                     case "ItemData":
                         if (GameManager.Instance != null)
                         {
-                            Debug.Log("디버그 : 아이템 데이터 불러오는 중");
+                            //Debug.Log("디버그 : 아이템 데이터 불러오는 중");
                             for (int i = 0; i < ItemData.itemEquip.Length; i++)
                             {
                                 if (ItemData.itemEquip[i] != "")
@@ -243,13 +243,13 @@ public class DataManager : MonoBehaviour
                                     temp.transform.SetParent(GameManager.Instance.GetComponent<inven>().inven_slots[i].transform);
                                 }
                             }
-                            Debug.Log("디버그 : 아이템 데이터 로드 완료");
+                            //Debug.Log("디버그 : 아이템 데이터 로드 완료");
                         }
                         break;
                     case "ProData":
                         if(Proficiency_ui.instance != null)
                         {
-                            Debug.Log("프로 데이터 불러옴");
+                            //Debug.Log("프로 데이터 불러옴");
                             Proficiency_ui.instance.proWeaponIndex = saveData.proWeaponSellect;
                             Proficiency_ui.instance.proLevel = saveData.proLevel;
                             Proficiency_ui.instance.Profill.fillAmount = saveData.proFill;
@@ -258,13 +258,13 @@ public class DataManager : MonoBehaviour
 
                 }
             }
-            Debug.Log("디버그 : 사용자 데이터 성공적으로 불러옴");
+            //Debug.Log("디버그 : 사용자 데이터 성공적으로 불러옴");
         }
     }
 
     public void JsonSave(string casedata)
     {
-        Debug.Log("디버그 : 데이터 저장 하는중..");
+        //Debug.Log("디버그 : 데이터 저장 하는중..");
         PlayerloadJson = File.ReadAllText(PlayerPath);
         SaveData jsonsave = JsonUtility.FromJson<SaveData>(PlayerloadJson);
         switch (casedata)
@@ -272,7 +272,7 @@ public class DataManager : MonoBehaviour
             case "PlayerData":
                 if (Player.instance != null)
                 {
-                    Debug.Log("디버그 : 플레이어 데이터 저장 중");
+                    //Debug.Log("디버그 : 플레이어 데이터 저장 중");
                     jsonsave.PlayerLevel = Player.instance.level;
                     jsonsave.PlayerCurrentHp = Player.instance.CurrentHp;
                     jsonsave.PlayerGold = Player.instance.gold;
@@ -283,19 +283,19 @@ public class DataManager : MonoBehaviour
                     jsonsave.proFill = Proficiency_ui.instance.Profill.fillAmount;
                     jsonsave.PlayTime = OptionManager.instance.TotalPlayTime;
                 }
-                Debug.Log("디버그 : 플레이어 데이터 저장 완료");
+                //Debug.Log("디버그 : 플레이어 데이터 저장 완료");
                 break;
             case "SliderData":
-                Debug.Log("디버그 : 사운드 데이터 저장 중");
+                //Debug.Log("디버그 : 사운드 데이터 저장 중");
                 jsonsave.MasterVolume = SoundSlider.instance.master_slider.value;
                 jsonsave.BGMVolume = SoundSlider.instance.bgm_slider.value;
                 jsonsave.SFXVolume = SoundSlider.instance.sfx_slider.value;
-                Debug.Log("디버그 : 사운드 데이터 저장 완료");
+                //Debug.Log("디버그 : 사운드 데이터 저장 완료");
                 break;
             case "ItemData":
                 if (GameManager.Instance != null)
                 {
-                    Debug.Log("디버그 : 아이템 데이터 저장 중");
+                    //Debug.Log("디버그 : 아이템 데이터 저장 중");
                     itemStatus[] equip_list = GameManager.Instance.GetComponent<inven>().itemStatus_list_equip;
                     itemStatus[] inven_list = GameManager.Instance.GetComponent<inven>().itemStatus_list_inven;
                     for (int i = 0; i < equip_list.Length; i++)
@@ -303,7 +303,7 @@ public class DataManager : MonoBehaviour
                         if (equip_list[i] != null)
                         {
                             ItemData.itemEquip[i] = equip_list[i].data.itemNameEng;
-                            Debug.Log(ItemData.itemEquip[i]);
+                            //Debug.Log(ItemData.itemEquip[i]);
                         }
                         else
                         {
@@ -315,20 +315,20 @@ public class DataManager : MonoBehaviour
                         if (inven_list[i] != null)
                         {
                             ItemData.itemInven[i] = inven_list[i].data.itemNameEng;
-                            Debug.Log(ItemData.itemInven[i]);
+                            //Debug.Log(ItemData.itemInven[i]);
                         }
                         else
                         {
                             ItemData.itemInven[i] = null;
                         }
                     }
-                    Debug.Log("디버그 : 아이템 데이터 저장 완료");
+                    //Debug.Log("디버그 : 아이템 데이터 저장 완료");
                 }
                 break;
             case "ProData":
                 if (Proficiency_ui.instance != null)
                 {
-                    Debug.Log("프로 데이터 저장");
+                    //Debug.Log("프로 데이터 저장");
                     jsonsave.proWeaponSellect = Proficiency_ui.instance.proWeaponIndex;
                     jsonsave.proLevel = Proficiency_ui.instance.proLevel;
                     jsonsave.proFill = Proficiency_ui.instance.Profill.fillAmount;
@@ -339,57 +339,57 @@ public class DataManager : MonoBehaviour
         string itemjson = JsonUtility.ToJson(ItemData, true);
         File.WriteAllText(PlayerPath, Playerjson);
         File.WriteAllText(ItemPath, itemjson);
-        Debug.Log("디버그 : 모든 데이터를 성공적으로 저장하였습니다");
+        //Debug.Log("디버그 : 모든 데이터를 성공적으로 저장하였습니다");
     }
 
     public void CreateJson()
     {
-        Debug.Log("디버그 : 데이터 생성 하는중..");
+        //Debug.Log("디버그 : 데이터 생성 하는중..");
         CreatePlayerJson();
         CreateItemJson();
         CreateSelectJson();
         CreateUnlockItemJson();
-        Debug.Log("디버그 : 데이터를 성공적으로 생성하였습니다");
+        //Debug.Log("디버그 : 데이터를 성공적으로 생성하였습니다");
     }
 
     public void CreatePlayerJson()
     {
         SaveData saveData = new SaveData();
-        Debug.Log("디버그 : 플레이어 데이터 생성 중");
+        //Debug.Log("디버그 : 플레이어 데이터 생성 중");
         saveData.PlayerLevel = 1;
         saveData.PlayerGold = 0;
         saveData.PlayerExp = 0.0f;
         saveData.PlayerCurrentHp = 100.0f;
         saveData.PlayerPos = new Vector3(-29.83f, -7.55f, 0.0f);
         saveData.PlayTime = 0f;
-        Debug.Log("디버그 : 플레이어 데이터 생성 완료");
-        Debug.Log("디버그 : 사운드 데이터 생성 중");
+        //Debug.Log("디버그 : 플레이어 데이터 생성 완료");
+        //Debug.Log("디버그 : 사운드 데이터 생성 중");
         saveData.MasterVolume = 1.0f;
         saveData.BGMVolume = 1.0f;
         saveData.SFXVolume = 1.0f;
-        Debug.Log("디버그 : 사운드 데이터 생성 완료");
-        Debug.Log("디버그 : 숙련도 데이터 생성 중");
+        //Debug.Log("디버그 : 사운드 데이터 생성 완료");
+        //Debug.Log("디버그 : 숙련도 데이터 생성 중");
         saveData.proWeaponSellect = 4;
         saveData.proLevel = 0;
         saveData.proFill = 0.0f;
-        Debug.Log("디버그 : 숙련도 데이터 생성 완료");
+        //Debug.Log("디버그 : 숙련도 데이터 생성 완료");
         string Playerjson = JsonUtility.ToJson(saveData, true);
         File.WriteAllText(PlayerPath, Playerjson);
     }
 
     public void CreateItemJson()
     {
-        Debug.Log("디버그 : 아이템 데이터 생성 중");
+        //Debug.Log("디버그 : 아이템 데이터 생성 중");
         Item itemData = new Item();
         itemData.itemEquip = new string[6];
         itemData.itemInven = new string[12];
-        Debug.Log("디버그 : 아이템 데이터 생성 완료");
+        //Debug.Log("디버그 : 아이템 데이터 생성 완료");
         string itemjson = JsonUtility.ToJson(itemData, true);
         File.WriteAllText(ItemPath, itemjson);
     }
     public void CreateSelectJson()
     {
-        Debug.Log("디버그 : 선택지 레벨 리스트 파일 생성 중");
+        //Debug.Log("디버그 : 선택지 레벨 리스트 파일 생성 중");
 
         // SelectLevel 데이터 생성
         List<SelectLevel> selectLevels = new List<SelectLevel>();
@@ -406,7 +406,7 @@ public class DataManager : MonoBehaviour
         // 데이터를 JSON 파일로 저장
         SaveToJson(selectLevels);
 
-        Debug.Log("디버그 : 선택지 레벨 리스트 파일 생성 완료");
+        //Debug.Log("디버그 : 선택지 레벨 리스트 파일 생성 완료");
     }
 
     void SaveToJson(List<SelectLevel> data)
@@ -416,7 +416,7 @@ public class DataManager : MonoBehaviour
 
         string jsonData = JsonUtility.ToJson(selectList);
         File.WriteAllText(SelectPath, jsonData);
-        Debug.Log("JSON 파일이 생성되었습니다.");
+        //Debug.Log("JSON 파일이 생성되었습니다.");
     }
 
     void CreateUnlockItemJson()
@@ -455,7 +455,7 @@ public class DataManager : MonoBehaviour
         // Unity의 JsonUtility를 사용하여 JSON 파일 생성
         string jsonData = JsonUtility.ToJson(itemList, true);
         File.WriteAllText(ItemUlockPath, jsonData);
-        Debug.Log("JSON 파일이 생성되었습니다.");
+        //Debug.Log("JSON 파일이 생성되었습니다.");
     }
 
     public List<float> getVolume()
@@ -567,7 +567,7 @@ public class DataManager : MonoBehaviour
             if (Json.items[i].isUnlock == false)
             {
                 ItemList.Add(i);
-                Debug.Log(Json.items[i].ItemName);
+                //Debug.Log(Json.items[i].ItemName);
             }
         }
         int randomNumber = Random.Range(0, ItemList.Count);
@@ -587,11 +587,11 @@ public class DataManager : MonoBehaviour
         if (File.Exists(filePath))
         {
             File.Delete(filePath);
-            Debug.Log("JSON 파일이 성공적으로 삭제되었습니다.");
+            //Debug.Log("JSON 파일이 성공적으로 삭제되었습니다.");
         }
         else
         {
-            Debug.Log("삭제할 JSON 파일이 존재하지 않습니다.");
+            //Debug.Log("삭제할 JSON 파일이 존재하지 않습니다.");
         }
     }
 }
