@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEditor.PlayerSettings;
@@ -104,7 +105,17 @@ public abstract class Enemy : MonoBehaviour
     public Transform Pos;
     public Arrow arrow;
     public Effect slash;
-    
+
+    public Transform[] TeleportPos;
+    public GameObject Missile;
+    public GameObject PunchEfc;
+    float[] angles0 = { -135f, -112.5f, -90f, -67.5f, -45f };
+    float[] angles1 = { -123.75f, -101.25f, -78.75f, -56.25f };
+    public int MissileCount;
+    public int PunchCount = 1;
+    public Animator PunchCharge;
+    public SpriteRenderer[] WaringArea;
+
     public abstract void InitSetting(); // 적의 기본 정보를 설정하는 함수(추상)
 
     public void Start()
@@ -1416,4 +1427,189 @@ public abstract class Enemy : MonoBehaviour
         Hit_Set = false;
     }
 
+
+    public virtual void GolemBoss(Transform target)
+    {
+        weaponTag = Player.playerTag;
+        Swordlevel = player.proLevel;
+        selectWeapon = player.proSelectWeapon;
+        bleedingDamage = Player.bleedDamage;
+        bloodBoomDmg = Player.bloodBoomDmg;
+        if (bleedingTime >= 0)
+        {
+            bleedingTime -= Time.deltaTime;
+        }
+
+        if (this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
+        {
+            if (animator.GetBool("Idle") == true)
+            {
+                Enemy_Speed = 0f;
+            }
+            if (animator.GetBool("Idle") == false)
+            {
+                Enemy_Speed = 1f;
+            }
+            GolemMove();
+            GolemAttack();
+        }
+        else if (this.gameObject.layer == LayerMask.NameToLayer("Dieenemy"))
+        {
+            animator.SetBool("Idle", true);
+            Enemy_Speed = 0f;
+        }
+        GolemDie();
+    }
+
+    public virtual void GolemBossOneTime()
+    {
+        Pos = GetComponent<Transform>();
+        BossSpriteBox = this.gameObject.GetComponent<BoxCollider2D>();
+        bossBox = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();
+        animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
+        rigid = this.gameObject.GetComponent<Rigidbody2D>();
+        hit_bloodTrans = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
+        Enemy_HPten = Enemy_HP * 0.1f;
+        bleedingTime = 0f;
+        Invoke("GolemRandomAtk", 2f);
+        bleeding();
+    }
+
+    void GolemRandomAtk()
+    {
+        int randNum;
+        randNum = Random.Range(4, 5);
+        atkPattern = Random.Range(1, 3);     // 패턴 번호를 1 ~ 6(Max-1)까지 랜덤으로 뽑음.
+        if (this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
+        {
+            Invoke("GolemRandomAtk", randNum);
+        }
+    }
+
+    void GolemMove()  // Orc 보스의 오른쪽으로 움직이는 함수
+    {
+        
+    }
+    void GolemDie()   // Orc 보스의 죽는 애니메이션
+    {
+        if (Dying)
+        {
+            BossSpriteBox.enabled = false;
+            rigid.isKinematic = true;
+            gameObject.transform.Translate(Vector2.down * Time.deltaTime * 5);
+        }
+    }
+
+    void GolemAttack()    // orc 보스의 공격 패턴
+    {
+        switch (atkPattern)
+        {
+            case 1:
+                Vector3 vc = new Vector3(player.transform.position.x - 11, player.transform.position.y + 2);
+                this.transform.position = vc;
+                animator.SetTrigger("Punch");
+                WaringArea[0].enabled = true;
+                PunchCharge.SetTrigger("Charging");
+                Invoke("Punch", 1f);
+                atkPattern = 0;
+                break;
+            case 2:
+                this.transform.position = TeleportPos[1].position;
+                animator.SetTrigger("Attacking");
+                Invoke("WingAttack", 0.6f);
+                atkPattern = 0;
+                break;
+            case 3:
+                Invoke("Punch", 1f);
+                atkPattern = 0;
+                break;
+            case 4:
+                this.transform.position = TeleportPos[1].position;
+                animator.SetTrigger("Attacking");
+                Invoke("WingAttack", 0.6f);
+                atkPattern = 0;
+                break;
+            case 5:
+                this.transform.position = TeleportPos[1].position;
+                animator.SetTrigger("Attacking");
+                Invoke("WingAttack", 0.6f);
+                atkPattern = 0;
+                break;
+            case 6:
+                this.transform.position = TeleportPos[1].position;
+                animator.SetTrigger("Attacking");
+                Invoke("WingAttack", 0.6f);
+                atkPattern = 0;
+                break;
+            default:
+                return;
+        }
+    }
+
+    void Punch()
+    {
+        Attacking = false;  // 공격중 끄기
+        float time = 0f;
+        WaringArea[0].enabled = false;
+        for (int i = 0; i < 5; i++)
+        {
+            Invoke("PunchCreate", time);
+            time += 0.2f;
+        }
+        PunchCount = 1;
+    }
+
+    void WingAttack()
+    {
+        Attacking = false;  // 공격중 끄기
+        float time = 0f;
+        for (int i = 0; i < 5; i++)
+        {
+            Invoke("MissileCreate", time);
+            time += 0.4f;
+        }
+        MissileCount = 0;
+    }
+
+    void MissileCreate()
+    {
+        float[] angles;
+        if (MissileCount % 2 == 0)
+        {
+            angles = angles0;
+        }
+        else
+        {
+            angles = angles1;
+        }
+
+        for (int i = 0; i < angles.Length; i++)
+        {
+            float angle = angles[i];
+            Quaternion rotation = Quaternion.Euler(0f, 0f, angle);
+
+            GameObject missile = Instantiate(Missile, transform.position, rotation);
+        }
+        MissileCount++;
+    }
+
+    void PunchCreate()
+    {
+        int px;
+        int py;
+        px = PunchCount * 6;
+        if (PunchCount % 2 == 0)
+        {
+            py = 1;
+        }
+        else
+        {
+            py = -1;
+        }
+
+        Vector3 Pc = new Vector3(this.transform.position.x + px, this.transform.position.y + py);
+        GameObject punch = Instantiate(PunchEfc, transform);
+        punch.transform.position = Pc;
+        PunchCount++;
+    }
 }

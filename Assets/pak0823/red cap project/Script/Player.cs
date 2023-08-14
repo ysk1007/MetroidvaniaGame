@@ -1,4 +1,6 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -139,6 +141,8 @@ public class Player : MonoBehaviour
     public bool UseGridSword = false;
     public bool DivinePower = false;
     public bool UsePastErase = false;
+    public Animator TimeLoopAnim;
+    public AudioSource TimeLoopSound;
     public GameObject PastErase;
     public float GridPower = 0f;
     void Awake()
@@ -597,8 +601,7 @@ public class Player : MonoBehaviour
                     }
                     else
                     {
-                        Destroy(PastErase);
-                        Ui.Heal(MaxHp);
+                        PastEraseFunction();
                     }
                 }
                 else
@@ -1109,4 +1112,28 @@ public class Player : MonoBehaviour
         Ui.Heal(LifeRegen);
         Invoke("HpRegen", 1.5f);
     }
+
+    public void PastEraseFunction()
+    {
+        GameObject prefab = Resources.Load<GameObject>("item/BrokenWatch");
+        Instantiate(prefab, PastErase.transform.parent);
+        itemStatus item = prefab.GetComponent<itemStatus>();
+        item.InitSetting();
+        item.StatusGet(this);
+        Destroy(PastErase);
+        TimeLoopAnim.SetTrigger("TimeLooping");
+        Time.timeScale = 0.3f;
+        TimeLoopSound.Play();
+        Ui.Heal(MaxHp);
+        Invoke("RealTime", 1.25f);
+    }
+
+    public void RealTime()
+    {
+        TimeLoopSound.Pause();
+        Time.timeScale = 1f;
+        ishurt = false;
+        gameObject.layer = LayerMask.NameToLayer("Player");
+    }
+
 }

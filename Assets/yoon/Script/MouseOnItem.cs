@@ -94,7 +94,7 @@ public class MouseOnItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         else if (slot_type == "Market")
         {
             GameManager.Instance.GetComponent<inven>().equip_slot_index = thisIndex;
-            vc.x = 480;
+            vc.x = 720;
             vc.y = 60;
             tiptext = "우클릭 하여 구매";
             pricetext = "구매가 : ";

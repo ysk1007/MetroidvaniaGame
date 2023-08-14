@@ -9,7 +9,7 @@ public class DivinePower : itemStatus
     public override void InitSetting()
     {
         data.itemimg = this.GetComponent<Image>();
-        data.itemName = "신성 권능";
+        data.itemName = "신성 권한";
         data.itemNameEng = "DivinePower";
         data.itemPrice = 4999;
         data.color = Color.yellow;
