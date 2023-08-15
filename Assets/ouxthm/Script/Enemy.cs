@@ -106,15 +106,29 @@ public abstract class Enemy : MonoBehaviour
     public Arrow arrow;
     public Effect slash;
 
+    public int BossPage;
+    public List<int> GolemPattern = new List<int>{ 1, 2, 3, 4, 5, 6 };
+    public List<int> Pattern = new List<int>(6);
+    public int LastPattern = 1;
     public Transform[] TeleportPos;
-    public GameObject Missile;
+    public Transform[] ThornPos;
+    public GameObject CircleMissilePB;
+    public GameObject MissilePB;
+    public GameObject ThornPB;
     public GameObject PunchEfc;
     float[] angles0 = { -135f, -112.5f, -90f, -67.5f, -45f };
     float[] angles1 = { -123.75f, -101.25f, -78.75f, -56.25f };
+    float[] CircleAngles = { 0f, 15f, 30f, 45f, 60f, 75f, 90f, 105f, 120f, 135f, 150f, 165f, 180f, 195f, 210f, 225f, 240f, 255f, 270f, 285f, 300f, 315f, 330f, 345f };
     public int MissileCount;
+    public int CircleMissileCount = 0;
+    public int ThornCount = 0;
+    public bool CircleMissileShoot;
     public int PunchCount = 1;
     public Animator PunchCharge;
+    public RuntimeAnimatorController Page2Idle;
     public SpriteRenderer[] WaringArea;
+    public float TargetFind; //좌우 구별
+    public GameObject BossCenter;
 
     public abstract void InitSetting(); // 적의 기본 정보를 설정하는 함수(추상)
 
@@ -1435,6 +1449,32 @@ public abstract class Enemy : MonoBehaviour
         selectWeapon = player.proSelectWeapon;
         bleedingDamage = Player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
+
+        if (Enemy_HP < 400 && BossPage < 1)
+        {
+            BossPage++;
+            Enemy_HP = 400;
+            CancelInvoke();
+            WaringArea[0].enabled = false;
+            animator.SetTrigger("ChangePage2");
+            Invoke("ChangePage", 2.7f);
+            bossMoving = true;
+        }
+
+        if (bossMoving)
+        {
+            // 목표 방향 계산
+            Vector3 targetDirection = (TeleportPos[0].position - transform.position).normalized;
+            rigid.velocity = targetDirection * 7.5f;
+
+            // 오브젝트 A가 목표 위치에 도달한 경우
+            if (Vector3.Distance(transform.position, TeleportPos[0].position) < 0.1f)
+            {
+                rigid.velocity = Vector3.zero;
+                bossMoving = false;
+            }
+        }
+
         if (bleedingTime >= 0)
         {
             bleedingTime -= Time.deltaTime;
@@ -1478,8 +1518,17 @@ public abstract class Enemy : MonoBehaviour
     void GolemRandomAtk()
     {
         int randNum;
+        if (BossPage < 1)
+        {
+            Pattern = new List<int> { 1, 2, 3};
+        }
+        else if (BossPage >= 1)
+        {
+            Pattern = new List<int> { 1, 2, 3, 4, 5, 6};
+        }
+        Pattern.RemoveAt(LastPattern - 1);
         randNum = Random.Range(4, 5);
-        atkPattern = Random.Range(1, 3);     // 패턴 번호를 1 ~ 6(Max-1)까지 랜덤으로 뽑음.
+        atkPattern = Pattern[Random.Range(0, Pattern.Count)];     // 패턴 번호를 1 ~ 6(Max-1)까지 랜덤으로 뽑음.
         if (this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
         {
             Invoke("GolemRandomAtk", randNum);
@@ -1505,44 +1554,70 @@ public abstract class Enemy : MonoBehaviour
         switch (atkPattern)
         {
             case 1:
-                Vector3 vc = new Vector3(player.transform.position.x - 11, player.transform.position.y + 2);
+                ScaleFlip();
+                float range = 11;
+                if (TargetFind > 0) //왼쪽으로 감
+                {
+                    range *= -1;
+                }
+                else if (TargetFind < 0) //오른쪽으로 감
+                {
+                    range *= 1;
+                }
+                Vector3 vc = new Vector3(player.transform.position.x + range, player.transform.position.y + 1);
                 this.transform.position = vc;
                 animator.SetTrigger("Punch");
                 WaringArea[0].enabled = true;
                 PunchCharge.SetTrigger("Charging");
                 Invoke("Punch", 1f);
                 atkPattern = 0;
+                LastPattern = 1;
                 break;
             case 2:
+                ScaleFlip();
                 this.transform.position = TeleportPos[1].position;
                 animator.SetTrigger("Attacking");
                 Invoke("WingAttack", 0.6f);
                 atkPattern = 0;
+                LastPattern = 2;
                 break;
             case 3:
-                Invoke("Punch", 1f);
+                Invoke("CircleMissile", 1f);
                 atkPattern = 0;
+                LastPattern = 3;
                 break;
             case 4:
-                this.transform.position = TeleportPos[1].position;
-                animator.SetTrigger("Attacking");
-                Invoke("WingAttack", 0.6f);
+                Invoke("ThornAttack", 0f);
                 atkPattern = 0;
+                LastPattern = 4;
                 break;
             case 5:
-                this.transform.position = TeleportPos[1].position;
-                animator.SetTrigger("Attacking");
-                Invoke("WingAttack", 0.6f);
+                Invoke("ThornAttack", 0f);
                 atkPattern = 0;
+                LastPattern = 5;
                 break;
             case 6:
-                this.transform.position = TeleportPos[1].position;
-                animator.SetTrigger("Attacking");
-                Invoke("WingAttack", 0.6f);
+                Invoke("ThornAttack", 0f);
                 atkPattern = 0;
+                LastPattern = 6;
                 break;
             default:
                 return;
+        }
+    }
+
+    void ScaleFlip()
+    {
+        TargetFind = this.transform.position.x - player.transform.position.x;
+        if (TargetFind > 0) //왼쪽으로 감
+        {
+            Vector3 newLocalScale = new Vector3(1, 1, 1);
+            this.transform.localScale = newLocalScale;
+        }
+        else if (TargetFind < 0) //오른쪽으로 감
+        {
+            Vector3 newLocalScale = new Vector3(-1, 1, 1);
+            this.transform.localScale = newLocalScale;
         }
     }
 
@@ -1553,7 +1628,7 @@ public abstract class Enemy : MonoBehaviour
         WaringArea[0].enabled = false;
         for (int i = 0; i < 5; i++)
         {
-            Invoke("PunchCreate", time);
+            Invoke("ChargingPunch", time);
             time += 0.2f;
         }
         PunchCount = 1;
@@ -1588,12 +1663,12 @@ public abstract class Enemy : MonoBehaviour
             float angle = angles[i];
             Quaternion rotation = Quaternion.Euler(0f, 0f, angle);
 
-            GameObject missile = Instantiate(Missile, transform.position, rotation);
+            GameObject missile = Instantiate(MissilePB, transform.position, rotation);
         }
         MissileCount++;
     }
 
-    void PunchCreate()
+    void ChargingPunch()
     {
         int px;
         int py;
@@ -1606,10 +1681,101 @@ public abstract class Enemy : MonoBehaviour
         {
             py = -1;
         }
-
+        if (TargetFind > 0)
+        {
+            px *= 1;
+        }
+        if (TargetFind < 0)
+        {
+            px *= -1;
+        }
         Vector3 Pc = new Vector3(this.transform.position.x + px, this.transform.position.y + py);
         GameObject punch = Instantiate(PunchEfc, transform);
         punch.transform.position = Pc;
         PunchCount++;
+    }
+
+    void CircleMissile()
+    {
+        animator.SetTrigger("Circle");
+        CircleMissileShoot = false;
+        Attacking = false;  // 공격중 끄기
+        float time = 0f;
+        for (int i = 0; i < CircleAngles.Length; i++)
+        {
+            if (BossPage >= 1)
+            {
+                Invoke("CircleMissileCreatePage2", time);
+            }
+            Invoke("CircleMissileCreate", time);
+            time += 0.025f;
+        }
+        Invoke("Shoot", 1f);
+        CircleMissileCount = 0;
+    }
+
+    void CircleMissileCreate()
+    {
+        float circleRadius = 2f;
+        
+        float angle = CircleMissileCount * (360f / CircleAngles.Length); // 각도 계산
+        Vector3 spawnPosition = BossCenter.transform.position + Quaternion.Euler(0f, 0f, angle) * Vector3.right * circleRadius; // 원의 둘레 위의 위치 계산
+
+        Quaternion rotation = Quaternion.Euler(0f, 0f, CircleAngles[CircleMissileCount]);
+
+        GameObject missile = Instantiate(CircleMissilePB, spawnPosition, rotation);
+        missile.GetComponent<CircleMissile>().boss = this;
+        CircleMissileCount++;
+    }
+
+    void CircleMissileCreatePage2()
+    {
+        float circleRadius = 3f;
+
+        float angle = CircleMissileCount * (360f / CircleAngles.Length); // 각도 계산
+        Vector3 spawnPosition = BossCenter.transform.position + Quaternion.Euler(0f, 0f, angle) * Vector3.right * circleRadius; // 원의 둘레 위의 위치 계산
+
+        Quaternion rotation = Quaternion.Euler(0f, 0f, CircleAngles[CircleMissileCount] + 15f);
+
+        GameObject missile = Instantiate(CircleMissilePB, spawnPosition, rotation);
+        missile.GetComponent<CircleMissile>().boss = this;
+        missile.GetComponent<CircleMissile>().moveSpeed = 5f;
+    }
+
+    void Shoot()
+    {
+        CircleMissileShoot = true;
+    }
+
+    void ThornAttack()
+    {
+        if (BossPage < 1)
+        {
+            return;
+        }
+        animator.SetTrigger("Thorn");
+        Attacking = false;  // 공격중 끄기
+        float time = 0f;
+        for (int i = 0; i < 2; i++)
+        {
+            Invoke("ThornCreate", time);
+            time += 0.7f;
+        }
+        ThornCount = 0;
+    }
+
+    void ThornCreate()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            GameObject Thorn = Instantiate(ThornPB, ThornPos[ThornCount + (i * 2)].position, Quaternion.identity);
+        }
+        ThornCount++;
+    }
+
+    void ChangePage()
+    {
+        animator.runtimeAnimatorController = Page2Idle;
+        Invoke("GolemRandomAtk", 1f);
     }
 }

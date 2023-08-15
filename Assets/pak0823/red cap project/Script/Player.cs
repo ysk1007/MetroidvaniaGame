@@ -1120,6 +1120,9 @@ public class Player : MonoBehaviour
         itemStatus item = prefab.GetComponent<itemStatus>();
         item.InitSetting();
         item.StatusGet(this);
+        item.data.SpecialPower = false;
+        item.SpecialPower();
+        UsePastErase = false;
         Destroy(PastErase);
         TimeLoopAnim.SetTrigger("TimeLooping");
         Time.timeScale = 0.3f;
