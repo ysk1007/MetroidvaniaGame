@@ -31,12 +31,14 @@ public class UnlockList
 
 public class MarketScript : MonoBehaviour
 {
+    public static MarketScript instance; //2023-08-15 추가
+
     public GameObject marketList;
     public GameObject marketItem;
     public GameObject marketUi;
     public GameObject KeyUi;
     private bool MarketOpen = false;
-    private bool PlayerVisit = false;
+    public bool PlayerVisit = false;    // 2023-08-15 private -> public 변경
     public List<int> RandomList;
 
     public UnlockList ItemFromJson;
@@ -45,6 +47,10 @@ public class MarketScript : MonoBehaviour
     public AudioClip BuySound;
     public AudioSource sfx;
 
+    void Awake()
+    {
+        instance = this; //2023-08-15 추가
+    }
     // Start is called before the first frame update
     void Start()
     {

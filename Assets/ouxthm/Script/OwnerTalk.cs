@@ -17,25 +17,28 @@ public class Dialogue
 
 public class OwnerTalk : MonoBehaviour
 {
-
+    MarketScript market;
     [SerializeField] private GameObject blackBox; // 검은 배경, 검은 대화박스 부모 오브젝트
     [SerializeField] private GameObject portrait; // 초상화 icon
     [SerializeField] private TextMeshProUGUI txt_name;    // 초상화 이름
     [SerializeField] private TextMeshProUGUI txt_dialogue;    // 대화 내용
-    public bool isDialogue = false; 
-    public bool isShow = false;     // 잠깐 보이게 하려 제작
+    [SerializeField] private TextMeshProUGUI txt_Enter;     // Enter 안내 문구
+    public bool isDialogue; 
+    public bool isShow;     // 오브젝트 켜는 변수
     private int count = 0;
-
+    
     [SerializeField] private Dialogue[] dialogue;
 
     public void ShowDialogue()
     {
-        blackBox.gameObject.SetActive(true);
-        portrait.gameObject.SetActive(true);
+        blackBox.SetActive(true);
+        portrait.SetActive(true);
         txt_name.gameObject.SetActive(true);
         txt_dialogue.gameObject.SetActive(true);
+        txt_Enter.gameObject.SetActive(true);
+
         count = 0;
-        isDialogue = true;
+        isDialogue = false;
         NextDialogue();
     }
 
@@ -45,8 +48,7 @@ public class OwnerTalk : MonoBehaviour
         portrait.gameObject.SetActive(false);
         txt_name.gameObject.SetActive(false);
         txt_dialogue.gameObject.SetActive(false);
-
-        isDialogue = false;
+        txt_Enter.gameObject.SetActive(false);
     }
 
     private void NextDialogue()
@@ -56,15 +58,19 @@ public class OwnerTalk : MonoBehaviour
         portrait.GetComponent<Image>().sprite = dialogue[count].poImage.sprite;
         count++;
     }
-
+    void Awake()
+    {
+        market = MarketScript.instance.GetComponent<MarketScript>();
+        isDialogue = true;
+    }
     void Update()
     {
-        if (isDialogue)
+        isShow = market.PlayerVisit;
+        if (isShow)
         {
-            if (isShow) // 잠시 추가한 조건
+            if (isDialogue) 
             {
                 ShowDialogue();
-                isShow = false;
             }
             if (Input.GetKeyUp(KeyCode.Return))
             {
