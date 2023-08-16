@@ -7213,17 +7213,23 @@ MonoBehaviour:
   LastPattern: 0
   TeleportPos: []
   ThornPos: []
+  LaserPos: []
   CircleMissilePB: {fileID: 0}
   MissilePB: {fileID: 0}
   ThornPB: {fileID: 0}
+  LaserPB: {fileID: 0}
+  MagicArrowPB: {fileID: 0}
   PunchEfc: {fileID: 0}
+  TeleportEfc: {fileID: 0}
   MissileCount: 0
   CircleMissileCount: 0
   ThornCount: 0
   CircleMissileShoot: 0
   PunchCount: 1
+  MagicArrowCount: 0
   PunchCharge: {fileID: 0}
-  Page2Idle: {fileID: 0}
+  Thunder: {fileID: 0}
+  PageAnimators: []
   WaringArea: []
   TargetFind: 0
   BossCenter: {fileID: 0}
@@ -8600,7 +8606,7 @@ Transform:
   - {fileID: 230132756}
   - {fileID: 1661307847}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &319344263
 GameObject:
@@ -9961,6 +9967,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TipText: {fileID: 312236635}
+--- !u!1 &381544774
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 381544775}
+  m_Layer: 0
+  m_Name: Laser_Pos_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &381544775
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 381544774}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -7, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 791468839}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &391157629
 GameObject:
   m_ObjectHideFlags: 0
@@ -11108,17 +11145,23 @@ MonoBehaviour:
   LastPattern: 0
   TeleportPos: []
   ThornPos: []
+  LaserPos: []
   CircleMissilePB: {fileID: 0}
   MissilePB: {fileID: 0}
   ThornPB: {fileID: 0}
+  LaserPB: {fileID: 0}
+  MagicArrowPB: {fileID: 0}
   PunchEfc: {fileID: 0}
+  TeleportEfc: {fileID: 0}
   MissileCount: 0
   CircleMissileCount: 0
   ThornCount: 0
   CircleMissileShoot: 0
   PunchCount: 1
+  MagicArrowCount: 0
   PunchCharge: {fileID: 0}
-  Page2Idle: {fileID: 0}
+  Thunder: {fileID: 0}
+  PageAnimators: []
   WaringArea: []
   TargetFind: 0
   BossCenter: {fileID: 0}
@@ -11842,7 +11885,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 791468839}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &515517794
 GameObject:
@@ -13750,17 +13793,23 @@ MonoBehaviour:
   LastPattern: 0
   TeleportPos: []
   ThornPos: []
+  LaserPos: []
   CircleMissilePB: {fileID: 0}
   MissilePB: {fileID: 0}
   ThornPB: {fileID: 0}
+  LaserPB: {fileID: 0}
+  MagicArrowPB: {fileID: 0}
   PunchEfc: {fileID: 0}
+  TeleportEfc: {fileID: 0}
   MissileCount: 0
   CircleMissileCount: 0
   ThornCount: 0
   CircleMissileShoot: 0
   PunchCount: 1
+  MagicArrowCount: 0
   PunchCharge: {fileID: 0}
-  Page2Idle: {fileID: 0}
+  Thunder: {fileID: 0}
+  PageAnimators: []
   WaringArea: []
   TargetFind: 0
   BossCenter: {fileID: 0}
@@ -15457,6 +15506,112 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 690918902}
   m_CullTransparentMesh: 1
+--- !u!1 &700506248
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 700506251}
+  - component: {fileID: 700506250}
+  - component: {fileID: 700506249}
+  m_Layer: 15
+  m_Name: ThunderEfc
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!95 &700506249
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700506248}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ab65f886a69315c468940ed5ccf8f322, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!212 &700506250
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700506248}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 6
+  m_Sprite: {fileID: -829301142, guid: cfc398d13ffbefe47b14ac262936cec0, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 2.91, y: 2.91}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!4 &700506251
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700506248}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 2, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1736382495}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &710574250
 GameObject:
   m_ObjectHideFlags: 0
@@ -16153,17 +16308,23 @@ MonoBehaviour:
   LastPattern: 0
   TeleportPos: []
   ThornPos: []
+  LaserPos: []
   CircleMissilePB: {fileID: 0}
   MissilePB: {fileID: 0}
   ThornPB: {fileID: 0}
+  LaserPB: {fileID: 0}
+  MagicArrowPB: {fileID: 0}
   PunchEfc: {fileID: 0}
+  TeleportEfc: {fileID: 0}
   MissileCount: 0
   CircleMissileCount: 0
   ThornCount: 0
   CircleMissileShoot: 0
   PunchCount: 1
+  MagicArrowCount: 0
   PunchCharge: {fileID: 0}
-  Page2Idle: {fileID: 0}
+  Thunder: {fileID: 0}
+  PageAnimators: []
   WaringArea: []
   TargetFind: 0
   BossCenter: {fileID: 0}
@@ -18453,17 +18614,23 @@ MonoBehaviour:
   LastPattern: 0
   TeleportPos: []
   ThornPos: []
+  LaserPos: []
   CircleMissilePB: {fileID: 0}
   MissilePB: {fileID: 0}
   ThornPB: {fileID: 0}
+  LaserPB: {fileID: 0}
+  MagicArrowPB: {fileID: 0}
   PunchEfc: {fileID: 0}
+  TeleportEfc: {fileID: 0}
   MissileCount: 0
   CircleMissileCount: 0
   ThornCount: 0
   CircleMissileShoot: 0
   PunchCount: 1
+  MagicArrowCount: 0
   PunchCharge: {fileID: 0}
-  Page2Idle: {fileID: 0}
+  Thunder: {fileID: 0}
+  PageAnimators: []
   WaringArea: []
   TargetFind: 0
   BossCenter: {fileID: 0}
@@ -18577,10 +18744,15 @@ Transform:
   - {fileID: 776143648}
   - {fileID: 210547060}
   - {fileID: 9976729}
+  - {fileID: 1753548391}
   - {fileID: 508873125}
   - {fileID: 1190964655}
   - {fileID: 1410095833}
   - {fileID: 1398751437}
+  - {fileID: 1412921527}
+  - {fileID: 381544775}
+  - {fileID: 1709986801}
+  - {fileID: 1526805471}
   m_Father: {fileID: 0}
   m_RootOrder: 28
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -18882,17 +19054,23 @@ MonoBehaviour:
   LastPattern: 0
   TeleportPos: []
   ThornPos: []
+  LaserPos: []
   CircleMissilePB: {fileID: 0}
   MissilePB: {fileID: 0}
   ThornPB: {fileID: 0}
+  LaserPB: {fileID: 0}
+  MagicArrowPB: {fileID: 0}
   PunchEfc: {fileID: 0}
+  TeleportEfc: {fileID: 0}
   MissileCount: 0
   CircleMissileCount: 0
   ThornCount: 0
   CircleMissileShoot: 0
   PunchCount: 1
+  MagicArrowCount: 0
   PunchCharge: {fileID: 0}
-  Page2Idle: {fileID: 0}
+  Thunder: {fileID: 0}
+  PageAnimators: []
   WaringArea: []
   TargetFind: 0
   BossCenter: {fileID: 0}
@@ -19811,8 +19989,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 832146627}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.3, z: 0}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1736382495}
@@ -22764,17 +22942,23 @@ MonoBehaviour:
   LastPattern: 0
   TeleportPos: []
   ThornPos: []
+  LaserPos: []
   CircleMissilePB: {fileID: 0}
   MissilePB: {fileID: 0}
   ThornPB: {fileID: 0}
+  LaserPB: {fileID: 0}
+  MagicArrowPB: {fileID: 0}
   PunchEfc: {fileID: 0}
+  TeleportEfc: {fileID: 0}
   MissileCount: 0
   CircleMissileCount: 0
   ThornCount: 0
   CircleMissileShoot: 0
   PunchCount: 1
+  MagicArrowCount: 0
   PunchCharge: {fileID: 0}
-  Page2Idle: {fileID: 0}
+  Thunder: {fileID: 0}
+  PageAnimators: []
   WaringArea: []
   TargetFind: 0
   BossCenter: {fileID: 0}
@@ -23154,17 +23338,23 @@ MonoBehaviour:
   LastPattern: 0
   TeleportPos: []
   ThornPos: []
+  LaserPos: []
   CircleMissilePB: {fileID: 0}
   MissilePB: {fileID: 0}
   ThornPB: {fileID: 0}
+  LaserPB: {fileID: 0}
+  MagicArrowPB: {fileID: 0}
   PunchEfc: {fileID: 0}
+  TeleportEfc: {fileID: 0}
   MissileCount: 0
   CircleMissileCount: 0
   ThornCount: 0
   CircleMissileShoot: 0
   PunchCount: 1
+  MagicArrowCount: 0
   PunchCharge: {fileID: 0}
-  Page2Idle: {fileID: 0}
+  Thunder: {fileID: 0}
+  PageAnimators: []
   WaringArea: []
   TargetFind: 0
   BossCenter: {fileID: 0}
@@ -24361,17 +24551,23 @@ MonoBehaviour:
   LastPattern: 0
   TeleportPos: []
   ThornPos: []
+  LaserPos: []
   CircleMissilePB: {fileID: 0}
   MissilePB: {fileID: 0}
   ThornPB: {fileID: 0}
+  LaserPB: {fileID: 0}
+  MagicArrowPB: {fileID: 0}
   PunchEfc: {fileID: 0}
+  TeleportEfc: {fileID: 0}
   MissileCount: 0
   CircleMissileCount: 0
   ThornCount: 0
   CircleMissileShoot: 0
   PunchCount: 1
+  MagicArrowCount: 0
   PunchCharge: {fileID: 0}
-  Page2Idle: {fileID: 0}
+  Thunder: {fileID: 0}
+  PageAnimators: []
   WaringArea: []
   TargetFind: 0
   BossCenter: {fileID: 0}
@@ -26168,7 +26364,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1190964655}
   m_Layer: 0
-  m_Name: Thorn_Pos_0 (1)
+  m_Name: Thorn_Pos_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26187,7 +26383,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 791468839}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1198186369
 GameObject:
@@ -29269,7 +29465,7 @@ GameObject:
   - component: {fileID: 1335136533}
   - component: {fileID: 1335136532}
   m_Layer: 15
-  m_Name: GameObject
+  m_Name: ChargingEfc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30018,17 +30214,23 @@ MonoBehaviour:
   LastPattern: 0
   TeleportPos: []
   ThornPos: []
+  LaserPos: []
   CircleMissilePB: {fileID: 0}
   MissilePB: {fileID: 0}
   ThornPB: {fileID: 0}
+  LaserPB: {fileID: 0}
+  MagicArrowPB: {fileID: 0}
   PunchEfc: {fileID: 0}
+  TeleportEfc: {fileID: 0}
   MissileCount: 0
   CircleMissileCount: 0
   ThornCount: 0
   CircleMissileShoot: 0
   PunchCount: 1
+  MagicArrowCount: 0
   PunchCharge: {fileID: 0}
-  Page2Idle: {fileID: 0}
+  Thunder: {fileID: 0}
+  PageAnimators: []
   WaringArea: []
   TargetFind: 0
   BossCenter: {fileID: 0}
@@ -30722,7 +30924,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1398751437}
   m_Layer: 0
-  m_Name: Thorn_Pos_0 (3)
+  m_Name: Thorn_Pos_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30741,7 +30943,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 791468839}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1401318261
 GameObject:
@@ -30888,7 +31090,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1410095833}
   m_Layer: 0
-  m_Name: Thorn_Pos_0 (2)
+  m_Name: Thorn_Pos_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30907,7 +31109,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 791468839}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1410571247
 GameObject:
@@ -30965,6 +31167,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TipText: {fileID: 391157629}
+--- !u!1 &1412921526
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1412921527}
+  m_Layer: 0
+  m_Name: Laser_Pos_0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1412921527
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1412921526}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 7, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 791468839}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1415182036
 GameObject:
   m_ObjectHideFlags: 0
@@ -31575,17 +31808,23 @@ MonoBehaviour:
   LastPattern: 0
   TeleportPos: []
   ThornPos: []
+  LaserPos: []
   CircleMissilePB: {fileID: 0}
   MissilePB: {fileID: 0}
   ThornPB: {fileID: 0}
+  LaserPB: {fileID: 0}
+  MagicArrowPB: {fileID: 0}
   PunchEfc: {fileID: 0}
+  TeleportEfc: {fileID: 0}
   MissileCount: 0
   CircleMissileCount: 0
   ThornCount: 0
   CircleMissileShoot: 0
   PunchCount: 1
+  MagicArrowCount: 0
   PunchCharge: {fileID: 0}
-  Page2Idle: {fileID: 0}
+  Thunder: {fileID: 0}
+  PageAnimators: []
   WaringArea: []
   TargetFind: 0
   BossCenter: {fileID: 0}
@@ -32481,17 +32720,23 @@ MonoBehaviour:
   LastPattern: 0
   TeleportPos: []
   ThornPos: []
+  LaserPos: []
   CircleMissilePB: {fileID: 0}
   MissilePB: {fileID: 0}
   ThornPB: {fileID: 0}
+  LaserPB: {fileID: 0}
+  MagicArrowPB: {fileID: 0}
   PunchEfc: {fileID: 0}
+  TeleportEfc: {fileID: 0}
   MissileCount: 0
   CircleMissileCount: 0
   ThornCount: 0
   CircleMissileShoot: 0
   PunchCount: 1
+  MagicArrowCount: 0
   PunchCharge: {fileID: 0}
-  Page2Idle: {fileID: 0}
+  Thunder: {fileID: 0}
+  PageAnimators: []
   WaringArea: []
   TargetFind: 0
   BossCenter: {fileID: 0}
@@ -32942,6 +33187,90 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1523691629}
   m_CullTransparentMesh: 1
+--- !u!1 &1526805470
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1526805471}
+  - component: {fileID: 1526805472}
+  m_Layer: 0
+  m_Name: Warring1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1526805471
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1526805470}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -14, y: 1.5, z: 0}
+  m_LocalScale: {x: 20, y: 20, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 791468839}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &1526805472
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1526805470}
+  m_Enabled: 0
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 5
+  m_Sprite: {fileID: 21300000, guid: ddda8e5b5c8cb5d4181305893c6436a6, type: 3}
+  m_Color: {r: 1, g: 0, b: 0, a: 0.5372549}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &1528154822
 GameObject:
   m_ObjectHideFlags: 0
@@ -35189,7 +35518,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7166585528206624360, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7166585528206624360, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
       propertyPath: m_AnchorMax.x
@@ -36505,6 +36834,90 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1708464853}
   m_CullTransparentMesh: 1
+--- !u!1 &1709986800
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1709986801}
+  - component: {fileID: 1709986802}
+  m_Layer: 0
+  m_Name: Warring0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1709986801
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1709986800}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 14, y: 1.5, z: 0}
+  m_LocalScale: {x: 20, y: 20, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 791468839}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &1709986802
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1709986800}
+  m_Enabled: 0
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 5
+  m_Sprite: {fileID: 21300000, guid: ddda8e5b5c8cb5d4181305893c6436a6, type: 3}
+  m_Color: {r: 1, g: 0, b: 0, a: 0.5372549}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &1710880289
 GameObject:
   m_ObjectHideFlags: 0
@@ -39429,24 +39842,37 @@ MonoBehaviour:
   - {fileID: 776143648}
   - {fileID: 210547060}
   - {fileID: 9976729}
+  - {fileID: 1753548391}
   ThornPos:
   - {fileID: 508873125}
   - {fileID: 1190964655}
   - {fileID: 1410095833}
   - {fileID: 1398751437}
+  LaserPos:
+  - {fileID: 1412921527}
+  - {fileID: 381544775}
   CircleMissilePB: {fileID: 117786764753181504, guid: 4edf69b68fb033844a956ded2ea98960, type: 3}
   MissilePB: {fileID: 117786764753181504, guid: a92c9660c612cf5499fc7af09f7dcada, type: 3}
   ThornPB: {fileID: 117786764753181504, guid: cf5ff41fe251ce3468a45f55a9640a1e, type: 3}
+  LaserPB: {fileID: 117786764753181504, guid: ffd9ed886f79565459b867dc3519cff4, type: 3}
+  MagicArrowPB: {fileID: 117786764753181504, guid: 9d3f6c2a8c70f78429dc4c8f4f58b47d, type: 3}
   PunchEfc: {fileID: 117786764753181504, guid: d042e5d5e909c74489c458a1dc46c009, type: 3}
+  TeleportEfc: {fileID: 1836009700}
   MissileCount: 0
   CircleMissileCount: 0
   ThornCount: 0
   CircleMissileShoot: 0
   PunchCount: 1
+  MagicArrowCount: 0
   PunchCharge: {fileID: 1335136532}
-  Page2Idle: {fileID: 9100000, guid: 42bab5f36f366254fbf303c95225da67, type: 2}
+  Thunder: {fileID: 700506249}
+  PageAnimators:
+  - {fileID: 9100000, guid: 42bab5f36f366254fbf303c95225da67, type: 2}
+  - {fileID: 9100000, guid: ae8575d5cfe2485429263aca97ede43d, type: 2}
   WaringArea:
   - {fileID: 653966231}
+  - {fileID: 1709986802}
+  - {fileID: 1526805472}
   TargetFind: 0
   BossCenter: {fileID: 832146627}
 --- !u!114 &1736382492
@@ -39462,7 +39888,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monster: {fileID: 1736382491}
-  target: {fileID: 0}
+  player: {fileID: 0}
 --- !u!61 &1736382493
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -39476,7 +39902,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.3}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -39525,6 +39951,8 @@ Transform:
   - {fileID: 653966234}
   - {fileID: 832146628}
   - {fileID: 1335136534}
+  - {fileID: 700506251}
+  - {fileID: 1836009702}
   - {fileID: 343350167}
   m_Father: {fileID: 0}
   m_RootOrder: 27
@@ -39889,6 +40317,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1753151550}
   m_CullTransparentMesh: 1
+--- !u!1 &1753548390
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1753548391}
+  m_Layer: 0
+  m_Name: Teleport_Pos_3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1753548391
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753548390}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 18.84, y: -6, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 791468839}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1762178950
 GameObject:
   m_ObjectHideFlags: 0
@@ -41130,7 +41589,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1819711769
 GameObject:
@@ -41430,6 +41889,112 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 443485497}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1836009699
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1836009702}
+  - component: {fileID: 1836009701}
+  - component: {fileID: 1836009700}
+  m_Layer: 15
+  m_Name: TeleportEfc
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!95 &1836009700
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836009699}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5f278eadde4d15d45a37be79be10b00b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!212 &1836009701
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836009699}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 3
+  m_Sprite: {fileID: -1173577865, guid: c5ebe78d387975644bcdaf5c9b9f12ed, type: 3}
+  m_Color: {r: 0.6, g: 0.69803923, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 2.91, y: 2.91}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!4 &1836009702
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836009699}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1736382495}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1837179978
@@ -42713,17 +43278,23 @@ MonoBehaviour:
   LastPattern: 0
   TeleportPos: []
   ThornPos: []
+  LaserPos: []
   CircleMissilePB: {fileID: 0}
   MissilePB: {fileID: 0}
   ThornPB: {fileID: 0}
+  LaserPB: {fileID: 0}
+  MagicArrowPB: {fileID: 0}
   PunchEfc: {fileID: 0}
+  TeleportEfc: {fileID: 0}
   MissileCount: 0
   CircleMissileCount: 0
   ThornCount: 0
   CircleMissileShoot: 0
   PunchCount: 1
+  MagicArrowCount: 0
   PunchCharge: {fileID: 0}
-  Page2Idle: {fileID: 0}
+  Thunder: {fileID: 0}
+  PageAnimators: []
   WaringArea: []
   TargetFind: 0
   BossCenter: {fileID: 0}
@@ -44820,7 +45391,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 211661632875083742, guid: 4e226d9fde940ae478f9506ac6cc2f42, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 211661632875083742, guid: 4e226d9fde940ae478f9506ac6cc2f42, type: 3}
       propertyPath: m_AnchorMax.x
@@ -46982,17 +47553,23 @@ MonoBehaviour:
   LastPattern: 0
   TeleportPos: []
   ThornPos: []
+  LaserPos: []
   CircleMissilePB: {fileID: 0}
   MissilePB: {fileID: 0}
   ThornPB: {fileID: 0}
+  LaserPB: {fileID: 0}
+  MagicArrowPB: {fileID: 0}
   PunchEfc: {fileID: 0}
+  TeleportEfc: {fileID: 0}
   MissileCount: 0
   CircleMissileCount: 0
   ThornCount: 0
   CircleMissileShoot: 0
   PunchCount: 1
+  MagicArrowCount: 0
   PunchCharge: {fileID: 0}
-  Page2Idle: {fileID: 0}
+  Thunder: {fileID: 0}
+  PageAnimators: []
   WaringArea: []
   TargetFind: 0
   BossCenter: {fileID: 0}
@@ -48147,7 +48724,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1663748615049300107, guid: 774fe36476ce3f342acf7bbaf704f9ea, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1663748615049300107, guid: 774fe36476ce3f342acf7bbaf704f9ea, type: 3}
       propertyPath: m_LocalPosition.x

@@ -6,12 +6,12 @@ public class Golem_Controller : MonoBehaviour
 {
 
     public Enemy monster;
-    public Transform target;
+    public Player player;
 
 
     void Start()
     {
-        target = Player.instance.gameObject.transform;
+        player = Player.instance;
         monster.InitSetting();
         monster.GolemBossOneTime();
     }
@@ -19,6 +19,6 @@ public class Golem_Controller : MonoBehaviour
 
     void Update()
     {
-        monster.GolemBoss(target);
+        monster.GolemBoss(player.transform);
     }
 }

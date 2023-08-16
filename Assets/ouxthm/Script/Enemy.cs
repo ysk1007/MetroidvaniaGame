@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -112,20 +113,27 @@ public abstract class Enemy : MonoBehaviour
     public int LastPattern = 1;
     public Transform[] TeleportPos;
     public Transform[] ThornPos;
+    public Transform[] LaserPos;
     public GameObject CircleMissilePB;
     public GameObject MissilePB;
     public GameObject ThornPB;
+    public GameObject LaserPB;
+    public GameObject MagicArrowPB;
     public GameObject PunchEfc;
+    public Animator TeleportEfc;
     float[] angles0 = { -135f, -112.5f, -90f, -67.5f, -45f };
     float[] angles1 = { -123.75f, -101.25f, -78.75f, -56.25f };
     float[] CircleAngles = { 0f, 15f, 30f, 45f, 60f, 75f, 90f, 105f, 120f, 135f, 150f, 165f, 180f, 195f, 210f, 225f, 240f, 255f, 270f, 285f, 300f, 315f, 330f, 345f };
+    float[] MagicArrowAngles = { 0f, 30f, 60f, 90f, 120f, 150f, 180f, 210f, 240f, 270f, 300f, 330f};
     public int MissileCount;
     public int CircleMissileCount = 0;
     public int ThornCount = 0;
     public bool CircleMissileShoot;
     public int PunchCount = 1;
+    public int MagicArrowCount = 0;
     public Animator PunchCharge;
-    public RuntimeAnimatorController Page2Idle;
+    public Animator Thunder;
+    public RuntimeAnimatorController[] PageAnimators;
     public SpriteRenderer[] WaringArea;
     public float TargetFind; //좌우 구별
     public GameObject BossCenter;
@@ -1450,14 +1458,27 @@ public abstract class Enemy : MonoBehaviour
         bleedingDamage = Player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
 
-        if (Enemy_HP < 400 && BossPage < 1)
+        if (Enemy_HP < 600 && BossPage < 1)
         {
             BossPage++;
-            Enemy_HP = 400;
+            bossBox.enabled = false;
             CancelInvoke();
             WaringArea[0].enabled = false;
+            Thunder.SetTrigger("Thunder");
             animator.SetTrigger("ChangePage2");
-            Invoke("ChangePage", 2.7f);
+            Invoke("ChangePage", 4f);
+            bossMoving = true;
+        }
+
+        if (Enemy_HP < 300 && BossPage < 2)
+        {
+            BossPage++;
+            bossBox.enabled = false;
+            CancelInvoke();
+            WaringArea[0].enabled = false;
+            Thunder.SetTrigger("Thunder");
+            animator.SetTrigger("ChangePage3");
+            Invoke("ChangePage", 6f);
             bossMoving = true;
         }
 
@@ -1505,7 +1526,7 @@ public abstract class Enemy : MonoBehaviour
     {
         Pos = GetComponent<Transform>();
         BossSpriteBox = this.gameObject.GetComponent<BoxCollider2D>();
-        bossBox = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();
+        bossBox = this.GetComponent<BoxCollider2D>();
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
         rigid = this.gameObject.GetComponent<Rigidbody2D>();
         hit_bloodTrans = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
@@ -1522,9 +1543,13 @@ public abstract class Enemy : MonoBehaviour
         {
             Pattern = new List<int> { 1, 2, 3};
         }
-        else if (BossPage >= 1)
+        else if (BossPage == 1)
         {
-            Pattern = new List<int> { 1, 2, 3, 4, 5, 6};
+            Pattern = new List<int> { 1, 2, 3, 4};
+        }
+        else if (BossPage > 1)
+        {
+            Pattern = new List<int> { 1, 2, 3, 4, 5 ,6};
         }
         Pattern.RemoveAt(LastPattern - 1);
         randNum = Random.Range(4, 5);
@@ -1543,13 +1568,11 @@ public abstract class Enemy : MonoBehaviour
     {
         if (Dying)
         {
-            BossSpriteBox.enabled = false;
-            rigid.isKinematic = true;
-            gameObject.transform.Translate(Vector2.down * Time.deltaTime * 5);
+            bossBox.enabled = false;
         }
     }
 
-    void GolemAttack()    // orc 보스의 공격 패턴
+    void GolemAttack()    // 보스 공격 패턴
     {
         switch (atkPattern)
         {
@@ -1568,6 +1591,7 @@ public abstract class Enemy : MonoBehaviour
                 this.transform.position = vc;
                 animator.SetTrigger("Punch");
                 WaringArea[0].enabled = true;
+                TeleportEfc.SetTrigger("Teleport");
                 PunchCharge.SetTrigger("Charging");
                 Invoke("Punch", 1f);
                 atkPattern = 0;
@@ -1575,6 +1599,7 @@ public abstract class Enemy : MonoBehaviour
                 break;
             case 2:
                 ScaleFlip();
+                TeleportEfc.SetTrigger("Teleport");
                 this.transform.position = TeleportPos[1].position;
                 animator.SetTrigger("Attacking");
                 Invoke("WingAttack", 0.6f);
@@ -1592,12 +1617,17 @@ public abstract class Enemy : MonoBehaviour
                 LastPattern = 4;
                 break;
             case 5:
-                Invoke("ThornAttack", 0f);
+                WaringArea[1].enabled = true;
+                WaringArea[2].enabled = true;
+                this.transform.position = TeleportPos[0].position;
+                TeleportEfc.SetTrigger("Teleport");
+                animator.SetTrigger("Laser");
+                Invoke("LaserAttack", 0f);
                 atkPattern = 0;
                 LastPattern = 5;
                 break;
             case 6:
-                Invoke("ThornAttack", 0f);
+                Invoke("MagicArrowAttack", 0f);
                 atkPattern = 0;
                 LastPattern = 6;
                 break;
@@ -1773,9 +1803,70 @@ public abstract class Enemy : MonoBehaviour
         ThornCount++;
     }
 
+    void LaserAttack()
+    {
+        Attacking = false;  // 공격중 끄기
+        Invoke("LaserCreate", 2f);
+    }
+
+    void LaserCreate()
+    {
+        Transform CreatePos;
+        Vector3 NewPos;
+        GameObject newLaser;
+        for (int i = 0; i < 2; i++)
+        {
+            WaringArea[1+i].enabled = false;
+            CreatePos = LaserPos[i];
+            NewPos = new Vector3(CreatePos.transform.position.x, CreatePos.transform.position.y, CreatePos.transform.position.z);
+            newLaser = Instantiate(LaserPB, NewPos, Quaternion.Euler(0f, 0f, 0f));
+            if (i>0)
+            {
+                newLaser.GetComponent<Laser>().Dir = -1;
+            }
+        }
+    }
+
+    void MagicArrowAttack()
+    {
+        animator.SetTrigger("MagicArrow");
+        Attacking = false;  // 공격중 끄기
+        float time = 0f;
+        for (int i = 0; i < MagicArrowAngles.Length; i++)
+        {
+            Invoke("MagicArrowCreate", time);
+            time += 0.05f;
+        }
+        MagicArrowCount = 0;
+    }
+
+    void MagicArrowCreate()
+    {
+        float circleRadius = 4f;
+
+        float angle = MagicArrowCount * (360f / MagicArrowAngles.Length); // 각도 계산
+        Vector3 spawnPosition = BossCenter.transform.position + Quaternion.Euler(0f, 0f, angle) * Vector3.right * circleRadius; // 원의 둘레 위의 위치 계산
+
+        Quaternion rotation = Quaternion.Euler(0f, 0f, MagicArrowAngles[MagicArrowCount]);
+
+        GameObject Arrow = Instantiate(MagicArrowPB, spawnPosition, rotation);
+        MagicArrowCount++;
+    }
+
     void ChangePage()
     {
-        animator.runtimeAnimatorController = Page2Idle;
-        Invoke("GolemRandomAtk", 1f);
+        if (BossPage == 1)
+        {
+            animator.runtimeAnimatorController = PageAnimators[BossPage - 1];
+            Invoke("GolemRandomAtk", 1f);
+            bossBox.enabled = true;
+        }
+        else if (BossPage == 2)
+        {
+            animator.runtimeAnimatorController = PageAnimators[BossPage - 1];
+            Invoke("GolemRandomAtk", 1f);
+            bossBox.enabled = true;
+        }
+
     }
 }

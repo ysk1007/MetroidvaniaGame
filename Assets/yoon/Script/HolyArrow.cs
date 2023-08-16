@@ -13,7 +13,6 @@ public class HolyArrow : MonoBehaviour
     private Vector3 moveDirection = Vector3.right; // 화살이 나가는 방향
 
     public SpriteRenderer spriteRenderer;
-    private Dictionary<Collider2D, bool> hitDict = new Dictionary<Collider2D, bool>(); // 이미 적에게 대미지를 입혔는지 여부를 기록하는 Dictionary 변수
 
     private void Start()
     {
@@ -65,13 +64,15 @@ public class HolyArrow : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision) //화살이 충돌시 확인후 공격 및 사라지게함
     {
-        if (collision.tag == "Enemy")
+        if (collision.tag == "Enemy" || collision.tag == "Boss")
         {
-            hitDict.Add(collision, true); // 적 정보를 Dictionary에 추가
             enemy = collision.GetComponent<Enemy>();
-            Vector3 newpos = enemy.Pos.position;
-            Instantiate(HolyEffect, newpos, transform.rotation);
-            DestroyArrow();
+            if(enemy != null)
+            {
+                Vector3 newpos = enemy.Pos.position;
+                Instantiate(HolyEffect, newpos, transform.rotation);
+                DestroyArrow();
+            }
         }
     }
 

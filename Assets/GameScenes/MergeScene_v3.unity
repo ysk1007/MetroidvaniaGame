@@ -7101,13 +7101,26 @@ MonoBehaviour:
   Pos: {fileID: 280149406}
   arrow: {fileID: 0}
   slash: {fileID: 0}
+  BossPage: 0
+  GolemPattern: 010000000200000003000000040000000500000006000000
+  Pattern: 
+  LastPattern: 1
   TeleportPos: []
-  Missile: {fileID: 0}
+  ThornPos: []
+  CircleMissilePB: {fileID: 0}
+  MissilePB: {fileID: 0}
+  ThornPB: {fileID: 0}
   PunchEfc: {fileID: 0}
   MissileCount: 0
+  CircleMissileCount: 0
+  ThornCount: 0
+  CircleMissileShoot: 0
   PunchCount: 1
   PunchCharge: {fileID: 0}
+  Page2Idle: {fileID: 0}
   WaringArea: []
+  TargetFind: 0
+  BossCenter: {fileID: 0}
 --- !u!114 &280149403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10743,13 +10756,26 @@ MonoBehaviour:
   Pos: {fileID: 443485497}
   arrow: {fileID: 0}
   slash: {fileID: 0}
+  BossPage: 0
+  GolemPattern: 010000000200000003000000040000000500000006000000
+  Pattern: 
+  LastPattern: 1
   TeleportPos: []
-  Missile: {fileID: 0}
+  ThornPos: []
+  CircleMissilePB: {fileID: 0}
+  MissilePB: {fileID: 0}
+  ThornPB: {fileID: 0}
   PunchEfc: {fileID: 0}
   MissileCount: 0
+  CircleMissileCount: 0
+  ThornCount: 0
+  CircleMissileShoot: 0
   PunchCount: 1
   PunchCharge: {fileID: 0}
+  Page2Idle: {fileID: 0}
   WaringArea: []
+  TargetFind: 0
+  BossCenter: {fileID: 0}
 --- !u!114 &443485494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13797,13 +13823,26 @@ MonoBehaviour:
   Pos: {fileID: 0}
   arrow: {fileID: 0}
   slash: {fileID: 0}
+  BossPage: 0
+  GolemPattern: 010000000200000003000000040000000500000006000000
+  Pattern: 
+  LastPattern: 1
   TeleportPos: []
-  Missile: {fileID: 0}
+  ThornPos: []
+  CircleMissilePB: {fileID: 0}
+  MissilePB: {fileID: 0}
+  ThornPB: {fileID: 0}
   PunchEfc: {fileID: 0}
   MissileCount: 0
+  CircleMissileCount: 0
+  ThornCount: 0
+  CircleMissileShoot: 0
   PunchCount: 1
   PunchCharge: {fileID: 0}
+  Page2Idle: {fileID: 0}
   WaringArea: []
+  TargetFind: 0
+  BossCenter: {fileID: 0}
 --- !u!114 &562679632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15978,13 +16017,26 @@ MonoBehaviour:
   Pos: {fileID: 739288570}
   arrow: {fileID: 0}
   slash: {fileID: 0}
+  BossPage: 0
+  GolemPattern: 010000000200000003000000040000000500000006000000
+  Pattern: 
+  LastPattern: 1
   TeleportPos: []
-  Missile: {fileID: 0}
+  ThornPos: []
+  CircleMissilePB: {fileID: 0}
+  MissilePB: {fileID: 0}
+  ThornPB: {fileID: 0}
   PunchEfc: {fileID: 0}
   MissileCount: 0
+  CircleMissileCount: 0
+  ThornCount: 0
+  CircleMissileShoot: 0
   PunchCount: 1
   PunchCharge: {fileID: 0}
+  Page2Idle: {fileID: 0}
   WaringArea: []
+  TargetFind: 0
+  BossCenter: {fileID: 0}
 --- !u!114 &739288567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18312,13 +18364,26 @@ MonoBehaviour:
   Pos: {fileID: 0}
   arrow: {fileID: 0}
   slash: {fileID: 0}
+  BossPage: 0
+  GolemPattern: 010000000200000003000000040000000500000006000000
+  Pattern: 
+  LastPattern: 1
   TeleportPos: []
-  Missile: {fileID: 0}
+  ThornPos: []
+  CircleMissilePB: {fileID: 0}
+  MissilePB: {fileID: 0}
+  ThornPB: {fileID: 0}
   PunchEfc: {fileID: 0}
   MissileCount: 0
+  CircleMissileCount: 0
+  ThornCount: 0
+  CircleMissileShoot: 0
   PunchCount: 1
   PunchCharge: {fileID: 0}
+  Page2Idle: {fileID: 0}
   WaringArea: []
+  TargetFind: 0
+  BossCenter: {fileID: 0}
 --- !u!114 &788845648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18721,13 +18786,26 @@ MonoBehaviour:
   Pos: {fileID: 0}
   arrow: {fileID: 0}
   slash: {fileID: 0}
+  BossPage: 0
+  GolemPattern: 010000000200000003000000040000000500000006000000
+  Pattern: 
+  LastPattern: 1
   TeleportPos: []
-  Missile: {fileID: 0}
+  ThornPos: []
+  CircleMissilePB: {fileID: 0}
+  MissilePB: {fileID: 0}
+  ThornPB: {fileID: 0}
   PunchEfc: {fileID: 0}
   MissileCount: 0
+  CircleMissileCount: 0
+  ThornCount: 0
+  CircleMissileShoot: 0
   PunchCount: 1
   PunchCharge: {fileID: 0}
+  Page2Idle: {fileID: 0}
   WaringArea: []
+  TargetFind: 0
+  BossCenter: {fileID: 0}
 --- !u!114 &799460072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22584,13 +22662,26 @@ MonoBehaviour:
   Pos: {fileID: 997255116}
   arrow: {fileID: 0}
   slash: {fileID: 0}
+  BossPage: 0
+  GolemPattern: 010000000200000003000000040000000500000006000000
+  Pattern: 
+  LastPattern: 1
   TeleportPos: []
-  Missile: {fileID: 0}
+  ThornPos: []
+  CircleMissilePB: {fileID: 0}
+  MissilePB: {fileID: 0}
+  ThornPB: {fileID: 0}
   PunchEfc: {fileID: 0}
   MissileCount: 0
+  CircleMissileCount: 0
+  ThornCount: 0
+  CircleMissileShoot: 0
   PunchCount: 1
   PunchCharge: {fileID: 0}
+  Page2Idle: {fileID: 0}
   WaringArea: []
+  TargetFind: 0
+  BossCenter: {fileID: 0}
 --- !u!114 &997255113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22863,13 +22954,26 @@ MonoBehaviour:
   Pos: {fileID: 999660540}
   arrow: {fileID: 0}
   slash: {fileID: 0}
+  BossPage: 0
+  GolemPattern: 010000000200000003000000040000000500000006000000
+  Pattern: 
+  LastPattern: 1
   TeleportPos: []
-  Missile: {fileID: 0}
+  ThornPos: []
+  CircleMissilePB: {fileID: 0}
+  MissilePB: {fileID: 0}
+  ThornPB: {fileID: 0}
   PunchEfc: {fileID: 0}
   MissileCount: 0
+  CircleMissileCount: 0
+  ThornCount: 0
+  CircleMissileShoot: 0
   PunchCount: 1
   PunchCharge: {fileID: 0}
+  Page2Idle: {fileID: 0}
   WaringArea: []
+  TargetFind: 0
+  BossCenter: {fileID: 0}
 --- !u!114 &999660537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24057,13 +24161,26 @@ MonoBehaviour:
   Pos: {fileID: 1070408997}
   arrow: {fileID: 0}
   slash: {fileID: 0}
+  BossPage: 0
+  GolemPattern: 010000000200000003000000040000000500000006000000
+  Pattern: 
+  LastPattern: 1
   TeleportPos: []
-  Missile: {fileID: 0}
+  ThornPos: []
+  CircleMissilePB: {fileID: 0}
+  MissilePB: {fileID: 0}
+  ThornPB: {fileID: 0}
   PunchEfc: {fileID: 0}
   MissileCount: 0
+  CircleMissileCount: 0
+  ThornCount: 0
+  CircleMissileShoot: 0
   PunchCount: 1
   PunchCharge: {fileID: 0}
+  Page2Idle: {fileID: 0}
   WaringArea: []
+  TargetFind: 0
+  BossCenter: {fileID: 0}
 --- !u!114 &1070408993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29617,13 +29734,26 @@ MonoBehaviour:
   Pos: {fileID: 1360893204}
   arrow: {fileID: 0}
   slash: {fileID: 0}
+  BossPage: 0
+  GolemPattern: 010000000200000003000000040000000500000006000000
+  Pattern: 
+  LastPattern: 1
   TeleportPos: []
-  Missile: {fileID: 0}
+  ThornPos: []
+  CircleMissilePB: {fileID: 0}
+  MissilePB: {fileID: 0}
+  ThornPB: {fileID: 0}
   PunchEfc: {fileID: 0}
   MissileCount: 0
+  CircleMissileCount: 0
+  ThornCount: 0
+  CircleMissileShoot: 0
   PunchCount: 1
   PunchCharge: {fileID: 0}
+  Page2Idle: {fileID: 0}
   WaringArea: []
+  TargetFind: 0
+  BossCenter: {fileID: 0}
 --- !u!114 &1360893201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31099,13 +31229,26 @@ MonoBehaviour:
   Pos: {fileID: 1428462447}
   arrow: {fileID: 0}
   slash: {fileID: 0}
+  BossPage: 0
+  GolemPattern: 010000000200000003000000040000000500000006000000
+  Pattern: 
+  LastPattern: 1
   TeleportPos: []
-  Missile: {fileID: 0}
+  ThornPos: []
+  CircleMissilePB: {fileID: 0}
+  MissilePB: {fileID: 0}
+  ThornPB: {fileID: 0}
   PunchEfc: {fileID: 0}
   MissileCount: 0
+  CircleMissileCount: 0
+  ThornCount: 0
+  CircleMissileShoot: 0
   PunchCount: 1
   PunchCharge: {fileID: 0}
+  Page2Idle: {fileID: 0}
   WaringArea: []
+  TargetFind: 0
+  BossCenter: {fileID: 0}
 --- !u!114 &1428462444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32121,13 +32264,26 @@ MonoBehaviour:
   Pos: {fileID: 1507255670}
   arrow: {fileID: 0}
   slash: {fileID: 0}
+  BossPage: 0
+  GolemPattern: 010000000200000003000000040000000500000006000000
+  Pattern: 
+  LastPattern: 1
   TeleportPos: []
-  Missile: {fileID: 0}
+  ThornPos: []
+  CircleMissilePB: {fileID: 0}
+  MissilePB: {fileID: 0}
+  ThornPB: {fileID: 0}
   PunchEfc: {fileID: 0}
   MissileCount: 0
+  CircleMissileCount: 0
+  ThornCount: 0
+  CircleMissileShoot: 0
   PunchCount: 1
   PunchCharge: {fileID: 0}
+  Page2Idle: {fileID: 0}
   WaringArea: []
+  TargetFind: 0
+  BossCenter: {fileID: 0}
 --- !u!114 &1507255667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42059,13 +42215,26 @@ MonoBehaviour:
   Pos: {fileID: 1877596584}
   arrow: {fileID: 0}
   slash: {fileID: 0}
+  BossPage: 0
+  GolemPattern: 010000000200000003000000040000000500000006000000
+  Pattern: 
+  LastPattern: 1
   TeleportPos: []
-  Missile: {fileID: 0}
+  ThornPos: []
+  CircleMissilePB: {fileID: 0}
+  MissilePB: {fileID: 0}
+  ThornPB: {fileID: 0}
   PunchEfc: {fileID: 0}
   MissileCount: 0
+  CircleMissileCount: 0
+  ThornCount: 0
+  CircleMissileShoot: 0
   PunchCount: 1
   PunchCharge: {fileID: 0}
+  Page2Idle: {fileID: 0}
   WaringArea: []
+  TargetFind: 0
+  BossCenter: {fileID: 0}
 --- !u!114 &1877596581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42898,7 +43067,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1934824339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42975,17 +43144,30 @@ MonoBehaviour:
   Pos: {fileID: 1934824343}
   arrow: {fileID: 0}
   slash: {fileID: 0}
+  BossPage: 0
+  GolemPattern: 010000000200000003000000040000000500000006000000
+  Pattern: 
+  LastPattern: 1
   TeleportPos:
   - {fileID: 1695366098}
   - {fileID: 442962231}
   - {fileID: 1437548945}
-  Missile: {fileID: 117786764753181504, guid: a92c9660c612cf5499fc7af09f7dcada, type: 3}
+  ThornPos: []
+  CircleMissilePB: {fileID: 0}
+  MissilePB: {fileID: 0}
+  ThornPB: {fileID: 0}
   PunchEfc: {fileID: 117786764753181504, guid: d042e5d5e909c74489c458a1dc46c009, type: 3}
   MissileCount: 0
+  CircleMissileCount: 0
+  ThornCount: 0
+  CircleMissileShoot: 0
   PunchCount: 1
   PunchCharge: {fileID: 1352244951}
+  Page2Idle: {fileID: 0}
   WaringArea:
   - {fileID: 94813281}
+  TargetFind: 0
+  BossCenter: {fileID: 0}
 --- !u!114 &1934824340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46539,13 +46721,26 @@ MonoBehaviour:
   Pos: {fileID: 2111616457}
   arrow: {fileID: 0}
   slash: {fileID: 0}
+  BossPage: 0
+  GolemPattern: 010000000200000003000000040000000500000006000000
+  Pattern: 
+  LastPattern: 1
   TeleportPos: []
-  Missile: {fileID: 0}
+  ThornPos: []
+  CircleMissilePB: {fileID: 0}
+  MissilePB: {fileID: 0}
+  ThornPB: {fileID: 0}
   PunchEfc: {fileID: 0}
   MissileCount: 0
+  CircleMissileCount: 0
+  ThornCount: 0
+  CircleMissileShoot: 0
   PunchCount: 1
   PunchCharge: {fileID: 0}
+  Page2Idle: {fileID: 0}
   WaringArea: []
+  TargetFind: 0
+  BossCenter: {fileID: 0}
 --- !u!114 &2111616454
 MonoBehaviour:
   m_ObjectHideFlags: 0
