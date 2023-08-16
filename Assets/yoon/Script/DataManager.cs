@@ -586,7 +586,7 @@ public class DataManager : MonoBehaviour
 
     public void DeleteJson()
     {
-        string filePath = Path.Combine(Application.dataPath + "/Resources", "");
+        string filePath = Path.Combine(Application.dataPath + "/Resources", "PlayerData.json");
 
         if (File.Exists(filePath))
         {

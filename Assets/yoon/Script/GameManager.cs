@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
         else
         {
             _instance = this; //아니면 인스턴스를 현재 GameManager 객체로 설정
-            DontDestroyOnLoad(this.gameObject); 
+            /*DontDestroyOnLoad(this.gameObject); */
         }
     }
 

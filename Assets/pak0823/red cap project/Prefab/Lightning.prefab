@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1909558851829657609}
   - component: {fileID: 5266891974252383466}
+  - component: {fileID: 3773814716377128223}
   - component: {fileID: 8204557325334005088}
-  - component: {fileID: 7174815663748261814}
-  - component: {fileID: 4164400629668353804}
+  - component: {fileID: 7083994796271374437}
   m_Layer: 0
-  m_Name: HolyHit
+  m_Name: Lightning
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 5773911161201639705}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 3, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 781138999, guid: 2196fe6a59ce45445b019bbab7c15a74, type: 3}
+  m_Sprite: {fileID: -500707765, guid: fdf7803449f7e894e8db1c61bd5126ed, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -87,6 +87,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3773814716377128223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5773911161201639705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b89f5142da429ad4d8dc381b6fa06606, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 8204557325334005088}
+  colider: {fileID: 7083994796271374437}
+  FindEnemys: {fileID: 0}
+  Finds: []
 --- !u!95 &8204557325334005088
 Animator:
   serializedVersion: 5
@@ -97,7 +113,7 @@ Animator:
   m_GameObject: {fileID: 5773911161201639705}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: aa4e59147002a2d42ad96b62d454e560, type: 2}
+  m_Controller: {fileID: 9100000, guid: be657a0aa01276046b04a565756ccb32, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -108,24 +124,8 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7174815663748261814
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5773911161201639705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ce39db22cc56cb45bdf294d8514374e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 8204557325334005088}
-  colider: {fileID: 4164400629668353804}
-  FindEnemys: {fileID: 0}
-  Finds: []
---- !u!58 &4164400629668353804
-CircleCollider2D:
+--- !u!61 &7083994796271374437
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -137,6 +137,16 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.03513682, y: -0.017568588}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 3.875, y: 8}
+    newSize: {x: 0.5625, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 2
+  m_Size: {x: 7.7, y: 24}
+  m_EdgeRadius: 0

@@ -145,6 +145,9 @@ public class Player : MonoBehaviour
     public AudioSource TimeLoopSound;
     public GameObject PastErase;
     public float GridPower = 0f;
+
+    public GameObject AxeMasterEfc;
+    public int SkillCount = 1;
     void Awake()
     {
         instance = this; //추가함
@@ -484,7 +487,8 @@ public class Player : MonoBehaviour
             anim.SetTrigger("axe_atk");
             yield return new WaitForSeconds(1.5f);
             //PlaySound("AxeMasterSkill"); // 애니메이션에 실행 있음
-            Instantiate(AxeSkill, Axepos.position, transform.rotation);
+            //Instantiate(AxeSkill, Axepos.position, transform.rotation);
+            AxeMasterSkill();
             Axe_MsTime = MasterSkillTime[1];
             yield return new WaitForSeconds(1f);
             isMasterSkill = false;
@@ -1139,4 +1143,32 @@ public class Player : MonoBehaviour
         gameObject.layer = LayerMask.NameToLayer("Player");
     }
 
+    void AxeMasterSkill()
+    {
+        float time = 0f;
+        for (int i = 0; i < 5; i++)
+        {
+            Invoke("SkillCreate", time);
+            time += 0.2f;
+        }
+        SkillCount = 1;
+    }
+
+    void SkillCreate()
+    {
+        int px;
+        px = SkillCount * 6;
+        if (slideDir > 0)
+        {
+            px *= 1;
+        }
+        if (slideDir < 0)
+        {
+            px *= -1;
+        }
+        Vector3 Pc = new Vector3(this.transform.position.x + px, this.transform.position.y + 7.7f);
+        GameObject punch = Instantiate(AxeMasterEfc, transform.parent);
+        punch.transform.position = Pc;
+        SkillCount++;
+    }
 }

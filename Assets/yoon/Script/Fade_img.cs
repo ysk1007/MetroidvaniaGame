@@ -8,7 +8,7 @@ public class Fade_img : MonoBehaviour
 {
     public GameObject img_obj; //효과 적용할 오브젝트를 담을 변수
     private Image img;  //이미지 컴포넌트를 담을 이미지 변수
-
+    public GameObject LoadingImage;
     public float fadeSpeed = 0.5f; //Fade in/out 속도
 
     string currentSceneName; //현재 씬이름을 저장하는 변수
@@ -18,10 +18,7 @@ public class Fade_img : MonoBehaviour
     {
         img = img_obj.GetComponent<Image>(); //img 변수에 효과 적용할 오브젝트의 Image 컴포넌트 가져옴
         currentSceneName = SceneManager.GetActiveScene().name; //현재 씬 이름을 불러옴
-        if (currentSceneName == "Main_Scene")
-        {
-            CallFadeOut();
-        }
+        CallFadeOut();
     }
 
     // Update is called once per frame
@@ -42,7 +39,7 @@ public class Fade_img : MonoBehaviour
     }
 
     IEnumerator FadeIn() //Fade in 효과
-        {
+    {
             // 0.5초 기다렸다 시작
             yield return new WaitForSeconds(0.5f);
 
@@ -60,7 +57,8 @@ public class Fade_img : MonoBehaviour
                 img.color = color; // 적용
                 yield return null; //이게 없으면 순식간에 효과가 지나감
             }
-        }
+            LoadingImage.SetActive(true);
+    }
 
     IEnumerator FadeOut() //Fade Out 효과
     {
@@ -81,6 +79,5 @@ public class Fade_img : MonoBehaviour
             img.color = color; // 적용
             yield return null; //이게 없으면 순식간에 효과가 지나감
         }
-        img_obj.SetActive(false);
     }
 }
