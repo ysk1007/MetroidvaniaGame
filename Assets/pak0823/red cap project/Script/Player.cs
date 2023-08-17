@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
         1350f, 1400f};   // 레벨업 하는데 필요한 경험치 추가함
     public float jumpPower; //Jump 높이 저장 변수
     public float Speed; //Move 속도 저장 변수
-    public float SpeedChange; // Move 속도변경 저장 변수
+    public float SpeedChange; // Move 속도변경 저장 변수 
     public float curTime, coolTime = 2;  // 연속공격이 가능한 시간
     public float[] MasterSkillTime = { 10, 10, 10 };   //무기별 숙련도 스킬 쿨타임
     public float Sword_MsTime, Axe_MsTime, Bow_MsTime;  // 무기별 숙련도 스킬 쿨타임 적용
@@ -48,6 +48,7 @@ public class Player : MonoBehaviour
     public float chargingTime = 2f; // 차징 시간
     public bool isCharging = false; // 차징 상태 여부
     public float chargeTimer = 0f; // 차징 시간을 측정하는 타이머
+    public float ArrowDistance = 0.75f;
     public PlayerCanvas playerCanvas; //추가함
 
     public static Player instance; //추가함
@@ -70,8 +71,8 @@ public class Player : MonoBehaviour
     public float enemyPower;
     public int stackbleed;  // 몬스터에 쌓인 출혈 스택
     public static float BleedingTime = 8f;  // 2023-07-31 추가(출혈 지속 시간)
-    public static float bleedDamage = 0.5f; // 2023-08-01 출혈 데미지
-    public static float bloodBoomDmg = 7f;  // 출혈스택 터뜨리는 데미지
+    public float bleedDamage = 3f; // 2023-08-01 출혈 데미지
+    public static float bloodBoomDmg = 25f;  // 출혈스택 터뜨리는 데미지
     public static string playerTag;    // 2023-08-11 추가 (플레이어 무기 태그)
     //선택능력치 밸류
     public float[] selectAtkValue = { 0.1f, 0.2f, 0.3f };
@@ -141,6 +142,10 @@ public class Player : MonoBehaviour
     public bool UseGridSword = false;
     public bool DivinePower = false;
     public bool UsePastErase = false;
+    public bool UseRedCard = false;
+    public bool NoNockback = false;
+    public bool UseMirror = false;
+    public Camera cam;
     public Animator TimeLoopAnim;
     public AudioSource TimeLoopSound;
     public GameObject PastErase;
@@ -769,6 +774,10 @@ public class Player : MonoBehaviour
 
     IEnumerator Knockback(float dir) //피해입을시 넉백
     {
+        if (NoNockback)
+        {
+            yield break;
+        }
         isknockback = true;
         float ctime = 0;
 
@@ -1133,6 +1142,18 @@ public class Player : MonoBehaviour
         TimeLoopSound.Play();
         Ui.Heal(MaxHp);
         Invoke("RealTime", 1.25f);
+    }
+
+    public void Mirror()
+    {
+        if (UseMirror)
+        {
+            cam.orthographicSize = 7f;
+        }
+        else
+        {
+            cam.orthographicSize = 9f;
+        }
     }
 
     public void RealTime()

@@ -15,8 +15,8 @@ public class GlassSword : itemStatus
         data.color = Color.red;
         data.Rating = "전설";
         data.itemExplanation = "스치기만 해도 치명타!";
-        data.itemStat = "피해량 증가 +100%\n 방어력 -50";
-        data.itemNumber = 17;
+        data.itemStat = "데미지 +100%\n 방어력 -50";
+        data.itemNumber = 18;
         data.DmgIncrease = 1f;
         data.Def = -50;
     }

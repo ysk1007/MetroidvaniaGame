@@ -471,6 +471,7 @@ MonoBehaviour:
   OptionPanel: {fileID: 284867789}
   clip: {fileID: 8300000, guid: 03fe61daccce2304384cc7dbf1aec1bc, type: 3}
   fade: {fileID: 1681496746}
+  loading_ui: {fileID: 1756462614}
   index: 
   currentIndex: 0
 --- !u!114 &296328185
@@ -1650,6 +1651,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1756462611}
   - component: {fileID: 1756462613}
+  - component: {fileID: 1756462614}
   - component: {fileID: 1756462612}
   m_Layer: 5
   m_Name: Loading_Ui
@@ -1719,6 +1721,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1756462610}
   m_CullTransparentMesh: 1
+--- !u!114 &1756462614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1756462610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f09c8e21a5857bf47b9f4b2cd2478755, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadingText: {fileID: 2096731634}
+  TipText: {fileID: 462721275}
+  ingame: 0
+  DoLoading: 0
+  FadeImg: {fileID: 0}
+  fade: {fileID: 0}
 --- !u!1 &1777050230
 GameObject:
   m_ObjectHideFlags: 0
@@ -2393,6 +2413,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadingText: {fileID: 2096731634}
+  TipText: {fileID: 0}
+  ingame: 0
+  DoLoading: 0
+  FadeImg: {fileID: 0}
+  fade: {fileID: 0}
 --- !u!114 &2096731634
 MonoBehaviour:
   m_ObjectHideFlags: 0

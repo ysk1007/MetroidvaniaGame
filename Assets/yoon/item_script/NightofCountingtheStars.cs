@@ -16,7 +16,7 @@ public class NightofCountingtheStars : itemStatus
         data.Rating = "신화";
         data.itemExplanation = "\"겨울이 지나고 나의 별에도 봄이 왔다\"";
         data.itemStat = "모든 능력치 +17";
-        data.itemNumber = 18;
+        data.itemNumber = 17;
         data.DmgIncrease = 0.17f;
         data.CriticalChance = 0.17f;
         data.CriDmgIncrease = 0.17f;
@@ -26,7 +26,7 @@ public class NightofCountingtheStars : itemStatus
         data.Speed = 0.17f;
         data.MaxHp = 17;
         data.JumpPower = 2.55f;
-        data.lifeStill = 0.017f;
+        data.lifeStill = 0.17f;
         data.GoldGet = 0.17f;
         data.EXPGet = 0.17f;
         data.DecreaseCool = 0.17f;

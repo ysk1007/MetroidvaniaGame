@@ -21,7 +21,7 @@ public class Arrow : MonoBehaviour
     private void Start()
     {
         player = Player.instance.GetComponent<Player>();
-        Invoke("DestroyArrow", 0.75f); // 일정 시간이 지난 후 화살을 제거하는 Invoke 함수를 호출
+        Invoke("DestroyArrow", player.ArrowDistance); // 일정 시간이 지난 후 화살을 제거하는 Invoke 함수를 호출
         pos = transform;
         Dmg = 5 + ((player.AtkPower + player.GridPower) * Dmg);
 

@@ -15,7 +15,7 @@ public class DivinePower : itemStatus
         data.color = Color.yellow;
         data.Rating = "신화";
         data.itemExplanation = "빛의 힘이여, 나를 이끌어라!";
-        data.itemStat = "대쉬 쿨타임이 감소합니다.\n대쉬 사용시 신성 화살을 발사합니다.";
+        data.itemStat = "대쉬 쿨타임 감소 50%\n대쉬 사용시 신성 화살을 발사합니다.";
         data.itemNumber = 22;
     }
 
@@ -25,12 +25,12 @@ public class DivinePower : itemStatus
         if (!data.SpecialPower)
         {
             p.DivinePower = false;
-            p.SlidingCool += 1.5f;
+            p.SlidingCool += 1f;
         }
         if (data.SpecialPower)
         {
             p.DivinePower = true;
-            p.SlidingCool -= 1.5f;
+            p.SlidingCool -= 1f;
         }
     }
 

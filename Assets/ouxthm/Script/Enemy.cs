@@ -156,7 +156,7 @@ public abstract class Enemy : MonoBehaviour
         Sensor();
         Swordlevel = player.proLevel;
         selectWeapon = player.proSelectWeapon;
-        bleedingDamage = Player.bleedDamage;
+        bleedingDamage = player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
         if (bleedingTime >= 0)
         {
@@ -193,7 +193,7 @@ public abstract class Enemy : MonoBehaviour
         weaponTag = Player.playerTag;
         Swordlevel = player.proLevel;
         selectWeapon = player.proSelectWeapon;
-        bleedingDamage = Player.bleedDamage;
+        bleedingDamage = player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
         playerLoc = target.position.x;
         bossLoc = this.gameObject.transform.position.x;
@@ -214,7 +214,7 @@ public abstract class Enemy : MonoBehaviour
         weaponTag = Player.playerTag;
         Swordlevel = player.proLevel;
         selectWeapon = player.proSelectWeapon;
-        bleedingDamage = Player.bleedDamage;
+        bleedingDamage = player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
         if (bleedingTime >= 0)
         {
@@ -253,7 +253,7 @@ public abstract class Enemy : MonoBehaviour
         boarLoc = this.gameObject.transform.position.x;
         Swordlevel = player.proLevel;
         selectWeapon = player.proSelectWeapon;
-        bleedingDamage = Player.bleedDamage;
+        bleedingDamage = player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
         StartCoroutine(boarMove());
     }
@@ -466,7 +466,7 @@ public abstract class Enemy : MonoBehaviour
         {
             if (selectWeapon == 0 && Swordlevel > 0 && Enemy_HP > 0)
             {
-                float damage = (bleedLevel * bleedingDamage);
+                float damage = (bleedLevel * player.bleedDamage);
                 this.GetComponentInChildren<EnemyUi>().ShowBleedText(damage); //윤성권 추가함 출혈딜
                 Enemy_HP -= damage; // 체력을  출혈스택 * 출혈 데미지로 감소
 
@@ -508,6 +508,11 @@ public abstract class Enemy : MonoBehaviour
         Ui_Controller ui = GameManager.Instance.GetComponent<Ui_Controller>(); //윤성권 추가함
         Proficiency_ui pro = GameManager.Instance.GetComponent<Proficiency_ui>(); // 숙련도 추가함
         damage = damage * player.DmgIncrease; //딜 증가 추가
+        if (player.UseRedCard)
+        {
+            float randNum = Random.Range(0.01f, 3.33f);
+            damage *= randNum;
+        }
         bool cc = false; // 추가
         if (player.CCGetRandomResult()) //치명타 계산 추가
         {
@@ -1140,6 +1145,12 @@ public abstract class Enemy : MonoBehaviour
         bloodEFF.dir = nextDirX;    // 몬스터의 방향값
         bloodEFF.scalX = scaleX;    // 몬스터의 scale.x 값(-가 되어있는 경우가 있음)
         float Damage = bloodBoomDmg * bleedLevel;
+        Damage = Damage * player.DmgIncrease; //딜 증가 추가
+        if (player.UseRedCard)
+        {
+            float randNum = Random.Range(0.01f, 3.33f);
+            Damage *= randNum;
+        }
         Enemy_HP -= Damage;
         this.GetComponentInChildren<EnemyUi>().ShowBleedText(Damage);
         bleedLevel = 0;
@@ -1455,7 +1466,7 @@ public abstract class Enemy : MonoBehaviour
         weaponTag = Player.playerTag;
         Swordlevel = player.proLevel;
         selectWeapon = player.proSelectWeapon;
-        bleedingDamage = Player.bleedDamage;
+        bleedingDamage = player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
 
         if (Enemy_HP < 600 && BossPage < 1)

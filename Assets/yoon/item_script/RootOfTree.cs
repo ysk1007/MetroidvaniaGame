@@ -19,7 +19,7 @@ public class RootOfTree : itemStatus
         data.itemNumber = 16;
         data.MaxHp = 111;
         data.Def = 33;
-        data.Speed = -5;
+        data.Speed = -1.2f;
     }
 
     public override void SpecialPower()

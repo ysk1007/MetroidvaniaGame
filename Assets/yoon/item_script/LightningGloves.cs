@@ -14,7 +14,7 @@ public class LightningGloves : itemStatus
         data.itemPrice = 900;
         data.color = Color.green;
         data.Rating = "고급";
-        data.itemStat = "공격속도 +75% \n피해량 증가 -15%";
+        data.itemStat = "공격속도 +75% \n데미지 -15%";
         data.itemNumber = 1;
         data.DmgIncrease = -0.15f;
         data.AtkSpeed = 0.75f;
