@@ -18,10 +18,7 @@ public class Fade_img : MonoBehaviour
     {
         img = img_obj.GetComponent<Image>(); //img 변수에 효과 적용할 오브젝트의 Image 컴포넌트 가져옴
         currentSceneName = SceneManager.GetActiveScene().name; //현재 씬 이름을 불러옴
-        if (currentSceneName == "Main_Scene")
-        {
             CallFadeOut();
-        }
     }
 
     // Update is called once per frame

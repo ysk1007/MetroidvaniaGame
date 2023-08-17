@@ -14,18 +14,18 @@ public class EndingCredit : MonoBehaviour
     public bool isSkip = false;   // ½ºÅµ
     public bool isShow = false;
     float time = 0f;
-    float F_time = 30f;
+    float F_time = 5f;
 
     void Update()
     {
         if (isEnding)
         {
-            FadeFlow();
+            StartCoroutine(FadeOut());
             credit.SetActive(true);
             StartCoroutine(GoTitleScene());
             if (!isShow)
             {
-                Invoke("ShowSkipButton", 10f);
+                Invoke("ShowSkipButton", 15f);
             }
             else if (isShow)
             {
@@ -34,13 +34,12 @@ public class EndingCredit : MonoBehaviour
 
             if (isSkip)
             {
-                credit.SetActive(false);
                 SkipTitleScene();
             }
 
         }
     }
-    void FadeFlow()
+    IEnumerator FadeOut()
     {
         Color alpha = Panel.color;
         while (alpha.a < 1f)
@@ -48,7 +47,9 @@ public class EndingCredit : MonoBehaviour
             time += Time.deltaTime / F_time;
             alpha.a = Mathf.Lerp(0, 1, time);
             Panel.color = alpha;
+            yield return null;
         }
+        yield return null;
     }
     IEnumerator GoTitleScene()
     {
@@ -57,6 +58,7 @@ public class EndingCredit : MonoBehaviour
     }
     public void SkipTitleScene()
     {
+        time = 0f;
         SceneManager.LoadScene("Title_Scene");
     }
 

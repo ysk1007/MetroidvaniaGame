@@ -25,6 +25,7 @@ public class OwnerTalk : MonoBehaviour
     public bool isDialogue; 
     public bool isShow;     // 오브젝트 켜는 변수
     private int count = 0;
+    public bool isStop = false; // 대화할 때 타임 스케일 0,1을 결정하는 변수
     
     public Dialogue[] dialogue;
 
@@ -34,11 +35,13 @@ public class OwnerTalk : MonoBehaviour
         allObject.SetActive(true);  // 모든 오브젝트 ON
         count = 0;
         NextDialogue();
+        isStop = true;
     }
 
     private void HideDialogue()
     {
         allObject.SetActive(false); // 모든 오브젝트 OFF
+        isStop = false;
     }
 
     private void NextDialogue() // 다음 대화 
@@ -73,6 +76,14 @@ public class OwnerTalk : MonoBehaviour
                     HideDialogue();
                 }
             }
+        }
+        if (isStop)
+        {
+            Time.timeScale = 0;
+        }
+        else if (!isStop)
+        {
+            Time.timeScale = 1;
         }
     }
 }
