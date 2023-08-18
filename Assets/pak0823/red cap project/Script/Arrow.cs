@@ -9,7 +9,8 @@ public class Arrow : MonoBehaviour
     public GameObject DmgEffect;    // 적이 화살을 맞았을 시 발생하는 피격 이펙트
     public LayerMask islayer; // 충돌 감지를 할 레이어
     public Transform pos; // 화살 위치 정보
-    public float Dmg = 3; //대미지 변수, 몬스터가 피격시 화살 데미지값을 받기 위해
+    public float Dmg; //대미지 변수, 몬스터가 피격시 화살 데미지값을 받기 위해
+    public float SkillDmg;
     public float speed = 20f; // 화살 이동 속도
     private bool isSkill = false; // 스킬 사용 여부
     private Vector3 moveDirection = Vector3.right; // 화살이 나가는 방향
@@ -78,12 +79,12 @@ public class Arrow : MonoBehaviour
         if (isSkill == true) // 스킬일 때
         {
 
-            Dmg = 10;
+            Dmg = (player.ATP + player.AtkPower + player.GridPower + 10);
             pos.position += moveDirection * speed * Time.deltaTime; // 화살 직진 이동
         }
         else
         {
-            Dmg = 3;
+            Dmg = (player.ATP + player.AtkPower + player.GridPower) / 2;
             if (closestCollider != null && closestCollider.tag != "Wall" && closestCollider.tag != "Pad" && closestCollider.tag != "Tilemap" && player.proSelectWeapon == 2) // 일정 거리 내에 적이 있으면 가장 가까운 적으로 이동
             {
                 if (hitColliders.Length > 0 && player.proLevel >= 1)

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Effect : MonoBehaviour
 {
     public float deleteTime = 1f;
-    public float Dmg = 10;
+    public float Dmg;
     public float speed = 15f;
     public int PlayerWeapon;
     public bool isMasterSkill = false;  //플레이어 마스터스킬 사용 유무 확인
@@ -65,13 +65,13 @@ public class Effect : MonoBehaviour
         if (deleteTime <= 0)
             Desrtory();
 
+        Dmg = player.ATP + player.AtkPower + player.GridPower + 10;
         pos.position += Direction * speed * Time.deltaTime; // 직진 이동
         TreeCnt = Random.Range(1, 5);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("gg");
         if (collision != null && collision.tag == "Enemy" || collision.tag == "Boss")
         {
             enemy = collision.GetComponent<Enemy>();
