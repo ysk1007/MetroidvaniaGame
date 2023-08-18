@@ -442,6 +442,25 @@ public class DataManager : MonoBehaviour
         items.Add(new DMUlcokItem("NightofCountingtheStars", false));
         items.Add(new DMUlcokItem("GlassSword", false));
         items.Add(new DMUlcokItem("GridsSword", false));
+        items.Add(new DMUlcokItem("PastThatWantToErase", false));
+        items.Add(new DMUlcokItem("ReproductionOfMassacre", false));
+        items.Add(new DMUlcokItem("DivinePower", false));
+        items.Add(new DMUlcokItem("BrokenWatch", false));
+        items.Add(new DMUlcokItem("EyeOfBeast", false));
+        items.Add(new DMUlcokItem("AttackClaw", false));
+        items.Add(new DMUlcokItem("BlackCard", false));
+        items.Add(new DMUlcokItem("RedCard", false));
+        items.Add(new DMUlcokItem("AssassinDagger", false));
+        items.Add(new DMUlcokItem("DoubleEdgedAxe", false));
+        items.Add(new DMUlcokItem("ElfBow", false));
+        items.Add(new DMUlcokItem("EscapeRope", false));
+        items.Add(new DMUlcokItem("BundleOfGifts", false));
+        items.Add(new DMUlcokItem("LoveLetter", false));
+        items.Add(new DMUlcokItem("MiniStar", false));
+        items.Add(new DMUlcokItem("HeroMask", false));
+        items.Add(new DMUlcokItem("RepressionShield", false));
+        items.Add(new DMUlcokItem("TransmitterHammer", false));
+        items.Add(new DMUlcokItem("SuspiciousMirror", false));
 
         // 데이터를 JSON 파일로 저장
         SaveToJson(items);
@@ -582,7 +601,7 @@ public class DataManager : MonoBehaviour
 
     public void DeleteJson()
     {
-        string filePath = Path.Combine(Application.dataPath + "/Resources", "");
+        string filePath = Path.Combine(Application.dataPath + "/Resources", "PlayerData.json");
 
         if (File.Exists(filePath))
         {

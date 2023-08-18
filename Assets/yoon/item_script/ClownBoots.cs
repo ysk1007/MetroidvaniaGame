@@ -14,10 +14,10 @@ public class ClownBoots : itemStatus
         data.itemPrice = 1700;
         data.color = Color.magenta;
         data.itemExplanation = "";
-        data.itemStat = "공격력 +3 \n치명타 확률 +25%";
+        data.itemStat = "공격력 +3 \n치명타 확률 +20%";
         data.itemNumber = 8;
         data.AtkPower = 3;
-        data.CriticalChance = 25f;
+        data.CriticalChance = 0.2f;
     }
 
     public override void SpecialPower()

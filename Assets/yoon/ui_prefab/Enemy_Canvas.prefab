@@ -595,7 +595,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &7166585528206624361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -636,8 +636,6 @@ MonoBehaviour:
   NormarColor: {r: 1, g: 1, b: 1, a: 1}
   BleedIcon: {fileID: 5344230674285173720}
   BleedStack: {fileID: 7852232757823947524}
-  bleed: 0
-  bleedstack: 0
 --- !u!1 &7166585528630806324
 GameObject:
   m_ObjectHideFlags: 0

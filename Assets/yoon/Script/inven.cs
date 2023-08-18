@@ -32,6 +32,7 @@ public class inven : MonoBehaviour
     void Start()
     {
         StartEquipSpecialpower();
+        updateUi();
     }
 
     // Update is called once per frame
@@ -131,8 +132,8 @@ public class inven : MonoBehaviour
 
     public void updateUi() // 전부 갱신
     {
-        updateInven();
         updateEquip();
+        updateInven();  
     }
 
     void updateInven() //인벤토리 갱신

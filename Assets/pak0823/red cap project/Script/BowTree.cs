@@ -6,7 +6,7 @@ using UnityEngine;
 public class BowTree : MonoBehaviour
 {
     public float deleteTime = 10f;
-    public float Dmg = 5;
+    public float Dmg = 10;
     public float speed = 1f;
     public int maxEnemies = 5;  // 최대 몬스터 수
     public float delay; // 공격 딜레이 시간
@@ -14,10 +14,17 @@ public class BowTree : MonoBehaviour
     private List<Enemy> enemiesInRange = new List<Enemy>(); // Enemy 타입 리스트로 변경
     new AudioSource audio;
     public AudioClip TreeSound;
+    public Player player;
 
     private void Awake()
     {
         audio = GetComponent<AudioSource>();
+    }
+
+    public void Start()
+    {
+        player = Player.instance;
+        Dmg = Dmg + (player.AtkPower + player.GridPower) * 0.5f;
     }
     void Update()
     {

@@ -15,10 +15,10 @@ public class ClownPants : itemStatus
         data.color = Color.magenta;
         data.Rating = "영웅";
         data.itemExplanation = "";
-        data.itemStat = "공격속도 +30% \n치명타 확률 +25%";
+        data.itemStat = "공격속도 +30% \n치명타 확률 +20%";
         data.itemNumber = 7;
         data.AtkSpeed = 0.3f;
-        data.CriticalChance = 25f;
+        data.CriticalChance = 0.2f;
     }
 
     public override void SpecialPower()

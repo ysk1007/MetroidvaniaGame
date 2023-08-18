@@ -9,6 +9,8 @@ public class Btn_Ctrol : MonoBehaviour
     public GameObject OptionPanel;
     public AudioClip clip;
     Scene_Move Scene_Move;
+    public Fade_img fade;
+    public Loading loading_ui;
 
     public int[] index = { };
     public int currentIndex;
@@ -79,13 +81,19 @@ public class Btn_Ctrol : MonoBehaviour
         switch(index)
         {
             case 0:
+                DataManager dm = DataManager.instance.GetComponent<DataManager>();
                 Debug.Log("새 이야기 시작");
-                DataManager.instance.GetComponent<DataManager>().JsonSave(default);
-                Scene_Move.SceneLoader("ingame_scene");
+                dm.DeleteJson();
+                dm.JsonLoad("Default");
+                fade.CallFadeIn();
+                loading_ui.DoLoading = true;
+                Invoke("GoInGame",4f);
                 break;
             case 1:
                 Debug.Log("이어서 시작");
-                Scene_Move.SceneLoader("ingame_scene");
+                fade.CallFadeIn();
+                loading_ui.DoLoading = true;
+                Invoke("GoInGame", 4f);
                 break;
             case 2:
                 OptionPanel.SetActive(true);
@@ -95,4 +103,10 @@ public class Btn_Ctrol : MonoBehaviour
                 break;
         }
     }
+
+    void GoInGame()
+    {
+        Scene_Move.SceneLoader("ingame_scene");
+    }
+
 }

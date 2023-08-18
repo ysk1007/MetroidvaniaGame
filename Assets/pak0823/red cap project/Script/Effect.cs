@@ -5,7 +5,7 @@ using UnityEngine;
 public class Effect : MonoBehaviour
 {
     public float deleteTime = 1f;
-    public float Dmg = 10;
+    public float Dmg = 2f;
     public float speed = 15f;
     public int PlayerWeapon;
     public bool isMasterSkill = false;  //플레이어 마스터스킬 사용 유무 확인
@@ -30,6 +30,7 @@ public class Effect : MonoBehaviour
     private void Start()
     {
         player = Player.instance.GetComponent<Player>();
+        Dmg = 10 + (player.AtkPower + player.GridPower) * Dmg;
         pos = transform;    //화살이 맞은 위치를 저장
         PlayerWeapon = player.WeaponChage;
         if (player != null)
@@ -71,7 +72,6 @@ public class Effect : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("gg");
         if (collision != null && collision.tag == "Enemy" || collision.tag == "Boss")
         {
             enemy = collision.GetComponent<Enemy>();

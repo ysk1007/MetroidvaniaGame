@@ -15,10 +15,10 @@ public class ClownGloves : itemStatus
         data.color = Color.magenta;
         data.Rating = "영웅";
         data.itemExplanation = "\"똑똑\"";
-        data.itemStat = "공격력 +3 \n치명타 확률 +25%";
+        data.itemStat = "공격력 +3 \n치명타 확률 +20%";
         data.itemNumber = 6;
         data.AtkPower = 3;
-        data.CriticalChance = 25f;
+        data.CriticalChance = 0.2f;
     }
 
     public override void SpecialPower()

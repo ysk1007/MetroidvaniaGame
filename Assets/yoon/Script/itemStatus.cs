@@ -30,6 +30,9 @@ public struct Data
     public float EXPGet;
     public float lifeStill;
     public float DecreaseCool;
+    public float ArrowDis;
+    public float BleedDmg;
+    public float ChargingTime;
     public bool SpecialPower;
 }
 
@@ -69,7 +72,6 @@ public abstract class itemStatus : MonoBehaviour
         player.delayTime = -0.4f * player.ATS + 1.4f;
         player.Def += data.Def;
         player.MaxHp += data.MaxHp;
-        player.Speed += data.Speed;
         player.jumpPower += data.JumpPower;
         player.SpeedChange += data.Speed;
         player.CriticalChance += data.CriticalChance;
@@ -80,6 +82,9 @@ public abstract class itemStatus : MonoBehaviour
         player.DmgIncrease += data.DmgIncrease;
         player.DecreaseCool += data.DecreaseCool;
         player.lifeStill += data.lifeStill;
+        player.ArrowDistance += data.ArrowDis;
+        player.bleedDamage += data.BleedDmg;
+        player.chargingTime -= data.ChargingTime;
     }
 
     public virtual void StatusReturn(Player player)
@@ -89,7 +94,6 @@ public abstract class itemStatus : MonoBehaviour
         player.delayTime = -0.4f * player.ATS + 1.4f;
         player.Def -= data.Def;
         player.MaxHp -= data.MaxHp;
-        player.Speed -= data.Speed;
         player.jumpPower -= data.JumpPower;
         player.SpeedChange -= data.Speed;
         player.CriticalChance -= data.CriticalChance;
@@ -100,5 +104,8 @@ public abstract class itemStatus : MonoBehaviour
         player.DmgIncrease -= data.DmgIncrease;
         player.DecreaseCool -= data.DecreaseCool;
         player.lifeStill -= data.lifeStill;
+        player.ArrowDistance -= data.ArrowDis;
+        player.bleedDamage -= data.BleedDmg;
+        player.chargingTime += data.ChargingTime;
     }
 }

@@ -98,7 +98,38 @@ public abstract class Enemy : MonoBehaviour
     public Transform Pos;
     public Arrow arrow;
     public Effect slash;
-    
+
+    public int BossPage;
+    public List<int> GolemPattern = new List<int>{ 1, 2, 3, 4, 5, 6 };
+    public List<int> Pattern = new List<int>(6);
+    public int LastPattern = 1;
+    public Transform[] TeleportPos;
+    public Transform[] ThornPos;
+    public Transform[] LaserPos;
+    public GameObject CircleMissilePB;
+    public GameObject MissilePB;
+    public GameObject ThornPB;
+    public GameObject LaserPB;
+    public GameObject MagicArrowPB;
+    public GameObject PunchEfc;
+    public Animator TeleportEfc;
+    float[] angles0 = { -135f, -112.5f, -90f, -67.5f, -45f };
+    float[] angles1 = { -123.75f, -101.25f, -78.75f, -56.25f };
+    float[] CircleAngles = { 0f, 15f, 30f, 45f, 60f, 75f, 90f, 105f, 120f, 135f, 150f, 165f, 180f, 195f, 210f, 225f, 240f, 255f, 270f, 285f, 300f, 315f, 330f, 345f };
+    float[] MagicArrowAngles = { 0f, 30f, 60f, 90f, 120f, 150f, 180f, 210f, 240f, 270f, 300f, 330f};
+    public int MissileCount;
+    public int CircleMissileCount = 0;
+    public int ThornCount = 0;
+    public bool CircleMissileShoot;
+    public int PunchCount = 1;
+    public int MagicArrowCount = 0;
+    public Animator PunchCharge;
+    public Animator Thunder;
+    public RuntimeAnimatorController[] PageAnimators;
+    public SpriteRenderer[] WaringArea;
+    public float TargetFind; //좌우 구별
+    public GameObject BossCenter;
+
     public abstract void InitSetting(); // 적의 기본 정보를 설정하는 함수(추상)
 
     public void Start()
@@ -117,7 +148,7 @@ public abstract class Enemy : MonoBehaviour
         Sensor();
         Swordlevel = player.proLevel;
         selectWeapon = player.proSelectWeapon;
-        bleedingDamage = Player.bleedDamage;
+        bleedingDamage = player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
         if (bleedingTime >= 0)
         {
@@ -154,7 +185,7 @@ public abstract class Enemy : MonoBehaviour
         weaponTag = Player.playerTag;
         Swordlevel = player.proLevel;
         selectWeapon = player.proSelectWeapon;
-        bleedingDamage = Player.bleedDamage;
+        bleedingDamage = player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
         playerLoc = target.position.x;
         bossLoc = this.gameObject.transform.position.x;
@@ -175,7 +206,7 @@ public abstract class Enemy : MonoBehaviour
         weaponTag = Player.playerTag;
         Swordlevel = player.proLevel;
         selectWeapon = player.proSelectWeapon;
-        bleedingDamage = Player.bleedDamage;
+        bleedingDamage = player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
         if (bleedingTime >= 0)
         {
@@ -214,7 +245,7 @@ public abstract class Enemy : MonoBehaviour
         boarLoc = this.gameObject.transform.position.x;
         Swordlevel = player.proLevel;
         selectWeapon = player.proSelectWeapon;
-        bleedingDamage = Player.bleedDamage;
+        bleedingDamage = player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
         StartCoroutine(boarMove());
     }
@@ -428,7 +459,7 @@ public abstract class Enemy : MonoBehaviour
         {
             if (selectWeapon == 0 && Swordlevel > 0 && Enemy_HP > 0)
             {
-                float damage = (bleedLevel * bleedingDamage);
+                float damage = (bleedLevel * player.bleedDamage);
                 this.GetComponentInChildren<EnemyUi>().ShowBleedText(damage); //윤성권 추가함 출혈딜
                 Enemy_HP -= damage; // 체력을  출혈스택 * 출혈 데미지로 감소
 
@@ -470,6 +501,11 @@ public abstract class Enemy : MonoBehaviour
         Ui_Controller ui = GameManager.Instance.GetComponent<Ui_Controller>(); //윤성권 추가함
         Proficiency_ui pro = GameManager.Instance.GetComponent<Proficiency_ui>(); // 숙련도 추가함
         damage = damage * player.DmgIncrease; //딜 증가 추가
+        if (player.UseRedCard)
+        {
+            float randNum = Random.Range(0.01f, 3.33f);
+            damage *= randNum;
+        }
         bool cc = false; // 추가
         if (player.CCGetRandomResult()) //치명타 계산 추가
         {
@@ -1102,6 +1138,12 @@ public abstract class Enemy : MonoBehaviour
         bloodEFF.dir = nextDirX;    // 몬스터의 방향값
         bloodEFF.scalX = scaleX;    // 몬스터의 scale.x 값(-가 되어있는 경우가 있음)
         float Damage = bloodBoomDmg * bleedLevel;
+        Damage = Damage * player.DmgIncrease; //딜 증가 추가
+        if (player.UseRedCard)
+        {
+            float randNum = Random.Range(0.01f, 3.33f);
+            Damage *= randNum;
+        }
         Enemy_HP -= Damage;
         this.GetComponentInChildren<EnemyUi>().ShowBleedText(Damage);
         bleedLevel = 0;
@@ -1411,4 +1453,424 @@ public abstract class Enemy : MonoBehaviour
         Hit_Set = false;
     }
 
+
+    public virtual void GolemBoss(Transform target)
+    {
+        weaponTag = Player.playerTag;
+        Swordlevel = player.proLevel;
+        selectWeapon = player.proSelectWeapon;
+        bleedingDamage = player.bleedDamage;
+        bloodBoomDmg = Player.bloodBoomDmg;
+
+        if (Enemy_HP < 600 && BossPage < 1)
+        {
+            BossPage++;
+            bossBox.enabled = false;
+            CancelInvoke();
+            WaringArea[0].enabled = false;
+            Thunder.SetTrigger("Thunder");
+            animator.SetTrigger("ChangePage2");
+            Invoke("ChangePage", 4f);
+            bossMoving = true;
+        }
+
+        if (Enemy_HP < 300 && BossPage < 2)
+        {
+            BossPage++;
+            bossBox.enabled = false;
+            CancelInvoke();
+            WaringArea[0].enabled = false;
+            Thunder.SetTrigger("Thunder");
+            animator.SetTrigger("ChangePage3");
+            Invoke("ChangePage", 6f);
+            bossMoving = true;
+        }
+
+        if (bossMoving)
+        {
+            // 목표 방향 계산
+            Vector3 targetDirection = (TeleportPos[0].position - transform.position).normalized;
+            rigid.velocity = targetDirection * 7.5f;
+
+            // 오브젝트 A가 목표 위치에 도달한 경우
+            if (Vector3.Distance(transform.position, TeleportPos[0].position) < 0.1f)
+            {
+                rigid.velocity = Vector3.zero;
+                bossMoving = false;
+            }
+        }
+
+        if (bleedingTime >= 0)
+        {
+            bleedingTime -= Time.deltaTime;
+        }
+
+        if (this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
+        {
+            if (animator.GetBool("Idle") == true)
+            {
+                Enemy_Speed = 0f;
+            }
+            if (animator.GetBool("Idle") == false)
+            {
+                Enemy_Speed = 1f;
+            }
+            GolemMove();
+            GolemAttack();
+        }
+        else if (this.gameObject.layer == LayerMask.NameToLayer("Dieenemy"))
+        {
+            animator.SetBool("Idle", true);
+            Enemy_Speed = 0f;
+        }
+        GolemDie();
+    }
+
+    public virtual void GolemBossOneTime()
+    {
+        Pos = GetComponent<Transform>();
+        BossSpriteBox = this.gameObject.GetComponent<BoxCollider2D>();
+        bossBox = this.GetComponent<BoxCollider2D>();
+        animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
+        rigid = this.gameObject.GetComponent<Rigidbody2D>();
+        hit_bloodTrans = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
+        Enemy_HPten = Enemy_HP * 0.1f;
+        bleedingTime = 0f;
+        Invoke("GolemRandomAtk", 2f);
+        bleeding();
+    }
+
+    void GolemRandomAtk()
+    {
+        int randNum;
+        if (BossPage < 1)
+        {
+            Pattern = new List<int> { 1, 2, 3};
+        }
+        else if (BossPage == 1)
+        {
+            Pattern = new List<int> { 1, 2, 3, 4};
+        }
+        else if (BossPage > 1)
+        {
+            Pattern = new List<int> { 1, 2, 3, 4, 5 ,6};
+        }
+        Pattern.RemoveAt(LastPattern - 1);
+        randNum = Random.Range(4, 5);
+        atkPattern = Pattern[Random.Range(0, Pattern.Count)];     // 패턴 번호를 1 ~ 6(Max-1)까지 랜덤으로 뽑음.
+        if (this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
+        {
+            Invoke("GolemRandomAtk", randNum);
+        }
+    }
+
+    void GolemMove()  // Orc 보스의 오른쪽으로 움직이는 함수
+    {
+        
+    }
+    void GolemDie()   // Orc 보스의 죽는 애니메이션
+    {
+        if (Dying)
+        {
+            bossBox.enabled = false;
+        }
+    }
+
+    void GolemAttack()    // 보스 공격 패턴
+    {
+        switch (atkPattern)
+        {
+            case 1:
+                ScaleFlip();
+                float range = 11;
+                if (TargetFind > 0) //왼쪽으로 감
+                {
+                    range *= -1;
+                }
+                else if (TargetFind < 0) //오른쪽으로 감
+                {
+                    range *= 1;
+                }
+                Vector3 vc = new Vector3(player.transform.position.x + range, player.transform.position.y + 1);
+                this.transform.position = vc;
+                animator.SetTrigger("Punch");
+                WaringArea[0].enabled = true;
+                TeleportEfc.SetTrigger("Teleport");
+                PunchCharge.SetTrigger("Charging");
+                Invoke("Punch", 1f);
+                atkPattern = 0;
+                LastPattern = 1;
+                break;
+            case 2:
+                ScaleFlip();
+                TeleportEfc.SetTrigger("Teleport");
+                this.transform.position = TeleportPos[1].position;
+                animator.SetTrigger("Attacking");
+                Invoke("WingAttack", 0.6f);
+                atkPattern = 0;
+                LastPattern = 2;
+                break;
+            case 3:
+                Invoke("CircleMissile", 1f);
+                atkPattern = 0;
+                LastPattern = 3;
+                break;
+            case 4:
+                Invoke("ThornAttack", 0f);
+                atkPattern = 0;
+                LastPattern = 4;
+                break;
+            case 5:
+                WaringArea[1].enabled = true;
+                WaringArea[2].enabled = true;
+                this.transform.position = TeleportPos[0].position;
+                TeleportEfc.SetTrigger("Teleport");
+                animator.SetTrigger("Laser");
+                Invoke("LaserAttack", 0f);
+                atkPattern = 0;
+                LastPattern = 5;
+                break;
+            case 6:
+                Invoke("MagicArrowAttack", 0f);
+                atkPattern = 0;
+                LastPattern = 6;
+                break;
+            default:
+                return;
+        }
+    }
+
+    void ScaleFlip()
+    {
+        TargetFind = this.transform.position.x - player.transform.position.x;
+        if (TargetFind > 0) //왼쪽으로 감
+        {
+            Vector3 newLocalScale = new Vector3(1, 1, 1);
+            this.transform.localScale = newLocalScale;
+        }
+        else if (TargetFind < 0) //오른쪽으로 감
+        {
+            Vector3 newLocalScale = new Vector3(-1, 1, 1);
+            this.transform.localScale = newLocalScale;
+        }
+    }
+
+    void Punch()
+    {
+        Attacking = false;  // 공격중 끄기
+        float time = 0f;
+        WaringArea[0].enabled = false;
+        for (int i = 0; i < 5; i++)
+        {
+            Invoke("ChargingPunch", time);
+            time += 0.2f;
+        }
+        PunchCount = 1;
+    }
+
+    void WingAttack()
+    {
+        Attacking = false;  // 공격중 끄기
+        float time = 0f;
+        for (int i = 0; i < 5; i++)
+        {
+            Invoke("MissileCreate", time);
+            time += 0.4f;
+        }
+        MissileCount = 0;
+    }
+
+    void MissileCreate()
+    {
+        float[] angles;
+        if (MissileCount % 2 == 0)
+        {
+            angles = angles0;
+        }
+        else
+        {
+            angles = angles1;
+        }
+
+        for (int i = 0; i < angles.Length; i++)
+        {
+            float angle = angles[i];
+            Quaternion rotation = Quaternion.Euler(0f, 0f, angle);
+
+            GameObject missile = Instantiate(MissilePB, transform.position, rotation);
+        }
+        MissileCount++;
+    }
+
+    void ChargingPunch()
+    {
+        int px;
+        int py;
+        px = PunchCount * 6;
+        if (PunchCount % 2 == 0)
+        {
+            py = 1;
+        }
+        else
+        {
+            py = -1;
+        }
+        if (TargetFind > 0)
+        {
+            px *= 1;
+        }
+        if (TargetFind < 0)
+        {
+            px *= -1;
+        }
+        Vector3 Pc = new Vector3(this.transform.position.x + px, this.transform.position.y + py);
+        GameObject punch = Instantiate(PunchEfc, transform);
+        punch.transform.position = Pc;
+        PunchCount++;
+    }
+
+    void CircleMissile()
+    {
+        animator.SetTrigger("Circle");
+        CircleMissileShoot = false;
+        Attacking = false;  // 공격중 끄기
+        float time = 0f;
+        for (int i = 0; i < CircleAngles.Length; i++)
+        {
+            if (BossPage >= 1)
+            {
+                Invoke("CircleMissileCreatePage2", time);
+            }
+            Invoke("CircleMissileCreate", time);
+            time += 0.025f;
+        }
+        Invoke("Shoot", 1f);
+        CircleMissileCount = 0;
+    }
+
+    void CircleMissileCreate()
+    {
+        float circleRadius = 2f;
+        
+        float angle = CircleMissileCount * (360f / CircleAngles.Length); // 각도 계산
+        Vector3 spawnPosition = BossCenter.transform.position + Quaternion.Euler(0f, 0f, angle) * Vector3.right * circleRadius; // 원의 둘레 위의 위치 계산
+
+        Quaternion rotation = Quaternion.Euler(0f, 0f, CircleAngles[CircleMissileCount]);
+
+        GameObject missile = Instantiate(CircleMissilePB, spawnPosition, rotation);
+        missile.GetComponent<CircleMissile>().boss = this;
+        CircleMissileCount++;
+    }
+
+    void CircleMissileCreatePage2()
+    {
+        float circleRadius = 3f;
+
+        float angle = CircleMissileCount * (360f / CircleAngles.Length); // 각도 계산
+        Vector3 spawnPosition = BossCenter.transform.position + Quaternion.Euler(0f, 0f, angle) * Vector3.right * circleRadius; // 원의 둘레 위의 위치 계산
+
+        Quaternion rotation = Quaternion.Euler(0f, 0f, CircleAngles[CircleMissileCount] + 15f);
+
+        GameObject missile = Instantiate(CircleMissilePB, spawnPosition, rotation);
+        missile.GetComponent<CircleMissile>().boss = this;
+        missile.GetComponent<CircleMissile>().moveSpeed = 5f;
+    }
+
+    void Shoot()
+    {
+        CircleMissileShoot = true;
+    }
+
+    void ThornAttack()
+    {
+        if (BossPage < 1)
+        {
+            return;
+        }
+        animator.SetTrigger("Thorn");
+        Attacking = false;  // 공격중 끄기
+        float time = 0f;
+        for (int i = 0; i < 2; i++)
+        {
+            Invoke("ThornCreate", time);
+            time += 0.7f;
+        }
+        ThornCount = 0;
+    }
+
+    void ThornCreate()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            GameObject Thorn = Instantiate(ThornPB, ThornPos[ThornCount + (i * 2)].position, Quaternion.identity);
+        }
+        ThornCount++;
+    }
+
+    void LaserAttack()
+    {
+        Attacking = false;  // 공격중 끄기
+        Invoke("LaserCreate", 2f);
+    }
+
+    void LaserCreate()
+    {
+        Transform CreatePos;
+        Vector3 NewPos;
+        GameObject newLaser;
+        for (int i = 0; i < 2; i++)
+        {
+            WaringArea[1+i].enabled = false;
+            CreatePos = LaserPos[i];
+            NewPos = new Vector3(CreatePos.transform.position.x, CreatePos.transform.position.y, CreatePos.transform.position.z);
+            newLaser = Instantiate(LaserPB, NewPos, Quaternion.Euler(0f, 0f, 0f));
+            if (i>0)
+            {
+                newLaser.GetComponent<Laser>().Dir = -1;
+            }
+        }
+    }
+
+    void MagicArrowAttack()
+    {
+        animator.SetTrigger("MagicArrow");
+        Attacking = false;  // 공격중 끄기
+        float time = 0f;
+        for (int i = 0; i < MagicArrowAngles.Length; i++)
+        {
+            Invoke("MagicArrowCreate", time);
+            time += 0.05f;
+        }
+        MagicArrowCount = 0;
+    }
+
+    void MagicArrowCreate()
+    {
+        float circleRadius = 4f;
+
+        float angle = MagicArrowCount * (360f / MagicArrowAngles.Length); // 각도 계산
+        Vector3 spawnPosition = BossCenter.transform.position + Quaternion.Euler(0f, 0f, angle) * Vector3.right * circleRadius; // 원의 둘레 위의 위치 계산
+
+        Quaternion rotation = Quaternion.Euler(0f, 0f, MagicArrowAngles[MagicArrowCount]);
+
+        GameObject Arrow = Instantiate(MagicArrowPB, spawnPosition, rotation);
+        MagicArrowCount++;
+    }
+
+    void ChangePage()
+    {
+        if (BossPage == 1)
+        {
+            animator.runtimeAnimatorController = PageAnimators[BossPage - 1];
+            Invoke("GolemRandomAtk", 1f);
+            bossBox.enabled = true;
+        }
+        else if (BossPage == 2)
+        {
+            animator.runtimeAnimatorController = PageAnimators[BossPage - 1];
+            Invoke("GolemRandomAtk", 1f);
+            bossBox.enabled = true;
+        }
+
+    }
 }

@@ -1,4 +1,6 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -13,7 +15,7 @@ public class Player : MonoBehaviour
         1350f, 1400f};   // 레벨업 하는데 필요한 경험치 추가함
     public float jumpPower; //Jump 높이 저장 변수
     public float Speed; //Move 속도 저장 변수
-    public float SpeedChange; // Move 속도변경 저장 변수
+    public float SpeedChange; // Move 속도변경 저장 변수 
     public float curTime, coolTime = 2;  // 연속공격이 가능한 시간
     public float[] MasterSkillTime = { 10, 10, 10 };   //무기별 숙련도 스킬 쿨타임
     public float Sword_MsTime, Axe_MsTime, Bow_MsTime;  // 무기별 숙련도 스킬 쿨타임 적용
@@ -46,6 +48,7 @@ public class Player : MonoBehaviour
     public float chargingTime = 2f; // 차징 시간
     public bool isCharging = false; // 차징 상태 여부
     public float chargeTimer = 0f; // 차징 시간을 측정하는 타이머
+    public float ArrowDistance = 0.75f;
     public PlayerCanvas playerCanvas; //추가함
 
     public static Player instance; //추가함
@@ -58,16 +61,18 @@ public class Player : MonoBehaviour
     public float ATS = 1; //추가함
     public float GoldGet = 1f; //추가함
     public float EXPGet = 1f; //추가함
-    public bool CanlifeStill = false; //추가함
+    public bool CanlifeStill = true; //추가함
     public float lifeStill; //추가함
     public float DecreaseCool = 0f; //추가함
+    public float LifeRegen = 0f; //추가함
+    public float SlidingCool = 2f;
     public int proSelectWeapon = 4; //4는 숙련도를 고르지 않은 상태 0,1,2 => 칼,도끼,활
     public int proLevel = 0;
     public float enemyPower;
     public int stackbleed;  // 몬스터에 쌓인 출혈 스택
     public static float BleedingTime = 8f;  // 2023-07-31 추가(출혈 지속 시간)
-    public static float bleedDamage = 0.5f; // 2023-08-01 출혈 데미지
-    public static float bloodBoomDmg = 7f;  // 출혈스택 터뜨리는 데미지
+    public float bleedDamage = 3f; // 2023-08-01 출혈 데미지
+    public static float bloodBoomDmg = 25f;  // 출혈스택 터뜨리는 데미지
     public static string playerTag;    // 2023-08-11 추가 (플레이어 무기 태그)
     //선택능력치 밸류
     public float[] selectAtkValue = { 0.1f, 0.2f, 0.3f };
@@ -92,6 +97,7 @@ public class Player : MonoBehaviour
     public int selectCoolTimeLevel = 0;
 
     public GameObject GameManager;  //게임 매니저
+    public Ui_Controller Ui;  //ui 컨트롤러
     public GameObject attackRange;  //근접공격 위치
     public GameObject Arrow; //화살 오브젝트
     public GameObject Arrow2; //화살 증가 오브젝트
@@ -99,6 +105,7 @@ public class Player : MonoBehaviour
     public GameObject AxeSkill;  //도끼 마스터스킬 오브젝트
     public GameObject BowSkill;  // 활 기본스킬 오브젝트
     public GameObject BowMaster; // 활 숙련도 화살 오브젝트
+    public GameObject HolyArrow; // 활 숙련도 화살 오브젝트
 
     public Transform Arrowpos; //화살 생성 오브젝트
     public Transform Arrowpos2; //증가된 화살  오브젝트
@@ -131,8 +138,21 @@ public class Player : MonoBehaviour
     public Animator anim;
     new AudioSource audio;
 
+    //특수 아이템 변수
     public bool UseGridSword = false;
+    public bool DivinePower = false;
+    public bool UsePastErase = false;
+    public bool UseRedCard = false;
+    public bool NoNockback = false;
+    public bool UseMirror = false;
+    public Camera cam;
+    public Animator TimeLoopAnim;
+    public AudioSource TimeLoopSound;
+    public GameObject PastErase;
     public float GridPower = 0f;
+
+    public GameObject AxeMasterEfc;
+    public int SkillCount = 1;
     void Awake()
     {
         instance = this; //추가함
@@ -150,6 +170,7 @@ public class Player : MonoBehaviour
         Arrowpos2 = transform.GetChild(2).GetComponentInChildren<Transform>(); //Arrowpos2의 위치값을 pos에 저장
         Skillpos = transform.GetChild(3).GetComponentInChildren<Transform>(); //Skillpos의 위치값을 pos에 저장
         Axepos = transform.GetChild(7).GetComponentInChildren<Transform>(); //Axepos의 위치값을 pos에 저장
+        Ui = GameManager.GetComponent<Ui_Controller>();
     }
 
     void Start() //추가함
@@ -157,6 +178,7 @@ public class Player : MonoBehaviour
         DataManager.instance.JsonLoad("PlayerData");
         anim.SetFloat("AttackSpeed", ATS);
         OptionManager.instance.Playing = true;
+        Invoke("HpRegen", 1f);
     }
 
     void Update()
@@ -208,6 +230,10 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isSlide && !isjump && !isdelay && !isSkill)
         {
             StartCoroutine(Sliding());
+            if (DivinePower)
+            {
+                Instantiate(HolyArrow, Arrowpos.position, transform.rotation);  //신성화살 발사
+            }
         }
 
         //Jump
@@ -466,7 +492,8 @@ public class Player : MonoBehaviour
             anim.SetTrigger("axe_atk");
             yield return new WaitForSeconds(1.5f);
             //PlaySound("AxeMasterSkill"); // 애니메이션에 실행 있음
-            Instantiate(AxeSkill, Axepos.position, transform.rotation);
+            //Instantiate(AxeSkill, Axepos.position, transform.rotation);
+            AxeMasterSkill();
             Axe_MsTime = MasterSkillTime[1];
             yield return new WaitForSeconds(1f);
             isMasterSkill = false;
@@ -559,7 +586,7 @@ public class Player : MonoBehaviour
         this.transform.GetChild(4).gameObject.SetActive(false);
         gameObject.layer = LayerMask.NameToLayer("Player");
         Speed = SpeedChange;
-        yield return new WaitForSeconds(2f); //슬라이딩 쿨타임
+        yield return new WaitForSeconds(SlidingCool); //슬라이딩 쿨타임
         isSlide = false;
 
     }
@@ -577,7 +604,14 @@ public class Player : MonoBehaviour
 
                 if (CurrentHp <= 0)
                 {
-                    StartCoroutine(Die(pos));
+                    if (!UsePastErase)
+                    {
+                        StartCoroutine(Die(pos));
+                    }
+                    else
+                    {
+                        PastEraseFunction();
+                    }
                 }
                 else
                 {
@@ -740,6 +774,10 @@ public class Player : MonoBehaviour
 
     IEnumerator Knockback(float dir) //피해입을시 넉백
     {
+        if (NoNockback)
+        {
+            yield break;
+        }
         isknockback = true;
         float ctime = 0;
 
@@ -1080,5 +1118,78 @@ public class Player : MonoBehaviour
             GameManager.GetComponent<Ui_Controller>().UiUpdate();
             UseGridSword = true;
         }
+    }
+
+    public void HpRegen()
+    {
+        Ui.Heal(LifeRegen);
+        Invoke("HpRegen", 1.5f);
+    }
+
+    public void PastEraseFunction()
+    {
+        GameObject prefab = Resources.Load<GameObject>("item/BrokenWatch");
+        Instantiate(prefab, PastErase.transform.parent);
+        itemStatus item = prefab.GetComponent<itemStatus>();
+        item.InitSetting();
+        item.StatusGet(this);
+        item.data.SpecialPower = false;
+        item.SpecialPower();
+        UsePastErase = false;
+        Destroy(PastErase);
+        TimeLoopAnim.SetTrigger("TimeLooping");
+        Time.timeScale = 0.3f;
+        TimeLoopSound.Play();
+        Ui.Heal(MaxHp);
+        Invoke("RealTime", 1.25f);
+    }
+
+    public void Mirror()
+    {
+        if (UseMirror)
+        {
+            cam.orthographicSize = 7f;
+        }
+        else
+        {
+            cam.orthographicSize = 9f;
+        }
+    }
+
+    public void RealTime()
+    {
+        TimeLoopSound.Pause();
+        Time.timeScale = 1f;
+        ishurt = false;
+        gameObject.layer = LayerMask.NameToLayer("Player");
+    }
+
+    void AxeMasterSkill()
+    {
+        float time = 0f;
+        for (int i = 0; i < 5; i++)
+        {
+            Invoke("SkillCreate", time);
+            time += 0.2f;
+        }
+        SkillCount = 1;
+    }
+
+    void SkillCreate()
+    {
+        int px;
+        px = SkillCount * 6;
+        if (slideDir > 0)
+        {
+            px *= 1;
+        }
+        if (slideDir < 0)
+        {
+            px *= -1;
+        }
+        Vector3 Pc = new Vector3(this.transform.position.x + px, this.transform.position.y + 7.7f);
+        GameObject punch = Instantiate(AxeMasterEfc, transform.parent);
+        punch.transform.position = Pc;
+        SkillCount++;
     }
 }
