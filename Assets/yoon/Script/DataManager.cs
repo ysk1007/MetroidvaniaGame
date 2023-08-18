@@ -12,7 +12,7 @@ public class SaveData
     public float PlayerGold = 0f;
     public float PlayerExp = 0f;
     public float PlayerCurrentHp = 100f;
-    public Vector3 PlayerPos = new Vector3(-29.83f, -7.46f, 0);
+    public Vector3 PlayerPos = new Vector3(0f, 0f, 0f);
 
     // 숙련도 데이터
     public int proWeaponSellect = 0; //숙련도를 선택한 무기
@@ -360,7 +360,7 @@ public class DataManager : MonoBehaviour
         saveData.PlayerGold = 0;
         saveData.PlayerExp = 0.0f;
         saveData.PlayerCurrentHp = 100.0f;
-        saveData.PlayerPos = new Vector3(-29.83f, -7.55f, 0.0f);
+        saveData.PlayerPos = new Vector3(0f, 0f, 0f);
         saveData.PlayTime = 0f;
         //Debug.Log("디버그 : 플레이어 데이터 생성 완료");
         //Debug.Log("디버그 : 사운드 데이터 생성 중");

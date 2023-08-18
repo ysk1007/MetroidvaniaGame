@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 using UnityEngine.UIElements;
 
 public class AxeLightning : MonoBehaviour

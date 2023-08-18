@@ -1,4 +1,3 @@
-using Microsoft.Unity.VisualStudio.Editor;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -180,7 +179,9 @@ public class Player : MonoBehaviour
 
     void Start() //Ãß°¡ÇÔ
     {
-        DataManager.instance.JsonLoad("PlayerData");
+        DataManager dm = DataManager.instance;
+        dm.JsonLoad("PlayerData");
+        dm.JsonLoad("ItemData");
         anim.SetFloat("AttackSpeed", ATS);
         OptionManager.instance.Playing = true;
         Invoke("HpRegen", 1f);

@@ -8,7 +8,7 @@ public class LogoScene : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("SceneMove", 8f);
+        Invoke("SceneMove", 13f);
     }
 
     void SceneMove()
