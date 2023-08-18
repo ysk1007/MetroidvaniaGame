@@ -15,11 +15,7 @@ public class AxeSkill : MonoBehaviour
 
     private void Start()
     {
-        GameObject playerObj = GameObject.FindWithTag("Player");
-        if (playerObj != null)
-        {
-            player = playerObj.GetComponent<Player>();
-        }
+        player = Player.instance.GetComponent<Player>();
         if (player != null)
         {
             if (player.GetComponent<SpriteRenderer>().flipX)
@@ -59,7 +55,7 @@ public class AxeSkill : MonoBehaviour
             enemy = collision.GetComponent<Enemy>();
             if (enemy != null)
             {
-                Dmg = 50;
+                Dmg = (enemy.Enemy_HP) / 3;
                 StartCoroutine(Delay());
                 StartCoroutine(enemy.Hit(Dmg));
             }

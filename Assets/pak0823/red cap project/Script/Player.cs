@@ -2,10 +2,11 @@ using Microsoft.Unity.VisualStudio.Editor;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Linq;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
-    public int level;   // 플레이어 레벨
     public float[] ExpBarValue = {
         100f, 150f, 200f, 250f, 300f,
         350f, 400f, 450f, 500f, 550f,
@@ -13,9 +14,9 @@ public class Player : MonoBehaviour
         850f, 900f, 950f, 1000f, 1050f,
         1100f, 1150f, 1200f, 1250f, 1300f,
         1350f, 1400f};   // 레벨업 하는데 필요한 경험치 추가함
-    public float jumpPower; //Jump 높이 저장 변수
     public float Speed; //Move 속도 저장 변수
-    public float SpeedChange; // Move 속도변경 저장 변수 
+    public float jumpPower; //Jump 높이 저장 변수
+    public float SpeedChange; // Move 속도변경 저장 변수
     public float curTime, coolTime = 2;  // 연속공격이 가능한 시간
     public float[] MasterSkillTime = { 10, 10, 10 };   //무기별 숙련도 스킬 쿨타임
     public float Sword_MsTime, Axe_MsTime, Bow_MsTime;  // 무기별 숙련도 스킬 쿨타임 적용
@@ -42,16 +43,17 @@ public class Player : MonoBehaviour
     public float CurrentHp;    //플레이어 현재 HP
     public bool ishurt = false; //피격 확인
     public bool isknockback = false;    //넉백 확인
-    public float Dmg;  // 대미지 적용 변수
-    public float DmgChange; // 대미지 변경 저장 변수
+    public float Dmg;  // 최종 대미지 변수
     public float ShieldTime; // 도끼 스킬 방어막 지속시간
-    public float chargingTime = 2f; // 차징 시간
+    public float chargingTime = 5f; // 차징 시간
     public bool isCharging = false; // 차징 상태 여부
     public float chargeTimer = 0f; // 차징 시간을 측정하는 타이머
     public float ArrowDistance = 0.75f;
     public PlayerCanvas playerCanvas; //추가함
 
     public static Player instance; //추가함
+    public float ATP; // 플레이어 대미지
+    public int level;   // 플레이어 레벨
     public float gold;  //추가함
     public float AtkPower; //추가함
     public float Def = 5; //추가함
@@ -74,6 +76,9 @@ public class Player : MonoBehaviour
     public float bleedDamage = 3f; // 2023-08-01 출혈 데미지
     public static float bloodBoomDmg = 25f;  // 출혈스택 터뜨리는 데미지
     public static string playerTag;    // 2023-08-11 추가 (플레이어 무기 태그)
+    private List<Collider2D> enemyColliders = new List<Collider2D>();   //공격 몬스터 체크
+    private List<Enemy> enemyCheck = new List<Enemy>(); // Enemy 타입 리스트로 변경
+
     //선택능력치 밸류
     public float[] selectAtkValue = { 0.1f, 0.2f, 0.3f };
     public float[] selectATSValue = { 0.15f, 0.3f, 0.4f };
@@ -115,7 +120,7 @@ public class Player : MonoBehaviour
 
     public AudioClip SwordAtkSound;
     public AudioClip SwordSkillSound;
-    //public AudioClip SwordMasterSound;
+    public AudioClip SwordMasterSound;
     public AudioClip AxeAtk1Sound;
     public AudioClip AxeAtk2Sound;
     public AudioClip AxeSkillSound;
@@ -163,7 +168,7 @@ public class Player : MonoBehaviour
         JumpCnt = JumpCount;    //시작시 점프 가능 횟수 적용
         SpeedChange = 4;  //시작시 기본 이동속도
         jumpPower = 15; //기본 점프높이
-        DmgChange = 7; // 기본 공격 대미지
+        ATP = 7; // 기본 공격 대미지
         audio = GetComponent<AudioSource>();
         Attackpos = transform.GetChild(0).GetComponentInChildren<Transform>(); //attackRange의 위치값을 pos에 저장
         Arrowpos = transform.GetChild(1).GetComponentInChildren<Transform>(); //Arrowpos의 위치값을 pos에 저장
@@ -175,7 +180,7 @@ public class Player : MonoBehaviour
 
     void Start() //추가함
     {
-        DataManager.instance.JsonLoad("PlayerData");
+        //DataManager.instance.JsonLoad("PlayerData");
         anim.SetFloat("AttackSpeed", ATS);
         OptionManager.instance.Playing = true;
         Invoke("HpRegen", 1f);
@@ -281,7 +286,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.S) && !anim.GetBool("Sliding") && !isSkill && !isMasterSkill)  //기본 스킬 실행
         {
-            if (WeaponChage == 1 && Sword_SkTime <= 0)    //Sword
+            if (WeaponChage == 1 && Sword_SkTime <= 0 && !anim.GetBool("sword_atk"))    //Sword
             {
                 Sword_SkTime = DeCoolTimeCarcul(SkillTime[0]); //스킬쿨 수정함
                 isSkill = true;
@@ -410,7 +415,7 @@ public class Player : MonoBehaviour
 
     public void AttackDamage()// Player 공격시 적에게 대미지값 넘겨주기
     {
-        Dmg = DmgChange + AtkPower + GridPower;//변경함
+        //Dmg = ATP + AtkPower + GridPower;//변경함
         box = transform.GetChild(0).GetComponentInChildren<BoxCollider2D>();
         if (box != null)    //공격 범위 안에 null값이 아닐때만
         {
@@ -424,6 +429,14 @@ public class Player : MonoBehaviour
                     {
                         StartCoroutine(enemy.Hit(Dmg));
                         Debug.Log(Dmg + "Player");
+                        if (proSelectWeapon == 0 && proLevel >= 2)
+                        {
+                            BoxCollider2D boxCollider = collider.GetComponent<BoxCollider2D>();
+                            if (boxCollider != null)
+                            {
+                                enemyColliders.Add(boxCollider);
+                            }
+                        }
                     }
                 }
             }
@@ -451,8 +464,6 @@ public class Player : MonoBehaviour
         }
         if (WeaponChage == 2) //Axe 스킬
         {
-
-            //gameObject.layer = LayerMask.NameToLayer("Shield"); //방어막 활성화 후 10초간 지속
             this.transform.GetChild(6).gameObject.SetActive(true);  //방어막 이펙트 켜기
             PlaySound("AxeSkill");
             isShield = true;
@@ -475,7 +486,25 @@ public class Player : MonoBehaviour
             if (stackbleed > 0)
             {
                 isMasterSkill = true;
-                enemy.bleedEff();
+                PlaySound("SwordMasterSkill");
+                yield return new WaitForSeconds(1f);
+
+                enemyCheck = enemyColliders
+                    .Where(x => x != null && (x.tag == "Enemy" || x.tag == "Boss") && x.GetComponent<Enemy>() != null && x.GetComponent<BoxCollider2D>() != null) // 존재하면서 "Enemy" 또는 "Boss" 태그인 게임오브젝트를 추출
+                    .Select(x => x.GetComponent<Enemy>()) // 추출된 게임오브젝트에서 Enemy 스크립트 컴포넌트를 가져와 리스트에 저장
+                    .Where(enemy => enemy != null) // Enemy 컴포넌트가 null이 아닐 경우 필터링
+                    .Distinct() // 중복된 Enemy 컴포넌트 제거
+                    .ToList();
+
+                foreach (Enemy enemy in enemyCheck) // 감지된 모든 적에게 데미지 입힘
+                {
+                    enemy.bleedEff();
+                    BoxCollider2D boxCollider = enemy.GetComponent<BoxCollider2D>();
+                    if (boxCollider!= null)
+                    {
+                        enemyColliders.Remove(boxCollider);
+                    }
+                }
                 Sword_MsTime = MasterSkillTime[0];
             }
             else
@@ -552,14 +581,14 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.tag == "Respawn")
         {
-            Playerhurt(10, Attackpos.position);
+            Playerhurt(10, transform.position);
             PlayerReposition();
         }
     }
 
     private IEnumerator Sliding() //슬라이딩 실행
     {
-        GameManager.GetComponent<Ui_Controller>().Sliding();
+        //GameManager.GetComponent<Ui_Controller>().Sliding();
         Transform SlideTransform = transform.GetChild(4);
         Speed = 0;
         isSlide = true;
@@ -599,8 +628,15 @@ public class Player : MonoBehaviour
             {
                 Damage = DefDamgeCarculation(Damage); //방어력 계산식 추가
                 ishurt = true;
+                isSkill = false;
+                isMasterSkill = false;
                 CurrentHp = CurrentHp - Damage;
                 PlaySound("Damaged");
+                float x;
+                if (transform.position.x < pos.x)
+                    x = -1;
+                else
+                    x = 1;
 
                 if (CurrentHp <= 0)
                 {
@@ -617,11 +653,6 @@ public class Player : MonoBehaviour
                 {
                     anim.SetTrigger("hurt");
                     GameManager.GetComponent<Ui_Controller>().Damage(Damage);
-                    float x = transform.position.x - pos.x;
-                    if (transform.position.x > pos.x)
-                        x = 1;
-                    else
-                        x = -1;
                     StartCoroutine(Knockback(x));
                     StartCoroutine(Routine());
                     StartCoroutine(Blink());
@@ -645,7 +676,7 @@ public class Player : MonoBehaviour
     void Sword_attack() //Sword 공격 관련 정보
     {
         isdelay = true;
-        DmgChange = 7;
+        Dmg = ATP + AtkPower;
         box.size = new Vector2(3.5f, 2.5f);
         box.offset = new Vector2(1.5f, 0);
         anim.SetFloat("Sword", SwdCnt); //Blend를 이용해 일반공격과 스킬 애니메이션 구분 실행
@@ -662,11 +693,11 @@ public class Player : MonoBehaviour
 
         if (AxeCnt == 1) // 동작별 대미지 변경
         {
-            DmgChange = 15;
+            Dmg = ATP + AtkPower + GridPower;
         }
         else if (AxeCnt == 2)
         {
-            DmgChange = 20;
+            Dmg = ATP + AtkPower + GridPower +5;
         }
         box.size = new Vector2(4f, 2.5f);
         if (slideDir == 1)   //공격 방향별 box.offset값을 다르게 적용
@@ -689,7 +720,7 @@ public class Player : MonoBehaviour
         isdelay = true;
         Speed = 0;
         AxeCnt = 3;
-        DmgChange = 30;
+        Dmg = (ATP + AtkPower + GridPower) * 3;
         isCharging = false;
         chargeTimer = 0f;
         anim.SetFloat("Axe", AxeCnt); //차징 공격은 Axe_atk3 짧은 애니메이션으로 실행
@@ -784,7 +815,7 @@ public class Player : MonoBehaviour
         while (ctime < 0.4f) //넉백 지속시간
         {
             Vector2 vector2 = new Vector2(dir, 1);
-            transform.Translate(vector2.normalized * Speed * 3 * Time.deltaTime);
+            transform.Translate(vector2.normalized * Speed * 2 * Time.deltaTime);
             ctime += Time.deltaTime;
             yield return null;
         }
@@ -822,6 +853,7 @@ public class Player : MonoBehaviour
             isShield = false;
         }
         spriteRenderer.color = new Color(1, 1, 1, 1f);
+        gameObject.layer = LayerMask.NameToLayer("Player");
     }
 
     IEnumerator PadJump(int up)
@@ -846,18 +878,11 @@ public class Player : MonoBehaviour
         this.transform.GetChild(5).gameObject.SetActive(false);
     } //발판 무시 관련
 
-    IEnumerator Die(Vector2 pos) //Player 사망시 스프라이트 삭제
+    IEnumerator Die(float x) //Player 사망시 스프라이트 삭제
     {
         PlaySound("Die");
-        float x = transform.position.x - pos.x;
-        if (transform.position.x > pos.x)
-            x = 1;
-        else
-            x = -1;
         StartCoroutine(Knockback(x));
         anim.SetTrigger("Die");
-        gameObject.tag = "DiePlayer";
-        //gameObject.layer = LayerMask.NameToLayer("DiePlayer");
         yield return new WaitForSeconds(2.2f);
         this.transform.gameObject.SetActive(false);
     }
@@ -899,7 +924,7 @@ public class Player : MonoBehaviour
                 audio.clip = SwordSkillSound;
                 break;
             case "SwordMasterSkill":
-                //audio.clip = SwordMasterSound;
+                audio.clip = SwordMasterSound;
                 break;
             case "AxeSkill":
                 audio.clip = AxeSkillSound;

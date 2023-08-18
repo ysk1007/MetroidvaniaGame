@@ -9,14 +9,14 @@ public class Movement : MonoBehaviour
     public float parallaxFactor = 0.1f; //¿ø±Ù°ª
     void Start()
     {
-        //player = GameObject.Find("Player").transform;
+        player = GameObject.Find("Player").transform;
         origin = transform.position;
     }
 
     void Update()
     {
-        //float distance = player.position.x - transform.position.x;
-       // Vector3 newPosition = origin + Vector3.right * distance * parallaxFactor;
-        //transform.position = newPosition;
+        float distance = player.position.x - transform.position.x;
+        Vector3 newPosition = origin + Vector3.right * distance * parallaxFactor;
+        transform.position = newPosition;
     }
 }

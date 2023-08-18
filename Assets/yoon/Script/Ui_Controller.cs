@@ -67,7 +67,7 @@ public class Ui_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        AtkPowerValueText.text = (player.AtkPower + player.DmgChange + player.GridPower).ToString("F0");
+        AtkPowerValueText.text = (player.AtkPower + player.ATP + player.GridPower).ToString("F0");
         if (Input.GetKeyDown(KeyCode.I))
         {
             if (openpro)
@@ -230,7 +230,7 @@ public class Ui_Controller : MonoBehaviour
         PlayerCurrentHpText.text = PlayerHp.currentHp.ToString("F0");
 
         //인벤토리 갱신
-        AtkPowerValueText.text = (player.AtkPower + player.DmgChange + player.GridPower).ToString("F0");
+        AtkPowerValueText.text = (player.AtkPower + player.ATP + player.GridPower).ToString("F0");
         DefValueText.text = player.Def.ToString();
         AtkSpeedValueText.text = player.ATS.ToString("F1");
         CriticalChanceText.text = (player.CriticalChance * 100f).ToString() + "%";

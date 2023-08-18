@@ -6,9 +6,9 @@ using UnityEngine;
 public class BowTree : MonoBehaviour
 {
     public float deleteTime = 10f;
-    public float Dmg = 10;
+    public float Dmg;
     public float speed = 1f;
-    public int maxEnemies = 5;  // 최대 몬스터 수
+    public int maxEnemies = 10;  // 최대 몬스터 수
     public float delay; // 공격 딜레이 시간
     private List<Collider2D> enemyColliders = new List<Collider2D>();   //공격 몬스터 중복 체크
     private List<Enemy> enemiesInRange = new List<Enemy>(); // Enemy 타입 리스트로 변경
@@ -19,6 +19,7 @@ public class BowTree : MonoBehaviour
     private void Awake()
     {
         audio = GetComponent<AudioSource>();
+        Dmg = player.Dmg / 2;
     }
 
     public void Start()

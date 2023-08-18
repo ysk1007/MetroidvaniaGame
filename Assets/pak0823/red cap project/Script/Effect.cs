@@ -66,6 +66,7 @@ public class Effect : MonoBehaviour
         if (deleteTime <= 0)
             Desrtory();
 
+        Dmg = player.ATP + player.AtkPower + player.GridPower + 10;
         pos.position += Direction * speed * Time.deltaTime; // 직진 이동
         TreeCnt = Random.Range(1, 5);
     }
