@@ -58,26 +58,26 @@ public class OwnerTalk : MonoBehaviour
     }
     void Update()
     {
-        isShow = market.PlayerVisit;  
+        isShow = market.PlayerVisit;    // 플레이어가 상점에 닿았는지 확인하는 변수
         if (isShow)
         {
             if (isDialogue)
             {
-                ShowDialogue();
+                ShowDialogue(); // 대화창 열기
             }
-            if (Input.GetKeyUp(KeyCode.Return))
+            if (Input.GetKeyUp(KeyCode.Return))     // 엔터 키를 눌렀을 때
             {
-                if(count < dialogue.Length)
+                if(count < dialogue.Length) 
                 {
-                    NextDialogue();
+                    NextDialogue();     // 다음 대화
                 }
                 else
                 {
-                    HideDialogue();
+                    HideDialogue();     // 대화 창 숨기기
                 }
             }
         }
-        if (isStop)
+        if (isStop) 
         {
             Time.timeScale = 0;
         }

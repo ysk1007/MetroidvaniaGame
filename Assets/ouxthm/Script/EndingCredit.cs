@@ -20,26 +20,26 @@ public class EndingCredit : MonoBehaviour
     {
         if (isEnding)
         {
-            StartCoroutine(FadeOut());
-            credit.SetActive(true);
-            StartCoroutine(GoTitleScene());
+            StartCoroutine(FadeOut());  // 화면 페이드 아웃 
+            credit.SetActive(true);     // 엔딩 크레딧 오브젝트 활성화
+            StartCoroutine(GoTitleScene());     // 타이틀 화면으로 이동
             if (!isShow)
             {
-                Invoke("ShowSkipButton", 15f);
+                Invoke("ShowSkipButton", 15f);      // 스킵 버튼 오브젝트 활성화 15초 뒤
             }
             else if (isShow)
             {
-                GoSkip();
+                GoSkip();      
             }
 
             if (isSkip)
             {
-                SkipTitleScene();
+                SkipTitleScene(); 
             }
 
         }
     }
-    IEnumerator FadeOut()
+    IEnumerator FadeOut()       // 페이드 아웃 활성화
     {
         Color alpha = Panel.color;
         while (alpha.a < 1f)
@@ -51,23 +51,23 @@ public class EndingCredit : MonoBehaviour
         }
         yield return null;
     }
-    IEnumerator GoTitleScene()
+    IEnumerator GoTitleScene()      // 60초 뒤 타이틀 화면으로 이동
     {
         yield return new WaitForSeconds(60f);
         SceneManager.LoadScene("Title_Scene");
     }
-    public void SkipTitleScene()
+    public void SkipTitleScene()        // 즉시 타이틀 화면으로 이동
     {
         time = 0f;
         SceneManager.LoadScene("Title_Scene");
     }
 
-    public void ShowSkipButton()
+    public void ShowSkipButton()        // 스킵 버튼 활성화 ㅎ마수
     {
         skipButton.SetActive(true);
         isShow = true;
     }
-    public void GoSkip()
+    public void GoSkip()        // isSkip 변수 참으로 만드는 함수
     {
         if(isShow && Input.GetKeyDown(KeyCode.Return))
         {
