@@ -15,7 +15,7 @@ public class Dialogue
 
 public class OwnerTalk : MonoBehaviour
 {
-    MarketScript market;                                       
+    public MarketScript market;                                       
     public GameObject allObject;   // 모든 오브젝트
     public GameObject portrait; // 초상화 icon
     public TextMeshProUGUI txt_name;    // 초상화 이름

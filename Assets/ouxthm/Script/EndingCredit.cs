@@ -54,12 +54,12 @@ public class EndingCredit : MonoBehaviour
     IEnumerator GoTitleScene()      // 60초 뒤 타이틀 화면으로 이동
     {
         yield return new WaitForSeconds(60f);
-        SceneManager.LoadScene("Title_Scene");
+        SceneManager.LoadScene("Logo_Scene");
     }
     public void SkipTitleScene()        // 즉시 타이틀 화면으로 이동
     {
         time = 0f;
-        SceneManager.LoadScene("Title_Scene");
+        SceneManager.LoadScene("Logo_Scene");
     }
 
     public void ShowSkipButton()        // 스킵 버튼 활성화 ㅎ마수

@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: -11
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -200,7 +200,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: -12
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -285,7 +285,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -12
   m_Sprite: {fileID: 21300000, guid: c6fe46e6cf5ddc748bc509448edbeefd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -375,11 +375,13 @@ MonoBehaviour:
   marketItem: {fileID: 6400051523436273826, guid: d1cf91756fb81fd4fb32b7769b04746b, type: 3}
   marketUi: {fileID: 0}
   KeyUi: {fileID: 6765765041450367412}
+  PlayerVisit: 0
   RandomList: 
   ItemFromJson:
     items: []
   SellSound: {fileID: 8300000, guid: 7e94a392b19e59b4caf956e230ee11ba, type: 3}
   BuySound: {fileID: 8300000, guid: 4ed2c5f893c458b4d9254dbc7f4386c3, type: 3}
+  sfx: {fileID: 0}
 --- !u!82 &5671210367489524504
 AudioSource:
   m_ObjectHideFlags: 0

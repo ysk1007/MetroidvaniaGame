@@ -82,7 +82,7 @@ public class Effect : MonoBehaviour
                 {
                     isMasterSkill = false;
                     TreePos = pos.position;
-                    TreePos.Set(TreePos.x, -7f, TreePos.z);    // 나무의 y값 위치를 고정
+                    TreePos.Set(TreePos.x, 0f, TreePos.z);    // 나무의 y값 위치를 고정
                     StartCoroutine(MasterSkill());
                 }
             }

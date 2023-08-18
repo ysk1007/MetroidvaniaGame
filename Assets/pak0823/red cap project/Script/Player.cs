@@ -180,7 +180,7 @@ public class Player : MonoBehaviour
 
     void Start() //추가함
     {
-        //DataManager.instance.JsonLoad("PlayerData");
+        DataManager.instance.JsonLoad("PlayerData");
         anim.SetFloat("AttackSpeed", ATS);
         OptionManager.instance.Playing = true;
         Invoke("HpRegen", 1f);
@@ -642,7 +642,7 @@ public class Player : MonoBehaviour
                 {
                     if (!UsePastErase)
                     {
-                        StartCoroutine(Die(pos));
+                        StartCoroutine(Die(x));
                     }
                     else
                     {
@@ -979,7 +979,6 @@ public class Player : MonoBehaviour
 
     public void GetSelectValue(string selectName) //선택 능력치 얻는 함수
     {
-        Debug.Log("GetSelectValue: " + selectName);
         switch (selectName)
         {
             case "selectAtkLevel":

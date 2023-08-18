@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: -6
   m_Sprite: {fileID: 1907707877, guid: 8652abd02228d8a4596b0e9531ba0514, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -350,8 +350,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7b156135852e7348a354beed4ad100b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  Enemy_Name: 
+  AmIBoss: 0
+  BossHpLine: 0
+  Stage: 0
   Enemy_Mod: 0
-  iamBoss: 0
   Enemy_HP: 0
   Enemy_HPten: 0
   Enemy_Power: 0
@@ -380,9 +384,11 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
-  whatWeapon: {fileID: 0}
+  scaleX: 0
+  weaponTag: 
   Swordlevel: 0
   selectWeapon: 0
+  bleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
   bloodBoomDmg: 0
@@ -408,6 +414,32 @@ MonoBehaviour:
   Pos: {fileID: 3810062626024355267}
   arrow: {fileID: 0}
   slash: {fileID: 0}
+  BossPage: 0
+  GolemPattern: 010000000200000003000000040000000500000006000000
+  Pattern: 
+  LastPattern: 1
+  TeleportPos: []
+  ThornPos: []
+  LaserPos: []
+  CircleMissilePB: {fileID: 0}
+  MissilePB: {fileID: 0}
+  ThornPB: {fileID: 0}
+  LaserPB: {fileID: 0}
+  MagicArrowPB: {fileID: 0}
+  PunchEfc: {fileID: 0}
+  TeleportEfc: {fileID: 0}
+  MissileCount: 0
+  CircleMissileCount: 0
+  ThornCount: 0
+  CircleMissileShoot: 0
+  PunchCount: 1
+  MagicArrowCount: 0
+  PunchCharge: {fileID: 0}
+  Thunder: {fileID: 0}
+  PageAnimators: []
+  WaringArea: []
+  TargetFind: 0
+  BossCenter: {fileID: 0}
 --- !u!82 &2285238295317449993
 AudioSource:
   m_ObjectHideFlags: 0
@@ -613,6 +645,10 @@ PrefabInstance:
     - target: {fileID: 7166585528206624360, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7166585528206624362, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7166585528206624363, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
       propertyPath: m_Camera
