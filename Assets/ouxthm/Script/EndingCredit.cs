@@ -6,22 +6,25 @@ using UnityEngine.SceneManagement;
 
 public class EndingCredit : MonoBehaviour
 {
-    public GameObject skipButton;   // 스킵 이미지와 텍스트가 들어있는 오브젝트
+    [SerializeField] private GameObject skipButton;   // 스킵 이미지와 텍스트가 들어있는 오브젝트
     [SerializeField] private GameObject playerUI;   // 플레이어 UI
-    public GameObject credit;   // 실질적 크레딧
-    public Image Panel;     // 검은 박스
+    [SerializeField] private GameObject credit;   // 실질적 크레딧
+    [SerializeField] private Image EndingUI;     // 검은 박스
+    [SerializeField] private Image balckScreen;
 
-    public AudioSource audioSource;
+    [SerializeField] private AudioSource audioSource;
 
     public bool isEnding = false;       // 엔딩인지 확인하는 변수
-    public bool isSkip = false;   // 스킵
-    public bool isShow = false;
-    public bool volumDown = false;  // 볼륨 줄이기
-    float time = 0f;
-    float vtime = 0f;
-    float F_time = 5f;
-    float V_time = 150f;
-    float currentVolume;        // 볼륨 바 이동시킬 변수
+    private bool isSkip = false;   // 스킵
+    private bool isShow = false;
+    private bool volumDown = false;  // 볼륨 줄이기
+    private float time = 0f;        // 맨 처음 페이드 아웃에 사용
+    private float vtime = 0f;       // 볼륨 조절에 사용
+    private float etime = 0f;       // blackScreen에 사용
+    private float F_time = 200f;    // 맨 처음 페이드 아웃에 사용
+    private float V_time = 150f;    // 볼륨 조절에 사용
+    private float E_Time = 200f;    // blackScreen에 사용
+    private float currentVolume;        // 볼륨 바 이동시킬 변수
 
     void Update()
     {
@@ -30,6 +33,7 @@ public class EndingCredit : MonoBehaviour
             StartCoroutine(FadeOut());  // 화면 페이드 아웃 
             credit.SetActive(true);     // 엔딩 크레딧 오브젝트 활성화
             playerUI.SetActive(false);  // 플레이어 UI 끄기
+            StartCoroutine(GoTitleSceneFadeOut());
             StartCoroutine(GoTitleSceneVolume());   // 크레딧 끝나기 2초 전 볼륨 줄이는 코루틴
             StartCoroutine(GoTitleScene());     // 크레딧 끝나고타이틀 화면으로 이동하는 코루틴
 
@@ -45,6 +49,7 @@ public class EndingCredit : MonoBehaviour
             if (isSkip)
             {
                 controlVolum();
+                StartCoroutine(EndingCreditFadeOut());
                 Invoke("SkipTitleScene", 1.5f);
             }
             if (volumDown)
@@ -55,28 +60,42 @@ public class EndingCredit : MonoBehaviour
     }
     IEnumerator FadeOut()       // 페이드 아웃 활성화
     {
-        Color alpha = Panel.color;
+        Color alpha = EndingUI.color;
         while (alpha.a < 1f)
         {
             time += Time.deltaTime / F_time;
             alpha.a = Mathf.Lerp(0, 1, time);       // 이미지 알파값 0에서 1까지 서서히 변경
-            Panel.color = alpha;
+            EndingUI.color = alpha;
             yield return null;
         }
         yield return null;
     }
-    IEnumerator GoTitleSceneVolume()
+    IEnumerator EndingCreditFadeOut()       // 엔딩 크레딧 페이드 아웃 활성화
     {
-        Debug.Log("58초 전");
+        Color blackalpha = balckScreen.color;
+        while (blackalpha.a < 1f)
+        {
+            etime += Time.deltaTime / E_Time;
+            blackalpha.a = Mathf.Lerp(0, 1, etime);       // 이미지 알파값 0에서 1까지 서서히 변경
+            balckScreen.color = blackalpha;
+            yield return null;
+        }
+        yield return null;
+    }
+
+    IEnumerator GoTitleSceneFadeOut()       // 58초 뒤 화면 페이드 아웃
+    {
         yield return new WaitForSeconds(58f);
-        Debug.Log("58초 후");
+        StartCoroutine(EndingCreditFadeOut());
+    }
+    IEnumerator GoTitleSceneVolume()        // 58초 뒤 볼륨 서서히 줄이기
+    {
+        yield return new WaitForSeconds(58f);
         controlVolum();
     }
     IEnumerator GoTitleScene()      // 60초 뒤 로고 화면으로 이동
     {
-        Debug.Log("60초 전");
         yield return new WaitForSeconds(60f);
-        Debug.Log("60초 후");
         SceneManager.LoadScene("Logo_Scene");      
     }
     public void SkipTitleScene()        // 즉시 로고 화면으로 이동
@@ -98,7 +117,7 @@ public class EndingCredit : MonoBehaviour
         }
     }
 
-    IEnumerator controlVolum()
+    IEnumerator controlVolum()  // 볼륨 줄이는 코루틴
     {
         vtime += Time.deltaTime / V_time;
         while (currentVolume < 1)
