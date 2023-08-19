@@ -7,19 +7,21 @@ using UnityEngine.SceneManagement;
 public class EndingCredit : MonoBehaviour
 {
     public GameObject skipButton;   // 스킵 이미지와 텍스트가 들어있는 오브젝트
+    [SerializeField] private GameObject playerUI;   // 플레이어 UI
     public GameObject credit;   // 실질적 크레딧
     public Image Panel;     // 검은 박스
 
     public AudioSource audioSource;
-    //public AudioClip endingBGM;     // 엔딩크레딧 배경음악
 
     public bool isEnding = false;       // 엔딩인지 확인하는 변수
     public bool isSkip = false;   // 스킵
     public bool isShow = false;
     public bool volumDown = false;  // 볼륨 줄이기
     float time = 0f;
+    float vtime = 0f;
     float F_time = 5f;
-    float V_time = 10f;
+    float V_time = 150f;
+    float currentVolume;        // 볼륨 바 이동시킬 변수
 
     void Update()
     {
@@ -27,7 +29,10 @@ public class EndingCredit : MonoBehaviour
         {
             StartCoroutine(FadeOut());  // 화면 페이드 아웃 
             credit.SetActive(true);     // 엔딩 크레딧 오브젝트 활성화
-            StartCoroutine(GoTitleScene());     // 타이틀 화면으로 이동
+            playerUI.SetActive(false);  // 플레이어 UI 끄기
+            StartCoroutine(GoTitleSceneVolume());   // 크레딧 끝나기 2초 전 볼륨 줄이는 코루틴
+            StartCoroutine(GoTitleScene());     // 크레딧 끝나고타이틀 화면으로 이동하는 코루틴
+
             if (!isShow)
             {
                 Invoke("ShowSkipButton", 15f);      // 스킵 버튼 오브젝트 활성화 15초 뒤
@@ -39,13 +44,13 @@ public class EndingCredit : MonoBehaviour
 
             if (isSkip)
             {
-                SkipTitleScene(); 
+                controlVolum();
+                Invoke("SkipTitleScene", 1.5f);
             }
             if (volumDown)
             {
                 controlVolum();
             }
-            voluemDD();
         }
     }
     IEnumerator FadeOut()       // 페이드 아웃 활성화
@@ -60,9 +65,18 @@ public class EndingCredit : MonoBehaviour
         }
         yield return null;
     }
+    IEnumerator GoTitleSceneVolume()
+    {
+        Debug.Log("58초 전");
+        yield return new WaitForSeconds(58f);
+        Debug.Log("58초 후");
+        controlVolum();
+    }
     IEnumerator GoTitleScene()      // 60초 뒤 로고 화면으로 이동
     {
+        Debug.Log("60초 전");
         yield return new WaitForSeconds(60f);
+        Debug.Log("60초 후");
         SceneManager.LoadScene("Logo_Scene");      
     }
     public void SkipTitleScene()        // 즉시 로고 화면으로 이동
@@ -84,20 +98,15 @@ public class EndingCredit : MonoBehaviour
         }
     }
 
-    void controlVolum()
+    IEnumerator controlVolum()
     {
-        
-        while(audioSource.volume > 0.2f)
+        vtime += Time.deltaTime / V_time;
+        while (currentVolume < 1)
         {
-            time += Time.deltaTime / V_time;
-            audioSource.volume = Mathf.Lerp(1, 0, 0.3f);  // Time.deltaTIme에 변수 값 추가해서 변동 범위 넓혀야 함.
+            currentVolume = Mathf.Lerp(audioSource.volume, 0, vtime);  // Time.deltaTIme에 변수 값 추가해서 변동 범위 넓혀야 함.
+            audioSource.volume = currentVolume;
+            return null;
         }
-    }
-    void voluemDD()
-    {
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            volumDown = true;
-        }
+        return null;
     }
 }
