@@ -45,24 +45,24 @@ public class EndingCredit : MonoBehaviour
         while (alpha.a < 1f)
         {
             time += Time.deltaTime / F_time;
-            alpha.a = Mathf.Lerp(0, 1, time);
+            alpha.a = Mathf.Lerp(0, 1, time);       // 이미지 알파값 0에서 1까지 서서히 변경
             Panel.color = alpha;
             yield return null;
         }
         yield return null;
     }
-    IEnumerator GoTitleScene()      // 60초 뒤 타이틀 화면으로 이동
+    IEnumerator GoTitleScene()      // 60초 뒤 로고 화면으로 이동
     {
         yield return new WaitForSeconds(60f);
-        SceneManager.LoadScene("Logo_Scene");
+        SceneManager.LoadScene("Logo_Scene");      
     }
-    public void SkipTitleScene()        // 즉시 타이틀 화면으로 이동
+    public void SkipTitleScene()        // 즉시 로고 화면으로 이동
     {
         time = 0f;
         SceneManager.LoadScene("Logo_Scene");
     }
 
-    public void ShowSkipButton()        // 스킵 버튼 활성화 ㅎ마수
+    public void ShowSkipButton()        // 스킵 버튼 활성화 함수
     {
         skipButton.SetActive(true);
         isShow = true;
