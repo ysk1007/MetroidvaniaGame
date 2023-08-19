@@ -10,11 +10,16 @@ public class EndingCredit : MonoBehaviour
     public GameObject credit;   // 실질적 크레딧
     public Image Panel;     // 검은 박스
 
+    public AudioSource audioSource;
+    //public AudioClip endingBGM;     // 엔딩크레딧 배경음악
+
     public bool isEnding = false;       // 엔딩인지 확인하는 변수
     public bool isSkip = false;   // 스킵
     public bool isShow = false;
+    public bool volumDown = false;  // 볼륨 줄이기
     float time = 0f;
     float F_time = 5f;
+    float V_time = 10f;
 
     void Update()
     {
@@ -36,7 +41,11 @@ public class EndingCredit : MonoBehaviour
             {
                 SkipTitleScene(); 
             }
-
+            if (volumDown)
+            {
+                controlVolum();
+            }
+            voluemDD();
         }
     }
     IEnumerator FadeOut()       // 페이드 아웃 활성화
@@ -72,6 +81,23 @@ public class EndingCredit : MonoBehaviour
         if(isShow && Input.GetKeyDown(KeyCode.Return))
         {
             isSkip = true;
+        }
+    }
+
+    void controlVolum()
+    {
+        
+        while(audioSource.volume > 0.2f)
+        {
+            time += Time.deltaTime / V_time;
+            audioSource.volume = Mathf.Lerp(1, 0, 0.3f);  // Time.deltaTIme에 변수 값 추가해서 변동 범위 넓혀야 함.
+        }
+    }
+    void voluemDD()
+    {
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            volumDown = true;
         }
     }
 }
