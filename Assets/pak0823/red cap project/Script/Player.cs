@@ -49,6 +49,7 @@ public class Player : MonoBehaviour
     public bool isCharging = false; // 차징 상태 여부
     public float chargeTimer = 0f; // 차징 시간을 측정하는 타이머
     public float ArrowDistance = 0.75f;
+    public bool Axepro = true;
     public PlayerCanvas playerCanvas; //추가함
 
     public static Player instance; //추가함
@@ -138,7 +139,6 @@ public class Player : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public Enemy enemy;
     Projective_Body PBody;
-
     Rigidbody2D rigid;
     public Animator anim;
     new AudioSource audio;
@@ -184,15 +184,12 @@ public class Player : MonoBehaviour
         anim.SetFloat("AttackSpeed", ATS);
         OptionManager.instance.Playing = true;
         Invoke("HpRegen", 1f);
+        
     }
 
     void Update()
     {
         playerTag = this.gameObject.transform.GetChild(0).tag;
-        if (enemy != null)
-        {
-            stackbleed = enemy.bleedLevel; // 2023-08-09 추가 
-        }
         Player_Move();  //Player의 이동, 점프, 속도 함수
         Player_Attack();    //Player의 공격 함수
         if (UseGridSword) //추가함
@@ -260,6 +257,12 @@ public class Player : MonoBehaviour
                 JumpCnt--;
             isGround = false;
         }
+
+        if(proLevel > 0 && proSelectWeapon == 1 && Axepro == true)
+        {
+            StartCoroutine(proSkill());
+            Axepro = false;
+        }
     }
 
     public void Player_Attack() //Player 공격모음
@@ -284,7 +287,7 @@ public class Player : MonoBehaviour
             Bow_MsTime -= Time.deltaTime;
         }
 
-        if (Input.GetKeyDown(KeyCode.S) && !anim.GetBool("Sliding") && !isSkill && !isMasterSkill)  //기본 스킬 실행
+        if (Input.GetKeyDown(KeyCode.S) && !anim.GetBool("Sliding") && !isSkill && !isMasterSkill && !isdelay)  //기본 스킬 실행
         {
             if (WeaponChage == 1 && Sword_SkTime <= 0 && !anim.GetBool("sword_atk"))    //Sword
             {
@@ -305,7 +308,6 @@ public class Player : MonoBehaviour
                 StartCoroutine(Skill());
                 Bow_SkTime = DeCoolTimeCarcul(SkillTime[2]); //스킬쿨 수정함
                 isSkill = true;
-                StartCoroutine(Skill());
             }
         }
         if (Sword_SkTime >= 0)   //Sword 스킬 쿨타임 
@@ -446,21 +448,18 @@ public class Player : MonoBehaviour
     {
         if (WeaponChage == 1) //sword 스킬
         {
-            StartCoroutine(SkillDelay());
             Transform SkillTransform = transform.GetChild(3);   //검 스킬 오브젝트 위치값 저장
             if (slideDir == 1)
-            {
-                SkillTransform.localPosition = new Vector3(2, 0.2f);
-            }
+                SkillTransform.localPosition = new Vector3(1, 0.2f);
             else
-            {
-                SkillTransform.localPosition = new Vector3(-2, 0.2f);
-            }
-            Instantiate(Slash, Skillpos.position, transform.rotation); // 검기 복사 생성
+                SkillTransform.localPosition = new Vector3(-1, 0.2f);
+
             PlaySound("SwordSkill");
+            Instantiate(Slash, Skillpos.position, transform.rotation); // 검기 복사 생성
             yield return new WaitForSeconds(0.2f);
             SwdCnt = 1;
             Sword_SkTime = SkillTime[0];
+            isSkill = false;
         }
         if (WeaponChage == 2) //Axe 스킬
         {
@@ -473,16 +472,29 @@ public class Player : MonoBehaviour
         }
         if (WeaponChage == 3) //Arrow 스킬
         {
-            anim.SetTrigger("arrow_atk");
-            StartCoroutine(SkillDelay());
+            anim.SetTrigger("arrow_atk");   //애니메이션에 Bow_Attack 함수 실행이 들어가있음
             Bow_SkTime = SkillTime[2];
         }
     }
-
+    IEnumerator proSkill()
+    {
+        Transform trans;
+        Vector3 scaleVector = new Vector3(1, 1, 1); // 스케일 값 변화를 저장할 Vector3 변수
+        trans = GetComponent<Transform>();
+        scaleVector.x = 1.5f;
+        scaleVector.y = 1.5f;
+        trans.localScale = scaleVector;
+        MaxHp += 50;
+        CurrentHp += 50;
+        Def += 50;
+        SpeedChange = 3;
+        yield return null;
+    }
     IEnumerator MasterSkill()
     {
         if (WeaponChage == 1 && proSelectWeapon == 0 && Sword_MsTime <= 0) //Sword 숙련도 스킬
         {
+            stackbleed = enemy.bleedLevel;  //2023 - 08 - 09 추가
             if (stackbleed > 0)
             {
                 isMasterSkill = true;
@@ -521,7 +533,6 @@ public class Player : MonoBehaviour
             anim.SetTrigger("axe_atk");
             yield return new WaitForSeconds(1.5f);
             //PlaySound("AxeMasterSkill"); // 애니메이션에 실행 있음
-            //Instantiate(AxeSkill, Axepos.position, transform.rotation);
             AxeMasterSkill();
             Axe_MsTime = MasterSkillTime[1];
             yield return new WaitForSeconds(1f);
@@ -531,7 +542,6 @@ public class Player : MonoBehaviour
         {
             isMasterSkill = true;
             anim.SetTrigger("arrow_atk");
-            StartCoroutine(SkillDelay());
             yield return new WaitForSeconds(0.5f);
             PlaySound("BowMasterSkill");
             Bow_MsTime = MasterSkillTime[2];
@@ -541,7 +551,7 @@ public class Player : MonoBehaviour
     //Wall_Slide
     void OnCollisionStay2D(Collision2D collision)   // 벽 콜라이젼이 Player에 닿고 있으면 실행, 점프착지 시 콜라이젼 닿을 시 점프 해제
     {
-        RaycastHit2D rayHitDown = Physics2D.Raycast(rigid.position, Vector3.down, 1f, LayerMask.GetMask("Tilemap", "Pad"));
+        RaycastHit2D rayHitDown = Physics2D.Raycast(rigid.position, Vector3.down, 1.5f, LayerMask.GetMask("Tilemap", "Pad"));
         //Debug.DrawRay(rigid.position, Vector3.down * 1f, Color.red);
 
         if (collision.gameObject.tag == "Wall" && !isGround)
@@ -588,7 +598,7 @@ public class Player : MonoBehaviour
 
     private IEnumerator Sliding() //슬라이딩 실행
     {
-        //GameManager.GetComponent<Ui_Controller>().Sliding();
+        GameManager.GetComponent<Ui_Controller>().Sliding();
         Transform SlideTransform = transform.GetChild(4);
         Speed = 0;
         isSlide = true;
@@ -617,7 +627,6 @@ public class Player : MonoBehaviour
         Speed = SpeedChange;
         yield return new WaitForSeconds(SlidingCool); //슬라이딩 쿨타임
         isSlide = false;
-
     }
 
     public void Playerhurt(float Damage, Vector2 pos) // Player가 공격받을 시
@@ -667,7 +676,7 @@ public class Player : MonoBehaviour
 
     }
 
-    IEnumerator Attack_delay() //연속공격 딜레이
+    IEnumerator Attack_delay() //기본공격 딜레이
     {
         yield return new WaitForSeconds(delayTime);
         isdelay = false;
@@ -728,19 +737,18 @@ public class Player : MonoBehaviour
     }
     IEnumerator Bow_attack() //화살 일반공격 및 스킬 - 애니메이션 특정 부분에서 실행되게 유니티에서 설정함
     {
-        yield return null;
         Transform ArrowposTransform = transform.GetChild(1);  // 기본 화살
         Transform Arrowpos2Transform = transform.GetChild(2); // 증가 화살
 
         if (slideDir == 1)   //공격 방향별 Arrowpos 위치값 변경
         {
-            ArrowposTransform.localPosition = new Vector3(1, 0.2f);
-            Arrowpos2Transform.localPosition = new Vector3(1, -0.5f);
+            ArrowposTransform.localPosition = new Vector3(-0.2f, 0.3f);
+            Arrowpos2Transform.localPosition = new Vector3(-0.7f, -0.4f);
         }
         else
         {
-            ArrowposTransform.localPosition = new Vector3(-1, 0.2f);
-            Arrowpos2Transform.localPosition = new Vector3(-1, -0.5f);
+            ArrowposTransform.localPosition = new Vector3(0.2f, 0.3f);
+            Arrowpos2Transform.localPosition = new Vector3(0.7f, -0.4f);
         }
 
         if (isSkill)
@@ -760,7 +768,6 @@ public class Player : MonoBehaviour
             PlaySound("BowAtk");
         }
 
-
         if (slideDir == 1)  //플레이어가 바라보는 방향 왼쪽
         {
             if (!isSkill)
@@ -775,19 +782,12 @@ public class Player : MonoBehaviour
             else
                 rigid.velocity = new Vector2(transform.localScale.x + 10f, Time.deltaTime);
         }
-    }
-
-    IEnumerator SkillDelay() //스킬 종료 시간 - 애니메이션 속도와 맞춰주려고 추가함
-    {
-        if (WeaponChage == 1)
-            yield return new WaitForSeconds(0.6f);
-        else if (WeaponChage == 2)
-            yield return new WaitForSeconds(0.5f);
-        else
-            yield return new WaitForSeconds(1.3f);
-
-        isSkill = false;
-        isMasterSkill = false;
+        yield return new WaitForSeconds(0.4f);
+        if(isSkill == true || isMasterSkill == true)
+        {
+            isSkill = false;
+            isMasterSkill = false;
+        } 
     }
 
     IEnumerator Dash() //일부 공격시 앞으로 대쉬 이동 - 애니메이션 특정 부분에서 실행되게 유니티에서 설정함

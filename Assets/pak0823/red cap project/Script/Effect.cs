@@ -6,12 +6,14 @@ public class Effect : MonoBehaviour
 {
     public float deleteTime = 1f;
     public float Dmg = 2f;
-    public float speed = 15f;
+    public float speed = 20f;
     public int PlayerWeapon;
     public bool isMasterSkill = false;  //플레이어 마스터스킬 사용 유무 확인
+    public bool isSkill = false;
     public int TreeCnt; //랜덤 나무 번호 저장
     private Vector3 Direction = Vector3.right;  //화살이 나가는 방향
 
+    public static Effect instance; //추가함
     public Player player; // Player 스크립트를 가지고 있는 GameObject
     public Enemy enemy;
     public Transform pos;   // 생성 위치
@@ -25,12 +27,14 @@ public class Effect : MonoBehaviour
     public GameObject ParticlePrefab;   //파티클 프리펩
     public ParticleSystem Particle; // 파티클 시스템 
 
-
+    private void Awake()
+    {
+        player = Player.instance.GetComponent<Player>();
+        Dmg = (10 + player.AtkPower + player.GridPower) * Dmg;
+    }
 
     private void Start()
     {
-        player = Player.instance.GetComponent<Player>();
-        Dmg = 10 + (player.AtkPower + player.GridPower) * Dmg;
         pos = transform;    //화살이 맞은 위치를 저장
         PlayerWeapon = player.WeaponChage;
         if (player != null)
@@ -57,6 +61,12 @@ public class Effect : MonoBehaviour
                 isMasterSkill = false; // 마스터스킬 사용 중이 아니면 isMasterSkill 변수를 false로 설정
 
             }
+
+
+            if (player.isSkill == true)
+                isSkill = true;
+            else
+                isSkill = false;
         }
     }
 
@@ -65,8 +75,6 @@ public class Effect : MonoBehaviour
         deleteTime -= Time.deltaTime;
         if (deleteTime <= 0)
             Desrtory();
-
-        Dmg = player.ATP + player.AtkPower + player.GridPower + 10;
         pos.position += Direction * speed * Time.deltaTime; // 직진 이동
         TreeCnt = Random.Range(1, 5);
     }
@@ -126,6 +134,7 @@ public class Effect : MonoBehaviour
             GameObject BowTree = Instantiate(BowTree4, TreePos, transform.rotation);
             GameObject particle = Instantiate(ParticlePrefab, part.position, part.rotation);
         }
+
         Desrtory();
         yield return null;
     }
@@ -133,7 +142,7 @@ public class Effect : MonoBehaviour
     void ParticleEfc()  //파티클 위치 지정
     {
         part.rotation = ParticlePrefab.transform.rotation;
-        part.position = new Vector3(pos.transform.position.x, pos.transform.position.y + 6f, pos.transform.position.z);
+        part.position = new Vector3(pos.transform.position.x, pos.transform.position.y + 10f, pos.transform.position.z);
         Particle.Play();
     }
 

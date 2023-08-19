@@ -1261,6 +1261,7 @@ MonoBehaviour:
   isCharging: 0
   chargeTimer: 0
   ArrowDistance: 0.75
+  slashBleedStack: 0
   playerCanvas: {fileID: 7859401245331457298}
   ATP: 0
   level: 0
@@ -1361,6 +1362,7 @@ MonoBehaviour:
   Axebox: {fileID: 0}
   spriteRenderer: {fileID: 0}
   enemy: {fileID: 0}
+  effect: {fileID: 0}
   anim: {fileID: 0}
   UseGridSword: 0
   DivinePower: 0
