@@ -68,10 +68,11 @@ public class Player : MonoBehaviour
     public float DecreaseCool = 0f; //추가함
     public float LifeRegen = 0f; //추가함
     public float SlidingCool = 2f;
-    public int proSelectWeapon = 4; //4는 숙련도를 고르지 않은 상태 0,1,2 => 칼,도끼,활
-    public int proLevel = 0;
+    public int proSelectWeapon = 0; //4는 숙련도를 고르지 않은 상태 0,1,2 => 칼,도끼,활
+    public int proLevel = 3;
     public float enemyPower;
     public int stackbleed;  // 몬스터에 쌓인 출혈 스택
+    public int slashBleedStack; 
     public static float BleedingTime = 8f;  // 2023-07-31 추가(출혈 지속 시간)
     public float bleedDamage = 3f; // 2023-08-01 출혈 데미지
     public static float bloodBoomDmg = 25f;  // 출혈스택 터뜨리는 데미지
@@ -191,7 +192,7 @@ public class Player : MonoBehaviour
         playerTag = this.gameObject.transform.GetChild(0).tag;
         if (enemy != null)
         {
-            stackbleed = enemy.bleedLevel; // 2023-08-09 추가 
+            stackbleed = (enemy.bleedLevel + slashBleedStack); // 2023-08-09 추가 
         }
         Player_Move();  //Player의 이동, 점프, 속도 함수
         Player_Attack();    //Player의 공격 함수

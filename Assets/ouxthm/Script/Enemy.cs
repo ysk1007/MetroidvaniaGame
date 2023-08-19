@@ -45,6 +45,7 @@ public abstract class Enemy : MonoBehaviour
     public int Swordlevel;  // 플레이어 검 숙련도
     public int selectWeapon;    // 숙련도를 올릴 무기 선택 0 = 칼, 1 = 도끼, 2 = 활, 4 = 선택 X
     public int bleedLevel;  // 출혈 스택
+    public int slashBleedLevel; // 검기로 넣은 출혈스택
     public float bleedingDamage;    // 출혈 데미지
     public float bleedingTime;  // 출혈 지속시간
     public float bloodBoomDmg;  // 플레이어의 출혈 스택 터뜨리는 데미지
@@ -351,7 +352,8 @@ public abstract class Enemy : MonoBehaviour
                 if (slash != null)
                 {
                     Pdamage = slash.Dmg;
-                    bleedLevel++;
+                    player.slashBleedStack++;
+                    Debug.Log("슬래시 스택 쌓음");
                     StartCoroutine(Hit(Pdamage));
                 }
             }
