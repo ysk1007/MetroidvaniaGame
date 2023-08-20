@@ -40,8 +40,9 @@ public class Fade_img : MonoBehaviour
 
     IEnumerator FadeIn() //Fade in 효과
     {
-            // 0.5초 기다렸다 시작
-            yield return new WaitForSeconds(0.5f);
+        img.color = new Color32(0, 0, 0, 0);
+        // 0.5초 기다렸다 시작
+        yield return new WaitForSeconds(0.5f);
 
             // Fade in
             float t = 0f; //0%
@@ -57,7 +58,8 @@ public class Fade_img : MonoBehaviour
                 img.color = color; // 적용
                 yield return null; //이게 없으면 순식간에 효과가 지나감
             }
-            LoadingImage.SetActive(true);
+        gameObject.SetActive(false);
+        LoadingImage.SetActive(true);
     }
 
     IEnumerator FadeOut() //Fade Out 효과
@@ -79,5 +81,7 @@ public class Fade_img : MonoBehaviour
             img.color = color; // 적용
             yield return null; //이게 없으면 순식간에 효과가 지나감
         }
+        gameObject.SetActive(false);
+        img.color = new Color32(0, 0, 0, 255);
     }
 }

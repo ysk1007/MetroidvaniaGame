@@ -13,6 +13,7 @@ public class FadeEffect_Text : MonoBehaviour
     public AudioClip clip;
     public TextMeshProUGUI Text; //텍스트 컴포넌트를 담을 변수
     bool SceneChange = false; //현재 씬을 전환중인가? 변수
+    public Fade_img fade;
     void Start()
     {
         scene_Move = GetComponent<Scene_Move>();
@@ -24,7 +25,6 @@ public class FadeEffect_Text : MonoBehaviour
         if (Input.anyKeyDown && !SceneChange) //아무키나입력 받았을때, 현재 타이틀 화면일때, 씬 전환중이 아닐때
         {
             SceneChange = true; //씬 전환중 (중복으로 호출하는것을 방지)
-            Fade_img fade = gameObject.GetComponent<Fade_img>(); //코드가 담긴 오브젝트의 Fade_img 스크립트를 참조
             fade.CallFadeIn(); //Fade_img 스크립트의 CallFadeIn()함수를 호출함
 
             FastEffect();

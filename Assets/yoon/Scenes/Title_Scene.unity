@@ -195,6 +195,7 @@ MonoBehaviour:
   PlayerDataLoadComplete: 0
   SoundDataLoadComplete: 0
   ItemDataLoadComplete: 0
+  CurrentStage: 
 --- !u!4 &15813714
 Transform:
   m_ObjectHideFlags: 0
@@ -374,7 +375,6 @@ GameObject:
   - component: {fileID: 681088598}
   - component: {fileID: 681088597}
   - component: {fileID: 681088596}
-  - component: {fileID: 681088600}
   - component: {fileID: 681088599}
   - component: {fileID: 681088601}
   m_Layer: 5
@@ -499,21 +499,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f26904cf62022b44bad7a6761719c574, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &681088600
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 681088594}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83ed6273b8dc5b946bb89cdbb9c6ba4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  img_obj: {fileID: 2093397073}
-  LoadingImage: {fileID: 2093397073}
-  fadeSpeed: 0.25
 --- !u!114 &681088601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -530,6 +515,7 @@ MonoBehaviour:
   startDelay: 0.5
   clip: {fileID: 8300000, guid: 7dccd70eead67154ebe414b695ffb24d, type: 3}
   Text: {fileID: 1469359619}
+  fade: {fileID: 2093397077}
 --- !u!1 &1124330265
 GameObject:
   m_ObjectHideFlags: 0
@@ -1152,6 +1138,7 @@ GameObject:
   - component: {fileID: 2093397074}
   - component: {fileID: 2093397076}
   - component: {fileID: 2093397075}
+  - component: {fileID: 2093397077}
   m_Layer: 5
   m_Name: Fade_Image
   m_TagString: Untagged
@@ -1217,3 +1204,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2093397073}
   m_CullTransparentMesh: 1
+--- !u!114 &2093397077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093397073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83ed6273b8dc5b946bb89cdbb9c6ba4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  img_obj: {fileID: 2093397073}
+  LoadingImage: {fileID: 2093397073}
+  fadeSpeed: 1

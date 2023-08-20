@@ -27,6 +27,15 @@ public class Loading : MonoBehaviour
         UpdateTip();
     }
 
+    public void Load()
+    {
+        fade.CallFadeIn();
+        DoLoading = true;
+        Invoke("off", 3f);
+        Mark();
+        UpdateTip();
+    }
+
     void Mark()
     {
         if (!DoLoading)

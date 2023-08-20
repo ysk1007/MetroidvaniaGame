@@ -50,6 +50,9 @@ public class MarketScript : MonoBehaviour
     void Awake()
     {
         instance = this; //2023-08-15 Ãß°¡
+        MarketUi ui = MarketUi.instance;
+        marketUi = ui.gameObject;
+        marketList = ui.item_list;
     }
     // Start is called before the first frame update
     void Start()

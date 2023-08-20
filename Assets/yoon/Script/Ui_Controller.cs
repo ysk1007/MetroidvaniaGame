@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Diagnostics;
+
 public class Ui_Controller : MonoBehaviour
 {
     public Slider PlayerHpBar;
@@ -191,8 +193,8 @@ public class Ui_Controller : MonoBehaviour
     public void GetGold(int stage)
     {
         float value = GoldValue[stage - 1];
-        Debug.Log("∞ÒµÂ»πµÊ :" + value);
         player.gold += value * player.GoldGet;
+        player.TotalGetGold += value * player.GoldGet;
         GoldVelueUI.text = player.gold.ToString();
         MarketGoldText.text = player.gold.ToString();
     }
@@ -200,6 +202,7 @@ public class Ui_Controller : MonoBehaviour
     public void GetGold(float price)
     {
         player.gold += price * player.GoldGet;
+        player.TotalGetGold += price * player.GoldGet;
         GoldVelueUI.text = player.gold.ToString();
         MarketGoldText.text = player.gold.ToString();
     }
@@ -208,7 +211,6 @@ public class Ui_Controller : MonoBehaviour
     {
         if (player.gold - value < 0)
         {
-            Debug.Log("∞ÒµÂ ∫Œ¡∑!");
             return false;
         }
         else

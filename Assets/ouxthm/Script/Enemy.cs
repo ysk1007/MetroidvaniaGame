@@ -565,6 +565,7 @@ public abstract class Enemy : MonoBehaviour
             pro.GetProExp(Stage);
             ui.GetExp(Stage);
             ui.GetGold(Stage);
+            player.EnemyKillCount++;
         }
 
         enemyHit = false;

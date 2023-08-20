@@ -69,6 +69,8 @@ public class Player : MonoBehaviour
     public float SlidingCool = 2f;
     public int proSelectWeapon = 4; //4는 숙련도를 고르지 않은 상태 0,1,2 => 칼,도끼,활
     public int proLevel = 0;
+    public int EnemyKillCount = 0;
+    public float TotalGetGold = 0f;
     public float enemyPower;
     public int stackbleed;  // 몬스터에 쌓인 출혈 스택
     public static float BleedingTime = 8f;  // 2023-07-31 추가(출혈 지속 시간)

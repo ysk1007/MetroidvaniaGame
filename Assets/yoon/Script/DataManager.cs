@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using System.Runtime.InteropServices;
 
 [System.Serializable]
 public class SaveData
@@ -13,6 +14,7 @@ public class SaveData
     public float PlayerExp = 0f;
     public float PlayerCurrentHp = 100f;
     public Vector3 PlayerPos = new Vector3(0f, 0f, 0f);
+    public int[] Stage = new int[2] { 0, 0 };
 
     // 숙련도 데이터
     public int proWeaponSellect = 0; //숙련도를 선택한 무기
@@ -25,6 +27,8 @@ public class SaveData
     public float SFXVolume = 1f;
 
     public float PlayTime = 0f;
+    public int EnemyKill = 0;
+    public float TotalGetGold = 0f;
     public List<float> getVolume()
     {
         List<float> Volumes = new List<float>();
@@ -105,6 +109,7 @@ public class DataManager : MonoBehaviour
     public bool ItemDataLoadComplete;
 
     public static DataManager instance;
+    public int[] CurrentStage;
     private void Awake()
     {
         if (instance == null)
@@ -163,8 +168,11 @@ public class DataManager : MonoBehaviour
                             Player.instance.gold = saveData.PlayerGold;
                             GameManager.Instance.GetComponent<Ui_Controller>().ExpBar.value = saveData.PlayerExp;
                             Player.instance.transform.position = saveData.PlayerPos;
+                            CurrentStage = saveData.Stage;
                             Player.instance.proSelectWeapon = saveData.proWeaponSellect;
                             Player.instance.proLevel = saveData.proLevel;
+                            Player.instance.EnemyKillCount = saveData.EnemyKill;
+                            Player.instance.TotalGetGold = saveData.TotalGetGold;
                             OptionManager.instance.TotalPlayTime = saveData.PlayTime;
                             Proficiency_ui.instance.proWeaponIndex = saveData.proWeaponSellect;
                             Proficiency_ui.instance.proLevel = saveData.proLevel;
@@ -278,10 +286,16 @@ public class DataManager : MonoBehaviour
                     jsonsave.PlayerGold = Player.instance.gold;
                     jsonsave.PlayerExp = GameManager.Instance.GetComponent<Ui_Controller>().ExpBar.value;
                     jsonsave.PlayerPos = Player.instance.transform.position;
+                    if (MapManager.instance != null)
+                    {
+                        jsonsave.Stage = MapManager.instance.CurrentStage;
+                    }
                     jsonsave.proWeaponSellect = Proficiency_ui.instance.proWeaponIndex;
                     jsonsave.proLevel = Proficiency_ui.instance.proLevel;
                     jsonsave.proFill = Proficiency_ui.instance.Profill.fillAmount;
                     jsonsave.PlayTime = OptionManager.instance.TotalPlayTime;
+                    jsonsave.EnemyKill = Player.instance.EnemyKillCount;
+                    jsonsave.TotalGetGold = Player.instance.TotalGetGold;
                 }
                 //Debug.Log("디버그 : 플레이어 데이터 저장 완료");
                 break;
@@ -361,7 +375,11 @@ public class DataManager : MonoBehaviour
         saveData.PlayerExp = 0.0f;
         saveData.PlayerCurrentHp = 100.0f;
         saveData.PlayerPos = new Vector3(0f, 0f, 0f);
+        int[] Stage = new int[2] { 0, 0 };
+        saveData.Stage = Stage;
         saveData.PlayTime = 0f;
+        saveData.EnemyKill = 0;
+        saveData.TotalGetGold = 0f;
         //Debug.Log("디버그 : 플레이어 데이터 생성 완료");
         //Debug.Log("디버그 : 사운드 데이터 생성 중");
         saveData.MasterVolume = 1.0f;
