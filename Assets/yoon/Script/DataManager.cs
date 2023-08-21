@@ -21,14 +21,20 @@ public class SaveData
     public int proLevel = 0; //숙련도 레벨
     public float proFill = 0f; //숙련도 진행 상황
 
+    public float PlayTime = 0f;
+    public int EnemyKill = 0;
+    public float TotalGetGold = 0f;
+    public float TotalDamaged = 0f;
+}
+
+[System.Serializable]
+public class OptionData
+{
     // 게임 설정 데이터
     public float MasterVolume = 1f;
     public float BGMVolume = 1f;
     public float SFXVolume = 1f;
 
-    public float PlayTime = 0f;
-    public int EnemyKill = 0;
-    public float TotalGetGold = 0f;
     public List<float> getVolume()
     {
         List<float> Volumes = new List<float>();
@@ -90,6 +96,7 @@ public class DataManager : MonoBehaviour
     public string ItemPath;
     public string SelectPath;
     public string ItemUlockPath;
+    public string OptionPath;
     public Proficiency_ui proData;
     public SoundManager soundData;
     public SoundSlider sliderData;
@@ -103,6 +110,7 @@ public class DataManager : MonoBehaviour
     public string PlayerloadJson;
     public string ItemloadJson;
     public string SelectloadJson;
+    public string OptionLoadJson;
 
     public bool PlayerDataLoadComplete;
     public bool SoundDataLoadComplete;
@@ -125,6 +133,7 @@ public class DataManager : MonoBehaviour
         ItemPath = Path.Combine(Application.dataPath + "/Resources", "ItemData.json");
         SelectPath = Path.Combine(Application.dataPath + "/Resources", "UnlockSelectList.txt");
         ItemUlockPath = Path.Combine(Application.dataPath + "/Resources", "UnlockItemList.txt");
+        OptionPath = Path.Combine(Application.dataPath + "/Resources", "OptionData.txt");
     }
 
     void Start()
@@ -133,12 +142,14 @@ public class DataManager : MonoBehaviour
         ItemPath = Path.Combine(Application.dataPath + "/Resources", "ItemData.json");
         SelectPath = Path.Combine(Application.dataPath + "/Resources", "UnlockSelectList.txt");
         ItemUlockPath = Path.Combine(Application.dataPath + "/Resources", "UnlockItemList.txt");
+        OptionPath = Path.Combine(Application.dataPath + "/Resources", "OptionData.txt");
         JsonLoad("Default");
         JsonLoad("ItemData");
     }
     public void JsonLoad(string casedata)
     {
         SaveData saveData = new SaveData();
+        OptionData optionData = new OptionData();
         if (!File.Exists(PlayerPath)) //초기값 생성
         {
             //Debug.Log("디버그 : 사용자 데이터 없음");
@@ -150,10 +161,12 @@ public class DataManager : MonoBehaviour
             PlayerloadJson = File.ReadAllText(PlayerPath);
             ItemloadJson = File.ReadAllText(ItemPath);
             SelectloadJson = File.ReadAllText(SelectPath);
+            OptionLoadJson = File.ReadAllText(OptionPath);
 
             saveData = JsonUtility.FromJson<SaveData>(PlayerloadJson);
             ItemData = JsonUtility.FromJson<Item>(ItemloadJson);
             SelectData = JsonUtility.FromJson<SelectList>(SelectloadJson);
+            optionData = JsonUtility.FromJson<OptionData>(OptionLoadJson);
 
             if (saveData != null)
             {
@@ -173,6 +186,7 @@ public class DataManager : MonoBehaviour
                             Player.instance.proLevel = saveData.proLevel;
                             Player.instance.EnemyKillCount = saveData.EnemyKill;
                             Player.instance.TotalGetGold = saveData.TotalGetGold;
+                            Player.instance.TotalDamaged = saveData.TotalDamaged;
                             OptionManager.instance.TotalPlayTime = saveData.PlayTime;
                             Proficiency_ui.instance.proWeaponIndex = saveData.proWeaponSellect;
                             Proficiency_ui.instance.proLevel = saveData.proLevel;
@@ -221,9 +235,10 @@ public class DataManager : MonoBehaviour
                         if (SoundSlider.instance != null)
                         {
                             //Debug.Log("디버그 : 사운드 데이터 불러오는 중");
-                            SoundSlider.instance.master_slider.value = saveData.MasterVolume;
-                            SoundSlider.instance.bgm_slider.value = saveData.BGMVolume;
-                            SoundSlider.instance.sfx_slider.value = saveData.SFXVolume;
+                            SoundSlider.instance.master_slider.value = optionData.MasterVolume;
+                            SoundSlider.instance.bgm_slider.value = optionData.BGMVolume;
+                            SoundSlider.instance.sfx_slider.value = optionData.SFXVolume;
+                            SoundManager.instance.SliderSetting();
                             //Debug.Log("디버그 : 사운드 데이터 로드 완료");
                         }
                         break;
@@ -275,6 +290,8 @@ public class DataManager : MonoBehaviour
         //Debug.Log("디버그 : 데이터 저장 하는중..");
         PlayerloadJson = File.ReadAllText(PlayerPath);
         SaveData jsonsave = JsonUtility.FromJson<SaveData>(PlayerloadJson);
+        OptionLoadJson = File.ReadAllText(OptionPath);
+        OptionData optionSave = JsonUtility.FromJson<OptionData>(OptionLoadJson);
         switch (casedata)
         {
             case "PlayerData":
@@ -296,14 +313,15 @@ public class DataManager : MonoBehaviour
                     jsonsave.PlayTime = OptionManager.instance.TotalPlayTime;
                     jsonsave.EnemyKill = Player.instance.EnemyKillCount;
                     jsonsave.TotalGetGold = Player.instance.TotalGetGold;
+                    jsonsave.TotalDamaged = Player.instance.TotalDamaged;
                 }
                 //Debug.Log("디버그 : 플레이어 데이터 저장 완료");
                 break;
             case "SliderData":
                 //Debug.Log("디버그 : 사운드 데이터 저장 중");
-                jsonsave.MasterVolume = SoundSlider.instance.master_slider.value;
-                jsonsave.BGMVolume = SoundSlider.instance.bgm_slider.value;
-                jsonsave.SFXVolume = SoundSlider.instance.sfx_slider.value;
+                optionSave.MasterVolume = SoundSlider.instance.master_slider.value;
+                optionSave.BGMVolume = SoundSlider.instance.bgm_slider.value;
+                optionSave.SFXVolume = SoundSlider.instance.sfx_slider.value;
                 //Debug.Log("디버그 : 사운드 데이터 저장 완료");
                 break;
             case "ItemData":
@@ -351,8 +369,10 @@ public class DataManager : MonoBehaviour
         }
         string Playerjson = JsonUtility.ToJson(jsonsave, true);
         string itemjson = JsonUtility.ToJson(ItemData, true);
+        string optionJson = JsonUtility.ToJson(optionSave, true);
         File.WriteAllText(PlayerPath, Playerjson);
         File.WriteAllText(ItemPath, itemjson);
+        File.WriteAllText(OptionPath, optionJson);
         //Debug.Log("디버그 : 모든 데이터를 성공적으로 저장하였습니다");
     }
 
@@ -363,6 +383,15 @@ public class DataManager : MonoBehaviour
         CreateItemJson();
         CreateSelectJson();
         CreateUnlockItemJson();
+        string filePath = Path.Combine(Application.dataPath + "/Resources", "OptionData.txt");
+        if (File.Exists(filePath))
+        {
+            return;
+        }
+        else
+        {
+            CreateOptionJson();
+        }
         //Debug.Log("디버그 : 데이터를 성공적으로 생성하였습니다");
     }
 
@@ -380,12 +409,8 @@ public class DataManager : MonoBehaviour
         saveData.PlayTime = 0f;
         saveData.EnemyKill = 0;
         saveData.TotalGetGold = 0f;
+        saveData.TotalDamaged = 0f;
         //Debug.Log("디버그 : 플레이어 데이터 생성 완료");
-        //Debug.Log("디버그 : 사운드 데이터 생성 중");
-        saveData.MasterVolume = 1.0f;
-        saveData.BGMVolume = 1.0f;
-        saveData.SFXVolume = 1.0f;
-        //Debug.Log("디버그 : 사운드 데이터 생성 완료");
         //Debug.Log("디버그 : 숙련도 데이터 생성 중");
         saveData.proWeaponSellect = 4;
         saveData.proLevel = 0;
@@ -405,6 +430,21 @@ public class DataManager : MonoBehaviour
         string itemjson = JsonUtility.ToJson(itemData, true);
         File.WriteAllText(ItemPath, itemjson);
     }
+
+    public void CreateOptionJson()
+    {
+        OptionData optionData = new OptionData();
+
+        //Debug.Log("디버그 : 사운드 데이터 생성 중");
+        optionData.MasterVolume = 1.0f;
+        optionData.BGMVolume = 1.0f;
+        optionData.SFXVolume = 1.0f;
+        //Debug.Log("디버그 : 사운드 데이터 생성 완료");
+
+        string OptionJson = JsonUtility.ToJson(optionData, true);
+        File.WriteAllText(OptionPath, OptionJson);
+    }
+
     public void CreateSelectJson()
     {
         //Debug.Log("디버그 : 선택지 레벨 리스트 파일 생성 중");
@@ -497,10 +537,10 @@ public class DataManager : MonoBehaviour
 
     public List<float> getVolume()
     {
-        SaveData saveData = new SaveData();
-        string loadJson = File.ReadAllText(PlayerPath);
-        saveData = JsonUtility.FromJson<SaveData>(loadJson);
-        return saveData.getVolume();
+        OptionData optionData = new OptionData();
+        string loadJson = File.ReadAllText(OptionPath);
+        optionData = JsonUtility.FromJson<OptionData>(loadJson);
+        return optionData.getVolume();
     }
 
     public void UnlockListUpdate(int ItemNumber)

@@ -161,7 +161,8 @@ public class WeaponSwap : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.D) && !ultting && currentWeaponIndex == player.proSelectWeapon && player.proLevel == 3)
         {
-            StartCoroutine(FillSliderOverTime(img_Ult_coolTime, ultcool, "ult"));
+            float cooltime = player.DeCoolTimeCarcul(player.MasterSkillTime[currentWeaponIndex]);
+            StartCoroutine(FillSliderOverTime(img_Ult_coolTime, cooltime, "ult"));
             Ult_onAnim.SetActive(false);
         }
     }

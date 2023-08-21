@@ -71,6 +71,7 @@ public class Player : MonoBehaviour
     public int proLevel = 0;
     public int EnemyKillCount = 0;
     public float TotalGetGold = 0f;
+    public float TotalDamaged = 0f;
     public float enemyPower;
     public int stackbleed;  // 몬스터에 쌓인 출혈 스택
     public static float BleedingTime = 8f;  // 2023-07-31 추가(출혈 지속 시간)
@@ -591,7 +592,7 @@ public class Player : MonoBehaviour
 
     private IEnumerator Sliding() //슬라이딩 실행
     {
-        //GameManager.GetComponent<Ui_Controller>().Sliding();
+        GameManager.GetComponent<Ui_Controller>().Sliding();
         Transform SlideTransform = transform.GetChild(4);
         Speed = 0;
         isSlide = true;

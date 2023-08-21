@@ -463,7 +463,7 @@ public abstract class Enemy : MonoBehaviour
                 float damage = (bleedLevel * player.bleedDamage);
                 this.GetComponentInChildren<EnemyUi>().ShowBleedText(damage); //윤성권 추가함 출혈딜
                 Enemy_HP -= damage; // 체력을  출혈스택 * 출혈 데미지로 감소
-
+                player.TotalDamaged += damage;
                 if (Swordlevel > 1 && Enemy_HP <= Enemy_HPten && AmIBoss == false)  // 검 숙련도가 1 이상 일정 체력 이하의 몬스터가 출혈 중이면 즉사(보스 제외)
                 {
                     Enemy_HP = 0f;
@@ -523,6 +523,7 @@ public abstract class Enemy : MonoBehaviour
         spriteRenderer = this.gameObject.transform.GetChild(1).GetComponentInChildren<SpriteRenderer>();
         rigid = this.GetComponent<Rigidbody2D>();
         Enemy_HP -= damage;
+        player.TotalDamaged += damage;
         if (weaponTag == "Sword")
         {
             StackBleed();
@@ -1147,6 +1148,7 @@ public abstract class Enemy : MonoBehaviour
             Damage *= randNum;
         }
         Enemy_HP -= Damage;
+        player.TotalDamaged += Damage;
         this.GetComponentInChildren<EnemyUi>().ShowBleedText(Damage);
         bleedLevel = 0;
         bleedingTime = 0;

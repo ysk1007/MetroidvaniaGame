@@ -190,8 +190,8 @@ public class Proficiency_ui : MonoBehaviour
                 }
                 if (proLevel >= 3)
                 {
-                    Pro3SkillName.text = "오의 : 아마조네스의 가호";
-                    Pro3SkillText.text = "여전사 아마조네스의 힘을 부여 받습니다. 5초동안 차징 속도가 대폭 증가하고, 철벽 부수기를 계속 사용합니다.";
+                    Pro3SkillName.text = "오의 : 신의 격노";
+                    Pro3SkillText.text = "강력한 번개를 내리쳐 적에게 강력한 피해를 줍니다.";
                     TextAligmentTopLeft(Pro3SkillText);
                 }
                 break;
@@ -225,7 +225,7 @@ public class Proficiency_ui : MonoBehaviour
 
     public void GetProExp(int stage)
     {
-        if (proWeaponIndex == 4)
+        if (proWeaponIndex == 4 || player.WeaponChage - 1 != proWeaponIndex)
         {
             return;
         }

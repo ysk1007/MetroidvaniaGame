@@ -95,4 +95,17 @@ public class OptionManager : MonoBehaviour
         PlayTimerText.text = "플레이 시간 : "+string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
+    public string returnTimerText()
+    {
+        string returnStr;
+        int hours;
+        int min;
+
+        hours = Mathf.FloorToInt(TotalPlayTime / 60)/60;
+        min = Mathf.FloorToInt(TotalPlayTime / 60) % 60;
+
+        returnStr = string.Format("{0}시간 {1}분", hours, min);
+        return returnStr;
+    }
+
 }
