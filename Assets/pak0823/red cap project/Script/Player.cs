@@ -646,7 +646,9 @@ public class Player : MonoBehaviour
                 {
                     if (!UsePastErase)
                     {
+                        GameManager.GetComponent<Ui_Controller>().Damage(Damage);
                         StartCoroutine(Die(x));
+                        GameManager.GetComponent<Ui_Controller>().StatisticsUi.isFalling = true;
                     }
                     else
                     {
@@ -1156,6 +1158,7 @@ public class Player : MonoBehaviour
 
     public void PastEraseFunction()
     {
+        GameManager.GetComponent<inven>().updateUi();
         GameObject prefab = Resources.Load<GameObject>("item/BrokenWatch");
         Instantiate(prefab, PastErase.transform.parent);
         itemStatus item = prefab.GetComponent<itemStatus>();

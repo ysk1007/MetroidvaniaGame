@@ -33,6 +33,7 @@ public class Ui_Controller : MonoBehaviour
     public GameObject Status_screen;
     public GameObject WeaponSelect_screen;
     public GameObject DescriptionBox;
+    public StatisticsUi StatisticsUi;
     private bool openinven = false;
     public bool openMarket = false;
     public GameObject iconObject;

@@ -20,6 +20,15 @@ public class MarketItem : MonoBehaviour
         itemname.text = randomitem.data.itemName;
         itemname.color = randomitem.data.color;
         price.text = randomitem.data.itemPrice.ToString();
+        DataManager dm = DataManager.instance;
+        for (int i = 0; i < dm.LastMarketList.Length; i++)
+        {
+            if (dm.LastMarketList[i] == null)
+            {
+                dm.LastMarketList[i] = randomitem;
+                break;
+            }
+        }
     }
 
     // Update is called once per frame

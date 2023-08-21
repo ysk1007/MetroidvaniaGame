@@ -653,6 +653,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3743811800656704330, guid: 79b65ae68eb72e945a69695de9caebea, type: 3}
   m_PrefabInstance: {fileID: 3743811801294174576}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &934789373 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8237343074135846018, guid: 79b65ae68eb72e945a69695de9caebea, type: 3}
+  m_PrefabInstance: {fileID: 3743811801294174576}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90b2d19226130644397733e997884819, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &942551225 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3743811800892950985, guid: 79b65ae68eb72e945a69695de9caebea, type: 3}
@@ -1334,6 +1345,13 @@ MonoBehaviour:
   SoundDataLoadComplete: 0
   ItemDataLoadComplete: 0
   CurrentStage: 
+  LastMarketList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!4 &1858267920
 Transform:
   m_ObjectHideFlags: 0
@@ -1926,6 +1944,7 @@ MonoBehaviour:
   Status_screen: {fileID: 572753206}
   WeaponSelect_screen: {fileID: 1288565389}
   DescriptionBox: {fileID: 0}
+  StatisticsUi: {fileID: 934789373}
   openMarket: 0
   iconObject: {fileID: 1589157489}
   pro_ui: {fileID: 553236943}

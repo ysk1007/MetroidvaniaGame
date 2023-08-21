@@ -25,6 +25,9 @@ public class SaveData
     public int EnemyKill = 0;
     public float TotalGetGold = 0f;
     public float TotalDamaged = 0f;
+
+    public string[] LastMarketList;
+    public string LastChestItem;
 }
 
 [System.Serializable]
@@ -118,6 +121,7 @@ public class DataManager : MonoBehaviour
 
     public static DataManager instance;
     public int[] CurrentStage;
+    public itemStatus[] LastMarketList = new itemStatus[6];
     private void Awake()
     {
         if (instance == null)
@@ -144,7 +148,6 @@ public class DataManager : MonoBehaviour
         ItemUlockPath = Path.Combine(Application.dataPath + "/Resources", "UnlockItemList.txt");
         OptionPath = Path.Combine(Application.dataPath + "/Resources", "OptionData.txt");
         JsonLoad("Default");
-        JsonLoad("ItemData");
     }
     public void JsonLoad(string casedata)
     {
@@ -366,6 +369,19 @@ public class DataManager : MonoBehaviour
                     jsonsave.proFill = Proficiency_ui.instance.Profill.fillAmount;
                 }
                 break;
+            case "MarketData":
+                for (int i = 0; i < LastMarketList.Length; i++)
+                {
+                    if (LastMarketList[i] == null)
+                    {
+                        jsonsave.LastMarketList[i] = "";
+                    }
+                    else
+                    {
+                        jsonsave.LastMarketList[i] = LastMarketList[i].data.itemNameEng;
+                    }
+                }
+                break;
         }
         string Playerjson = JsonUtility.ToJson(jsonsave, true);
         string itemjson = JsonUtility.ToJson(ItemData, true);
@@ -416,6 +432,8 @@ public class DataManager : MonoBehaviour
         saveData.proLevel = 0;
         saveData.proFill = 0.0f;
         //Debug.Log("디버그 : 숙련도 데이터 생성 완료");
+        saveData.LastMarketList = new string[6];
+        saveData.LastChestItem = null;
         string Playerjson = JsonUtility.ToJson(saveData, true);
         File.WriteAllText(PlayerPath, Playerjson);
     }
