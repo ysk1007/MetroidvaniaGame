@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 91673e9a754e56149bcb55f20f48933c
+guid: a1a73faee4bcc944caf3fe7edb703877
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 25
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -141,148 +141,64 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Smoke VFX3_0
+      name: I_0
       rect:
         serializedVersion: 2
-        x: 10
+        x: 0
         y: 0
-        width: 14
-        height: 6
+        width: 19
+        height: 21
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 28255b2fc9ec49c42afbd5ae92d60fe6
-      internalID: -283046955
+      spriteID: f79690ade56e3c94c83fc4974aa2c0b3
+      internalID: -661133531
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Smoke VFX3_1
+      name: I_1
       rect:
         serializedVersion: 2
-        x: 41
+        x: 19
         y: 0
-        width: 16
-        height: 6
+        width: 19
+        height: 21
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1aea78da83f9e094bb704b56203b246d
-      internalID: -102857568
+      spriteID: be9eecc7d6793f64691bf223820151bd
+      internalID: -1972405964
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Smoke VFX3_2
+      name: I_2
       rect:
         serializedVersion: 2
-        x: 72
+        x: 38
         y: 0
-        width: 17
-        height: 9
+        width: 19
+        height: 21
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 57529c9cdc076cc47af738793e9929be
-      internalID: -864026292
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Smoke VFX3_3
-      rect:
-        serializedVersion: 2
-        x: 103
-        y: 0
-        width: 21
-        height: 10
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c92d3665e89cf2b49b335574c66a4940
-      internalID: 312940427
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Smoke VFX3_4
-      rect:
-        serializedVersion: 2
-        x: 134
-        y: 0
-        width: 22
-        height: 10
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6eb47ccb736f06d4aa3f93a3a087d183
-      internalID: 1559565225
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Smoke VFX3_5
-      rect:
-        serializedVersion: 2
-        x: 165
-        y: 0
-        width: 23
-        height: 11
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ec8431ea0a313934ab1c64da8afb9bd2
-      internalID: -1563849028
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Smoke VFX3_6
-      rect:
-        serializedVersion: 2
-        x: 197
-        y: 0
-        width: 23
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 905592b85f239294e8367ec796a23543
-      internalID: -1561115297
+      spriteID: d50b08f12ab115f438c121689b788f3c
+      internalID: -709784683
       vertices: []
       indices: 
       edges: []
@@ -298,13 +214,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Smoke VFX3_0: -283046955
-      Smoke VFX3_1: -102857568
-      Smoke VFX3_2: -864026292
-      Smoke VFX3_3: 312940427
-      Smoke VFX3_4: 1559565225
-      Smoke VFX3_5: -1563849028
-      Smoke VFX3_6: -1561115297
+      I_0: -661133531
+      I_1: -1972405964
+      I_2: -709784683
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

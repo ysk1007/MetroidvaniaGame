@@ -589,7 +589,7 @@ public class Player : MonoBehaviour
 
     private IEnumerator Sliding() //슬라이딩 실행
     {
-        //GameManager.GetComponent<Ui_Controller>().Sliding();
+        GameManager.GetComponent<Ui_Controller>().Sliding();
         Transform SlideTransform = transform.GetChild(4);
         Speed = 0;
         isSlide = true;

@@ -12,7 +12,6 @@ public class Rock_Eff : MonoBehaviour
     Enemy enemy;
     Rigidbody2D rigid;
 
-    //public float height = 50f;
     public float distance;
 
     public int Dir;
