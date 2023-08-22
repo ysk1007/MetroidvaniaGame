@@ -48,6 +48,7 @@ public class MarketScript : MonoBehaviour
     public AudioClip BuySound;
     public AudioSource sfx;
 
+    public DataManager dm;
     void Awake()
     {
         instance = this; //2023-08-15 추가
@@ -58,6 +59,7 @@ public class MarketScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        dm = DataManager.instance;
         string PlayerPath = Application.dataPath + "/Resources";
         SaveData saveData = new SaveData();
         //FromJson 부분
@@ -218,16 +220,25 @@ public class MarketScript : MonoBehaviour
     {
         sfx.clip = BuySound;
         sfx.Play();
+        Invoke("DataSave", 1f);
     }
 
     public void SellSoundPlay()
     {
         sfx.clip = SellSound;
         sfx.Play();
+        Invoke("DataSave", 1f);
     }
 
     public void SaveLastList()
     {
-        DataManager.instance.JsonSave("MarketData");
+        dm.JsonSave("MarketData");
+    }
+
+    void DataSave()
+    {
+        dm.JsonSave("PlayerData");
+        dm.JsonSave("ItemData");
+        dm.JsonSave("MarketData");
     }
 }

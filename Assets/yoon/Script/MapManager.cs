@@ -76,7 +76,6 @@ public class MapManager : MonoBehaviour
         }
         CurrentStage = dm.CurrentStage;
         CurrentStagePrefab = Instantiate(Stage_Prefabs[CurrentStage[0], CurrentStage[1]], transform.parent);
-        dm.JsonSave("PlayerData");
-        dm.JsonSave("ItemData");
+        dm.NextStage();
     }
 }

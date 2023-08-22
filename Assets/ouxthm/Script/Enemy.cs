@@ -1490,6 +1490,8 @@ public abstract class Enemy : MonoBehaviour
             bossMoving = true;
         }
 
+        GolemDie();
+
         if (bossMoving)
         {
             // 목표 방향 계산
@@ -1527,7 +1529,6 @@ public abstract class Enemy : MonoBehaviour
             animator.SetBool("Idle", true);
             Enemy_Speed = 0f;
         }
-        GolemDie();
     }
 
     public virtual void GolemBossOneTime()
@@ -1546,6 +1547,10 @@ public abstract class Enemy : MonoBehaviour
 
     void GolemRandomAtk()
     {
+        if (Dying)
+        {
+            return;
+        }
         int randNum;
         if (BossPage < 1)
         {
@@ -1568,15 +1573,18 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    void GolemMove()  // Orc 보스의 오른쪽으로 움직이는 함수
+    void GolemMove()  // 골렘의 오른쪽으로 움직이는 함수
     {
         
     }
-    void GolemDie()   // Orc 보스의 죽는 애니메이션
+    void GolemDie()   // 골렘의 죽는 애니메이션
     {
-        if (Dying)
+        if (Enemy_HP <= 0 && !Dying)
         {
+            animator.runtimeAnimatorController = PageAnimators[1];
+            Dying = true;
             bossBox.enabled = false;
+            animator.SetTrigger("Die");
         }
     }
 

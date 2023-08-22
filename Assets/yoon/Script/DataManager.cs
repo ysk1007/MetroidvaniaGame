@@ -38,8 +38,14 @@ public class OptionData
     public float BGMVolume = 1f;
     public float SFXVolume = 1f;
 
+    public bool ViewMarketCnema = false;
+    public bool ViewCnema1 = false;
+    public bool ViewCnema2 = false;
+    public bool ViewCnema3 = false;
+    public bool ViewCnema4 = false;
+   
     public List<float> getVolume()
-    {
+    { 
         List<float> Volumes = new List<float>();
         Volumes.Add(MasterVolume);
         Volumes.Add(BGMVolume);
@@ -122,6 +128,7 @@ public class DataManager : MonoBehaviour
     public static DataManager instance;
     public int[] CurrentStage;
     public itemStatus[] LastMarketList = new itemStatus[6];
+    public string LastChestItem;
     private void Awake()
     {
         if (instance == null)
@@ -317,6 +324,7 @@ public class DataManager : MonoBehaviour
                     jsonsave.EnemyKill = Player.instance.EnemyKillCount;
                     jsonsave.TotalGetGold = Player.instance.TotalGetGold;
                     jsonsave.TotalDamaged = Player.instance.TotalDamaged;
+                    jsonsave.LastChestItem = LastChestItem;
                 }
                 //Debug.Log("디버그 : 플레이어 데이터 저장 완료");
                 break;
@@ -458,6 +466,12 @@ public class DataManager : MonoBehaviour
         optionData.BGMVolume = 1.0f;
         optionData.SFXVolume = 1.0f;
         //Debug.Log("디버그 : 사운드 데이터 생성 완료");
+
+        optionData.ViewMarketCnema = false;
+        optionData.ViewCnema1 = false;
+        optionData.ViewCnema2 = false;
+        optionData.ViewCnema3 = false;
+        optionData.ViewCnema4 = false;
 
         string OptionJson = JsonUtility.ToJson(optionData, true);
         File.WriteAllText(OptionPath, OptionJson);
@@ -650,29 +664,77 @@ public class DataManager : MonoBehaviour
 
     public GameObject ChestItem()
     {
-        UnlockList Json;
-
-        string path = Application.dataPath + "/Resources";
-        string fromJsonData = File.ReadAllText(path + "/UnlockItemList.txt");
-        Json = JsonUtility.FromJson<UnlockList>(fromJsonData);
-
-        List<int> ItemList = new List<int> { };
-        for (int i = 0; i < Json.items.Count; i++)
+        PlayerloadJson = File.ReadAllText(PlayerPath);
+        SaveData jsonsave = JsonUtility.FromJson<SaveData>(PlayerloadJson);
+        if (jsonsave.LastChestItem != "")
         {
-            if (Json.items[i].isUnlock == false)
+            GameObject randomItem = Resources.Load<GameObject>("item/" + jsonsave.LastChestItem);
+            LastChestItem = jsonsave.LastChestItem;
+            JsonSave("PlayerData");
+            return randomItem;
+        }
+        else
+        {
+            UnlockList Json;
+
+            string path = Application.dataPath + "/Resources";
+            string fromJsonData = File.ReadAllText(path + "/UnlockItemList.txt");
+            Json = JsonUtility.FromJson<UnlockList>(fromJsonData);
+
+            List<int> ItemList = new List<int> { };
+            for (int i = 0; i < Json.items.Count; i++)
             {
-                ItemList.Add(i);
-                //Debug.Log(Json.items[i].ItemName);
+                if (Json.items[i].isUnlock == false)
+                {
+                    ItemList.Add(i);
+                    //Debug.Log(Json.items[i].ItemName);
+                }
             }
+            int randomNumber = Random.Range(0, ItemList.Count);
+            if (ItemList.Count == 0) //남아 있는 아이템 없으면 종료
+            {
+                GameObject Potion = Resources.Load<GameObject>("item/HpPotion");
+                return Potion;
+            }
+            GameObject randomItem = Resources.Load<GameObject>("item/" + Json.items[ItemList[randomNumber]].ItemName);
+            LastChestItem = Json.items[ItemList[randomNumber]].ItemName;
+            JsonSave("PlayerData");
+            return randomItem;
         }
-        int randomNumber = Random.Range(0, ItemList.Count);
-        if (ItemList.Count == 0) //남아 있는 아이템 없으면 종료
+    }
+
+    public void NextStage()
+    {
+        PlayerloadJson = File.ReadAllText(PlayerPath);
+        SaveData jsonsave = JsonUtility.FromJson<SaveData>(PlayerloadJson);
+        Vector3 vc = new Vector3(0, 0, 0);
+        jsonsave.PlayerPos = vc;
+        if (MapManager.instance != null)
         {
-            GameObject Potion = Resources.Load<GameObject>("item/HpPotion");
-            return Potion;
+            jsonsave.Stage = MapManager.instance.CurrentStage;
         }
-        GameObject randomItem = Resources.Load<GameObject>("item/" + Json.items[ItemList[randomNumber]].ItemName);
-        return randomItem;
+        jsonsave.LastChestItem = "";
+        jsonsave.LastMarketList = new string[6];
+        string Playerjson = JsonUtility.ToJson(jsonsave, true);
+        File.WriteAllText(PlayerPath, Playerjson);
+        JsonSave("ItemData");
+    }
+
+    public bool CanCenemaPlay()
+    {
+        OptionLoadJson = File.ReadAllText(OptionPath);
+        OptionData optionSave = JsonUtility.FromJson<OptionData>(OptionLoadJson);
+        if (optionSave.ViewMarketCnema == false)
+        {
+            optionSave.ViewMarketCnema = true;
+            string optionJson = JsonUtility.ToJson(optionSave, true);
+            File.WriteAllText(OptionPath, optionJson);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public void DeleteJson()

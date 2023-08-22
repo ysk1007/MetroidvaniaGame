@@ -43,7 +43,14 @@ public class AxeLightning : MonoBehaviour
             Enemy enemy = collider.gameObject.GetComponent<Enemy>();
             if (enemy != null)
             {
-                StartCoroutine(enemy.Hit(999f));
+                if (enemy.AmIBoss == true)
+                {
+                    StartCoroutine(enemy.Hit(1000f));
+                }
+                else
+                {
+                    StartCoroutine(enemy.Hit(999f));
+                }
             }
         }
     }

@@ -90,13 +90,7 @@ public class BossHpController : MonoBehaviour
     {
         Shake();
         HpSliders[currentHpLine - 1].Dmg(damage);
-        if (HpSliders[currentHpLine - 1].currentHp < 0 && currentHpLine != 1)
-        {
-            float overdmg = Math.Abs(HpSliders[currentHpLine - 1].currentHp);
-            currentHpLine--;
-            LineCount.text = "X " + currentHpLine.ToString();
-            HpSliders[currentHpLine - 1].Dmg(overdmg);
-        }
+        overDamageCarcul();
         if (HpSliders[0].currentHp <= 0)
         {
             Invoke("BossDead", 2f);
@@ -191,5 +185,17 @@ public class BossHpController : MonoBehaviour
     {
         CancelInvoke("StartCameraShake"); //현재 Invoke 실행되는 함수 있으면 취소
         CameraObject.transform.position = CameraObjectPos; //처음 지정했던 곳으로 ui 원위치
+    }
+
+    public void overDamageCarcul()
+    {
+        if (HpSliders[currentHpLine - 1].currentHp < 0 && currentHpLine != 1)
+        {
+            float overdmg = Math.Abs(HpSliders[currentHpLine - 1].currentHp);
+            currentHpLine--;
+            LineCount.text = "X " + currentHpLine.ToString();
+            HpSliders[currentHpLine - 1].Dmg(overdmg);
+            overDamageCarcul();
+        }
     }
 }

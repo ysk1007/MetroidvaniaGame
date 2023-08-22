@@ -11,6 +11,7 @@ public class MarketItem : MonoBehaviour
     public TextMeshProUGUI price;
     public itemStatus randomitem;
     public MarketScript market;
+    DataManager dm;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +21,7 @@ public class MarketItem : MonoBehaviour
         itemname.text = randomitem.data.itemName;
         itemname.color = randomitem.data.color;
         price.text = randomitem.data.itemPrice.ToString();
-        DataManager dm = DataManager.instance;
+        dm = DataManager.instance;
         for (int i = 0; i < dm.LastMarketList.Length; i++)
         {
             if (dm.LastMarketList[i] == null)
@@ -60,7 +61,7 @@ public class MarketItem : MonoBehaviour
                     {
                         int itemNumber = randomitem.GetComponentInChildren<itemStatus>().data.itemNumber;
                         EmptySloatSearch = true;
-                        DataManager.instance.GetComponent<DataManager>().UnlockListUpdate(itemNumber);
+                        dm.GetComponent<DataManager>().UnlockListUpdate(itemNumber);
                         Instantiate(randomitem, iv.inven_slots[i].transform);
                         GameManager.Instance.GetComponent<inven>().updateUi();
                         Destroy(this.gameObject);
@@ -75,10 +76,10 @@ public class MarketItem : MonoBehaviour
                 }
                 market.BuySoundPlay();
             }
-        }
-        else
-        {
-            ui.MarketTextBox.text = "\"∞ÒµÂ∞° ∫Œ¡∑«œ¿›æ∆!\"";
-        }
+    }
+    else
+    {
+        ui.MarketTextBox.text = "\"∞ÒµÂ∞° ∫Œ¡∑«œ¿›æ∆!\"";
+    }
     }
 }

@@ -690,7 +690,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00012207031, y: 0}
+  m_AnchoredPosition: {x: -0.00021362316, y: -0.000015258793}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4602492618933957151
@@ -758,7 +758,7 @@ RectTransform:
   m_GameObject: {fileID: 4602492619031780271}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6666667, y: 0.6666667, z: 0.6666667}
+  m_LocalScale: {x: 0.6666666, y: 0.6666666, z: 0.6666666}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4602492618933957149}
@@ -767,7 +767,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -258.5}
+  m_AnchoredPosition: {x: 0, y: -258.49994}
   m_SizeDelta: {x: 304, y: 304}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &4602492619031780264
@@ -944,6 +944,8 @@ MonoBehaviour:
   - name: "\uC0C1\uC810 \uC8FC\uC778"
     dialogue: "\"\uC774\uB9AC \uB4E4\uC5B4\uC640\uC11C \uCC9C\uCC9C\uD788 \uBD10\""
     poImage: {fileID: 1611333078860276096, guid: f7c1e304b7ee20f46baeb617cb5c0815, type: 3}
+  dm: {fileID: 0}
+  firstShow: 0
 --- !u!1 &4602492619413536678
 GameObject:
   m_ObjectHideFlags: 0
