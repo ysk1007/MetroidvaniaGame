@@ -26,8 +26,8 @@ public class MoveCamera : MonoBehaviour
 
     void Start()
     {
-        height = Camera.main.orthographicSize;
-        width = height * Screen.width / Screen.height;
+        height = Camera.main.orthographicSize;  // 카메라의 월드 공간에서의 세로 절반 사이즈
+        width = height * Screen.width / Screen.height; // 카메라의 월드 공간에서의 가로 절반 사이즈
     }
 
     void LateUpdate()
@@ -61,11 +61,11 @@ public class MoveCamera : MonoBehaviour
 
     void WatchingPlayer()   // 플레이어 비추는 카메라 함수
     {
-        Camera.main.orthographicSize = 9f;
+        //Camera.main.orthographicSize = 9f;
         transform.position = Vector3.Lerp(transform.position, target.position, Time.deltaTime * speed);
 
         float lx = size.x * 0.5f - width;
-        float clampX = Mathf.Clamp(transform.position.x, -lx + center.x, lx + center.x);
+        float clampX = Mathf.Clamp(transform.position.x, -lx + center.x, lx + center.x);    //value 값이 min 과 max 사이면 value값을 반환, min보다 작으면 min, max보다 크면 max값을 반환
 
         float ly = size.y * 0.5f - height;
         float clampY = Mathf.Clamp(transform.position.y, -ly + center.y, ly + center.y);

@@ -96,6 +96,16 @@ public class Effect : MonoBehaviour
             }
             if (PlayerWeapon == 3)
                 Desrtory();
+
+            if (player.proSelectWeapon == 0 && player.proLevel >= 2)  // 출혈이 있는 몬스터를 리스트에 저장
+            {
+                player.enemy = collision.GetComponent<Enemy>();
+                BoxCollider2D boxCollider = collision.GetComponent<BoxCollider2D>();
+                if (boxCollider != null)
+                {
+                    player.enemyColliders.Add(boxCollider);
+                }
+            }
         }
         if (collision.tag == "Wall")
         {

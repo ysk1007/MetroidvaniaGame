@@ -77,8 +77,8 @@ public class Player : MonoBehaviour
     public float bleedDamage = 3f; // 2023-08-01 출혈 데미지
     public static float bloodBoomDmg = 25f;  // 출혈스택 터뜨리는 데미지
     public static string playerTag;    // 2023-08-11 추가 (플레이어 무기 태그)
-    private List<Collider2D> enemyColliders = new List<Collider2D>();   //공격 몬스터 체크
-    private List<Enemy> enemyCheck = new List<Enemy>(); // Enemy 타입 리스트로 변경
+    public List<Collider2D> enemyColliders = new List<Collider2D>();   //공격 몬스터 체크
+    public List<Enemy> enemyCheck = new List<Enemy>(); // Enemy 타입 리스트로 변경
 
     //선택능력치 밸류
     public float[] selectAtkValue = { 0.1f, 0.2f, 0.3f };
@@ -112,12 +112,12 @@ public class Player : MonoBehaviour
     public GameObject BowSkill;  // 활 기본스킬 오브젝트
     public GameObject BowMaster; // 활 숙련도 화살 오브젝트
     public GameObject HolyArrow; // 활 숙련도 화살 오브젝트
+    public GameObject Axebuf; // 도끼 숙련도 0렙 패시브 버프
 
     public Transform Arrowpos; //화살 생성 오브젝트
     public Transform Arrowpos2; //증가된 화살  오브젝트
     public Transform Attackpos;   //공격박스 위치
     public Transform Skillpos;  // 스킬 생성 오브젝트
-    public Transform Axepos;   //스킬 생성 위치
 
     public AudioClip SwordAtkSound;
     public AudioClip SwordSkillSound;
@@ -174,7 +174,6 @@ public class Player : MonoBehaviour
         Arrowpos = transform.GetChild(1).GetComponentInChildren<Transform>(); //Arrowpos의 위치값을 pos에 저장
         Arrowpos2 = transform.GetChild(2).GetComponentInChildren<Transform>(); //Arrowpos2의 위치값을 pos에 저장
         Skillpos = transform.GetChild(3).GetComponentInChildren<Transform>(); //Skillpos의 위치값을 pos에 저장
-        Axepos = transform.GetChild(7).GetComponentInChildren<Transform>(); //Axepos의 위치값을 pos에 저장
         Ui = GameManager.GetComponent<Ui_Controller>();
     }
 
@@ -206,7 +205,6 @@ public class Player : MonoBehaviour
         {
             Speed = SpeedChange;
             Transform AtkRangeTransform = transform.GetChild(0);   // AttackRange 위치값 변경을 위해 자식오브젝트 위치값 불러옴
-            Transform AxeposTransform = transform.GetChild(7);   //Axepos 위치값 변경 위해 자식오브젝트 위치값 가져옴
             anim.SetBool("Player_Walk", true);
             if (Direction < 0) //왼쪽 바라보기
             {
@@ -214,7 +212,6 @@ public class Player : MonoBehaviour
                 transform.Translate(new Vector2(-1, 0) * Speed * Time.deltaTime);
                 slideDir = -1;
                 AtkRangeTransform.localPosition = new Vector3(-3, 0); // AttackRange 위치값 변경
-                AxeposTransform.localPosition = new Vector3(-3, -(0.8f));   //Axepos 위치값 변경
             }
             else if (Direction > 0) //오른쪽 바라보기
             {
@@ -222,7 +219,6 @@ public class Player : MonoBehaviour
                 transform.Translate(new Vector2(1, 0) * Speed * Time.deltaTime);
                 slideDir = 1;
                 AtkRangeTransform.localPosition = new Vector3(0, 0);
-                AxeposTransform.localPosition = new Vector3(3, -(0.8f));
             }
         }
         else
@@ -256,12 +252,6 @@ public class Player : MonoBehaviour
             if (!Input.GetKey(KeyCode.DownArrow))
                 JumpCnt--;
             isGround = false;
-        }
-
-        if(proLevel > 0 && proSelectWeapon == 1 && Axepro == true)
-        {
-            StartCoroutine(proSkill());
-            Axepro = false;
         }
     }
 
@@ -413,6 +403,12 @@ public class Player : MonoBehaviour
                 }
             }
         }
+
+        if (proLevel == 0 && proSelectWeapon == 1 && Axepro == true) // 도끼 숙련도 0일 때 발동
+        {
+            StartCoroutine(proSkill());
+            Axepro = false;
+        }
     }
 
     public void AttackDamage()// Player 공격시 적에게 대미지값 넘겨주기
@@ -431,7 +427,7 @@ public class Player : MonoBehaviour
                     {
                         StartCoroutine(enemy.Hit(Dmg));
                         Debug.Log(Dmg + "Player");
-                        if (proSelectWeapon == 0 && proLevel >= 2)
+                        if (proSelectWeapon == 0 && proLevel >= 2)  // 출혈이 있는 몬스터를 리스트에 저장
                         {
                             BoxCollider2D boxCollider = collider.GetComponent<BoxCollider2D>();
                             if (boxCollider != null)
@@ -478,6 +474,10 @@ public class Player : MonoBehaviour
     }
     IEnumerator proSkill()
     {
+        Vector3 Axepro = new Vector3(this.transform.position.x, this.transform.position.y);
+        GameObject Axe = Instantiate(Axebuf, transform.parent);
+        Axe.transform.position = Axepro;
+        yield return new WaitForSeconds(0.5f);
         Transform trans;
         Vector3 scaleVector = new Vector3(1, 1, 1); // 스케일 값 변화를 저장할 Vector3 변수
         trans = GetComponent<Transform>();
@@ -488,13 +488,15 @@ public class Player : MonoBehaviour
         CurrentHp += 50;
         Def += 50;
         SpeedChange = 3;
-        yield return null;
+        slideSpeed = 10;
+        Destroy(Axe);
     }
     IEnumerator MasterSkill()
     {
         if (WeaponChage == 1 && proSelectWeapon == 0 && Sword_MsTime <= 0) //Sword 숙련도 스킬
         {
             stackbleed = enemy.bleedLevel;  //2023 - 08 - 09 추가
+
             if (stackbleed > 0)
             {
                 isMasterSkill = true;
@@ -552,12 +554,23 @@ public class Player : MonoBehaviour
     void OnCollisionStay2D(Collision2D collision)   // 벽 콜라이젼이 Player에 닿고 있으면 실행, 점프착지 시 콜라이젼 닿을 시 점프 해제
     {
         RaycastHit2D rayHitDown = Physics2D.Raycast(rigid.position, Vector3.down, 1.5f, LayerMask.GetMask("Tilemap", "Pad"));
-        //Debug.DrawRay(rigid.position, Vector3.down * 1f, Color.red);
+        RaycastHit2D rayHitRight = Physics2D.Raycast(rigid.position, Vector3.right, 1.5f, LayerMask.GetMask("Tilemap"));
+        RaycastHit2D rayHitLeft = Physics2D.Raycast(rigid.position, Vector3.left, 1.5f, LayerMask.GetMask("Tilemap"));
 
         if (collision.gameObject.tag == "Wall" && !isGround)
         {
             anim.SetBool("Wall_slide", true);
             rigid.drag = 10;
+            if (rayHitLeft.collider != null && Input.GetKeyDown(KeyCode.Space))
+            {
+                rigid.velocity = new Vector2(1, 1) * 10f;
+                spriteRenderer.flipX = true;
+            }
+            if (rayHitRight.collider != null && Input.GetKeyDown(KeyCode.Space))
+            {
+                rigid.velocity = new Vector2(-1, 1) * 10f;
+                spriteRenderer.flipX = false;
+            }
         }
         if (collision.gameObject.tag == "Pad" || collision.gameObject.tag == "Tilemap" && !isGround)
         {
@@ -576,14 +589,6 @@ public class Player : MonoBehaviour
         {
             anim.SetBool("Wall_slide", false);
             rigid.drag = 0;
-        }
-
-        if (collision.gameObject.tag == "Wall" && Input.GetKey(KeyCode.Space)) //벽에서 점프시 반대로 팅겨감
-        {
-            if (Direction > 0)
-                rigid.velocity = new Vector2(1, 1) * 10f;
-            if (Direction < 0)
-                rigid.velocity = new Vector2(-1, 1) * 10f;
         }
     }
 
