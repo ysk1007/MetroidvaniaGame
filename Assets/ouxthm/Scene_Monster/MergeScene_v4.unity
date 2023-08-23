@@ -1331,6 +1331,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1772563110321075541, guid: 8be65e5b7e7196745b90667a5836778b, type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4815015638844110082, guid: 8be65e5b7e7196745b90667a5836778b, type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6028410215965197726, guid: 8be65e5b7e7196745b90667a5836778b, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7676858987699252366, guid: 8be65e5b7e7196745b90667a5836778b, type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 7768527673777569440, guid: 8be65e5b7e7196745b90667a5836778b, type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8be65e5b7e7196745b90667a5836778b, type: 3}
 --- !u!1 &302367085
@@ -1491,7 +1511,7 @@ TilemapRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 7.5, y: 4.0416665, z: 0}
+  m_ChunkCullingBounds: {x: 15.5, y: 4.0416665, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
@@ -3362,17 +3382,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e41d98888619c154480e63e1891c4536, type: 3}
---- !u!114 &1076441929 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3743811800221927993, guid: 79b65ae68eb72e945a69695de9caebea, type: 3}
-  m_PrefabInstance: {fileID: 3743811801294174576}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1086501534 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3743811800233102318, guid: 79b65ae68eb72e945a69695de9caebea, type: 3}
@@ -4074,17 +4083,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1237350789}
   m_CullTransparentMesh: 1
---- !u!114 &1245632215 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3743811800055099303, guid: 79b65ae68eb72e945a69695de9caebea, type: 3}
-  m_PrefabInstance: {fileID: 3743811801294174576}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1282775121 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3743811800160297249, guid: 79b65ae68eb72e945a69695de9caebea, type: 3}
@@ -4485,6 +4483,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1245228816923703714, guid: 78ad3cfd49f3b41419937ce276e3a87e, type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 1303206352834736752, guid: 78ad3cfd49f3b41419937ce276e3a87e, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -4584,6 +4586,10 @@ PrefabInstance:
     - target: {fileID: 4974345480436689183, guid: 78ad3cfd49f3b41419937ce276e3a87e, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5838303384663888260, guid: 78ad3cfd49f3b41419937ce276e3a87e, type: 3}
+      propertyPath: m_RootOrder
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 6325638336864416600, guid: 78ad3cfd49f3b41419937ce276e3a87e, type: 3}
       propertyPath: m_IsActive
@@ -6352,6 +6358,7 @@ MonoBehaviour:
   ItemPath: 
   SelectPath: 
   ItemUlockPath: 
+  OptionPath: 
   proData: {fileID: 0}
   soundData: {fileID: 0}
   sliderData: {fileID: 0}
@@ -6388,9 +6395,19 @@ MonoBehaviour:
   PlayerloadJson: 
   ItemloadJson: 
   SelectloadJson: 
+  OptionLoadJson: 
   PlayerDataLoadComplete: 0
   SoundDataLoadComplete: 0
   ItemDataLoadComplete: 0
+  CurrentStage: 
+  LastMarketList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  LastChestItem: 
 --- !u!4 &1858267920
 Transform:
   m_ObjectHideFlags: 0
@@ -7245,8 +7262,8 @@ MonoBehaviour:
   DefValueText: {fileID: 2074328336}
   AtkSpeedValueText: {fileID: 409204599}
   CriticalChanceText: {fileID: 665165632}
-  MarketTextBox: {fileID: 1245632215}
-  MarketGoldText: {fileID: 1076441929}
+  MarketTextBox: {fileID: 0}
+  MarketGoldText: {fileID: 0}
   BloodScreen: {fileID: 874713440}
   player: {fileID: 317697529}
   GoldVelueUI: {fileID: 2035524478}
@@ -7257,6 +7274,7 @@ MonoBehaviour:
   Status_screen: {fileID: 572753206}
   WeaponSelect_screen: {fileID: 1288565389}
   DescriptionBox: {fileID: 0}
+  StatisticsUi: {fileID: 0}
   openMarket: 0
   iconObject: {fileID: 1589157489}
   pro_ui: {fileID: 553236943}

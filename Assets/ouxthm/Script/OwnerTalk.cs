@@ -25,7 +25,6 @@ public class OwnerTalk : MonoBehaviour
     public bool isDialogue; 
     public bool isShow;     // 오브젝트 켜는 변수
     private int count = 0;
-    public bool isStop = false; // 대화할 때 타임 스케일 0,1을 결정하는 변수
     
     public Dialogue[] dialogue;
 
@@ -38,13 +37,13 @@ public class OwnerTalk : MonoBehaviour
         allObject.SetActive(true);  // 모든 오브젝트 ON
         count = 0;
         NextDialogue();
-        isStop = true;
+        Time.timeScale = 0;
     }
 
     private void HideDialogue()
     {
         allObject.SetActive(false); // 모든 오브젝트 OFF
-        isStop = false;
+        Time.timeScale = 1;
     }
 
     private void NextDialogue() // 다음 대화 
@@ -54,16 +53,13 @@ public class OwnerTalk : MonoBehaviour
         portrait.GetComponent<Image>().sprite = dialogue[count].poImage.sprite;
         count++;
     }
-    void Awake()
-    {
-        market = MarketScript.instance.GetComponent<MarketScript>();   
-        isDialogue = true;
-    }
 
     void Start() //8.22 윤성권 추가
     {
         dm = DataManager.instance;
         firstShow = dm.CanCenemaPlay();
+        market = MarketScript.instance.GetComponent<MarketScript>();
+        isDialogue = true;
     }
 
     void Update()
@@ -86,14 +82,6 @@ public class OwnerTalk : MonoBehaviour
                     HideDialogue();     // 대화 창 숨기기
                 }
             }
-        }
-        if (isStop) 
-        {
-            Time.timeScale = 0;
-        }
-        else if (!isStop)
-        {
-            Time.timeScale = 1;
         }
     }
 }

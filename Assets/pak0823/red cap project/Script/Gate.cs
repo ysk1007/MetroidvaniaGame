@@ -6,6 +6,8 @@ public class Gate : MonoBehaviour
 {
     Player player;
     Animator anim;
+    MapManager mapManager;
+    bool TouchPortal = false;
 
     private void Awake()
     {
@@ -14,15 +16,15 @@ public class Gate : MonoBehaviour
     private void Start()
     {
         player = Player.instance.GetComponent<Player>();
+        mapManager = MapManager.instance;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") || other.CompareTag("Sliding"))
         {
             anim.SetBool("open", true);
-            StartCoroutine(Delay());
-            
+            TouchPortal = true;
         }
         else
         {
@@ -32,26 +34,29 @@ public class Gate : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") || other.CompareTag("Sliding"))
         {
             anim.SetBool("open", false);
+            TouchPortal = false;
         }
         else
             anim.SetBool("open", true);
     }
 
-    private void OnTriggerStay2D(Collider2D other)
+    private void Update()
     {
-        if (other.CompareTag("Player") && Input.GetKeyDown(KeyCode.E))
+        if (TouchPortal && Input.GetKeyDown(KeyCode.E))
         {
+            TouchPortal = false;
             StartCoroutine(Delay());
-            player.transform.position = new Vector3(0, 0, 0);
         }
     }
 
-    
+
     IEnumerator Delay()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(2f);
+        player.transform.position = new Vector3(0, 0, 0);
+        mapManager.StageMove = true;
     }
 }
