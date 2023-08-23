@@ -29,6 +29,9 @@ public class OwnerTalk : MonoBehaviour
     
     public Dialogue[] dialogue;
 
+    public DataManager dm; //8.22 윤성권 추가
+    public bool firstShow; //8.22 처음 보는지 확인하는 bool 값
+
     public void ShowDialogue()  // UI
     {
         isDialogue = false;
@@ -56,10 +59,17 @@ public class OwnerTalk : MonoBehaviour
         market = MarketScript.instance.GetComponent<MarketScript>();   
         isDialogue = true;
     }
+
+    void Start() //8.22 윤성권 추가
+    {
+        dm = DataManager.instance;
+        firstShow = dm.CanCenemaPlay();
+    }
+
     void Update()
     {
         isShow = market.PlayerVisit;    // 플레이어가 상점에 닿았는지 확인하는 변수
-        if (isShow)
+        if (isShow && firstShow) // 8.22 처음 보는지 확인하는 조건문 추가
         {
             if (isDialogue)
             {

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 using UnityEngine.UIElements;
 using Unity.VisualScripting;
 using static Unity.VisualScripting.Member;

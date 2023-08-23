@@ -18,13 +18,13 @@ public class BowTree : MonoBehaviour
 
     private void Awake()
     {
+        player = Player.instance;
         audio = GetComponent<AudioSource>();
         Dmg = player.Dmg / 2;
     }
 
     public void Start()
     {
-        player = Player.instance;
         Dmg = Dmg + (player.AtkPower + player.GridPower) * 0.5f;
     }
     void Update()

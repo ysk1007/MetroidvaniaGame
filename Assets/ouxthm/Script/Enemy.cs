@@ -465,7 +465,7 @@ public abstract class Enemy : MonoBehaviour
                 float damage = (bleedLevel * player.bleedDamage);
                 this.GetComponentInChildren<EnemyUi>().ShowBleedText(damage); //윤성권 추가함 출혈딜
                 Enemy_HP -= damage; // 체력을  출혈스택 * 출혈 데미지로 감소
-
+                player.TotalDamaged += damage;
                 if (Swordlevel > 1 && Enemy_HP <= Enemy_HPten && AmIBoss == false)  // 검 숙련도가 1 이상 일정 체력 이하의 몬스터가 출혈 중이면 즉사(보스 제외)
                 {
                     Enemy_HP = 0f;
@@ -525,6 +525,7 @@ public abstract class Enemy : MonoBehaviour
         spriteRenderer = this.gameObject.transform.GetChild(1).GetComponentInChildren<SpriteRenderer>();
         rigid = this.GetComponent<Rigidbody2D>();
         Enemy_HP -= damage;
+        player.TotalDamaged += damage;
         if (weaponTag == "Sword")
         {
             StackBleed();
@@ -567,6 +568,7 @@ public abstract class Enemy : MonoBehaviour
             pro.GetProExp(Stage);
             ui.GetExp(Stage);
             ui.GetGold(Stage);
+            player.EnemyKillCount++;
         }
 
         enemyHit = false;
@@ -1148,6 +1150,7 @@ public abstract class Enemy : MonoBehaviour
             Damage *= randNum;
         }
         Enemy_HP -= Damage;
+        player.TotalDamaged += Damage;
         this.GetComponentInChildren<EnemyUi>().ShowBleedText(Damage);
         bleedLevel = 0;
         bleedingTime = 0;
@@ -1489,6 +1492,8 @@ public abstract class Enemy : MonoBehaviour
             bossMoving = true;
         }
 
+        GolemDie();
+
         if (bossMoving)
         {
             // 목표 방향 계산
@@ -1526,7 +1531,6 @@ public abstract class Enemy : MonoBehaviour
             animator.SetBool("Idle", true);
             Enemy_Speed = 0f;
         }
-        GolemDie();
     }
 
     public virtual void GolemBossOneTime()
@@ -1545,6 +1549,10 @@ public abstract class Enemy : MonoBehaviour
 
     void GolemRandomAtk()
     {
+        if (Dying)
+        {
+            return;
+        }
         int randNum;
         if (BossPage < 1)
         {
@@ -1567,15 +1575,18 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    void GolemMove()  // Orc 보스의 오른쪽으로 움직이는 함수
+    void GolemMove()  // 골렘의 오른쪽으로 움직이는 함수
     {
         
     }
-    void GolemDie()   // Orc 보스의 죽는 애니메이션
+    void GolemDie()   // 골렘의 죽는 애니메이션
     {
-        if (Dying)
+        if (Enemy_HP <= 0 && !Dying)
         {
+            animator.runtimeAnimatorController = PageAnimators[1];
+            Dying = true;
             bossBox.enabled = false;
+            animator.SetTrigger("Die");
         }
     }
 

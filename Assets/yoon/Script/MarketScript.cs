@@ -39,6 +39,7 @@ public class MarketScript : MonoBehaviour
     public GameObject KeyUi;
     private bool MarketOpen = false;
     public bool PlayerVisit = false;    // 2023-08-15 private -> public 변경
+    public bool Remain;
     public List<int> RandomList;
 
     public UnlockList ItemFromJson;
@@ -47,21 +48,57 @@ public class MarketScript : MonoBehaviour
     public AudioClip BuySound;
     public AudioSource sfx;
 
+    public DataManager dm;
     void Awake()
     {
         instance = this; //2023-08-15 추가
+        MarketUi ui = MarketUi.instance;
+        marketUi = ui.gameObject;
+        marketList = ui.item_list;
     }
     // Start is called before the first frame update
     void Start()
     {
-        string path = Application.dataPath + "/Resources";
-
+        dm = DataManager.instance;
+        string PlayerPath = Application.dataPath + "/Resources";
+        SaveData saveData = new SaveData();
         //FromJson 부분
-        string fromJsonData = File.ReadAllText(path + "/UnlockItemList.txt");
-        ItemFromJson = JsonUtility.FromJson<UnlockList>(fromJsonData);
+        string playerJson = File.ReadAllText(PlayerPath + "/PlayerData.json");
+        saveData = JsonUtility.FromJson<SaveData>(playerJson);
+        for (int i = 0; i < saveData.LastMarketList.Length; i++)
+        {
+            if (saveData.LastMarketList[i] != "")
+            {
+                Remain = true;
+                //상점 품목
+                GameObject list = Instantiate(marketItem) as GameObject;
+                list.transform.SetParent(marketList.transform, false);
+                list.GetComponent<MarketItem>().market = this;
+                //아이템
+                GameObject randomItem = Resources.Load<GameObject>("item/" + saveData.LastMarketList[i]);
 
-        FindRemainItem();
-        FillItemList(5);
+                Image img = randomItem.GetComponent<Image>();
+                img.SetNativeSize();
+                RectTransform rectTransform = randomItem.GetComponent<RectTransform>();
+                // 이미지의 너비와 높이 값을 가져옵니다.
+                float width = rectTransform.sizeDelta.x;
+                float height = rectTransform.sizeDelta.y;
+                rectTransform.sizeDelta = new Vector2(width * 3f, height * 3f);
+
+                Instantiate(randomItem, list.GetComponent<MarketItem>().icon.transform);
+            }
+        }
+        if (!Remain)
+        {
+            string path = Application.dataPath + "/Resources";
+
+            //FromJson 부분
+            string fromJsonData = File.ReadAllText(path + "/UnlockItemList.txt");
+            ItemFromJson = JsonUtility.FromJson<UnlockList>(fromJsonData);
+
+            FindRemainItem();
+            FillItemList(5);
+        }
     }
 
     // Update is called once per frame
@@ -89,6 +126,7 @@ public class MarketScript : MonoBehaviour
                 ui.inven_ui.SetActive(true);
                 ui.openMarket = true;
                 Time.timeScale = 0f;
+                Invoke("SaveLastList",1f);
             }
         }
 
@@ -182,11 +220,25 @@ public class MarketScript : MonoBehaviour
     {
         sfx.clip = BuySound;
         sfx.Play();
+        Invoke("DataSave", 1f);
     }
 
     public void SellSoundPlay()
     {
         sfx.clip = SellSound;
         sfx.Play();
+        Invoke("DataSave", 1f);
+    }
+
+    public void SaveLastList()
+    {
+        dm.JsonSave("MarketData");
+    }
+
+    void DataSave()
+    {
+        dm.JsonSave("PlayerData");
+        dm.JsonSave("ItemData");
+        dm.JsonSave("MarketData");
     }
 }

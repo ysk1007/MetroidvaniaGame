@@ -11,7 +11,11 @@ public class Chest : MonoBehaviour
     public GameObject Item;
     public float time;
     public AudioSource sfx;
-
+    public bool goldChest;
+    public GameObject coin;
+    public float forceStrength = 10f;
+    public int dir = 1;
+    public Transform pos;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,7 +31,19 @@ public class Chest : MonoBehaviour
             OpenAnimator.SetTrigger("ChestOpen");
             sfx.Play();
             KeyUi.SetActive(false);
-            Invoke("ItemAnim", time);
+            if (!goldChest)
+            {
+                Invoke("ItemAnim", time);
+            }
+            else
+            {
+                float time = 0f;
+                for (int i = 0; i < 30; i++)
+                {
+                    Invoke("CreateObjectWithForce", time);
+                    time += 0.1f;
+                }
+            }
         }
     }
 
@@ -59,5 +75,30 @@ public class Chest : MonoBehaviour
     {
         Item.GetComponent<DropItem>().isMoving = true;
         Item.SetActive(true);
+    }
+
+    private void CreateObjectWithForce()
+    {
+        // 게임 오브젝트 생성
+        GameObject go = Instantiate(coin, pos.position, Quaternion.identity);
+
+        // Rigidbody2D 컴포넌트 가져오기
+        Rigidbody2D rb = go.GetComponent<Rigidbody2D>();
+
+        if (rb != null)
+        {
+            // 위 방향으로 힘을 추가
+            rb.AddForce(Vector2.up * forceStrength, ForceMode2D.Impulse);
+            rb.AddForce(Vector2.right * dir * 2, ForceMode2D.Impulse);
+        }
+        forceStrength = Random.Range(5f, 10f);
+        if (dir > 0)
+        {
+            dir = -1;
+        }
+        else
+        {
+            dir = 1;
+        }
     }
 }

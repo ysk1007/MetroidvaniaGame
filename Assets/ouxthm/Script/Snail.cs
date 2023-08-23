@@ -16,7 +16,7 @@ public class Snail : Enemy
         Enemy_Dying_anim_Time = 1.1f;   // 죽는 애니메이션 실행 시간
         Enemy_Sensing_X = 10f; // 플레이어 인지 X값
         Enemy_Sensing_Y = 5f;  // 플레이어 인지 Y값
-        Bump_Power = 2f; // 충돌 시 줄 데미지
+        Bump_Power = 20f; // 충돌 시 줄 데미지
         bleedLevel = 0; // 받은 출혈량
         AmIBoss = false;    // 보스가 아님
     }

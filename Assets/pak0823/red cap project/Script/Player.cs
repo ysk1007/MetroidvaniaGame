@@ -1,4 +1,3 @@
-using Microsoft.Unity.VisualStudio.Editor;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -68,8 +67,11 @@ public class Player : MonoBehaviour
     public float DecreaseCool = 0f; //추가함
     public float LifeRegen = 0f; //추가함
     public float SlidingCool = 2f;
-    public int proSelectWeapon = 0; //4는 숙련도를 고르지 않은 상태 0,1,2 => 칼,도끼,활
-    public int proLevel = 3;
+    public int proSelectWeapon = 4; //4는 숙련도를 고르지 않은 상태 0,1,2 => 칼,도끼,활
+    public int proLevel = 0;
+    public int EnemyKillCount = 0;
+    public float TotalGetGold = 0f;
+    public float TotalDamaged = 0f;
     public float enemyPower;
     public int stackbleed;  // 몬스터에 쌓인 출혈 스택
     public int slashBleedStack; 
@@ -181,7 +183,9 @@ public class Player : MonoBehaviour
 
     void Start() //추가함
     {
-        DataManager.instance.JsonLoad("PlayerData");
+        DataManager dm = DataManager.instance;
+        dm.JsonLoad("PlayerData");
+        dm.JsonLoad("ItemData");
         anim.SetFloat("AttackSpeed", ATS);
         OptionManager.instance.Playing = true;
         Invoke("HpRegen", 1f);
@@ -643,7 +647,9 @@ public class Player : MonoBehaviour
                 {
                     if (!UsePastErase)
                     {
+                        GameManager.GetComponent<Ui_Controller>().Damage(Damage);
                         StartCoroutine(Die(x));
+                        GameManager.GetComponent<Ui_Controller>().StatisticsUi.isFalling = true;
                     }
                     else
                     {
@@ -1153,6 +1159,7 @@ public class Player : MonoBehaviour
 
     public void PastEraseFunction()
     {
+        GameManager.GetComponent<inven>().updateUi();
         GameObject prefab = Resources.Load<GameObject>("item/BrokenWatch");
         Instantiate(prefab, PastErase.transform.parent);
         itemStatus item = prefab.GetComponent<itemStatus>();

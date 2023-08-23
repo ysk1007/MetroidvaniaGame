@@ -26,6 +26,11 @@ public class SoundManager : MonoBehaviour
 
     void Start()
     {
+        SliderSetting();
+    }
+
+    public void SliderSetting()
+    {
         List<float> Volumes = new List<float>();
         Volumes = DataManager.instance.getVolume();
         mixer.SetFloat("Master", Mathf.Log10(Volumes[0]) * 20);

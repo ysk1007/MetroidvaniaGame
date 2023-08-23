@@ -470,7 +470,7 @@ MonoBehaviour:
   buttons: []
   OptionPanel: {fileID: 284867789}
   clip: {fileID: 8300000, guid: 03fe61daccce2304384cc7dbf1aec1bc, type: 3}
-  fade: {fileID: 1681496746}
+  fade: {fileID: 1117441800}
   loading_ui: {fileID: 1756462614}
   index: 
   currentIndex: 0
@@ -1141,6 +1141,7 @@ GameObject:
   - component: {fileID: 1117441797}
   - component: {fileID: 1117441799}
   - component: {fileID: 1117441798}
+  - component: {fileID: 1117441800}
   m_Layer: 5
   m_Name: Fade_Image
   m_TagString: Untagged
@@ -1206,6 +1207,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1117441796}
   m_CullTransparentMesh: 1
+--- !u!114 &1117441800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1117441796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83ed6273b8dc5b946bb89cdbb9c6ba4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  img_obj: {fileID: 1117441796}
+  LoadingImage: {fileID: 1756462610}
+  fadeSpeed: 2
 --- !u!1 &1169791768
 GameObject:
   m_ObjectHideFlags: 0
@@ -1485,7 +1501,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1681496742}
   - component: {fileID: 1681496745}
-  - component: {fileID: 1681496746}
   - component: {fileID: 1681496744}
   - component: {fileID: 1681496743}
   m_Layer: 5
@@ -1626,21 +1641,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1681496741}
   m_CullTransparentMesh: 1
---- !u!114 &1681496746
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1681496741}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83ed6273b8dc5b946bb89cdbb9c6ba4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  img_obj: {fileID: 1117441796}
-  LoadingImage: {fileID: 1756462610}
-  fadeSpeed: 2
 --- !u!1 &1756462610
 GameObject:
   m_ObjectHideFlags: 0
@@ -2157,6 +2157,7 @@ MonoBehaviour:
   PlayerDataLoadComplete: 0
   SoundDataLoadComplete: 0
   ItemDataLoadComplete: 0
+  CurrentStage: 
 --- !u!4 &2063750648
 Transform:
   m_ObjectHideFlags: 0
