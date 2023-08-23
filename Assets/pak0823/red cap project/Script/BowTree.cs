@@ -20,6 +20,7 @@ public class BowTree : MonoBehaviour
     {
         player = Player.instance;
         audio = GetComponent<AudioSource>();
+        player = Player.instance;
         Dmg = player.Dmg / 2;
     }
 

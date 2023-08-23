@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8953418291157970680}
   m_Layer: 0
   m_Name: BowSkill
-  m_TagString: Arrow
+  m_TagString: Skill_arrow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -145,7 +145,7 @@ Animator:
   m_GameObject: {fileID: 16888911687298902}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 62d0a809421adee4b868042cb194d849, type: 2}
+  m_Controller: {fileID: 9100000, guid: 72cab6b0ddf28464ab878346882439d6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -173,9 +173,9 @@ MonoBehaviour:
   DmgEffect: {fileID: 5773911161201639705, guid: fdbb1f7b90e987d45b14ce1087e50918, type: 3}
   islayer:
     serializedVersion: 2
-    m_Bits: 35848
+    m_Bits: 33800
   pos: {fileID: 0}
   Dmg: 2
-  SkillDmg: 0
-  speed: 25
+  SkillDmg: 3
+  speed: 20
   spriteRenderer: {fileID: 2037286392937857263}

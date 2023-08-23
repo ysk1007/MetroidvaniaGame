@@ -346,14 +346,23 @@ public abstract class Enemy : MonoBehaviour
                     StartCoroutine(Hit(Pdamage));
                 }
             }
+            else if(collision.tag == "Skill_arrow")
+            {
+                arrow = collision.GetComponent<Arrow>();
+                if (arrow != null)
+                {
+                    Pdamage = arrow.SkillDmg;
+                    StartCoroutine(Hit(Pdamage));
+                }
+            }
             else if (collision.tag == "Slash")
             {
                 slash = collision.GetComponent<Effect>();
                 if (slash != null)
                 {
                     Pdamage = slash.Dmg;
-                    player.slashBleedStack++;
-                    Debug.Log("슬래시 스택 쌓음");
+                    if (bleedLevel <= 5 && player.proLevel > 0)
+                        bleedLevel += 1;
                     StartCoroutine(Hit(Pdamage));
                 }
             }

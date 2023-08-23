@@ -48,6 +48,7 @@ public class Player : MonoBehaviour
     public bool isCharging = false; // 차징 상태 여부
     public float chargeTimer = 0f; // 차징 시간을 측정하는 타이머
     public float ArrowDistance = 0.75f;
+    public bool Axepro = true;
     public PlayerCanvas playerCanvas; //추가함
 
     public static Player instance; //추가함
@@ -79,8 +80,8 @@ public class Player : MonoBehaviour
     public float bleedDamage = 3f; // 2023-08-01 출혈 데미지
     public static float bloodBoomDmg = 25f;  // 출혈스택 터뜨리는 데미지
     public static string playerTag;    // 2023-08-11 추가 (플레이어 무기 태그)
-    private List<Collider2D> enemyColliders = new List<Collider2D>();   //공격 몬스터 체크
-    private List<Enemy> enemyCheck = new List<Enemy>(); // Enemy 타입 리스트로 변경
+    public List<Collider2D> enemyColliders = new List<Collider2D>();   //공격 몬스터 체크
+    public List<Enemy> enemyCheck = new List<Enemy>(); // Enemy 타입 리스트로 변경
 
     //선택능력치 밸류
     public float[] selectAtkValue = { 0.1f, 0.2f, 0.3f };
@@ -114,12 +115,12 @@ public class Player : MonoBehaviour
     public GameObject BowSkill;  // 활 기본스킬 오브젝트
     public GameObject BowMaster; // 활 숙련도 화살 오브젝트
     public GameObject HolyArrow; // 활 숙련도 화살 오브젝트
+    public GameObject Axebuf; // 도끼 숙련도 0렙 패시브 버프
 
     public Transform Arrowpos; //화살 생성 오브젝트
     public Transform Arrowpos2; //증가된 화살  오브젝트
     public Transform Attackpos;   //공격박스 위치
     public Transform Skillpos;  // 스킬 생성 오브젝트
-    public Transform Axepos;   //스킬 생성 위치
 
     public AudioClip SwordAtkSound;
     public AudioClip SwordSkillSound;
@@ -141,7 +142,6 @@ public class Player : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public Enemy enemy;
     Projective_Body PBody;
-
     Rigidbody2D rigid;
     public Animator anim;
     new AudioSource audio;
@@ -177,7 +177,6 @@ public class Player : MonoBehaviour
         Arrowpos = transform.GetChild(1).GetComponentInChildren<Transform>(); //Arrowpos의 위치값을 pos에 저장
         Arrowpos2 = transform.GetChild(2).GetComponentInChildren<Transform>(); //Arrowpos2의 위치값을 pos에 저장
         Skillpos = transform.GetChild(3).GetComponentInChildren<Transform>(); //Skillpos의 위치값을 pos에 저장
-        Axepos = transform.GetChild(7).GetComponentInChildren<Transform>(); //Axepos의 위치값을 pos에 저장
         Ui = GameManager.GetComponent<Ui_Controller>();
     }
 
@@ -189,15 +188,12 @@ public class Player : MonoBehaviour
         anim.SetFloat("AttackSpeed", ATS);
         OptionManager.instance.Playing = true;
         Invoke("HpRegen", 1f);
+        
     }
 
     void Update()
     {
         playerTag = this.gameObject.transform.GetChild(0).tag;
-        if (enemy != null)
-        {
-            stackbleed = (enemy.bleedLevel + slashBleedStack); // 2023-08-09 추가 
-        }
         Player_Move();  //Player의 이동, 점프, 속도 함수
         Player_Attack();    //Player의 공격 함수
         if (UseGridSword) //추가함
@@ -214,7 +210,6 @@ public class Player : MonoBehaviour
         {
             Speed = SpeedChange;
             Transform AtkRangeTransform = transform.GetChild(0);   // AttackRange 위치값 변경을 위해 자식오브젝트 위치값 불러옴
-            Transform AxeposTransform = transform.GetChild(7);   //Axepos 위치값 변경 위해 자식오브젝트 위치값 가져옴
             anim.SetBool("Player_Walk", true);
             if (Direction < 0) //왼쪽 바라보기
             {
@@ -222,7 +217,6 @@ public class Player : MonoBehaviour
                 transform.Translate(new Vector2(-1, 0) * Speed * Time.deltaTime);
                 slideDir = -1;
                 AtkRangeTransform.localPosition = new Vector3(-3, 0); // AttackRange 위치값 변경
-                AxeposTransform.localPosition = new Vector3(-3, -(0.8f));   //Axepos 위치값 변경
             }
             else if (Direction > 0) //오른쪽 바라보기
             {
@@ -230,7 +224,6 @@ public class Player : MonoBehaviour
                 transform.Translate(new Vector2(1, 0) * Speed * Time.deltaTime);
                 slideDir = 1;
                 AtkRangeTransform.localPosition = new Vector3(0, 0);
-                AxeposTransform.localPosition = new Vector3(3, -(0.8f));
             }
         }
         else
@@ -289,7 +282,7 @@ public class Player : MonoBehaviour
             Bow_MsTime -= Time.deltaTime;
         }
 
-        if (Input.GetKeyDown(KeyCode.S) && !anim.GetBool("Sliding") && !isSkill && !isMasterSkill)  //기본 스킬 실행
+        if (Input.GetKeyDown(KeyCode.S) && !anim.GetBool("Sliding") && !isSkill && !isMasterSkill && !isdelay)  //기본 스킬 실행
         {
             if (WeaponChage == 1 && Sword_SkTime <= 0 && !anim.GetBool("sword_atk"))    //Sword
             {
@@ -310,7 +303,6 @@ public class Player : MonoBehaviour
                 StartCoroutine(Skill());
                 Bow_SkTime = DeCoolTimeCarcul(SkillTime[2]); //스킬쿨 수정함
                 isSkill = true;
-                StartCoroutine(Skill());
             }
         }
         if (Sword_SkTime >= 0)   //Sword 스킬 쿨타임 
@@ -416,6 +408,12 @@ public class Player : MonoBehaviour
                 }
             }
         }
+
+        if (proLevel == 0 && proSelectWeapon == 1 && Axepro == true) // 도끼 숙련도 0일 때 발동
+        {
+            StartCoroutine(proSkill());
+            Axepro = false;
+        }
     }
 
     public void AttackDamage()// Player 공격시 적에게 대미지값 넘겨주기
@@ -434,7 +432,7 @@ public class Player : MonoBehaviour
                     {
                         StartCoroutine(enemy.Hit(Dmg));
                         Debug.Log(Dmg + "Player");
-                        if (proSelectWeapon == 0 && proLevel >= 2)
+                        if (proSelectWeapon == 0 && proLevel >= 2)  // 출혈이 있는 몬스터를 리스트에 저장
                         {
                             BoxCollider2D boxCollider = collider.GetComponent<BoxCollider2D>();
                             if (boxCollider != null)
@@ -451,21 +449,18 @@ public class Player : MonoBehaviour
     {
         if (WeaponChage == 1) //sword 스킬
         {
-            StartCoroutine(SkillDelay());
             Transform SkillTransform = transform.GetChild(3);   //검 스킬 오브젝트 위치값 저장
             if (slideDir == 1)
-            {
-                SkillTransform.localPosition = new Vector3(2, 0.2f);
-            }
+                SkillTransform.localPosition = new Vector3(1, 0.2f);
             else
-            {
-                SkillTransform.localPosition = new Vector3(-2, 0.2f);
-            }
-            Instantiate(Slash, Skillpos.position, transform.rotation); // 검기 복사 생성
+                SkillTransform.localPosition = new Vector3(-1, 0.2f);
+
             PlaySound("SwordSkill");
+            Instantiate(Slash, Skillpos.position, transform.rotation); // 검기 복사 생성
             yield return new WaitForSeconds(0.2f);
             SwdCnt = 1;
             Sword_SkTime = SkillTime[0];
+            isSkill = false;
         }
         if (WeaponChage == 2) //Axe 스킬
         {
@@ -478,16 +473,35 @@ public class Player : MonoBehaviour
         }
         if (WeaponChage == 3) //Arrow 스킬
         {
-            anim.SetTrigger("arrow_atk");
-            StartCoroutine(SkillDelay());
+            anim.SetTrigger("arrow_atk");   //애니메이션에 Bow_Attack 함수 실행이 들어가있음
             Bow_SkTime = SkillTime[2];
         }
     }
-
+    IEnumerator proSkill()
+    {
+        Vector3 Axepro = new Vector3(this.transform.position.x, this.transform.position.y);
+        GameObject Axe = Instantiate(Axebuf, transform.parent);
+        Axe.transform.position = Axepro;
+        yield return new WaitForSeconds(0.5f);
+        Transform trans;
+        Vector3 scaleVector = new Vector3(1, 1, 1); // 스케일 값 변화를 저장할 Vector3 변수
+        trans = GetComponent<Transform>();
+        scaleVector.x = 1.5f;
+        scaleVector.y = 1.5f;
+        trans.localScale = scaleVector;
+        MaxHp += 50;
+        CurrentHp += 50;
+        Def += 50;
+        SpeedChange = 3;
+        slideSpeed = 10;
+        Destroy(Axe);
+    }
     IEnumerator MasterSkill()
     {
         if (WeaponChage == 1 && proSelectWeapon == 0 && Sword_MsTime <= 0) //Sword 숙련도 스킬
         {
+            stackbleed = enemy.bleedLevel;  //2023 - 08 - 09 추가
+
             if (stackbleed > 0)
             {
                 isMasterSkill = true;
@@ -526,7 +540,6 @@ public class Player : MonoBehaviour
             anim.SetTrigger("axe_atk");
             yield return new WaitForSeconds(1.5f);
             //PlaySound("AxeMasterSkill"); // 애니메이션에 실행 있음
-            //Instantiate(AxeSkill, Axepos.position, transform.rotation);
             AxeMasterSkill();
             Axe_MsTime = MasterSkillTime[1];
             yield return new WaitForSeconds(1f);
@@ -536,7 +549,6 @@ public class Player : MonoBehaviour
         {
             isMasterSkill = true;
             anim.SetTrigger("arrow_atk");
-            StartCoroutine(SkillDelay());
             yield return new WaitForSeconds(0.5f);
             PlaySound("BowMasterSkill");
             Bow_MsTime = MasterSkillTime[2];
@@ -546,13 +558,24 @@ public class Player : MonoBehaviour
     //Wall_Slide
     void OnCollisionStay2D(Collision2D collision)   // 벽 콜라이젼이 Player에 닿고 있으면 실행, 점프착지 시 콜라이젼 닿을 시 점프 해제
     {
-        RaycastHit2D rayHitDown = Physics2D.Raycast(rigid.position, Vector3.down, 1f, LayerMask.GetMask("Tilemap", "Pad"));
-        //Debug.DrawRay(rigid.position, Vector3.down * 1f, Color.red);
+        RaycastHit2D rayHitDown = Physics2D.Raycast(rigid.position, Vector3.down, 1.5f, LayerMask.GetMask("Tilemap", "Pad"));
+        RaycastHit2D rayHitRight = Physics2D.Raycast(rigid.position, Vector3.right, 1.5f, LayerMask.GetMask("Tilemap"));
+        RaycastHit2D rayHitLeft = Physics2D.Raycast(rigid.position, Vector3.left, 1.5f, LayerMask.GetMask("Tilemap"));
 
         if (collision.gameObject.tag == "Wall" && !isGround)
         {
             anim.SetBool("Wall_slide", true);
             rigid.drag = 10;
+            if (rayHitLeft.collider != null && Input.GetKeyDown(KeyCode.Space))
+            {
+                rigid.velocity = new Vector2(1, 1) * 10f;
+                spriteRenderer.flipX = true;
+            }
+            if (rayHitRight.collider != null && Input.GetKeyDown(KeyCode.Space))
+            {
+                rigid.velocity = new Vector2(-1, 1) * 10f;
+                spriteRenderer.flipX = false;
+            }
         }
         if (collision.gameObject.tag == "Pad" || collision.gameObject.tag == "Tilemap" && !isGround)
         {
@@ -571,14 +594,6 @@ public class Player : MonoBehaviour
         {
             anim.SetBool("Wall_slide", false);
             rigid.drag = 0;
-        }
-
-        if (collision.gameObject.tag == "Wall" && Input.GetKey(KeyCode.Space)) //벽에서 점프시 반대로 팅겨감
-        {
-            if (Direction > 0)
-                rigid.velocity = new Vector2(1, 1) * 10f;
-            if (Direction < 0)
-                rigid.velocity = new Vector2(-1, 1) * 10f;
         }
     }
 
@@ -622,7 +637,6 @@ public class Player : MonoBehaviour
         Speed = SpeedChange;
         yield return new WaitForSeconds(SlidingCool); //슬라이딩 쿨타임
         isSlide = false;
-
     }
 
     public void Playerhurt(float Damage, Vector2 pos) // Player가 공격받을 시
@@ -674,7 +688,7 @@ public class Player : MonoBehaviour
 
     }
 
-    IEnumerator Attack_delay() //연속공격 딜레이
+    IEnumerator Attack_delay() //기본공격 딜레이
     {
         yield return new WaitForSeconds(delayTime);
         isdelay = false;
@@ -735,19 +749,18 @@ public class Player : MonoBehaviour
     }
     IEnumerator Bow_attack() //화살 일반공격 및 스킬 - 애니메이션 특정 부분에서 실행되게 유니티에서 설정함
     {
-        yield return null;
         Transform ArrowposTransform = transform.GetChild(1);  // 기본 화살
         Transform Arrowpos2Transform = transform.GetChild(2); // 증가 화살
 
         if (slideDir == 1)   //공격 방향별 Arrowpos 위치값 변경
         {
-            ArrowposTransform.localPosition = new Vector3(1, 0.2f);
-            Arrowpos2Transform.localPosition = new Vector3(1, -0.5f);
+            ArrowposTransform.localPosition = new Vector3(-0.2f, 0.3f);
+            Arrowpos2Transform.localPosition = new Vector3(-0.7f, -0.4f);
         }
         else
         {
-            ArrowposTransform.localPosition = new Vector3(-1, 0.2f);
-            Arrowpos2Transform.localPosition = new Vector3(-1, -0.5f);
+            ArrowposTransform.localPosition = new Vector3(0.2f, 0.3f);
+            Arrowpos2Transform.localPosition = new Vector3(0.7f, -0.4f);
         }
 
         if (isSkill)
@@ -767,7 +780,6 @@ public class Player : MonoBehaviour
             PlaySound("BowAtk");
         }
 
-
         if (slideDir == 1)  //플레이어가 바라보는 방향 왼쪽
         {
             if (!isSkill)
@@ -782,19 +794,12 @@ public class Player : MonoBehaviour
             else
                 rigid.velocity = new Vector2(transform.localScale.x + 10f, Time.deltaTime);
         }
-    }
-
-    IEnumerator SkillDelay() //스킬 종료 시간 - 애니메이션 속도와 맞춰주려고 추가함
-    {
-        if (WeaponChage == 1)
-            yield return new WaitForSeconds(0.6f);
-        else if (WeaponChage == 2)
-            yield return new WaitForSeconds(0.5f);
-        else
-            yield return new WaitForSeconds(1.3f);
-
-        isSkill = false;
-        isMasterSkill = false;
+        yield return new WaitForSeconds(0.4f);
+        if(isSkill == true || isMasterSkill == true)
+        {
+            isSkill = false;
+            isMasterSkill = false;
+        } 
     }
 
     IEnumerator Dash() //일부 공격시 앞으로 대쉬 이동 - 애니메이션 특정 부분에서 실행되게 유니티에서 설정함
