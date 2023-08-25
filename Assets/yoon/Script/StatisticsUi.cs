@@ -33,7 +33,6 @@ public class StatisticsUi : MonoBehaviour
 
         // 목표 위치를 화면 중앙으로 설정
         targetPosition = new Vector2(0f, 0f);
-        Debug.Log(targetPosition);
     }
 
     private void Update()
