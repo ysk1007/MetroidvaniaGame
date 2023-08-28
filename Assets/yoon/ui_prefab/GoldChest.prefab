@@ -135,7 +135,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1663748615049300108}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 73.176575, y: -3.36, z: -0.018178}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -238,6 +238,7 @@ MonoBehaviour:
   sfx: {fileID: -7637710796419038458}
   goldChest: 1
   coin: {fileID: 1351812554138216957, guid: 429da86f468b6e2478de0e7a27992e16, type: 3}
+  potion: {fileID: 1351812554138216957, guid: 71b674b83aab4504bb7a9fe11bf8ff4b, type: 3}
   forceStrength: 10
   dir: 1
   pos: {fileID: 1313177193867134798}

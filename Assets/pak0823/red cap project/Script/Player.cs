@@ -73,6 +73,9 @@ public class Player : MonoBehaviour
     public int EnemyKillCount = 0;
     public float TotalGetGold = 0f;
     public float TotalDamaged = 0f;
+    public bool FirstMaterial = false;
+    public bool SecondMaterial = false;
+    public bool ThirdMaterial = false;
     public float enemyPower;
     public int stackbleed;  // 몬스터에 쌓인 출혈 스택
     public int slashBleedStack; 
@@ -619,13 +622,13 @@ public class Player : MonoBehaviour
         if (slideDir == 1) //오른쪽으로 슬라이딩
         {
             rigid.velocity = new Vector2(transform.localScale.x * slideSpeed, Time.deltaTime);
-            SlideTransform.localPosition = new Vector3((float)-1.1, (float)-0.4); // Smoke 위치값 변경
+            SlideTransform.localPosition = new Vector3((float)-1.3, (float)-1.12); // Smoke 위치값 변경
             SlideTransform.eulerAngles = new Vector3(0, 0, 0);
         }
         if (slideDir == -1) //왼쪽으로 슬라이딩
         {
             rigid.velocity = new Vector2((transform.localScale.x * -1 * slideSpeed), Time.deltaTime);
-            SlideTransform.localPosition = new Vector3((float)1.1, (float)-0.4); // Smoke 위치값 변경
+            SlideTransform.localPosition = new Vector3((float)1.3, (float)-1.12); // Smoke 위치값 변경
             SlideTransform.eulerAngles = new Vector3(0, 180, 0);
         }
         this.transform.GetChild(4).gameObject.SetActive(true);
@@ -754,13 +757,13 @@ public class Player : MonoBehaviour
 
         if (slideDir == 1)   //공격 방향별 Arrowpos 위치값 변경
         {
-            ArrowposTransform.localPosition = new Vector3(-0.2f, 0.3f);
-            Arrowpos2Transform.localPosition = new Vector3(-0.7f, -0.4f);
+            ArrowposTransform.localPosition = new Vector3(-0.2f, -0.4f);
+            Arrowpos2Transform.localPosition = new Vector3(-0.7f, -0.9f);
         }
         else
         {
-            ArrowposTransform.localPosition = new Vector3(0.2f, 0.3f);
-            Arrowpos2Transform.localPosition = new Vector3(0.7f, -0.4f);
+            ArrowposTransform.localPosition = new Vector3(0.2f, -0.4f);
+            Arrowpos2Transform.localPosition = new Vector3(0.7f, -0.9f);
         }
 
         if (isSkill)

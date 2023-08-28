@@ -6,6 +6,7 @@ using TMPro;
 
 public class StatisticsUi : MonoBehaviour
 {
+    public DataManager dm;
     public Player p;
     public OptionManager op;
     public TextMeshProUGUI TitleText;
@@ -13,6 +14,8 @@ public class StatisticsUi : MonoBehaviour
     public TextMeshProUGUI GetGoldText;
     public TextMeshProUGUI TotalDmageText;
     public TextMeshProUGUI PlayTimeText;
+    public TextMeshProUGUI GetItemText;
+    public GameObject List;
 
     public Animator anim;
     public float fallSpeed = 750f;
@@ -63,6 +66,7 @@ public class StatisticsUi : MonoBehaviour
     {
         p = Player.instance;
         op = OptionManager.instance;
+        dm = DataManager.instance;
         KillCountText.text = p.EnemyKillCount.ToString();
         GetGoldText.text = p.TotalGetGold.ToString("F0")+" G";
         TotalDmageText.text = p.TotalDamaged.ToString("F0");
@@ -70,6 +74,12 @@ public class StatisticsUi : MonoBehaviour
         if (GameClear)
         {
             TitleText.text = "게임 클리어!";
+        }
+        List<GameObject> find = dm.finditem();
+        GetItemText.text = (find.Count).ToString();
+        for (int i = 0; i < find.Count-1; i++)
+        {
+            Instantiate(find[i], List.transform);
         }
     }
 }

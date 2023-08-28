@@ -25,9 +25,14 @@ public class SaveData
     public int EnemyKill = 0;
     public float TotalGetGold = 0f;
     public float TotalDamaged = 0f;
+    public int TotalItems = 0;
 
     public string[] LastMarketList;
     public string LastChestItem;
+
+    public bool FristMaterial;
+    public bool SecondMaterial;
+    public bool ThirdMaterial;
 }
 
 [System.Serializable]
@@ -129,6 +134,9 @@ public class DataManager : MonoBehaviour
     public int[] CurrentStage;
     public itemStatus[] LastMarketList = new itemStatus[6];
     public string LastChestItem;
+
+    private int count;
+    public List<GameObject> finditemList;
     private void Awake()
     {
         if (instance == null)
@@ -197,6 +205,9 @@ public class DataManager : MonoBehaviour
                             Player.instance.EnemyKillCount = saveData.EnemyKill;
                             Player.instance.TotalGetGold = saveData.TotalGetGold;
                             Player.instance.TotalDamaged = saveData.TotalDamaged;
+                            Player.instance.FirstMaterial = saveData.FristMaterial;
+                            Player.instance.SecondMaterial = saveData.SecondMaterial;
+                            Player.instance.ThirdMaterial = saveData.ThirdMaterial;
                             OptionManager.instance.TotalPlayTime = saveData.PlayTime;
                             Proficiency_ui.instance.proWeaponIndex = saveData.proWeaponSellect;
                             Proficiency_ui.instance.proLevel = saveData.proLevel;
@@ -325,6 +336,9 @@ public class DataManager : MonoBehaviour
                     jsonsave.TotalGetGold = Player.instance.TotalGetGold;
                     jsonsave.TotalDamaged = Player.instance.TotalDamaged;
                     jsonsave.LastChestItem = LastChestItem;
+                    jsonsave.FristMaterial = Player.instance.FirstMaterial;
+                    jsonsave.SecondMaterial = Player.instance.SecondMaterial;
+                    jsonsave.ThirdMaterial = Player.instance.ThirdMaterial;
                 }
                 //Debug.Log("디버그 : 플레이어 데이터 저장 완료");
                 break;
@@ -442,6 +456,10 @@ public class DataManager : MonoBehaviour
         //Debug.Log("디버그 : 숙련도 데이터 생성 완료");
         saveData.LastMarketList = new string[6];
         saveData.LastChestItem = null;
+        saveData.FristMaterial = false;
+        saveData.SecondMaterial = false;
+        saveData.ThirdMaterial = false;
+        saveData.TotalItems = 0;
         string Playerjson = JsonUtility.ToJson(saveData, true);
         File.WriteAllText(PlayerPath, Playerjson);
     }
@@ -735,6 +753,24 @@ public class DataManager : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public List<GameObject> finditem()
+    {
+        UnlockList Json;
+
+        string path = Application.dataPath + "/Resources";
+        string fromJsonData = File.ReadAllText(path + "/UnlockItemList.txt");
+        Json = JsonUtility.FromJson<UnlockList>(fromJsonData);
+        for (int i = 0; i < Json.items.Count; i++)
+        {
+            if (Json.items[i].isUnlock == true)
+            {
+                GameObject finditem = Resources.Load<GameObject>("item/" + Json.items[i].ItemName);
+                finditemList.Add(finditem);
+            }
+        }
+        return finditemList;
     }
 
     public void DeleteJson()

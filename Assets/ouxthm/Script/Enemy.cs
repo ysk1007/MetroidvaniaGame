@@ -1336,6 +1336,7 @@ public abstract class Enemy : MonoBehaviour
     {
         if (Dying)
         {
+            Player.instance.FirstMaterial = true;
             BossSpriteBox.enabled = false;
             rigid.isKinematic = true;
             gameObject.transform.Translate(Vector2.down * Time.deltaTime * 5);
@@ -1592,6 +1593,7 @@ public abstract class Enemy : MonoBehaviour
     {
         if (Enemy_HP <= 0 && !Dying)
         {
+            Player.instance.ThirdMaterial = true;
             animator.runtimeAnimatorController = PageAnimators[1];
             Dying = true;
             bossBox.enabled = false;
@@ -1862,7 +1864,7 @@ public abstract class Enemy : MonoBehaviour
         for (int i = 0; i < MagicArrowAngles.Length; i++)
         {
             Invoke("MagicArrowCreate", time);
-            time += 0.05f;
+            time += 0.075f;
         }
         MagicArrowCount = 0;
     }

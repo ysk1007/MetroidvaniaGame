@@ -45,6 +45,10 @@ public class MouseOnItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 MouseOn = false;
                 Destroy(instance);
             }
+            else if (slot_type == "Material")
+            {
+                return;
+            }
             else
             {
                 Debug.Log("해제");
@@ -98,6 +102,12 @@ public class MouseOnItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             vc.y = 60;
             tiptext = "우클릭 하여 구매";
             pricetext = "구매가 : ";
+        }
+        else if (slot_type == "Material")
+        {
+            vc.y = -360;
+            tiptext = "";
+            pricetext = "";
         }
         else
         {

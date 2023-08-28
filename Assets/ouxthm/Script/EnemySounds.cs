@@ -56,6 +56,8 @@ public class EnemySounds : MonoBehaviour
     public AudioClip snailHit;
     public AudioClip snailDie;
 
+    public AudioClip golemLaser;
+
     private void Awake()
     {
         audioSource = this.gameObject.GetComponentInParent<AudioSource>();
@@ -127,6 +129,7 @@ public class EnemySounds : MonoBehaviour
     public void NecDie()
     {
         Sounds("necDie");
+        Player.instance.SecondMaterial = true;
     }
     public void SlimeHit()
     {
@@ -207,6 +210,11 @@ public class EnemySounds : MonoBehaviour
     public void SnailDie()
     {
         Sounds("snailDie");
+    }
+
+    public void GolemLaser()
+    {
+        Sounds("golemLaser");
     }
     public void Sounds(string sounds)
     {
@@ -322,6 +330,9 @@ public class EnemySounds : MonoBehaviour
                 break;
             case "snailDie":
                 audioSource.clip = snailDie;
+                break;
+            case "golemLaser":
+                audioSource.clip = golemLaser;
                 break;
         }
         audioSource.Play();

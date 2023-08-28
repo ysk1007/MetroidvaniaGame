@@ -13,6 +13,7 @@ public class MagicArrow : MonoBehaviour
     public Player player;
     public float rotationSpeed = 5f;
     public SpriteRenderer sprite;
+    public AudioSource sfx;
     private void Start()
     {
         player = Player.instance;
@@ -58,5 +59,6 @@ public class MagicArrow : MonoBehaviour
     {
         isShoot = true;
         sprite.enabled = false;
+        sfx.Play();
     }
 }
