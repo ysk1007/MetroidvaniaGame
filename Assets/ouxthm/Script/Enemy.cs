@@ -1223,7 +1223,7 @@ public abstract class Enemy : MonoBehaviour
 
         atkPattern = Random.Range(1, 4);
         nextNum = Random.Range(4, 7);
-        Invoke("randomAtk", nextNum);
+        Invoke("randomAtk", 3f);
     }
 
     public void bossSoul()      // ¿µÈ¥ ¹ß»ç
