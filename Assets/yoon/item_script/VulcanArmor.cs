@@ -4,20 +4,21 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GridsSword : itemStatus
+public class VulcanArmor : itemStatus
 {
     public override void InitSetting()
     {
         data.itemimg = this.GetComponent<Image>();
-        data.itemName = "그리드의 검";
-        data.itemNameEng = "GridsSword";
-        data.itemPrice = 4500;
-        data.color = Color.yellow;
-        data.Rating = "신화";
-        data.itemExplanation = "\"돈은 곧 힘!\" \n-그리드-";
-        data.itemStat = "골드 획득량 +77% \n보유한 골드 777 당, 공격력이 7 증가합니다.";
-        data.itemNumber = 19;
-        data.GoldGet = 0.77f;
+        data.itemName = "불카누스의 갑옷";
+        data.itemNameEng = "VulcanArmor";
+        data.itemPrice = 3150;
+        data.color = Color.red;
+        data.Rating = "전설";
+        data.itemExplanation = "최선의 방어는 공격이다";
+        data.itemStat = "최대 체력 +30\n방어력 +30\n보유한 방어력 10당, 공격력이 10 증가합니다.";
+        data.itemNumber = 39;
+        data.MaxHp = 30;
+        data.Def = 30;
     }
 
     public override void SpecialPower()
@@ -26,13 +27,13 @@ public class GridsSword : itemStatus
         Player p = Player.instance;
         if (!data.SpecialPower)
         {
-            p.UseGridSword = false;
-            p.GridPower = 0f;
+            p.UseVulcanArmor = false;
+            p.VulcanPower = 0f;
             ui.UiUpdate();
         }
         if (data.SpecialPower)
         {
-            p.GridsSword();
+            p.VulcanArmor();
         }
     }
 

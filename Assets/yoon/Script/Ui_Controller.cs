@@ -33,7 +33,7 @@ public class Ui_Controller : MonoBehaviour
     public GameObject Status_screen;
     public GameObject WeaponSelect_screen;
     public GameObject DescriptionBox;
-    public StatisticsUi StatisticsUi;
+    public GameObject StatisticsUi;
     private bool openinven = false;
     public bool openMarket = false;
     public GameObject iconObject;
@@ -233,7 +233,7 @@ public class Ui_Controller : MonoBehaviour
         PlayerCurrentHpText.text = PlayerHp.currentHp.ToString("F0");
 
         //인벤토리 갱신
-        AtkPowerValueText.text = (player.AtkPower + player.ATP + player.GridPower).ToString("F0");
+        AtkPowerValueText.text = (player.AtkPower + player.ATP + player.GridPower + player.VulcanPower).ToString("F0");
         DefValueText.text = player.Def.ToString();
         AtkSpeedValueText.text = player.ATS.ToString("F1");
         CriticalChanceText.text = (player.CriticalChance * 100f).ToString() + "%";

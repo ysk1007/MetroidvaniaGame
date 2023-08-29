@@ -5363,7 +5363,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   img_obj: {fileID: 3743811799928751493}
-  LoadingImage: {fileID: 0}
+  img: {fileID: 3743811799928751495}
+  LoadingImage: {fileID: 3743811800273623474}
   fadeSpeed: 2
 --- !u!114 &3743811799928751495
 MonoBehaviour:
@@ -17298,7 +17299,6 @@ GameObject:
   - component: {fileID: 3743811800985770491}
   - component: {fileID: 3743811800985770494}
   - component: {fileID: 3743811800985770493}
-  - component: {fileID: 3743811800985770492}
   m_Layer: 5
   m_Name: LoadingText
   m_TagString: Untagged
@@ -17423,24 +17423,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &3743811800985770492
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3743811800985770490}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f09c8e21a5857bf47b9f4b2cd2478755, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loadingText: {fileID: 3743811800985770493}
-  TipText: {fileID: 0}
-  ingame: 0
-  DoLoading: 0
-  FadeImg: {fileID: 0}
-  fade: {fileID: 0}
 --- !u!1 &3743811801003103550
 GameObject:
   m_ObjectHideFlags: 0

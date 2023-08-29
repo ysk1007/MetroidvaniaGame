@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Gate : MonoBehaviour
 {
-    Player player;
+    public GameObject key;
     Animator anim;
     MapManager mapManager;
     bool TouchPortal = false;
@@ -15,7 +15,6 @@ public class Gate : MonoBehaviour
     }
     private void Start()
     {
-        player = Player.instance.GetComponent<Player>();
         mapManager = MapManager.instance;
     }
 
@@ -25,12 +24,8 @@ public class Gate : MonoBehaviour
         {
             anim.SetBool("open", true);
             TouchPortal = true;
+            key.SetActive(true);
         }
-        else
-        {
-            anim.SetBool("open", false);
-        }
-            
     }
     private void OnTriggerExit2D(Collider2D other)
     {
@@ -38,9 +33,8 @@ public class Gate : MonoBehaviour
         {
             anim.SetBool("open", false);
             TouchPortal = false;
+            key.SetActive(false);
         }
-        else
-            anim.SetBool("open", true);
     }
 
     private void Update()
@@ -48,15 +42,7 @@ public class Gate : MonoBehaviour
         if (TouchPortal && Input.GetKeyDown(KeyCode.E))
         {
             TouchPortal = false;
-            StartCoroutine(Delay());
+            mapManager.StageMove = true;
         }
-    }
-
-
-    IEnumerator Delay()
-    {
-        yield return new WaitForSeconds(2f);
-        player.transform.position = new Vector3(0, 0, 0);
-        mapManager.StageMove = true;
     }
 }

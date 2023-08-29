@@ -77,5 +77,6 @@ public class MapManager : MonoBehaviour
         CurrentStage = dm.CurrentStage;
         CurrentStagePrefab = Instantiate(Stage_Prefabs[CurrentStage[0], CurrentStage[1]], transform.parent);
         dm.NextStage();
+        Player.instance.transform.position = new Vector3(0, 0, 0);
     }
 }

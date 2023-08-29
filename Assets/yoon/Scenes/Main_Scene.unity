@@ -472,6 +472,9 @@ MonoBehaviour:
   clip: {fileID: 8300000, guid: 03fe61daccce2304384cc7dbf1aec1bc, type: 3}
   fade: {fileID: 1117441800}
   loading_ui: {fileID: 1756462614}
+  dm: {fileID: 0}
+  continueBtn: {fileID: 614505726}
+  noContinue: 0
   index: 
   currentIndex: 0
 --- !u!114 &296328185
@@ -1220,6 +1223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   img_obj: {fileID: 1117441796}
+  img: {fileID: 0}
   LoadingImage: {fileID: 1756462610}
   fadeSpeed: 2
 --- !u!1 &1169791768
@@ -2118,6 +2122,7 @@ MonoBehaviour:
   ItemPath: 
   SelectPath: 
   ItemUlockPath: 
+  OptionPath: 
   proData: {fileID: 0}
   soundData: {fileID: 712646396}
   sliderData: {fileID: 284867793}
@@ -2154,10 +2159,18 @@ MonoBehaviour:
   PlayerloadJson: 
   ItemloadJson: 
   SelectloadJson: 
-  PlayerDataLoadComplete: 0
-  SoundDataLoadComplete: 0
-  ItemDataLoadComplete: 0
+  OptionLoadJson: 
+  successCreateJson: 1
   CurrentStage: 
+  LastMarketList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  LastChestItem: 
+  finditemList: []
 --- !u!4 &2063750648
 Transform:
   m_ObjectHideFlags: 0

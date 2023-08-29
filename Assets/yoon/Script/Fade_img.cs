@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement; // 씬 이동 사용할때 참조
 public class Fade_img : MonoBehaviour
 {
     public GameObject img_obj; //효과 적용할 오브젝트를 담을 변수
-    private Image img;  //이미지 컴포넌트를 담을 이미지 변수
+    public Image img;  //이미지 컴포넌트를 담을 이미지 변수
     public GameObject LoadingImage;
     public float fadeSpeed = 0.5f; //Fade in/out 속도
 

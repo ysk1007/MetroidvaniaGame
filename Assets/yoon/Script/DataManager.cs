@@ -126,9 +126,7 @@ public class DataManager : MonoBehaviour
     public string SelectloadJson;
     public string OptionLoadJson;
 
-    public bool PlayerDataLoadComplete;
-    public bool SoundDataLoadComplete;
-    public bool ItemDataLoadComplete;
+    public bool successCreateJson = true;
 
     public static DataManager instance;
     public int[] CurrentStage;
@@ -171,7 +169,6 @@ public class DataManager : MonoBehaviour
         if (!File.Exists(PlayerPath)) //초기값 생성
         {
             //Debug.Log("디버그 : 사용자 데이터 없음");
-            CreateJson();
         }
         else 
         {
@@ -431,6 +428,7 @@ public class DataManager : MonoBehaviour
             CreateOptionJson();
         }
         //Debug.Log("디버그 : 데이터를 성공적으로 생성하였습니다");
+        successCreateJson = true;
     }
 
     public void CreatePlayerJson()
@@ -567,8 +565,10 @@ public class DataManager : MonoBehaviour
         items.Add(new DMUlcokItem("MiniStar", false));
         items.Add(new DMUlcokItem("HeroMask", false));
         items.Add(new DMUlcokItem("RepressionShield", false));
+        items.Add(new DMUlcokItem("ThreePeas", false));
         items.Add(new DMUlcokItem("TransmitterHammer", false));
         items.Add(new DMUlcokItem("SuspiciousMirror", false));
+        items.Add(new DMUlcokItem("VulcanArmor", false));
 
         // 데이터를 JSON 파일로 저장
         SaveToJson(items);
@@ -775,16 +775,29 @@ public class DataManager : MonoBehaviour
 
     public void DeleteJson()
     {
-        string filePath = Path.Combine(Application.dataPath + "/Resources", "PlayerData.json");
-
-        if (File.Exists(filePath))
+        string playPath = Path.Combine(Application.dataPath + "/Resources", "PlayerData.json");
+        if (File.Exists(playPath))
         {
-            File.Delete(filePath);
+            File.Delete(playPath);
             //Debug.Log("JSON 파일이 성공적으로 삭제되었습니다.");
         }
         else
         {
             //Debug.Log("삭제할 JSON 파일이 존재하지 않습니다.");
+        }
+    }
+
+    public bool findPlayerData()
+    {
+        string filePath = Path.Combine(Application.dataPath + "/Resources", "PlayerData.json");
+
+        if (File.Exists(filePath))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 }

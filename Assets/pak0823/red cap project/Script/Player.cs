@@ -156,11 +156,13 @@ public class Player : MonoBehaviour
     public bool UseRedCard = false;
     public bool NoNockback = false;
     public bool UseMirror = false;
+    public bool UseVulcanArmor = false;
     public Camera cam;
     public Animator TimeLoopAnim;
     public AudioSource TimeLoopSound;
     public GameObject PastErase;
     public float GridPower = 0f;
+    public float VulcanPower = 0f;
 
     public GameObject AxeMasterEfc;
     public int SkillCount = 1;
@@ -421,7 +423,7 @@ public class Player : MonoBehaviour
 
     public void AttackDamage()// Player 공격시 적에게 대미지값 넘겨주기
     {
-        //Dmg = ATP + AtkPower + GridPower;//변경함
+        //Dmg = ATP + AtkPower + GridPower + VulcanPower;//변경함
         box = transform.GetChild(0).GetComponentInChildren<BoxCollider2D>();
         if (box != null)    //공격 범위 안에 null값이 아닐때만
         {
@@ -462,7 +464,6 @@ public class Player : MonoBehaviour
             Instantiate(Slash, Skillpos.position, transform.rotation); // 검기 복사 생성
             yield return new WaitForSeconds(0.2f);
             SwdCnt = 1;
-            Sword_SkTime = SkillTime[0];
             isSkill = false;
         }
         if (WeaponChage == 2) //Axe 스킬
@@ -471,13 +472,11 @@ public class Player : MonoBehaviour
             PlaySound("AxeSkill");
             isShield = true;
             ShieldTime = 10f;
-            Axe_SkTime = SkillTime[1];
             isSkill = false;
         }
         if (WeaponChage == 3) //Arrow 스킬
         {
             anim.SetTrigger("arrow_atk");   //애니메이션에 Bow_Attack 함수 실행이 들어가있음
-            Bow_SkTime = SkillTime[2];
         }
     }
     IEnumerator proSkill()
@@ -527,7 +526,7 @@ public class Player : MonoBehaviour
                         enemyColliders.Remove(boxCollider);
                     }
                 }
-                Sword_MsTime = MasterSkillTime[0];
+                Sword_MsTime = DeCoolTimeCarcul(MasterSkillTime[0]);
             }
             else
             {
@@ -544,7 +543,7 @@ public class Player : MonoBehaviour
             yield return new WaitForSeconds(1.5f);
             //PlaySound("AxeMasterSkill"); // 애니메이션에 실행 있음
             AxeMasterSkill();
-            Axe_MsTime = MasterSkillTime[1];
+            Axe_MsTime = DeCoolTimeCarcul(MasterSkillTime[1]);
             yield return new WaitForSeconds(1f);
             isMasterSkill = false;
         }
@@ -554,7 +553,7 @@ public class Player : MonoBehaviour
             anim.SetTrigger("arrow_atk");
             yield return new WaitForSeconds(0.5f);
             PlaySound("BowMasterSkill");
-            Bow_MsTime = MasterSkillTime[2];
+            Bow_MsTime = DeCoolTimeCarcul(MasterSkillTime[2]);
         }
     }
 
@@ -666,7 +665,7 @@ public class Player : MonoBehaviour
                     {
                         GameManager.GetComponent<Ui_Controller>().Damage(Damage);
                         StartCoroutine(Die(x));
-                        GameManager.GetComponent<Ui_Controller>().StatisticsUi.isFalling = true;
+                        GameManager.GetComponent<Ui_Controller>().StatisticsUi.SetActive(true);
                     }
                     else
                     {
@@ -700,7 +699,7 @@ public class Player : MonoBehaviour
     void Sword_attack() //Sword 공격 관련 정보
     {
         isdelay = true;
-        Dmg = ATP + AtkPower;
+        Dmg = ATP + AtkPower + GridPower + VulcanPower;//변경함
         box.size = new Vector2(3.5f, 2.5f);
         box.offset = new Vector2(1.5f, 0);
         anim.SetFloat("Sword", SwdCnt); //Blend를 이용해 일반공격과 스킬 애니메이션 구분 실행
@@ -717,11 +716,11 @@ public class Player : MonoBehaviour
 
         if (AxeCnt == 1) // 동작별 대미지 변경
         {
-            Dmg = ATP + AtkPower + GridPower;
+            Dmg = ATP + AtkPower + GridPower + VulcanPower;
         }
         else if (AxeCnt == 2)
         {
-            Dmg = ATP + AtkPower + GridPower +5;
+            Dmg = ATP + AtkPower + GridPower + VulcanPower + 5;
         }
         box.size = new Vector2(4f, 2.5f);
         if (slideDir == 1)   //공격 방향별 box.offset값을 다르게 적용
@@ -744,7 +743,7 @@ public class Player : MonoBehaviour
         isdelay = true;
         Speed = 0;
         AxeCnt = 3;
-        Dmg = (ATP + AtkPower + GridPower) * 3;
+        Dmg = (ATP + AtkPower + GridPower + VulcanPower) * 3;
         isCharging = false;
         chargeTimer = 0f;
         anim.SetFloat("Axe", AxeCnt); //차징 공격은 Axe_atk3 짧은 애니메이션으로 실행
@@ -1156,6 +1155,16 @@ public class Player : MonoBehaviour
         {
             GameManager.GetComponent<Ui_Controller>().UiUpdate();
             UseGridSword = true;
+        }
+    }
+
+    public void VulcanArmor()
+    {
+        VulcanPower = (Def / 10) * 10;
+        if (!UseVulcanArmor)
+        {
+            GameManager.GetComponent<Ui_Controller>().UiUpdate();
+            UseVulcanArmor = true;
         }
     }
 

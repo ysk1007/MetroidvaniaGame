@@ -79,7 +79,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -13
+  m_SortingOrder: -10
   m_Sprite: {fileID: 1956864686, guid: cd3db22b8d179bd4b93c9ab14a51ba6f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -175,6 +175,7 @@ MonoBehaviour:
   ps: {fileID: 3170063873744192988}
   sfx: {fileID: 5852144818124696067}
   Collider: {fileID: 6063399923696009927}
+  pt: 0
 --- !u!198 &3170063873744192988
 ParticleSystem:
   m_ObjectHideFlags: 0

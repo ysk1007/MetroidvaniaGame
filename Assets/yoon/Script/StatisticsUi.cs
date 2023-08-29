@@ -7,6 +7,8 @@ using TMPro;
 public class StatisticsUi : MonoBehaviour
 {
     public DataManager dm;
+    public Scene_Move sm;
+    public Fade_img fade;
     public Player p;
     public OptionManager op;
     public TextMeshProUGUI TitleText;
@@ -25,6 +27,8 @@ public class StatisticsUi : MonoBehaviour
     private RectTransform rectTransform;
     private Vector2 targetPosition;
 
+    public bool die = false;
+
     private void Start()
     {
         rectTransform = GetComponent<RectTransform>();
@@ -37,6 +41,7 @@ public class StatisticsUi : MonoBehaviour
         // 목표 위치를 화면 중앙으로 설정
         targetPosition = new Vector2(0f, 0f);
         Debug.Log(targetPosition);
+        isFalling = true;
     }
 
     private void Update()
@@ -54,6 +59,11 @@ public class StatisticsUi : MonoBehaviour
                 anim.SetTrigger("Play");
                 Setting();
             }
+        }
+        if (Input.GetKeyUp(KeyCode.Return) && die)
+        {
+            sm.Wait_And_SceneLoader("Title_Scene");
+            //fade.CallFadeOut();
         }
     }
 
@@ -81,5 +91,7 @@ public class StatisticsUi : MonoBehaviour
         {
             Instantiate(find[i], List.transform);
         }
+        dm.DeleteJson();
+        die = true;
     }
 }
