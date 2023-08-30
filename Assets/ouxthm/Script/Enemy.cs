@@ -271,7 +271,7 @@ public abstract class Enemy : MonoBehaviour
         bleeding();
     }
 
-    public virtual void bossOnetime()   // boss용 Awake문
+    public virtual void bossOnetime()   // NecBoss용 Awake문
     {
         Enemy_HPten = Enemy_HP * 0.15f;
         bleedingTime = 0f;
@@ -289,11 +289,11 @@ public abstract class Enemy : MonoBehaviour
         soulSpawn1 = this.gameObject.transform.GetChild(3).GetComponent<Transform>();
         soulSpawn2 = this.gameObject.transform.GetChild(4).GetComponent<Transform>();
 
-        randomAtk();
+        Invoke("randomAtk", 5f);
         bleeding();
     }
 
-    public virtual void orcbossOnetime()
+    public virtual void orcbossOnetime()    // OrcBoss Awake문
     {
         Pos = GetComponent<Transform>();
         BossSpriteBox = this.gameObject.GetComponent<BoxCollider2D>();
@@ -305,7 +305,7 @@ public abstract class Enemy : MonoBehaviour
         PbSpawn = this.gameObject.transform.GetChild(2).GetComponent<Transform>();
         Enemy_HPten = Enemy_HP * 0.1f;
         bleedingTime = 0f;
-        Invoke("OrcRandomAtk", 2f);
+        Invoke("OrcRandomAtk", 5f);
         bleeding();
     }
 

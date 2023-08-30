@@ -7,9 +7,11 @@ public class MoveCamera : MonoBehaviour
     [SerializeField] private Transform[] Boss;  // 보스오브젝트 (2023-08-14추가)
     [SerializeField] private GameObject[] bossName;  // 보스오브젝트 (2023-08-14추가)
     [SerializeField] private GameObject UI;     // InGameUI 
-
+    public MapManager map;
     public bool startFightBoss = false;   // 보스전 시작시 true 되었다가 false로 변환
-    public int stage;   // 추후 추가되는 MapManager에서 변수 가져오면 됨.
+    public int stage;   // 추후 추가되는 MapManager에서 변수 가져오면 됨.  큰 스테이지
+    public int stageSmall;  // 작은 스테이지
+    public bool watchBossname = false;  // 보스 이름 띄운 걸 봤는지 확인하는 변수
 
     float changeX;
     float changeY;
@@ -25,18 +27,35 @@ public class MoveCamera : MonoBehaviour
 
     void Start()
     {
+        map = MapManager.instance.GetComponent<MapManager>();
         height = Camera.main.orthographicSize;  // 카메라의 월드 공간에서의 세로 절반 사이즈
         width = height * Screen.width / Screen.height; // 카메라의 월드 공간에서의 가로 절반 사이즈
     }
 
     void LateUpdate()
     {
+        stage = map.CurrentStage[0];
+        stageSmall = map.CurrentStage[1];
+
+        if(stageSmall == 5 && !startFightBoss && !watchBossname)
+        {
+            startFightBoss = true;
+            Debug.Log("11111111");
+        }
+        else if(stageSmall != 5)
+        {
+            startFightBoss = false;
+            watchBossname = false;
+        }
+
         if (startFightBoss)
         {
-            Invoke("bossNameOn", 1.5f);
             WatchingBoss();
-            Invoke("bossNameOff", 3f);
-            Invoke("SituationTerminated", 3.5f);
+        }
+
+        if (startFightBoss && !watchBossname)
+        {
+            OnOffText();
         }
         else if (!startFightBoss)
         {
@@ -52,10 +71,17 @@ public class MoveCamera : MonoBehaviour
         bossName[stage].gameObject.SetActive(false);
         UI.SetActive(true); // InGameUI On
     }
-
     void SituationTerminated()  // 보스시작 종료
     {
         startFightBoss = false;
+        Debug.Log("제발 꺼");
+    }
+    void OnOffText()    // 보스 텍스트 띄웠다 내리는 함수를 실행하는 함수
+    {
+        Invoke("bossNameOn", 1.5f);
+        Invoke("bossNameOff", 3f);
+        Invoke("SituationTerminated", 3.5f);
+        watchBossname = true;
     }
 
     void WatchingPlayer()   // 플레이어 비추는 카메라 함수
@@ -78,20 +104,25 @@ public class MoveCamera : MonoBehaviour
 
         switch (stage)
         {
-            case 0:
+            case 0: // Stage 1
                 Camera.main.orthographicSize = 5f;
-                changeX = 4f;
-                changeY = 5.15f;
+                changeX = 19f;
+                changeY = 0f;
                 break;
-            case 1:
+            case 1: // Stage 2
                 Camera.main.orthographicSize = 3f;
-                changeX = 0f;
-                changeY = -6f;
+                changeX = 19f;
+                changeY = 1f;
+                break;
+            case 2: // Stage 3
+                Camera.main.orthographicSize = 3f;
+                changeX = 19f;
+                changeY = 1f;
                 break;
         }
 
         Vector3 vector3 = new Vector3(changeX, changeY);
-        transform.position = Vector3.Lerp(transform.position, Boss[stage].position + vector3, Time.deltaTime * speed);
+        transform.position = Vector3.Lerp(transform.position, vector3, Time.deltaTime * speed);
 
         float lx = size.x * 0.5f - width;
         float clampX = Mathf.Clamp(transform.position.x, -lx + center.x, lx + center.x);
