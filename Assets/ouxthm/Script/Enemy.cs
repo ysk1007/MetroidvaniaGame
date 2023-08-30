@@ -580,14 +580,14 @@ public abstract class Enemy : MonoBehaviour
                 enemyHit = true;
             }
         }
-        else if(Enemy_HP <= 0)
+        /*else if(Enemy_HP <= 0)
         {
             //StartCoroutine(Die());
             pro.GetProExp(Stage);
             ui.GetExp(Stage);
             ui.GetGold(Stage);
             player.EnemyKillCount++;
-        }
+        }*/
 
         enemyHit = false;
     }
@@ -619,12 +619,10 @@ public abstract class Enemy : MonoBehaviour
                 Split();
                 this.gameObject.SetActive(false);
                 Invoke("enemyDestroy", 1f);
-                Debug.Log("분열 1");
             }
             else if (Enemy_Mod == 9 && posi.localScale.y < 1f)  // 분열된 슬라임인 경우
             {
                 enemyDestroy();
-                Debug.Log("분열 2");
             }
             else if (Enemy_Mod != 9)
             {
@@ -699,13 +697,20 @@ public abstract class Enemy : MonoBehaviour
         enemyHit = false;
     }
 
-    void watcihingHP()
+    void watcihingHP()      // 체력이 0이면 Die 코루틴 실행하는 함수
     {
-        if(Enemy_HP <= 0 && !watching)
+        Player player = Player.instance.GetComponent<Player>();
+        Ui_Controller ui = GameManager.Instance.GetComponent<Ui_Controller>(); //윤성권 추가함
+        Proficiency_ui pro = GameManager.Instance.GetComponent<Proficiency_ui>(); // 숙련도 추가함
+        if (Enemy_HP <= 0 && !watching)
         {            
             watching = true;
             StopAllCoroutines();
             StartCoroutine(Die());
+            pro.GetProExp(Stage);
+            ui.GetExp(Stage);
+            ui.GetGold(Stage);
+            player.EnemyKillCount++;
         }
     }
 
