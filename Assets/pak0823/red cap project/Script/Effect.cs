@@ -30,7 +30,7 @@ public class Effect : MonoBehaviour
     private void Awake()
     {
         player = Player.instance.GetComponent<Player>();
-        Dmg = (10 + player.AtkPower + player.GridPower + player.VulcanPower) * Dmg;
+        Dmg = (player.ATP + player.AtkPower + player.GridPower + player.VulcanPower) * 2.5f;
     }
 
     private void Start()

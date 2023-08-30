@@ -64,6 +64,7 @@ public class MarketItem : MonoBehaviour
                         dm.GetComponent<DataManager>().UnlockListUpdate(itemNumber);
                         Instantiate(randomitem, iv.inven_slots[i].transform);
                         GameManager.Instance.GetComponent<inven>().updateUi();
+                        Destroy(GameManager.Instance.GetComponent<Ui_Controller>().DescriptionBox);
                         Destroy(this.gameObject);
                         break;
                     }

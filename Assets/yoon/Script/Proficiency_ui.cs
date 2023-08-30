@@ -35,7 +35,7 @@ public class Proficiency_ui : MonoBehaviour
     public TextMeshProUGUI Pro3SkillName;
     public Image Pro3UnlockImage;
 
-    public float[] ProValue = { 0.01f, 0.02f, 0.03f }; // 1,2,3 스테이지 값
+    public float[] ProValue = { 0.005f, 0.0075f, 0.01f }; // 1,2,3 스테이지 값
     private void Awake()
     {
         instance = this;
@@ -229,7 +229,7 @@ public class Proficiency_ui : MonoBehaviour
         {
             return;
         }
-        Profill.fillAmount += ProValue[stage];
+        Profill.fillAmount += ProValue[stage - 1];
     }
 
     public void DoStart()

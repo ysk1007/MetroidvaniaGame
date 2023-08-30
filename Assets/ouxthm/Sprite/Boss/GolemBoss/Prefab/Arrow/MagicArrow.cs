@@ -7,7 +7,7 @@ public class MagicArrow : MonoBehaviour
 {
     public Enemy boss;
     public float moveSpeed = 10f;
-    public float Damage = 40f;
+    public float Damage = 30f;
     public bool isShoot;
     public Transform target; // 타겟 오브젝트 설정
     public Player player;

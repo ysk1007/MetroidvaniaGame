@@ -6,8 +6,9 @@ public class Boar : Enemy
 {
     public override void InitSetting()  // 적의 기본 정보를 설정하는 함수
     {
+        Stage = 1;
         Enemy_Mod = 11;
-        Enemy_HP = 40f;  // 적의 체력
+        Enemy_HP = 80f;  // 적의 체력
         Enemy_Speed = 8f;    // 적의 이동속도
         Gap_Distance_X = 99f;  // Enemy와 Player의 X 거리차이
         Gap_Distance_Y = 99f;  // Enemy와 Player의 Y 거리차이
@@ -15,7 +16,7 @@ public class Boar : Enemy
         Enemy_Dying_anim_Time = 1.1f;   // 죽는 애니메이션 실행 시간
         Enemy_Sensing_X = 10f; // 플레이어 인지 X값
         Enemy_Sensing_Y = 5f;  // 플레이어 인지 Y값
-        Bump_Power = 8; // 충돌 시 줄 데미지
+        Bump_Power = 35; // 충돌 시 줄 데미지
         bleedLevel = 0; // 받은 출혈량
         AmIBoss = false;    //  보스가 아님
     }

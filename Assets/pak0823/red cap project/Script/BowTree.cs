@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BowTree : MonoBehaviour
 {
-    public float deleteTime = 10f;
+    public float deleteTime = 10.5f;
     public float Dmg;
     public float speed = 1f;
     public int maxEnemies = 10;  // 최대 몬스터 수
@@ -21,7 +21,6 @@ public class BowTree : MonoBehaviour
         player = Player.instance;
         audio = GetComponent<AudioSource>();
         player = Player.instance;
-        Dmg = player.Dmg / 2;
     }
 
     public void Start()
@@ -59,6 +58,7 @@ public class BowTree : MonoBehaviour
 
     void TreeDamage()
     {
+        Debug.Log("g");
         enemiesInRange = enemyColliders
             .Where(x => x != null && x.tag == "Enemy") // 존재하면서 "Enemy" 태그인 게임오브젝트를 추출
             .Select(x => x.GetComponent<Enemy>()) // 추출된 게임오브젝트에서 Enemy 스크립트 컴포넌트를 가져와 리스트에 저장
@@ -69,6 +69,6 @@ public class BowTree : MonoBehaviour
         {
             StartCoroutine(enemy.Hit(Dmg));
         }
-        delay = 1f;
+        delay = 0.5f;
     }
 }

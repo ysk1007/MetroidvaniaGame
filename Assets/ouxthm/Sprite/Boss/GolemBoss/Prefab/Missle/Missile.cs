@@ -5,7 +5,7 @@ using UnityEngine;
 public class Missile : MonoBehaviour
 {
     public float moveSpeed = 10f;
-    public float Damage = 40f;
+    public float Damage = 20f;
 
     private void Start()
     {

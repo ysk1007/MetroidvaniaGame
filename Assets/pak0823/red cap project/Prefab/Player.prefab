@@ -1168,19 +1168,23 @@ MonoBehaviour:
   curTime: 0
   coolTime: 2
   MasterSkillTime:
-  - 1
-  - 1
-  - 1
+  - 60
+  - 120
+  - 90
   Sword_MsTime: 0
   Axe_MsTime: 0
   Bow_MsTime: 0
   SkillTime:
-  - 1
-  - 11
-  - 1
+  - 20
+  - 30
+  - 15
   Sword_SkTime: 0
   Axe_SkTime: 0
   Bow_SkTime: 0
+  WeaponsDmg:
+  - 1
+  - 1.2
+  - 0.5
   isdelay: 0
   isSlide: 0
   isGround: 1
@@ -1239,7 +1243,7 @@ MonoBehaviour:
   enemyPower: 0
   stackbleed: 0
   slashBleedStack: 0
-  bleedDamage: 0.5
+  bleedDamage: 10
   enemyColliders: []
   enemyCheck: []
   selectAtkValue:
@@ -1327,11 +1331,13 @@ MonoBehaviour:
   UseRedCard: 0
   NoNockback: 0
   UseMirror: 0
+  UseVulcanArmor: 0
   cam: {fileID: 0}
   TimeLoopAnim: {fileID: 7859401245638558401}
   TimeLoopSound: {fileID: 7859401245638558406}
   PastErase: {fileID: 0}
   GridPower: 0
+  VulcanPower: 0
   AxeMasterEfc: {fileID: 5773911161201639705, guid: df2a3bacd70287540a9dfb4a08fdc497, type: 3}
   SkillCount: 1
 --- !u!95 &7859401246129824556

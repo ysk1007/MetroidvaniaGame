@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Thorn : MonoBehaviour
 {
-    public float Damage = 40f;
+    public float Damage = 50f;
 
     private void Start()
     {

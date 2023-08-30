@@ -1,9 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System.Diagnostics;
 
 public class Ui_Controller : MonoBehaviour
 {
@@ -53,8 +51,8 @@ public class Ui_Controller : MonoBehaviour
 
     public bool isDown = false;
 
-    public float[] ExpValue = {10f,20f,30f}; // 1,2,3 스테이지 값
-    public float[] GoldValue = {50f,75f,90f}; // 1,2,3 스테이지 값
+    public float[] ExpValue = {8f,20f,35f}; // 1,2,3 스테이지 값
+    public float[] GoldValue = {50f,75f,100f}; // 1,2,3 스테이지 값
     private void Awake()
     {
 
@@ -193,8 +191,9 @@ public class Ui_Controller : MonoBehaviour
 
     public void GetGold(int stage)
     {
-        float value = GoldValue[stage - 1];
-        player.gold += value * player.GoldGet;
+        float randNum = Random.Range(0.5f, 1f);
+        float value = GoldValue[stage - 1] ;
+        player.gold += value * randNum * player.GoldGet;
         player.TotalGetGold += value * player.GoldGet;
         GoldVelueUI.text = player.gold.ToString();
         MarketGoldText.text = player.gold.ToString();

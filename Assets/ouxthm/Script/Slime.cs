@@ -6,10 +6,10 @@ public class Slime : Enemy
 {
     public override void InitSetting()  // 적의 기본 정보를 설정하는 함수
     {
-        Stage = 1;
+        Stage = 2;
         Enemy_Mod = 9;  // 분열
-        Enemy_Power = 5f; //적의 공격력
-        Enemy_HP = 20f;  // 적의 체력
+        Enemy_Power = 10f; //적의 공격력
+        Enemy_HP = 200f;  // 적의 체력
         Enemy_Speed = 2f;    // 적의 이동속도
         Gap_Distance_X = 99f;  // Enemy와 Player의 X 거리차이
         Gap_Distance_Y = 99f;  // Enemy와 Player의 Y 거리차이

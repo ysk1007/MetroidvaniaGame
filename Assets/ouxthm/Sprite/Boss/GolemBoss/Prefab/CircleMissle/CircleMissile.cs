@@ -6,7 +6,7 @@ public class CircleMissile : MonoBehaviour
 {
     public Enemy boss;
     public float moveSpeed = 10f;
-    public float Damage = 40f;
+    public float Damage = 50f;
     public bool isShoot;
     private void Start()
     {

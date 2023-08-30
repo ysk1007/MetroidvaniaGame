@@ -43,7 +43,7 @@ public class coin : MonoBehaviour
                 this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
                 sfx.Play();
                 Invoke("det", 1f);
-                GameManager.Instance.GetComponent<Ui_Controller>().GetGold(50f);
+                GameManager.Instance.GetComponent<Ui_Controller>().GetGold(25f);
             }
         }
     }

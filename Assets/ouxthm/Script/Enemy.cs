@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static System.Net.WebRequestMethods;
 
 public abstract class Enemy : MonoBehaviour
 {
@@ -254,7 +255,7 @@ public abstract class Enemy : MonoBehaviour
     
     public virtual void onetime()   // Awake에 적용
     {
-        Enemy_HPten = Enemy_HP * 0.1f;
+        Enemy_HPten = Enemy_HP * 0.15f;
         bleedingTime = 0f;
         hit_bloodTrans = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
         Pos = GetComponent<Transform>();
@@ -854,9 +855,13 @@ public abstract class Enemy : MonoBehaviour
 
             // 레이저를 아래로 쏘아서 실질적인 레이저 생성(물리기반), LayMask.GetMask("")는 해당하는 레이어만 스캔함
             rayHit = Physics2D.Raycast(frontVec, Vector3.down, 2, LayerMask.GetMask("Tilemap", "Pad", "wall"));
-            if (rayHit.collider == null)
+            if (rayHit.collider == null && Enemy_HP >= 0 && !Dying)
             {
                 Turn();
+            }
+            else if (rayHit.collider == null && Enemy_HP <= 0 && Dying)
+            {
+                StartCoroutine(Die());
             }
         }
     }
@@ -1112,7 +1117,7 @@ public abstract class Enemy : MonoBehaviour
         SoulEff Se = Soul.GetComponent<SoulEff>();
 
         Se.Time = endTime;
-        Se.Power = Enemy_Power;
+        Se.Power = 40f;
         Se.Dir = nextDirX;
        
     }
@@ -1122,7 +1127,7 @@ public abstract class Enemy : MonoBehaviour
         SoulEff Se1 = Soul1.GetComponent<SoulEff>();
 
         Se1.Time = endTime;
-        Se1.Power = Enemy_Power;
+        Se1.Power = 40f;
         Se1.Dir = nextDirX;
     }
 
@@ -1132,7 +1137,7 @@ public abstract class Enemy : MonoBehaviour
         SoulEff Se2 = Soul2.GetComponent<SoulEff>();
 
         Se2.Time = endTime;
-        Se2.Power = Enemy_Power;
+        Se2.Power = 40f;
         Se2.Dir = nextDirX;
         turning = true;
     }
@@ -1151,7 +1156,7 @@ public abstract class Enemy : MonoBehaviour
         bloodEFF bloodEFF = bloodEff.GetComponent<bloodEFF>();
         bloodEFF.dir = nextDirX;    // 몬스터의 방향값
         bloodEFF.scalX = scaleX;    // 몬스터의 scale.x 값(-가 되어있는 경우가 있음)
-        float Damage = bloodBoomDmg * bleedLevel;
+        float Damage = (bloodBoomDmg * bleedLevel) + player.AtkPower + player.GridPower + player.VulcanPower;
         Damage = Damage * player.DmgIncrease; //딜 증가 추가
         if (player.UseRedCard)
         {

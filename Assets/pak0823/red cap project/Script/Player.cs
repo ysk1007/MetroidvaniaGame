@@ -17,10 +17,11 @@ public class Player : MonoBehaviour
     public float jumpPower; //Jump 높이 저장 변수
     public float SpeedChange; // Move 속도변경 저장 변수
     public float curTime, coolTime = 2;  // 연속공격이 가능한 시간
-    public float[] MasterSkillTime = { 10, 10, 10 };   //무기별 숙련도 스킬 쿨타임
+    public float[] MasterSkillTime = { 60, 120, 90 };   //무기별 숙련도 스킬 쿨타임
     public float Sword_MsTime, Axe_MsTime, Bow_MsTime;  // 무기별 숙련도 스킬 쿨타임 적용
-    public float[] SkillTime = { 10, 20, 10 }; // 무기별 기본스킬 쿨타임
+    public float[] SkillTime = { 20, 30, 15 }; // 무기별 기본스킬 쿨타임
     public float Sword_SkTime, Axe_SkTime, Bow_SkTime;  // 무기별 기본스킬 쿨타임 적용
+    public float[] WeaponsDmg = { 1, 1.2f, 0.5f }; //무기별 공격력 비례 칼, 도끼, 활
     public bool isdelay = false;    //공격 딜레이 체크
     public bool isSlide = false;     //슬라이딩 체크
     public bool isGround = true;    //Player가 땅인지 아닌지 체크
@@ -80,8 +81,8 @@ public class Player : MonoBehaviour
     public int stackbleed;  // 몬스터에 쌓인 출혈 스택
     public int slashBleedStack; 
     public static float BleedingTime = 8f;  // 2023-07-31 추가(출혈 지속 시간)
-    public float bleedDamage = 3f; // 2023-08-01 출혈 데미지
-    public static float bloodBoomDmg = 25f;  // 출혈스택 터뜨리는 데미지
+    public float bleedDamage = 10f; // 2023-08-01 출혈 데미지
+    public static float bloodBoomDmg = 66f;  // 출혈스택 터뜨리는 데미지
     public static string playerTag;    // 2023-08-11 추가 (플레이어 무기 태그)
     public List<Collider2D> enemyColliders = new List<Collider2D>();   //공격 몬스터 체크
     public List<Enemy> enemyCheck = new List<Enemy>(); // Enemy 타입 리스트로 변경
@@ -174,9 +175,9 @@ public class Player : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         JumpCnt = JumpCount;    //시작시 점프 가능 횟수 적용
-        SpeedChange = 4;  //시작시 기본 이동속도
+        SpeedChange = 5;  //시작시 기본 이동속도
         jumpPower = 15; //기본 점프높이
-        ATP = 7; // 기본 공격 대미지
+        ATP = 20; // 기본 공격 대미지
         audio = GetComponent<AudioSource>();
         Attackpos = transform.GetChild(0).GetComponentInChildren<Transform>(); //attackRange의 위치값을 pos에 저장
         Arrowpos = transform.GetChild(1).GetComponentInChildren<Transform>(); //Arrowpos의 위치값을 pos에 저장
@@ -488,12 +489,12 @@ public class Player : MonoBehaviour
         Transform trans;
         Vector3 scaleVector = new Vector3(1, 1, 1); // 스케일 값 변화를 저장할 Vector3 변수
         trans = GetComponent<Transform>();
-        scaleVector.x = 1.5f;
-        scaleVector.y = 1.5f;
+        scaleVector.x = 1.2f;
+        scaleVector.y = 1.2f;
         trans.localScale = scaleVector;
         MaxHp += 50;
         CurrentHp += 50;
-        Def += 50;
+        Def += 20;
         SpeedChange = 3;
         slideSpeed = 10;
         Destroy(Axe);
@@ -699,7 +700,7 @@ public class Player : MonoBehaviour
     void Sword_attack() //Sword 공격 관련 정보
     {
         isdelay = true;
-        Dmg = ATP + AtkPower + GridPower + VulcanPower;//변경함
+        Dmg = (ATP + AtkPower + GridPower + VulcanPower) * WeaponsDmg[0];//변경함
         box.size = new Vector2(3.5f, 2.5f);
         box.offset = new Vector2(1.5f, 0);
         anim.SetFloat("Sword", SwdCnt); //Blend를 이용해 일반공격과 스킬 애니메이션 구분 실행
@@ -716,11 +717,11 @@ public class Player : MonoBehaviour
 
         if (AxeCnt == 1) // 동작별 대미지 변경
         {
-            Dmg = ATP + AtkPower + GridPower + VulcanPower;
+            Dmg = (ATP + AtkPower + GridPower + VulcanPower) * WeaponsDmg[1];
         }
         else if (AxeCnt == 2)
         {
-            Dmg = ATP + AtkPower + GridPower + VulcanPower + 5;
+            Dmg = (ATP + AtkPower + GridPower + VulcanPower + 5) * WeaponsDmg[1];
         }
         box.size = new Vector2(4f, 2.5f);
         if (slideDir == 1)   //공격 방향별 box.offset값을 다르게 적용
@@ -743,7 +744,7 @@ public class Player : MonoBehaviour
         isdelay = true;
         Speed = 0;
         AxeCnt = 3;
-        Dmg = (ATP + AtkPower + GridPower + VulcanPower) * 3;
+        Dmg = (ATP + AtkPower + GridPower + VulcanPower) * 3 * WeaponsDmg[1];
         isCharging = false;
         chargeTimer = 0f;
         anim.SetFloat("Axe", AxeCnt); //차징 공격은 Axe_atk3 짧은 애니메이션으로 실행
