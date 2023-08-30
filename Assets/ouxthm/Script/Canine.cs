@@ -6,6 +6,7 @@ public class Canine : Enemy
 {
     public override void InitSetting()  // 적의 기본 정보를 설정하는 함수
     {
+        Stage = 1;  // 스테이지
         Enemy_Mod = 2;  // 근거리
         Enemy_Power = 7f; //적의 공격력
         Bump_Power = 4f; // 충돌 시 줄 데미지

@@ -15,6 +15,8 @@ public class Arrow : MonoBehaviour
     private Vector3 moveDirection = Vector3.right; // 화살이 나가는 방향
     private float detectRadius = 2.5f; // 화살이 감지할 수 있는 반경 (적이 있는지 없는지 확인)
     public SpriteRenderer spriteRenderer;
+    public BoxCollider2D collider;
+    public bool hit = false;    // 적을 맞췄는지 확인하는 변수
     private Dictionary<Collider2D, bool> hitDict = new Dictionary<Collider2D, bool>(); // 이미 적에게 대미지를 입혔는지 여부를 기록하는 Dictionary 변수
 
     private void Awake()
@@ -115,20 +117,35 @@ public class Arrow : MonoBehaviour
             {
                 hitDict.Add(collision, true); // 적 정보를 Dictionary에 추가
             }
-            else
+            else 
             {
-                DestroyArrow();
+                Debug.Log("난 적");
+                hit  = true;
+                Off();
+                Invoke("DestroyArrow", 3f);
             }
         }
-        if (collision.tag == "Wall" || collision.tag == "Tilemap") // 벽이나 땅에 맞으면 화살 사라짐 패드는 없는게 나은것 같아서 뺐음
+        else if (collision.tag == "Wall" || collision.tag == "Tilemap") // 벽이나 땅에 맞으면 화살 사라짐 패드는 없는게 나은것 같아서 뺐음
         {
-            DestroyArrow();
+            if (hit)
+            {
+                return;
+            }
+            Debug.Log("난 벽");
+            Off();
+            Invoke("DestroyArrow", 3f);
         }
     }
 
     public void DestroyArrow()  // 화살 제거 함수
     {
         Destroy(gameObject);
+    }
+    public void Off()
+    {
+        CancelInvoke();
+        spriteRenderer.enabled = false;
+        collider.enabled = false;
     }
 }
 

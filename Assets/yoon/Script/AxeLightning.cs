@@ -13,7 +13,7 @@ public class AxeLightning : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("EffectOff", 0.9f);
+        Invoke("EffectOff", 3f);
         Hit();
     }
 
@@ -41,8 +41,15 @@ public class AxeLightning : MonoBehaviour
         foreach (Collider2D collider in Finds)
         {
             Enemy enemy = collider.gameObject.GetComponent<Enemy>();
+            
             if (enemy != null)
             {
+                if (enemy.axeUltHit)
+                {
+                    return;
+                }
+                enemy.axeUltHit = true;
+                Debug.Log("½ÇÇà?");
                 if (enemy.AmIBoss == true)
                 {
                     StartCoroutine(enemy.Hit(1000f));
@@ -53,6 +60,9 @@ public class AxeLightning : MonoBehaviour
                 }
             }
         }
+
+        colider.enabled = false;
+
     }
 
 }

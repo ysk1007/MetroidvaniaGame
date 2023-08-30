@@ -170,7 +170,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   enemy: {fileID: 0}
-  DmgEffect: {fileID: 5773911161201639705, guid: fdbb1f7b90e987d45b14ce1087e50918, type: 3}
   islayer:
     serializedVersion: 2
     m_Bits: 33800
@@ -178,4 +177,6 @@ MonoBehaviour:
   Dmg: 2
   SkillDmg: 3
   speed: 20
+  isSkill: 0
   spriteRenderer: {fileID: 2037286392937857263}
+  collider: {fileID: 5286367198380712494}

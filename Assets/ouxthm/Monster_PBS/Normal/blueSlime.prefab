@@ -242,7 +242,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &7375433865317797563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308,6 +308,7 @@ MonoBehaviour:
   Swordlevel: 0
   selectWeapon: 0
   bleedLevel: 0
+  slashBleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
   bloodBoomDmg: 0

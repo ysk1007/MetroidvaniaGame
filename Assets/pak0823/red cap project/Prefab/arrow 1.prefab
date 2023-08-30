@@ -101,14 +101,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 6371477986873845597}
   enemy: {fileID: 0}
-  DmgEffect: {fileID: 0}
   islayer:
     serializedVersion: 2
     m_Bits: 35968
   pos: {fileID: 0}
   Dmg: 0.3
+  SkillDmg: 2
   speed: 20
+  isSkill: 0
   spriteRenderer: {fileID: 9191525023929005868}
+  collider: {fileID: -8604415927066986594}
 --- !u!61 &-8604415927066986594
 BoxCollider2D:
   m_ObjectHideFlags: 0

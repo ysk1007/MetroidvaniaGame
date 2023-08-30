@@ -7,6 +7,7 @@ public class Mushroom : Enemy
 {
     public override void InitSetting()  // 적의 기본 정보를 설정하는 함수
     {
+        Stage = 1;  // 스테이지
         Enemy_Mod = 5;  // 자폭
         Enemy_Power = 30f; //적의 공격력
         Enemy_HP = 30f;  // 적의 체력

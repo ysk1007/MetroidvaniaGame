@@ -146,11 +146,13 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  axeUltHit: 0
   scaleX: 0
   weaponTag: 
   Swordlevel: 0
   selectWeapon: 0
   bleedLevel: 0
+  slashBleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
   bloodBoomDmg: 0
@@ -543,7 +545,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -6
   m_Sprite: {fileID: 1020173927, guid: 26d0987df33c68f4997aab21a47e0171, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5471698, g: 0.19787388, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

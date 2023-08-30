@@ -6,6 +6,7 @@ public class Boar : Enemy
 {
     public override void InitSetting()  // 적의 기본 정보를 설정하는 함수
     {
+        Stage = 1;  // 스테이지
         Enemy_Mod = 11;
         Enemy_HP = 40f;  // 적의 체력
         Enemy_Speed = 8f;    // 적의 이동속도

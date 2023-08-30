@@ -39,6 +39,7 @@ public abstract class Enemy : MonoBehaviour
     public float atkTime;   // 공격 모션 시간
     public bool Attacker;  // 비행 몬스터가 공격형인지 아닌지 구분짓는 변수
     public float endTime;   // 투사체 사라지는 시간
+    public bool axeUltHit = false;  // 도끼 궁에 맞았는지 확인하는 변수
 
     public float scaleX; // scale X 값(hit_eff가 스케일이 -되어있으면 반대방향으로 뜨기에 설정하기 위한 변수)
     public string weaponTag;    // 무기 태그 ("Sword"일 때만 출혈)
@@ -132,6 +133,8 @@ public abstract class Enemy : MonoBehaviour
     public float TargetFind; //좌우 구별
     public GameObject BossCenter;
 
+    public bool watching = false;
+
     public abstract void InitSetting(); // 적의 기본 정보를 설정하는 함수(추상)
 
     public void Start()
@@ -180,6 +183,7 @@ public abstract class Enemy : MonoBehaviour
                 animator.SetBool("Run", false);
             }
         }
+        watcihingHP();
     }
 
     public virtual void Boss(Transform target)  // boss용 Update문
@@ -238,6 +242,7 @@ public abstract class Enemy : MonoBehaviour
 
     public virtual void Boar(Transform target)  // boar용
     {
+        watcihingHP();
         if (bleedingTime >= 0)
         {
             bleedingTime -= Time.deltaTime;
@@ -254,7 +259,7 @@ public abstract class Enemy : MonoBehaviour
     
     public virtual void onetime()   // Awake에 적용
     {
-        Enemy_HPten = Enemy_HP * 0.1f;
+        Enemy_HPten = Enemy_HP * 0.15f;
         bleedingTime = 0f;
         hit_bloodTrans = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
         Pos = GetComponent<Transform>();
@@ -268,7 +273,7 @@ public abstract class Enemy : MonoBehaviour
 
     public virtual void bossOnetime()   // boss용 Awake문
     {
-        Enemy_HPten = Enemy_HP * 0.1f;
+        Enemy_HPten = Enemy_HP * 0.15f;
         bleedingTime = 0f;
         PObject = this.gameObject.transform.GetChild(2).GetComponent<Transform>();
         BossSpriteBox = this.gameObject.GetComponent<BoxCollider2D>();
@@ -306,7 +311,7 @@ public abstract class Enemy : MonoBehaviour
 
     public virtual void boarOntime()
     {
-        Enemy_HPten = Enemy_HP * 0.1f;
+        Enemy_HPten = Enemy_HP * 0.15f;
         bleedingTime = 0f;
         Hit_Set = false;    // 플레이어에게 맞지 않은 상태
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
@@ -509,6 +514,10 @@ public abstract class Enemy : MonoBehaviour
     }
     public IEnumerator Hit(float damage) // 피해 함수
     {
+        if(this.gameObject.layer == LayerMask.NameToLayer("Dieenemy"))
+        {
+            yield break;
+        }
         Player player = Player.instance.GetComponent<Player>();
         Ui_Controller ui = GameManager.Instance.GetComponent<Ui_Controller>(); //윤성권 추가함
         Proficiency_ui pro = GameManager.Instance.GetComponent<Proficiency_ui>(); // 숙련도 추가함
@@ -571,9 +580,9 @@ public abstract class Enemy : MonoBehaviour
                 enemyHit = true;
             }
         }
-        else if(Enemy_HP < 0)
+        else if(Enemy_HP <= 0)
         {
-            StartCoroutine(Die());
+            //StartCoroutine(Die());
             pro.GetProExp(Stage);
             ui.GetExp(Stage);
             ui.GetGold(Stage);
@@ -607,17 +616,15 @@ public abstract class Enemy : MonoBehaviour
             enemyHit = false;
             if (Enemy_Mod == 9 && posi.localScale.y == 1f)   // 분열 몬스터일 경우
             {
-                StartCoroutine(Split());
+                Split();
                 this.gameObject.SetActive(false);
-                Invoke("enemyDestroy", 0.5f);
+                Invoke("enemyDestroy", 1f);
+                Debug.Log("분열 1");
             }
-            else if (Enemy_Mod == 9 && posi.localScale.y < 1f)
+            else if (Enemy_Mod == 9 && posi.localScale.y < 1f)  // 분열된 슬라임인 경우
             {
                 enemyDestroy();
-                if(Enemy_Mod == 9 && posi.localScale.y == 1f)
-                {
-                    enemyDestroy();
-                }
+                Debug.Log("분열 2");
             }
             else if (Enemy_Mod != 9)
             {
@@ -685,13 +692,23 @@ public abstract class Enemy : MonoBehaviour
                 yield return new WaitForSeconds(0.1f);
                 spriteRenderer.color = new Color(1, 1, 1, 1);
                 yield return new WaitForSeconds(0.1f);
-                Debug.Log("반짝반짝");
             }
             spriteRenderer.color = new Color(1, 1, 1, 0.4f);
             enemyDestroy();
         }
         enemyHit = false;
     }
+
+    void watcihingHP()
+    {
+        if(Enemy_HP <= 0 && !watching)
+        {            
+            watching = true;
+            StopAllCoroutines();
+            StartCoroutine(Die());
+        }
+    }
+
 
     void Sensing(Transform target, RaycastHit2D rayHit)  // 플레이어 추적
     {
@@ -854,9 +871,13 @@ public abstract class Enemy : MonoBehaviour
 
             // 레이저를 아래로 쏘아서 실질적인 레이저 생성(물리기반), LayMask.GetMask("")는 해당하는 레이어만 스캔함
             rayHit = Physics2D.Raycast(frontVec, Vector3.down, 2, LayerMask.GetMask("Tilemap", "Pad", "wall"));
-            if (rayHit.collider == null)
+            if (rayHit.collider == null && Enemy_HP >= 0 && !Dying)
             {
                 Turn();
+            }
+            else if(rayHit.collider == null && Enemy_HP <= 0 && Dying)
+            {
+                StartCoroutine(Die());
             }
         }
     }
@@ -948,6 +969,10 @@ public abstract class Enemy : MonoBehaviour
     }
     public void Bump()      // 충돌 데미지 함수
     {
+        if(this.gameObject.layer == LayerMask.NameToLayer("Dieenemy"))
+        {
+            return;
+        }
         Vector3 vector3;
         if(Enemy_Mod == 6)
         {
@@ -998,13 +1023,12 @@ public abstract class Enemy : MonoBehaviour
         enemyDestroy();
     }
 
-    public IEnumerator Split()  // 슬라임 분열 함수
+    void  Split()  // 슬라임 분열 함수
     {
         spawn = this.gameObject.transform.GetChild(2).GetComponent<Transform>();
         spawn2 = this.gameObject.transform.GetChild(3).GetComponent<Transform>();
         GameObject splitSlime = Instantiate(Split_Slime, spawn.position, spawn.rotation);
         GameObject splitSlime2 = Instantiate(Split_Slime, spawn2.position, spawn2.rotation);
-        yield return null;
     }
 
 
@@ -1017,7 +1041,8 @@ public abstract class Enemy : MonoBehaviour
 
     public void enemyDestroy()
     {
-        Destroy(this.gameObject); 
+        Destroy(this.gameObject);
+        StopAllCoroutines();
     }
 
     public void ProjectiveBody()    // 투사체 생성 (위치 저장)
@@ -1449,6 +1474,9 @@ public abstract class Enemy : MonoBehaviour
         animator.SetBool("Rush", true);
 
         Enemy_Speed = 10f;        //  속도 10 설정.
+
+        yield return new WaitForSeconds(4f);
+        StartCoroutine(StopRush());
     }
 
     IEnumerator StopRush()
