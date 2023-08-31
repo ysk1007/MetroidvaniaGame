@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MoveCamera : MonoBehaviour
 {
+    public static MoveCamera instance;
     [SerializeField] private Transform[] Boss;  // 보스오브젝트 (2023-08-14추가)
     [SerializeField] private GameObject[] bossName;  // 보스오브젝트 (2023-08-14추가)
     [SerializeField] private GameObject UI;     // InGameUI 
@@ -26,6 +27,10 @@ public class MoveCamera : MonoBehaviour
     float width;
     public float screenSize;
 
+    void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
         player = Player.instance.GetComponent<Player>();
@@ -41,7 +46,7 @@ public class MoveCamera : MonoBehaviour
 
         if(stageSmall == 5 && !startFightBoss && !watchBossname)
         {
-            startFightBoss = true;
+            Invoke("OnStartBool", 1f);
         }
         else if(stageSmall != 5)    // 작은 스테이지가 5 아닐 때
         {
@@ -83,7 +88,10 @@ public class MoveCamera : MonoBehaviour
         Invoke("SituationTerminated", 3.5f);
         watchBossname = true;
     }
-
+    void OnStartBool()
+    {
+        startFightBoss = true;
+    }
     void WatchingPlayer()   // 플레이어 비추는 카메라 함수
     {
         if (player.UseMirror)
@@ -130,14 +138,6 @@ public class MoveCamera : MonoBehaviour
 
         Vector3 vector3 = new Vector3(changeX, changeY);
         transform.position = Vector3.Lerp(transform.position, vector3, Time.deltaTime * speed);
-
-        float lx = size.x * 0.5f - width;
-        float clampX = Mathf.Clamp(transform.position.x, -lx + center.x, lx + center.x);
-
-        float ly = size.y * 0.5f - height;
-        float clampY = Mathf.Clamp(transform.position.y, -ly + center.y, ly + center.y);
-
-        transform.position = new Vector3(clampX, clampY, -10f);
     }    
 
     private void OnDrawGizmos()

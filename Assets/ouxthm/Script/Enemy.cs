@@ -1585,7 +1585,7 @@ public abstract class Enemy : MonoBehaviour
         hit_bloodTrans = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
         Enemy_HPten = Enemy_HP * 0.1f;
         bleedingTime = 0f;
-        Invoke("GolemRandomAtk", 2f);
+        Invoke("GolemRandomAtk", 5f);
         bleeding();
     }
 

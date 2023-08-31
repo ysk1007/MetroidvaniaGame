@@ -383,11 +383,13 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  axeUltHit: 0
   scaleX: 0
   weaponTag: 
   Swordlevel: 0
   selectWeapon: 0
   bleedLevel: 0
+  slashBleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
   bloodBoomDmg: 0
@@ -439,6 +441,7 @@ MonoBehaviour:
   WaringArea: []
   TargetFind: 0
   BossCenter: {fileID: 0}
+  watching: 0
 --- !u!82 &7227023883360115922
 AudioSource:
   m_ObjectHideFlags: 0
