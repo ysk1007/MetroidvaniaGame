@@ -1012,6 +1012,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &328206564 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3253721325892332139, guid: 2b672b636ba493b4cb0cc96a850f88c8, type: 3}
+  m_PrefabInstance: {fileID: 3253721325566222991}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &329679080
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1073,6 +1078,11 @@ PrefabInstance:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3743811801559038718, guid: 79b65ae68eb72e945a69695de9caebea, type: 3}
   m_PrefabInstance: {fileID: 3743811801294174576}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &366674300 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6796475381532435473, guid: 5c4251a607a0fbc4f9f41a11a38c12c8, type: 3}
+  m_PrefabInstance: {fileID: 6796475381872764269}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &381183163 stripped
 GameObject:
@@ -1225,7 +1235,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &431385037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1248,12 +1258,12 @@ MonoBehaviour:
   - {fileID: 8801707444081862223, guid: a8ce485b7303a8543bcfba7ab2699e62, type: 3}
   - {fileID: 2558648461630588700, guid: 33254c2ff8082c647b319f76d95e87b2, type: 3}
   Stage2_Prefab:
-  - {fileID: 4746763056479210655, guid: fb5cbf62ecc5f7044a62e81b89144a61, type: 3}
-  - {fileID: 8801707444081862223, guid: 32768d3e81158ec44a5067d0485f0b71, type: 3}
-  - {fileID: 8801707444081862223, guid: 32768d3e81158ec44a5067d0485f0b71, type: 3}
-  - {fileID: 8801707444081862223, guid: 32768d3e81158ec44a5067d0485f0b71, type: 3}
-  - {fileID: 8801707444081862223, guid: 32768d3e81158ec44a5067d0485f0b71, type: 3}
-  - {fileID: 8801707444081862223, guid: 32768d3e81158ec44a5067d0485f0b71, type: 3}
+  - {fileID: 2133612594}
+  - {fileID: 366674300}
+  - {fileID: 507494483}
+  - {fileID: 601613820}
+  - {fileID: 840941485}
+  - {fileID: 328206564}
   Stage3_Prefab:
   - {fileID: 4746763056479210655, guid: 92097c59663a0e34cb781ca06ae4d23b, type: 3}
   - {fileID: 4746763056479210655, guid: 8454486cac7139a4eaf91cad0005206b, type: 3}
@@ -1336,6 +1346,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f3eecdf82bdd8f44a6d79e04b0feca0, type: 3}
+--- !u!1 &507494483 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3922735270058135532, guid: 2490f0d7c87744c448c27ae785dc0c44, type: 3}
+  m_PrefabInstance: {fileID: 3922735270088789951}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &516636158
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1463,7 +1478,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 9
+  orthographic size: 7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1487,7 +1502,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 18.7, y: 6.04, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1512,12 +1527,15 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   bossName:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1510310502}
+  - {fileID: 75102588}
+  - {fileID: 2126167207}
   UI: {fileID: 906326985}
+  map: {fileID: 0}
   startFightBoss: 0
   stage: 0
+  stageSmall: 0
+  watchBossname: 0
   target: {fileID: 317697531}
   speed: 3
   center: {x: 120, y: 7}
@@ -1777,6 +1795,11 @@ Transform:
 --- !u!4 &578804165 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6475495307044693358, guid: 4fd61f7e3ea851d43b5b13cf9c5d8a69, type: 3}
+  m_PrefabInstance: {fileID: 6475495307619892395}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &601613820 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6475495307038660951, guid: 4fd61f7e3ea851d43b5b13cf9c5d8a69, type: 3}
   m_PrefabInstance: {fileID: 6475495307619892395}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &610544267 stripped
@@ -2182,6 +2205,11 @@ PrefabInstance:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3743811801048901896, guid: 79b65ae68eb72e945a69695de9caebea, type: 3}
   m_PrefabInstance: {fileID: 3743811801294174576}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &840941485 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3596241813033065720, guid: 0eacb4ffff133ff4ca92bf5d422a2459, type: 3}
+  m_PrefabInstance: {fileID: 3596241813333189461}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &840941487 stripped
 Transform:
@@ -7463,6 +7491,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2126167207}
   m_CullTransparentMesh: 1
+--- !u!1 &2133612594 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6475905872657634522, guid: a613432e38483984c9c6a4cea26f044b, type: 3}
+  m_PrefabInstance: {fileID: 6475905874185653480}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2223274207783945205
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7614,6 +7647,14 @@ PrefabInstance:
     - target: {fileID: 3253721325892332139, guid: 2b672b636ba493b4cb0cc96a850f88c8, type: 3}
       propertyPath: m_Name
       value: Stage 2-Boss
+      objectReference: {fileID: 0}
+    - target: {fileID: 3253721325892332139, guid: 2b672b636ba493b4cb0cc96a850f88c8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3487139652404424640, guid: 2b672b636ba493b4cb0cc96a850f88c8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 19
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b672b636ba493b4cb0cc96a850f88c8, type: 3}
@@ -9488,7 +9529,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6475905872657634522, guid: a613432e38483984c9c6a4cea26f044b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6475905872657634524, guid: a613432e38483984c9c6a4cea26f044b, type: 3}
       propertyPath: m_RootOrder

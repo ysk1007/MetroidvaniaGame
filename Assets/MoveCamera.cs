@@ -8,6 +8,7 @@ public class MoveCamera : MonoBehaviour
     [SerializeField] private GameObject[] bossName;  // 보스오브젝트 (2023-08-14추가)
     [SerializeField] private GameObject UI;     // InGameUI 
     public MapManager map;
+    public Player player;
     public bool startFightBoss = false;   // 보스전 시작시 true 되었다가 false로 변환
     public int stage;   // 추후 추가되는 MapManager에서 변수 가져오면 됨.  큰 스테이지
     public int stageSmall;  // 작은 스테이지
@@ -27,6 +28,7 @@ public class MoveCamera : MonoBehaviour
 
     void Start()
     {
+        player = Player.instance.GetComponent<Player>();
         map = MapManager.instance.GetComponent<MapManager>();
         height = Camera.main.orthographicSize;  // 카메라의 월드 공간에서의 세로 절반 사이즈
         width = height * Screen.width / Screen.height; // 카메라의 월드 공간에서의 가로 절반 사이즈
@@ -40,9 +42,8 @@ public class MoveCamera : MonoBehaviour
         if(stageSmall == 5 && !startFightBoss && !watchBossname)
         {
             startFightBoss = true;
-            Debug.Log("11111111");
         }
-        else if(stageSmall != 5)
+        else if(stageSmall != 5)    // 작은 스테이지가 5 아닐 때
         {
             startFightBoss = false;
             watchBossname = false;
@@ -69,12 +70,11 @@ public class MoveCamera : MonoBehaviour
     void bossNameOff()  // 보스 이름 텍스트 내리는 함수
     {
         bossName[stage].gameObject.SetActive(false);
-        UI.SetActive(true); // InGameUI On
     }
     void SituationTerminated()  // 보스시작 종료
     {
         startFightBoss = false;
-        Debug.Log("제발 꺼");
+        UI.SetActive(true); // 플레이어 UI ON
     }
     void OnOffText()    // 보스 텍스트 띄웠다 내리는 함수를 실행하는 함수
     {
@@ -86,7 +86,14 @@ public class MoveCamera : MonoBehaviour
 
     void WatchingPlayer()   // 플레이어 비추는 카메라 함수
     {
-        //Camera.main.orthographicSize = 9f;
+        if (player.UseMirror)
+        {
+            Camera.main.orthographicSize = 7f;
+        }
+        else if (!player.UseMirror)
+        {
+            Camera.main.orthographicSize = 9f;
+        }
         transform.position = Vector3.Lerp(transform.position, target.position, Time.deltaTime * speed);
 
         float lx = size.x * 0.5f - width;
@@ -115,9 +122,9 @@ public class MoveCamera : MonoBehaviour
                 changeY = 1f;
                 break;
             case 2: // Stage 3
-                Camera.main.orthographicSize = 3f;
-                changeX = 19f;
-                changeY = 1f;
+                Camera.main.orthographicSize = 8f;
+                changeX = 25f;
+                changeY = 10f;
                 break;
         }
 
