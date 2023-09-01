@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
 
+
 public class Player : MonoBehaviour
 {
     public float[] ExpBarValue = {
@@ -50,6 +51,7 @@ public class Player : MonoBehaviour
     public float ArrowDistance = 0.75f;
     public bool Axepro = true;
     public PlayerCanvas playerCanvas; //추가함
+    public Vector3 spawnPoint;  // 2023-09-02 추가(플레이어 리스폰 위치)
 
     public static Player instance; //추가함
     public float ATP; // 플레이어 대미지
@@ -169,7 +171,7 @@ public class Player : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         JumpCnt = JumpCount;    //시작시 점프 가능 횟수 적용
-        SpeedChange = 4;  //시작시 기본 이동속도
+        SpeedChange = 5;  //시작시 기본 이동속도
         jumpPower = 15; //기본 점프높이
         ATP = 7; // 기본 공격 대미지
         audio = GetComponent<AudioSource>();
@@ -199,6 +201,11 @@ public class Player : MonoBehaviour
         if (UseGridSword) //추가함
         {
             GridsSword();
+        }
+        if(this.gameObject.transform.position.y < -30)
+        {
+            PlayerReposition();
+            Debug.Log("리스폰");
         }
     }
 
@@ -597,15 +604,14 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)  // 함정 구멍에 떨어졌을 경우 다시 리스폰(임시)
+    private void OnTriggerEnter2D(Collider2D collision)  // 함정 구멍에 떨어졌을 경우 다시 리스폰
     {
-        if (collision.gameObject.tag == "Respawn")
+        if (collision.gameObject.CompareTag("Respawn"))
         {
-            Playerhurt(10, transform.position);
-            PlayerReposition();
+            Debug.Log("박스와 붙음");
+            spawnPoint = collision.transform.position;
         }
     }
-
     private IEnumerator Sliding() //슬라이딩 실행
     {
         GameManager.GetComponent<Ui_Controller>().Sliding();
@@ -688,6 +694,14 @@ public class Player : MonoBehaviour
 
     }
 
+    public void FallHurt()
+    {
+        CurrentHp = CurrentHp - 10;
+        PlaySound("Damaged");
+        anim.SetTrigger("hurt");
+        StartCoroutine(Routine());
+        StartCoroutine(Blink());
+    }
     IEnumerator Attack_delay() //기본공격 딜레이
     {
         yield return new WaitForSeconds(delayTime);
@@ -899,9 +913,10 @@ public class Player : MonoBehaviour
         this.transform.gameObject.SetActive(false);
     }
 
-    void PlayerReposition() // 리스폰 위치 지정(임시)
+    void PlayerReposition() // 리스폰 위치 지정 2023-09-02 추가
     {
-        transform.position = new Vector3(-30, -7.5f, 0);
+        FallHurt();
+        transform.position = spawnPoint;
     }
 
     void PlaySound(string action) // 사운드 관련 함수
