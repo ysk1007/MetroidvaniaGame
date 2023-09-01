@@ -119,7 +119,6 @@ public class Arrow : MonoBehaviour
             }
             else 
             {
-                Debug.Log("난 적");
                 hit  = true;
                 Off();
                 Invoke("DestroyArrow", 3f);
@@ -131,7 +130,6 @@ public class Arrow : MonoBehaviour
             {
                 return;
             }
-            Debug.Log("난 벽");
             Off();
             Invoke("DestroyArrow", 3f);
         }

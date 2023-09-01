@@ -5,7 +5,6 @@ using UnityEngine;
 public class MoveCamera : MonoBehaviour
 {
     public static MoveCamera instance;
-    [SerializeField] private Transform[] Boss;  // 보스오브젝트 (2023-08-14추가)
     [SerializeField] private GameObject[] bossName;  // 보스오브젝트 (2023-08-14추가)
     [SerializeField] private GameObject UI;     // InGameUI 
     public MapManager map;
@@ -136,7 +135,7 @@ public class MoveCamera : MonoBehaviour
                 break;
         }
 
-        Vector3 vector3 = new Vector3(changeX, changeY);
+        Vector3 vector3 = new Vector3(changeX, changeY, -10f);
         transform.position = Vector3.Lerp(transform.position, vector3, Time.deltaTime * speed);
     }    
 

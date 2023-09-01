@@ -205,6 +205,7 @@ public abstract class Enemy : MonoBehaviour
             bossMove();
             BossAtk();
         }
+        watcihingHP();  // 체력이 0일 때 플레이어에게 골드와 경험치를 주는 함수
     }
 
     public virtual void OrcBoss(Transform target)
@@ -229,7 +230,12 @@ public abstract class Enemy : MonoBehaviour
             {
                 Enemy_Speed = 1f;
             }
-            orcMove();
+
+            if (bossMoving)
+            {
+                orcMove();
+            }
+            
             OrcAttack();
         }
         else if(this.gameObject.layer == LayerMask.NameToLayer("Dieenemy"))
@@ -289,7 +295,7 @@ public abstract class Enemy : MonoBehaviour
         soulSpawn1 = this.gameObject.transform.GetChild(3).GetComponent<Transform>();
         soulSpawn2 = this.gameObject.transform.GetChild(4).GetComponent<Transform>();
 
-        Invoke("randomAtk", 5f);
+        Invoke("randomAtk", 7f);
         bleeding();
     }
 
@@ -305,7 +311,8 @@ public abstract class Enemy : MonoBehaviour
         PbSpawn = this.gameObject.transform.GetChild(2).GetComponent<Transform>();
         Enemy_HPten = Enemy_HP * 0.1f;
         bleedingTime = 0f;
-        Invoke("OrcRandomAtk", 5f);
+        bossMoving = false;
+        Invoke("OrcRandomAtk", 7f);
         bleeding();
     }
 
@@ -493,6 +500,7 @@ public abstract class Enemy : MonoBehaviour
         if(this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
         {
             StartCoroutine(Die());
+
             if(this.gameObject.layer == LayerMask.NameToLayer("Dieenemy"))
             {
                 return;
@@ -1224,12 +1232,15 @@ public abstract class Enemy : MonoBehaviour
         {
             case 1:
                 bossSoul();
-                Invoke("ProjectiveBody", 3f);
+                if (!Dying)
+                {
+                    Invoke("ProjectiveBody", 3f);
+                }
                 atkPattern = 0;
                 break;
 
             case 2:
-                StartCoroutine(bossJump());
+                bossJump();
                 atkPattern = 0;
                 break;
 
@@ -1261,12 +1272,15 @@ public abstract class Enemy : MonoBehaviour
         animator.SetTrigger("Attacking");
     }
 
-    public IEnumerator bossJump()       // 몸통박치기
+    public void bossJump()       // 몸통박치기
     {
         animator.SetTrigger("Jump");
         Enemy_Speed = 12f;
         bossMoving = true;
-        yield return new WaitForSeconds(0.5f);
+        Invoke("OffMoving", 0.5f);
+    }
+    void OffMoving()    // 보스 움직일 수 없게 하는 함수
+    {
         bossMoving = false;
     }
 
@@ -1349,6 +1363,7 @@ public abstract class Enemy : MonoBehaviour
 
     void OrcRandomAtk()
     {
+        bossMoving = true;
         int randNum;
         randNum = Random.Range(4, 5); 
         atkPattern = Random.Range(1, 7);     // 패턴 번호를 1 ~ 6까지 랜덤으로 뽑음.
@@ -1364,8 +1379,14 @@ public abstract class Enemy : MonoBehaviour
     }
     void orcDie()   // Orc 보스의 죽는 애니메이션
     {
+        Player player = Player.instance.GetComponent<Player>();
+        Ui_Controller ui = GameManager.Instance.GetComponent<Ui_Controller>(); //윤성권 추가함
+        Proficiency_ui pro = GameManager.Instance.GetComponent<Proficiency_ui>(); // 숙련도 추가함
         if (Dying)
         {
+            pro.GetProExp(Stage);
+            ui.GetExp(Stage);
+            ui.GetGold(Stage);
             BossSpriteBox.enabled = false;
             rigid.isKinematic = true;
             gameObject.transform.Translate(Vector2.down * Time.deltaTime * 5);
@@ -1629,6 +1650,7 @@ public abstract class Enemy : MonoBehaviour
             Dying = true;
             bossBox.enabled = false;
             animator.SetTrigger("Die");
+
         }
     }
 
