@@ -205,7 +205,6 @@ public class Player : MonoBehaviour
         if(this.gameObject.transform.position.y < -30)
         {
             PlayerReposition();
-            Debug.Log("¸®½ºÆù");
         }
     }
 
@@ -699,6 +698,7 @@ public class Player : MonoBehaviour
         CurrentHp = CurrentHp - 10;
         PlaySound("Damaged");
         anim.SetTrigger("hurt");
+        GameManager.GetComponent<Ui_Controller>().Damage(10);
         StartCoroutine(Routine());
         StartCoroutine(Blink());
     }
