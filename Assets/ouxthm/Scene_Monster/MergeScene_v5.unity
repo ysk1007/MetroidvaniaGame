@@ -178,11 +178,11 @@ RectTransform:
   m_Father: {fileID: 199830582}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 9}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 399, y: 0}
   m_SizeDelta: {x: 334, y: 63}
-  m_Pivot: {x: 1, y: 0.5}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &75102590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -660,7 +660,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 7
+  orthographic size: 3
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -684,7 +684,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 16, y: 1, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3008,6 +3008,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2223274207719645978, guid: cd151f802a833194b8b7133ae8a3f029, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223274208149978879, guid: cd151f802a833194b8b7133ae8a3f029, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd151f802a833194b8b7133ae8a3f029, type: 3}
 --- !u!1001 &2502796932048714299
@@ -3206,6 +3214,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3743811799928751493, guid: 79b65ae68eb72e945a69695de9caebea, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3743811799928751496, guid: 79b65ae68eb72e945a69695de9caebea, type: 3}
       propertyPath: LoadingImage
       value: 
@@ -3262,6 +3274,10 @@ PrefabInstance:
     - target: {fileID: 3743811800656704330, guid: 79b65ae68eb72e945a69695de9caebea, type: 3}
       propertyPath: m_Name
       value: Ui_canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 3743811800656704330, guid: 79b65ae68eb72e945a69695de9caebea, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3743811800656704331, guid: 79b65ae68eb72e945a69695de9caebea, type: 3}
       propertyPath: m_Pivot.x
@@ -3355,6 +3371,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2035488384}
+    - target: {fileID: 3743811800830432251, guid: 79b65ae68eb72e945a69695de9caebea, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3743811800871810270, guid: 79b65ae68eb72e945a69695de9caebea, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -3378,6 +3398,10 @@ PrefabInstance:
     - target: {fileID: 3743811800893529497, guid: 79b65ae68eb72e945a69695de9caebea, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3743811800898419984, guid: 79b65ae68eb72e945a69695de9caebea, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3743811800898521672, guid: 79b65ae68eb72e945a69695de9caebea, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3431,6 +3455,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2035488384}
+    - target: {fileID: 3743811801638471099, guid: 79b65ae68eb72e945a69695de9caebea, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3743811801643308675, guid: 79b65ae68eb72e945a69695de9caebea, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -3707,6 +3735,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7706613468683241869, guid: e907dbc24f882dc44a3a32beb5b633a3, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8100478949649400532, guid: e907dbc24f882dc44a3a32beb5b633a3, type: 3}
       propertyPath: m_Name
       value: Stage 2-4

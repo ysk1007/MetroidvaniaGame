@@ -125,7 +125,7 @@ public class MoveCamera : MonoBehaviour
                 break;
             case 1: // Stage 2
                 Camera.main.orthographicSize = 3f;
-                changeX = 19f;
+                changeX = 16f;
                 changeY = 1f;
                 break;
             case 2: // Stage 3

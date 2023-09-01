@@ -115,11 +115,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skipButton: {fileID: 2223274207719645978}
+  playerUI: {fileID: 0}
   credit: {fileID: 2223274208149978879}
-  Panel: {fileID: 2223274208149978878}
+  EndingUI: {fileID: 0}
+  balckScreen: {fileID: 0}
+  audioSource: {fileID: 0}
   isEnding: 0
-  isSkip: 0
-  isShow: 0
 --- !u!1 &2223274206521105516
 GameObject:
   m_ObjectHideFlags: 0
@@ -186,20 +187,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Background Music
-
-
-
-
-
-    Forest Walk - Camille Berthome
-
-
-    Forest
-    Walk - Camille Berthome
-
-
-    Forest Walk - Camille Berthome'
+  m_text: "Background Music\n\n\n\n\nForest Walk - Camille Berthome\n\n\uB290\uAE0B\uD55C
+    \uAC8C\uC784\uC758 \uD0C0\uC774\uD2C0 \uD654\uBA74   - Nid\n\nForest Walk - Camille
+    Berthome"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 145d2ff76d6bd4446a80bdeeffbeb217, type: 2}
   m_sharedMaterial: {fileID: 1274855221101142022, guid: 145d2ff76d6bd4446a80bdeeffbeb217, type: 2}
@@ -1921,7 +1911,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2223274208149978872
 RectTransform:
   m_ObjectHideFlags: 0

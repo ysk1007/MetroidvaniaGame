@@ -328,7 +328,7 @@ public abstract class Enemy : MonoBehaviour
         bleeding();
     }
 
-    void OnCollisionStay2D(Collision2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.name == "Player")
         {
@@ -337,7 +337,7 @@ public abstract class Enemy : MonoBehaviour
         }        
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionStay2D(Collision2D collision)
     {
         if (Enemy_Mod == 11 && collision.gameObject.CompareTag("Wall"))
         {
@@ -1260,11 +1260,8 @@ public abstract class Enemy : MonoBehaviour
     }
     public void randomAtk() // 공격 패턴 랜덤으로 정하기
     {
-        int nextNum;
-
         atkPattern = Random.Range(1, 4);
-        nextNum = Random.Range(4, 7);
-        Invoke("randomAtk", 3f);
+        Invoke("randomAtk", 4f);
     }
 
     public void bossSoul()      // 영혼 발사
