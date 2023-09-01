@@ -62,7 +62,7 @@ public class StatisticsUi : MonoBehaviour
         }
         if (Input.GetKeyUp(KeyCode.Return) && die)
         {
-            sm.Wait_And_SceneLoader("Title_Scene");
+            Invoke("GoTitleScreen",1f);
             //fade.CallFadeOut();
         }
     }
@@ -87,11 +87,16 @@ public class StatisticsUi : MonoBehaviour
         }
         List<GameObject> find = dm.finditem();
         GetItemText.text = (find.Count).ToString();
-        for (int i = 0; i < find.Count-1; i++)
+        for (int i = 0; i < find.Count; i++)
         {
             Instantiate(find[i], List.transform);
         }
         dm.DeleteJson();
         die = true;
+    }
+
+    void GoTitleScreen()
+    {
+        sm.SceneLoader("Title_Scene");
     }
 }

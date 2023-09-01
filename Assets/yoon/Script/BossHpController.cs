@@ -81,7 +81,7 @@ public class BossHpController : MonoBehaviour
         StartCoroutine(BossHpUi_Up());
     }
 
-    void BossDead()
+    public void BossDead()
     {
         StartCoroutine(BossHpUi_Down());
     }
@@ -161,6 +161,13 @@ public class BossHpController : MonoBehaviour
             ShakeObject.transform.position = newPosition;
 
             yield return null;
+        }
+        for (int i = 0; i < 5; i++)
+        {
+            if (HpSliders[i] != null)
+            {
+                HpSliders[i].SelfCreate();
+            }
         }
     }
 

@@ -49,6 +49,7 @@ public class MarketItem : MonoBehaviour
             GameManager.Instance.GetComponent<Ui_Controller>().UiUpdate();
             if (randomitem.GetComponentInChildren<itemStatus>().data.itemNameEng == "HpPotion")
             {
+                Destroy(GameManager.Instance.GetComponent<Ui_Controller>().DescriptionBox);
                 GameManager.Instance.GetComponent<Ui_Controller>().Heal(Player.instance.GetComponent<Player>().MaxHp / 2);
                 Destroy(this.gameObject);
                 market.BuySoundPlay();

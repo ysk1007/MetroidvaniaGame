@@ -475,6 +475,10 @@ public abstract class Enemy : MonoBehaviour
                 float damage = (bleedLevel * player.bleedDamage);
                 this.GetComponentInChildren<EnemyUi>().ShowBleedText(damage); //윤성권 추가함 출혈딜
                 Enemy_HP -= damage; // 체력을  출혈스택 * 출혈 데미지로 감소
+                if (AmIBoss)
+                {
+                    GameManager.Instance.GetComponent<BossHpController>().BossHit(damage);
+                }
                 player.TotalDamaged += damage;
                 if (Swordlevel > 1 && Enemy_HP <= Enemy_HPten && AmIBoss == false)  // 검 숙련도가 1 이상 일정 체력 이하의 몬스터가 출혈 중이면 즉사(보스 제외)
                 {
@@ -1166,6 +1170,10 @@ public abstract class Enemy : MonoBehaviour
         Enemy_HP -= Damage;
         player.TotalDamaged += Damage;
         this.GetComponentInChildren<EnemyUi>().ShowBleedText(Damage);
+        if (AmIBoss == true)
+        {
+            GameManager.Instance.GetComponent<BossHpController>().BossHit(Damage);
+        }
         bleedLevel = 0;
         bleedingTime = 0;
     }
@@ -1345,6 +1353,7 @@ public abstract class Enemy : MonoBehaviour
             BossSpriteBox.enabled = false;
             rigid.isKinematic = true;
             gameObject.transform.Translate(Vector2.down * Time.deltaTime * 5);
+            GameManager.Instance.GetComponent<BossHpController>().BossDead();
         }
     }
 
@@ -1513,7 +1522,7 @@ public abstract class Enemy : MonoBehaviour
         {
             // 목표 방향 계산
             Vector3 targetDirection = (TeleportPos[0].position - transform.position).normalized;
-            rigid.velocity = targetDirection * 7.5f;
+            rigid.velocity = targetDirection * 10f;
 
             // 오브젝트 A가 목표 위치에 도달한 경우
             if (Vector3.Distance(transform.position, TeleportPos[0].position) < 0.1f)
@@ -1598,11 +1607,11 @@ public abstract class Enemy : MonoBehaviour
     {
         if (Enemy_HP <= 0 && !Dying)
         {
-            Player.instance.ThirdMaterial = true;
             animator.runtimeAnimatorController = PageAnimators[1];
             Dying = true;
             bossBox.enabled = false;
             animator.SetTrigger("Die");
+            GameManager.Instance.GetComponent<BossHpController>().BossDead();
         }
     }
 
@@ -1612,7 +1621,7 @@ public abstract class Enemy : MonoBehaviour
         {
             case 1:
                 ScaleFlip();
-                float range = 11;
+                float range = 7;
                 if (TargetFind > 0) //왼쪽으로 감
                 {
                     range *= -1;

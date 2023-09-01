@@ -110,6 +110,7 @@ public class Player : MonoBehaviour
     public int selectCoolTimeLevel = 0;
 
     public GameObject GameManager;  //게임 매니저
+    MapManager map;
     public Ui_Controller Ui;  //ui 컨트롤러
     public GameObject attackRange;  //근접공격 위치
     public GameObject Arrow; //화살 오브젝트
@@ -189,6 +190,7 @@ public class Player : MonoBehaviour
     void Start() //추가함
     {
         DataManager dm = DataManager.instance;
+        map = MapManager.instance;
         dm.JsonLoad("PlayerData");
         dm.JsonLoad("ItemData");
         anim.SetFloat("AttackSpeed", ATS);
@@ -210,6 +212,10 @@ public class Player : MonoBehaviour
 
     void Player_Move() //Player 이동, 점프
     {
+        if (map.pause)
+        {
+            return;
+        }
         //Move
         Direction = Input.GetAxisRaw("Horizontal");   // 좌우 방향값을 정수로 가져오기
         if (!isdelay && Direction != 0 && gameObject.CompareTag("Player") && !isSkill && !isMasterSkill)    //공격 딜레이중일시 이동 불가능
@@ -268,6 +274,10 @@ public class Player : MonoBehaviour
 
     public void Player_Attack() //Player 공격모음
     {
+        if (map.pause)
+        {
+            return;
+        }
         if (Input.GetKeyDown(KeyCode.D) && proSelectWeapon != 4 && proLevel == 3)    //숙련도 스킬 실행
         {
             if (!anim.GetBool("Sliding") && !isMasterSkill && !isSkill && !isCharging)
@@ -503,9 +513,7 @@ public class Player : MonoBehaviour
     {
         if (WeaponChage == 1 && proSelectWeapon == 0 && Sword_MsTime <= 0) //Sword 숙련도 스킬
         {
-            stackbleed = enemy.bleedLevel;  //2023 - 08 - 09 추가
-
-            if (stackbleed > 0)
+            if (enemyColliders != null)
             {
                 isMasterSkill = true;
                 PlaySound("SwordMasterSkill");
@@ -520,11 +528,15 @@ public class Player : MonoBehaviour
 
                 foreach (Enemy enemy in enemyCheck) // 감지된 모든 적에게 데미지 입힘
                 {
-                    enemy.bleedEff();
-                    BoxCollider2D boxCollider = enemy.GetComponent<BoxCollider2D>();
-                    if (boxCollider!= null)
+                    stackbleed = enemy.bleedLevel;  //2023 - 08 - 09 추가
+                    if (stackbleed > 0)
                     {
-                        enemyColliders.Remove(boxCollider);
+                        enemy.bleedEff();
+                        BoxCollider2D boxCollider = enemy.GetComponent<BoxCollider2D>();
+                        if (boxCollider != null)
+                        {
+                            enemyColliders.Remove(boxCollider);
+                        }
                     }
                 }
                 Sword_MsTime = DeCoolTimeCarcul(MasterSkillTime[0]);
@@ -895,6 +907,11 @@ public class Player : MonoBehaviour
 
     IEnumerator Die(float x) //Player 사망시 스프라이트 삭제
     {
+        if (EnemyAudioSource.instance != null)
+        {
+            EnemyAudioSource.instance.SoundOff();
+        }
+        SoundManager.instance.bgSound.clip = null;
         PlaySound("Die");
         StartCoroutine(Knockback(x));
         anim.SetTrigger("Die");

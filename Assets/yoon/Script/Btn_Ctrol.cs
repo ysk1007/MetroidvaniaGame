@@ -12,6 +12,7 @@ public class Btn_Ctrol : MonoBehaviour
     public Fade_img fade;
     public Loading loading_ui;
     public DataManager dm;
+    SoundManager sm;
 
     public GameObject continueBtn;
     public bool noContinue = false;
@@ -99,7 +100,8 @@ public class Btn_Ctrol : MonoBehaviour
         }
         else
         {
-            SoundManager.instance.SFXPlay("Seleect", clip);
+            sm = SoundManager.instance;
+            sm.SFXPlay("Seleect", clip);
             TextMeshProUGUI text = buttons[currentIndex].GetComponentInChildren<TextMeshProUGUI>();
             text.fontSize = 30;
             text.color = new Color32(255, 255, 255, 255);
@@ -139,6 +141,7 @@ public class Btn_Ctrol : MonoBehaviour
                 break;
             case 3:
                 Debug.Log("게임 종료");
+                Application.Quit();
                 break;
         }
     }

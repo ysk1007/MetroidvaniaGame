@@ -5,7 +5,7 @@ using UnityEngine;
 public class Laser : MonoBehaviour
 {
     public float Damage = 20f;
-    public float moveSpeed = 1.5f;
+    public float moveSpeed = 2f;
     public int Dir = 1;
 
     private void Start()

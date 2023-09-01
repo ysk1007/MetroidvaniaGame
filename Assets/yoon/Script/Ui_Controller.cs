@@ -195,7 +195,7 @@ public class Ui_Controller : MonoBehaviour
         float value = GoldValue[stage - 1] ;
         player.gold += value * randNum * player.GoldGet;
         player.TotalGetGold += value * player.GoldGet;
-        GoldVelueUI.text = player.gold.ToString();
+        GoldVelueUI.text = player.gold.ToString("F0");
         MarketGoldText.text = player.gold.ToString();
     }
 
@@ -203,7 +203,7 @@ public class Ui_Controller : MonoBehaviour
     {
         player.gold += price * player.GoldGet;
         player.TotalGetGold += price * player.GoldGet;
-        GoldVelueUI.text = player.gold.ToString();
+        GoldVelueUI.text = player.gold.ToString("F0");
         MarketGoldText.text = player.gold.ToString();
     }
 
@@ -216,7 +216,7 @@ public class Ui_Controller : MonoBehaviour
         else
         {
             player.gold -= value;
-            GoldVelueUI.text = player.gold.ToString();
+            GoldVelueUI.text = player.gold.ToString("F0");
             MarketGoldText.text = player.gold.ToString();
             return true;
         }
@@ -240,7 +240,7 @@ public class Ui_Controller : MonoBehaviour
         //레벨 골드 갱신
         PlayerLevel = player.level;
         LevelVelueUi.text = player.level.ToString();
-        GoldVelueUI.text = player.gold.ToString();
+        GoldVelueUI.text = player.gold.ToString("F0");
         MarketGoldText.text = player.gold.ToString();
 
         Status_screen.GetComponent<StatusScreen>().StatusUpdate(player);

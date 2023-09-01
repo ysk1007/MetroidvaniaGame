@@ -57,6 +57,9 @@ public class EnemySounds : MonoBehaviour
     public AudioClip snailDie;
 
     public AudioClip golemLaser;
+    public AudioClip golemBreakdown;
+    public AudioClip golemHit;
+    public AudioClip golemDie;
 
     private void Awake()
     {
@@ -216,6 +219,22 @@ public class EnemySounds : MonoBehaviour
     {
         Sounds("golemLaser");
     }
+
+    public void GolemBreakdown()
+    {
+        Sounds("golemBreakdown");
+    }
+
+    public void GolemDie()
+    {
+        Player.instance.ThirdMaterial = true;
+        Sounds("golemDie");
+    }
+
+    public void GolemHit()
+    {
+        Sounds("golemHit");
+    }
     public void Sounds(string sounds)
     {
         switch (sounds)
@@ -333,6 +352,15 @@ public class EnemySounds : MonoBehaviour
                 break;
             case "golemLaser":
                 audioSource.clip = golemLaser;
+                break;
+            case "golemBreakdown":
+                audioSource.clip = golemBreakdown;
+                break;
+            case "golemDie":
+                audioSource.clip = golemDie;
+                break;
+            case "golemHit":
+                audioSource.clip = golemHit;
                 break;
         }
         audioSource.Play();

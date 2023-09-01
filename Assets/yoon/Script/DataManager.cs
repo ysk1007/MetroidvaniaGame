@@ -411,6 +411,33 @@ public class DataManager : MonoBehaviour
         //Debug.Log("디버그 : 모든 데이터를 성공적으로 저장하였습니다");
     }
 
+    public void JsonSliderSave()
+    {
+        OptionLoadJson = File.ReadAllText(OptionPath);
+        OptionData optionSave = JsonUtility.FromJson<OptionData>(OptionLoadJson);
+        optionSave.MasterVolume = SoundSlider.instance.master_slider.value;
+        optionSave.BGMVolume = SoundSlider.instance.bgm_slider.value;
+        optionSave.SFXVolume = SoundSlider.instance.sfx_slider.value;
+        string optionJson = JsonUtility.ToJson(optionSave, true);
+        File.WriteAllText(OptionPath, optionJson);
+    }
+
+    public void JsonSliderLoad()
+    {
+        OptionData optionData = new OptionData();
+        OptionLoadJson = File.ReadAllText(OptionPath);
+        optionData = JsonUtility.FromJson<OptionData>(OptionLoadJson);
+        if (SoundSlider.instance != null)
+        {
+            //Debug.Log("디버그 : 사운드 데이터 불러오는 중");
+            SoundSlider.instance.master_slider.value = optionData.MasterVolume;
+            SoundSlider.instance.bgm_slider.value = optionData.BGMVolume;
+            SoundSlider.instance.sfx_slider.value = optionData.SFXVolume;
+            SoundManager.instance.SliderSetting();
+            //Debug.Log("디버그 : 사운드 데이터 로드 완료");
+        }
+    }
+
     public void CreateJson()
     {
         //Debug.Log("디버그 : 데이터 생성 하는중..");

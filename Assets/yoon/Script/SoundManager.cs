@@ -10,6 +10,9 @@ public class SoundManager : MonoBehaviour
     public AudioSource bgSound;
     public static SoundManager instance;
     public AudioClip[] bglist;
+    public AudioClip[] BossBglist;
+    public AudioClip[] StageBglist;
+    public AudioClip marketBGM;
     private void Awake()
     {
         if(instance == null)
@@ -70,8 +73,41 @@ public class SoundManager : MonoBehaviour
         bgSound.outputAudioMixerGroup = mixer.FindMatchingGroups("BGM")[0];
         bgSound.clip = clip;
         bgSound.loop = true;
-        bgSound.volume = 0.1f;
+        bgSound.volume = 0.05f;
         bgSound.Play();
     }
 
+    public void BossStage(int stage)
+    {
+        bgSound.outputAudioMixerGroup = mixer.FindMatchingGroups("BGM")[0];
+        bgSound.clip = BossBglist[stage - 1];
+        bgSound.loop = true;
+        bgSound.volume = 0.05f;
+    }
+
+    public void MarketStage()
+    {
+        bgSound.outputAudioMixerGroup = mixer.FindMatchingGroups("BGM")[0];
+        bgSound.clip = marketBGM;
+        bgSound.loop = true;
+        bgSound.volume = 0.05f;
+    }
+
+    public void Loading()
+    {
+        bgSound.Pause();
+    }
+
+    public void SoundUp()
+    {
+        bgSound.Play();
+    }
+
+    public void Stage(int stage)
+    {
+        bgSound.outputAudioMixerGroup = mixer.FindMatchingGroups("BGM")[0];
+        bgSound.clip = StageBglist[stage - 1];
+        bgSound.loop = true;
+        bgSound.volume = 0.05f;
+    }
 }

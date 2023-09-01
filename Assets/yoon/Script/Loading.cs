@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class Loading : MonoBehaviour
 {
+    public SoundManager sm;
     public TextMeshProUGUI loadingText;
     public TextMeshProUGUI TipText;
     int count = 1;
@@ -18,6 +19,7 @@ public class Loading : MonoBehaviour
     // Update is called once per frame
     void Start()
     {
+        sm = SoundManager.instance;
         if (ingame)
         {
             DoLoading = true;
@@ -29,6 +31,7 @@ public class Loading : MonoBehaviour
 
     public void Load()
     {
+        sm.Loading();
         fade.CallFadeIn();
         DoLoading = true;
         Invoke("off", 3f);

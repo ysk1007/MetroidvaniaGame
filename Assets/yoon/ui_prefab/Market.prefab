@@ -376,19 +376,14 @@ MonoBehaviour:
   marketUi: {fileID: 0}
   KeyUi: {fileID: 6765765041450367412}
   PlayerVisit: 0
+  Remain: 0
   RandomList: 
-  LastItemList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   ItemFromJson:
     items: []
   SellSound: {fileID: 8300000, guid: 7e94a392b19e59b4caf956e230ee11ba, type: 3}
   BuySound: {fileID: 8300000, guid: 4ed2c5f893c458b4d9254dbc7f4386c3, type: 3}
-  sfx: {fileID: 0}
+  sfx: {fileID: 5671210367489524504}
+  dm: {fileID: 0}
 --- !u!82 &5671210367489524504
 AudioSource:
   m_ObjectHideFlags: 0
