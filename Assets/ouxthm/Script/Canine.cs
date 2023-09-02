@@ -6,11 +6,11 @@ public class Canine : Enemy
 {
     public override void InitSetting()  // 적의 기본 정보를 설정하는 함수
     {
-        Stage = 1;  // 스테이지
+        Stage = 1;
         Enemy_Mod = 2;  // 근거리
-        Enemy_Power = 7f; //적의 공격력
-        Bump_Power = 4f; // 충돌 시 줄 데미지
-        Enemy_HP = 35f;  // 적의 체력
+        Enemy_Power = 30f; //적의 공격력
+        Bump_Power = 10f; // 충돌 시 줄 데미지
+        Enemy_HP = 100f;  // 적의 체력
         Enemy_Speed = 2.5f;    // 적의 이동속도
         Gap_Distance_X = 99f;  // Enemy와 Player의 X 거리차이
         Gap_Distance_Y = 99f;  // Enemy와 Player의 Y 거리차이

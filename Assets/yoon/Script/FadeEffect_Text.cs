@@ -14,6 +14,7 @@ public class FadeEffect_Text : MonoBehaviour
     public TextMeshProUGUI Text; //텍스트 컴포넌트를 담을 변수
     bool SceneChange = false; //현재 씬을 전환중인가? 변수
     public Fade_img fade;
+    SoundManager sm;
     void Start()
     {
         scene_Move = GetComponent<Scene_Move>();
@@ -76,7 +77,8 @@ public class FadeEffect_Text : MonoBehaviour
     public void FastEffect() //이펙트 속도를 빠르게 하려고 만듬
     {
         scene_Move.Wait_And_SceneLoader("Main_Scene");
-        SoundManager.instance.SFXPlay("PTB", clip);
+        sm = SoundManager.instance;
+        sm.SFXPlay("PTB", clip);
         fadeSpeed = 6f;
         startDelay = 0.05f;
     }

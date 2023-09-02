@@ -15,7 +15,7 @@ public class GridsSword : itemStatus
         data.color = Color.yellow;
         data.Rating = "신화";
         data.itemExplanation = "\"돈은 곧 힘!\" \n-그리드-";
-        data.itemStat = "골드 획득량 +77% \n 보유한 골드 777 당, 공격력이 7 증가합니다.";
+        data.itemStat = "골드 획득량 +77% \n보유한 골드 777 당, 공격력이 7 증가합니다.";
         data.itemNumber = 19;
         data.GoldGet = 0.77f;
     }

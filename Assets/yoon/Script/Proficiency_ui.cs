@@ -35,7 +35,7 @@ public class Proficiency_ui : MonoBehaviour
     public TextMeshProUGUI Pro3SkillName;
     public Image Pro3UnlockImage;
 
-    public float[] ProValue = { 0.01f, 0.02f, 0.03f }; // 1,2,3 스테이지 값
+    public float[] ProValue = { 0.005f, 0.0075f, 0.01f }; // 1,2,3 스테이지 값
     private void Awake()
     {
         instance = this;
@@ -178,14 +178,14 @@ public class Proficiency_ui : MonoBehaviour
             case 1:
                 if (proLevel >= 1)
                 {
-                    Pro1SkillName.text = "굳은 결의";
-                    Pro1SkillText.text = "차징 공격이 가능해집니다. 차징중에는 받는 피해가 감소하고, 차징시간에 비례하여 데미지를 줍니다.";
+                    Pro1SkillName.text = "철벽 부수기";
+                    Pro1SkillText.text = "차징 공격이 가능해집니다. 차징시간에 비례하여 데미지를 줍니다.";
                     TextAligmentTopLeft(Pro1SkillText);
                 }
                 if (proLevel >= 2)
                 {
-                    Pro2SkillName.text = "철벽 부수기";
-                    Pro2SkillText.text = "마지막 공격에 힘을 실어 강력한 추가 피해를 입힙니다.";
+                    Pro2SkillName.text = "금강불괴";
+                    Pro2SkillText.text = "최대 체력과 방어력이 증가합니다.";
                     TextAligmentTopLeft(Pro2SkillText);
                 }
                 if (proLevel >= 3)
@@ -229,7 +229,7 @@ public class Proficiency_ui : MonoBehaviour
         {
             return;
         }
-        Profill.fillAmount += ProValue[stage];
+        Profill.fillAmount += ProValue[stage - 1];
     }
 
     public void DoStart()

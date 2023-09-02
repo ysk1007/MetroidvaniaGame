@@ -13,6 +13,7 @@ public class Chest : MonoBehaviour
     public AudioSource sfx;
     public bool goldChest;
     public GameObject coin;
+    public GameObject potion;
     public float forceStrength = 10f;
     public int dir = 1;
     public Transform pos;
@@ -38,10 +39,11 @@ public class Chest : MonoBehaviour
             else
             {
                 float time = 0f;
-                for (int i = 0; i < 30; i++)
+                CreatePotionWithForce();
+                for (int i = 0; i < 40; i++)
                 {
                     Invoke("CreateObjectWithForce", time);
-                    time += 0.1f;
+                    time += 0.05f;
                 }
             }
         }
@@ -84,14 +86,15 @@ public class Chest : MonoBehaviour
 
         // Rigidbody2D 컴포넌트 가져오기
         Rigidbody2D rb = go.GetComponent<Rigidbody2D>();
-
+        float rannum = Random.Range(0.5f, 3f);
         if (rb != null)
         {
             // 위 방향으로 힘을 추가
             rb.AddForce(Vector2.up * forceStrength, ForceMode2D.Impulse);
-            rb.AddForce(Vector2.right * dir * 2, ForceMode2D.Impulse);
+            rb.AddForce(Vector2.right * dir * rannum, ForceMode2D.Impulse);
         }
         forceStrength = Random.Range(5f, 10f);
+
         if (dir > 0)
         {
             dir = -1;
@@ -99,6 +102,20 @@ public class Chest : MonoBehaviour
         else
         {
             dir = 1;
+        }
+    }
+
+    private void CreatePotionWithForce()
+    {
+        // 게임 오브젝트 생성
+        GameObject go = Instantiate(potion, pos.position, Quaternion.identity);
+
+        // Rigidbody2D 컴포넌트 가져오기
+        Rigidbody2D rb = go.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            // 위 방향으로 힘을 추가
+            rb.AddForce(Vector2.up * 5f, ForceMode2D.Impulse);
         }
     }
 }

@@ -43,7 +43,7 @@ public class HolyHit : MonoBehaviour
             Enemy enemy = collider.gameObject.GetComponent<Enemy>();
             if (enemy != null)
             {
-                StartCoroutine(enemy.Hit(50f));
+                StartCoroutine(enemy.Hit(20f));
             }
         }
     }

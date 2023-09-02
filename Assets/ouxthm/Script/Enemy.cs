@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static System.Net.WebRequestMethods;
 
 public abstract class Enemy : MonoBehaviour
 {
@@ -486,6 +487,10 @@ public abstract class Enemy : MonoBehaviour
                 float damage = (bleedLevel * player.bleedDamage);
                 this.GetComponentInChildren<EnemyUi>().ShowBleedText(damage); //윤성권 추가함 출혈딜
                 Enemy_HP -= damage; // 체력을  출혈스택 * 출혈 데미지로 감소
+                if (AmIBoss)
+                {
+                    GameManager.Instance.GetComponent<BossHpController>().BossHit(damage);
+                }
                 player.TotalDamaged += damage;
                 if (Swordlevel > 1 && Enemy_HP <= Enemy_HPten && AmIBoss == false)  // 검 숙련도가 1 이상 일정 체력 이하의 몬스터가 출혈 중이면 즉사(보스 제외)
                 {
@@ -525,6 +530,10 @@ public abstract class Enemy : MonoBehaviour
         if(this.gameObject.layer == LayerMask.NameToLayer("Dieenemy"))
         {
             yield break;
+        }
+        if (AmIBoss && Stage == 3)
+        {
+            gameObject.GetComponentInChildren<EnemySounds>().GolemHit();
         }
         Player player = Player.instance.GetComponent<Player>();
         Ui_Controller ui = GameManager.Instance.GetComponent<Ui_Controller>(); //윤성권 추가함
@@ -588,15 +597,6 @@ public abstract class Enemy : MonoBehaviour
                 enemyHit = true;
             }
         }
-        /*else if(Enemy_HP <= 0)
-        {
-            //StartCoroutine(Die());
-            pro.GetProExp(Stage);
-            ui.GetExp(Stage);
-            ui.GetGold(Stage);
-            player.EnemyKillCount++;
-        }*/
-
         enemyHit = false;
     }
     public IEnumerator Die()    // 죽는 코루틴
@@ -888,7 +888,7 @@ public abstract class Enemy : MonoBehaviour
             {
                 Turn();
             }
-            else if(rayHit.collider == null && Enemy_HP <= 0 && Dying)
+            else if (rayHit.collider == null && Enemy_HP <= 0 && Dying)
             {
                 StartCoroutine(Die());
             }
@@ -1150,7 +1150,7 @@ public abstract class Enemy : MonoBehaviour
         SoulEff Se = Soul.GetComponent<SoulEff>();
 
         Se.Time = endTime;
-        Se.Power = Enemy_Power;
+        Se.Power = 40f;
         Se.Dir = nextDirX;
        
     }
@@ -1160,7 +1160,7 @@ public abstract class Enemy : MonoBehaviour
         SoulEff Se1 = Soul1.GetComponent<SoulEff>();
 
         Se1.Time = endTime;
-        Se1.Power = Enemy_Power;
+        Se1.Power = 40f;
         Se1.Dir = nextDirX;
     }
 
@@ -1170,7 +1170,7 @@ public abstract class Enemy : MonoBehaviour
         SoulEff Se2 = Soul2.GetComponent<SoulEff>();
 
         Se2.Time = endTime;
-        Se2.Power = Enemy_Power;
+        Se2.Power = 40f;
         Se2.Dir = nextDirX;
         turning = true;
     }
@@ -1189,7 +1189,7 @@ public abstract class Enemy : MonoBehaviour
         bloodEFF bloodEFF = bloodEff.GetComponent<bloodEFF>();
         bloodEFF.dir = nextDirX;    // 몬스터의 방향값
         bloodEFF.scalX = scaleX;    // 몬스터의 scale.x 값(-가 되어있는 경우가 있음)
-        float Damage = bloodBoomDmg * bleedLevel;
+        float Damage = (bloodBoomDmg * bleedLevel) + player.AtkPower + player.GridPower + player.VulcanPower;
         Damage = Damage * player.DmgIncrease; //딜 증가 추가
         if (player.UseRedCard)
         {
@@ -1199,6 +1199,10 @@ public abstract class Enemy : MonoBehaviour
         Enemy_HP -= Damage;
         player.TotalDamaged += Damage;
         this.GetComponentInChildren<EnemyUi>().ShowBleedText(Damage);
+        if (AmIBoss == true)
+        {
+            GameManager.Instance.GetComponent<BossHpController>().BossHit(Damage);
+        }
         bleedLevel = 0;
         bleedingTime = 0;
     }
@@ -1384,9 +1388,11 @@ public abstract class Enemy : MonoBehaviour
             pro.GetProExp(Stage);
             ui.GetExp(Stage);
             ui.GetGold(Stage);
+            Player.instance.FirstMaterial = true;
             BossSpriteBox.enabled = false;
             rigid.isKinematic = true;
             gameObject.transform.Translate(Vector2.down * Time.deltaTime * 5);
+            GameManager.Instance.GetComponent<BossHpController>().BossDead();
         }
     }
 
@@ -1558,7 +1564,7 @@ public abstract class Enemy : MonoBehaviour
         {
             // 목표 방향 계산
             Vector3 targetDirection = (TeleportPos[0].position - transform.position).normalized;
-            rigid.velocity = targetDirection * 7.5f;
+            rigid.velocity = targetDirection * 10f;
 
             // 오브젝트 A가 목표 위치에 도달한 경우
             if (Vector3.Distance(transform.position, TeleportPos[0].position) < 0.1f)
@@ -1647,7 +1653,7 @@ public abstract class Enemy : MonoBehaviour
             Dying = true;
             bossBox.enabled = false;
             animator.SetTrigger("Die");
-
+            GameManager.Instance.GetComponent<BossHpController>().BossDead();
         }
     }
 
@@ -1657,7 +1663,7 @@ public abstract class Enemy : MonoBehaviour
         {
             case 1:
                 ScaleFlip();
-                float range = 11;
+                float range = 7;
                 if (TargetFind > 0) //왼쪽으로 감
                 {
                     range *= -1;
@@ -1914,7 +1920,7 @@ public abstract class Enemy : MonoBehaviour
         for (int i = 0; i < MagicArrowAngles.Length; i++)
         {
             Invoke("MagicArrowCreate", time);
-            time += 0.05f;
+            time += 0.075f;
         }
         MagicArrowCount = 0;
     }

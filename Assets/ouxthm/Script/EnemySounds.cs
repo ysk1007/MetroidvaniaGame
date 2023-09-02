@@ -56,6 +56,11 @@ public class EnemySounds : MonoBehaviour
     public AudioClip snailHit;
     public AudioClip snailDie;
 
+    public AudioClip golemLaser;
+    public AudioClip golemBreakdown;
+    public AudioClip golemHit;
+    public AudioClip golemDie;
+
     private void Awake()
     {
         audioSource = this.gameObject.GetComponentInParent<AudioSource>();
@@ -127,6 +132,7 @@ public class EnemySounds : MonoBehaviour
     public void NecDie()
     {
         Sounds("necDie");
+        Player.instance.SecondMaterial = true;
     }
     public void SlimeHit()
     {
@@ -207,6 +213,27 @@ public class EnemySounds : MonoBehaviour
     public void SnailDie()
     {
         Sounds("snailDie");
+    }
+
+    public void GolemLaser()
+    {
+        Sounds("golemLaser");
+    }
+
+    public void GolemBreakdown()
+    {
+        Sounds("golemBreakdown");
+    }
+
+    public void GolemDie()
+    {
+        Player.instance.ThirdMaterial = true;
+        Sounds("golemDie");
+    }
+
+    public void GolemHit()
+    {
+        SoundManager.instance.SFXPlay("golemHitSound",golemHit);
     }
     public void Sounds(string sounds)
     {
@@ -322,6 +349,18 @@ public class EnemySounds : MonoBehaviour
                 break;
             case "snailDie":
                 audioSource.clip = snailDie;
+                break;
+            case "golemLaser":
+                audioSource.clip = golemLaser;
+                break;
+            case "golemBreakdown":
+                audioSource.clip = golemBreakdown;
+                break;
+            case "golemDie":
+                audioSource.clip = golemDie;
+                break;
+            case "golemHit":
+                audioSource.clip = golemHit;
                 break;
         }
         audioSource.Play();

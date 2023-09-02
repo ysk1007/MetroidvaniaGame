@@ -72,9 +72,13 @@ public class HpBar : MonoBehaviour
 
     public void SelfDestroy()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
+    public void SelfCreate()
+    {
+        gameObject.SetActive(true);
+    }
     IEnumerator blood()
     {
         Blood = true;

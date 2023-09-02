@@ -22,8 +22,8 @@ public class Arrow : MonoBehaviour
     private void Awake()
     {
         player = Player.instance.GetComponent<Player>();
-        Dmg = (player.AtkPower + player.GridPower) * Dmg;
-        SkillDmg =  (10 + player.AtkPower + player.GridPower) * SkillDmg;
+        Dmg = (player.ATP + player.AtkPower + player.GridPower + player.VulcanPower) * player.WeaponsDmg[2];
+        SkillDmg = (player.ATP + player.AtkPower + player.GridPower + player.VulcanPower) * 2.5f;
         if (player.isSkill == true)
         {
             isSkill = true; // 스킬 사용 중이면 SetSkill 변수를 true로 설정
@@ -87,10 +87,9 @@ public class Arrow : MonoBehaviour
         }
         else
         {
-            Dmg = (player.ATP + player.AtkPower + player.GridPower) / 2;
-            if (closestCollider != null && closestCollider.tag != "Wall" && closestCollider.tag != "Pad" && closestCollider.tag != "Tilemap" && player.proSelectWeapon == 2) // 일정 거리 내에 적이 있으면 가장 가까운 적으로 이동
+            if (closestCollider != null && closestCollider.tag != "Wall" && closestCollider.tag != "Pad" && closestCollider.tag != "Tilemap" && player.proLevel >= 1) // 일정 거리 내에 적이 있으면 가장 가까운 적으로 이동
             {
-                if (hitColliders.Length > 0 && player.proLevel >= 1)
+                if (hitColliders.Length > 0)
                 {
                     //print(closestCollider);
                     Vector2 direction = (closestCollider.transform.position - transform.position).normalized;

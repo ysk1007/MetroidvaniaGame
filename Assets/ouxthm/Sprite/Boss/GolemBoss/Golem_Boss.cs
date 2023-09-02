@@ -6,10 +6,10 @@ public class Golem_Boss : Enemy
 {
     public override void InitSetting()  // 적의 기본 정보를 설정하는 함수
     {
-        Enemy_Name = "레이저 골렘"; //윤성권 추가함
+        Stage = 3;
+        Enemy_Name = "깨어난 고대의 피조물"; //윤성권 추가함
         AmIBoss = true; //윤성권 추가함
         BossHpLine = 5; //윤성권 추가함
-        Stage = 2; //윤성권 추가함
         Enemy_Mod = 2;  // 보스
         Enemy_Power = 12f; //적의 공격력
         Bump_Power = 10f;    // 충돌 공격력

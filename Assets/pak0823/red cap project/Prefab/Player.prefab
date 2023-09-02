@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7859401244918661413}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.1, y: -0.4, z: 0}
+  m_LocalPosition: {x: 1.1, y: -1.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -240,7 +240,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7859401245018679778}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -944,7 +944,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7859401246035618786}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.5, z: 0}
+  m_LocalPosition: {x: 0, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1168,19 +1168,23 @@ MonoBehaviour:
   curTime: 0
   coolTime: 2
   MasterSkillTime:
-  - 1
-  - 1
-  - 1
+  - 60
+  - 120
+  - 90
   Sword_MsTime: 0
   Axe_MsTime: 0
   Bow_MsTime: 0
   SkillTime:
-  - 1
-  - 11
-  - 1
+  - 20
+  - 30
+  - 15
   Sword_SkTime: 0
   Axe_SkTime: 0
   Bow_SkTime: 0
+  WeaponsDmg:
+  - 1
+  - 1.2
+  - 0.5
   isdelay: 0
   isSlide: 0
   isGround: 1
@@ -1230,9 +1234,18 @@ MonoBehaviour:
   SlidingCool: 2
   proSelectWeapon: 1
   proLevel: 3
+  EnemyKillCount: 0
+  TotalGetGold: 0
+  TotalDamaged: 0
+  FirstMaterial: 0
+  SecondMaterial: 0
+  ThirdMaterial: 0
   enemyPower: 0
   stackbleed: 0
-  bleedDamage: 0.5
+  slashBleedStack: 0
+  bleedDamage: 10
+  enemyColliders: []
+  enemyCheck: []
   selectAtkValue:
   - 0.1
   - 0.2
@@ -1318,11 +1331,13 @@ MonoBehaviour:
   UseRedCard: 0
   NoNockback: 0
   UseMirror: 0
+  UseVulcanArmor: 0
   cam: {fileID: 0}
   TimeLoopAnim: {fileID: 7859401245638558401}
   TimeLoopSound: {fileID: 7859401245638558406}
   PastErase: {fileID: 0}
   GridPower: 0
+  VulcanPower: 0
   AxeMasterEfc: {fileID: 5773911161201639705, guid: df2a3bacd70287540a9dfb4a08fdc497, type: 3}
   SkillCount: 1
 --- !u!95 &7859401246129824556
@@ -1359,18 +1374,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.07, y: -0.55}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.125, y: 1.9375}
+    oldSize: {x: 1.5, y: 3}
     newSize: {x: 1, y: 1.9375}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1.9}
+  m_Size: {x: 1.12, y: 1.9}
   m_EdgeRadius: 0
 --- !u!50 &7859401246129824546
 Rigidbody2D:

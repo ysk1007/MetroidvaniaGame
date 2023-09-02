@@ -6,6 +6,9 @@ using TMPro;
 
 public class StatisticsUi : MonoBehaviour
 {
+    public DataManager dm;
+    public Scene_Move sm;
+    public Fade_img fade;
     public Player p;
     public OptionManager op;
     public TextMeshProUGUI TitleText;
@@ -13,6 +16,8 @@ public class StatisticsUi : MonoBehaviour
     public TextMeshProUGUI GetGoldText;
     public TextMeshProUGUI TotalDmageText;
     public TextMeshProUGUI PlayTimeText;
+    public TextMeshProUGUI GetItemText;
+    public GameObject List;
 
     public Animator anim;
     public float fallSpeed = 750f;
@@ -21,6 +26,8 @@ public class StatisticsUi : MonoBehaviour
 
     private RectTransform rectTransform;
     private Vector2 targetPosition;
+
+    public bool die = false;
 
     private void Start()
     {
@@ -33,6 +40,8 @@ public class StatisticsUi : MonoBehaviour
 
         // 목표 위치를 화면 중앙으로 설정
         targetPosition = new Vector2(0f, 0f);
+        Debug.Log(targetPosition);
+        isFalling = true;
     }
 
     private void Update()
@@ -51,6 +60,11 @@ public class StatisticsUi : MonoBehaviour
                 Setting();
             }
         }
+        if (Input.GetKeyUp(KeyCode.Return) && die)
+        {
+            Invoke("GoTitleScreen",1f);
+            //fade.CallFadeOut();
+        }
     }
 
     public void StartSlideIn()
@@ -62,6 +76,7 @@ public class StatisticsUi : MonoBehaviour
     {
         p = Player.instance;
         op = OptionManager.instance;
+        dm = DataManager.instance;
         KillCountText.text = p.EnemyKillCount.ToString();
         GetGoldText.text = p.TotalGetGold.ToString("F0")+" G";
         TotalDmageText.text = p.TotalDamaged.ToString("F0");
@@ -70,5 +85,18 @@ public class StatisticsUi : MonoBehaviour
         {
             TitleText.text = "게임 클리어!";
         }
+        List<GameObject> find = dm.finditem();
+        GetItemText.text = (find.Count).ToString();
+        for (int i = 0; i < find.Count; i++)
+        {
+            Instantiate(find[i], List.transform);
+        }
+        dm.DeleteJson();
+        die = true;
+    }
+
+    void GoTitleScreen()
+    {
+        sm.SceneLoader("Title_Scene");
     }
 }

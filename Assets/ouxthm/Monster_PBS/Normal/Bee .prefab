@@ -237,6 +237,9 @@ MonoBehaviour:
   orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
   snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
   snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
+  golemLaser: {fileID: 0}
+  golemBreakdown: {fileID: 0}
+  golemDie: {fileID: 0}
 --- !u!1 &7227023883360115923
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,7 +460,7 @@ AudioSource:
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
-  Mute: 0
+  Mute: 1
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128

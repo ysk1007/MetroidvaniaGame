@@ -6,14 +6,14 @@ public class Nec_Boss : Enemy
 {
     public override void InitSetting()  // 적의 기본 정보를 설정하는 함수
     {
-        Enemy_Name = "네크로맨서"; //윤성권 추가함
+        Enemy_Name = "금단의 사령술사 네크"; //윤성권 추가함
         AmIBoss = true; //윤성권 추가함
-        BossHpLine = 4; //윤성권 추가함
+        BossHpLine = 3; //윤성권 추가함
         Stage = 2; //윤성권 추가함
         Enemy_Mod = 2;  // 보스
-        Enemy_Power = 12f; //적의 공격력
+        Enemy_Power = 25f; //적의 공격력
         Bump_Power = 10f;    // 충돌 공격력
-        Enemy_HP = 5000f;  // 적의 체력
+        Enemy_HP = 3000f;  // 적의 체력
         Enemy_Speed = 1f;    // 적의 이동속도
         Gap_Distance_X = 99f;  // Enemy와 Player의 X 거리차이
         Gap_Distance_Y = 99f;  // Enemy와 Player의 Y 거리차이

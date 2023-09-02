@@ -6,9 +6,10 @@ public class Bee : Enemy
 {
     public override void InitSetting()  // 적의 기본 정보를 설정하는 함수
     {
+        Stage = 1;
         Enemy_Mod = 3;  // 비행 몬스터
-        Enemy_Power = 4; //적의 공격력
-        Enemy_HP = 50f;  // 적의 체력
+        Enemy_Power = 25; //적의 공격력
+        Enemy_HP = 40f;  // 적의 체력
         Enemy_Speed = 3f;    // 적의 이동속도
         Gap_Distance_X = 99f;  // Enemy와 Player의 X 거리차이
         Gap_Distance_Y = 99f;  // Enemy와 Player의 Y 거리차이

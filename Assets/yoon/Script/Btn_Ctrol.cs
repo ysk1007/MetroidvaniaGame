@@ -11,11 +11,24 @@ public class Btn_Ctrol : MonoBehaviour
     Scene_Move Scene_Move;
     public Fade_img fade;
     public Loading loading_ui;
+    public DataManager dm;
+    SoundManager sm;
+
+    public GameObject continueBtn;
+    public bool noContinue = false;
 
     public int[] index = { };
     public int currentIndex;
     private void Start()
     {
+        dm = DataManager.instance;
+        if (!dm.findPlayerData())
+        {
+            Destroy(continueBtn.GetComponent<Button>());
+            Color32 color = new Color32(255, 255, 255, 100);
+            continueBtn.GetComponentInChildren<TextMeshProUGUI>().color = color;
+            noContinue = true;
+        }
         Scene_Move = GetComponent<Scene_Move>();
         buttons = GetComponentsInChildren<Button>();
         index = new int[buttons.Length];
@@ -35,7 +48,17 @@ public class Btn_Ctrol : MonoBehaviour
             {
                 GetBtnImpo(0);
             }
-            else { GetBtnImpo(currentIndex + 1); }
+            else 
+            {
+                if (noContinue && currentIndex == 0)
+                {
+                    GetBtnImpo(currentIndex + 2);
+                }
+                else
+                {
+                    GetBtnImpo(currentIndex + 1);
+                }
+            }
         }
         else if (Input.GetKeyUp(KeyCode.UpArrow) && !OptionPanel.activeSelf)
         {
@@ -43,7 +66,17 @@ public class Btn_Ctrol : MonoBehaviour
             {
                 GetBtnImpo(buttons.Length - 1);
             }
-            else { GetBtnImpo(currentIndex - 1); }
+            else 
+            {
+                if (noContinue && currentIndex == 2)
+                {
+                    GetBtnImpo(currentIndex - 2);
+                }
+                else
+                {
+                    GetBtnImpo(currentIndex - 1);
+                }
+            }
         }
         else if (Input.GetKeyUp(KeyCode.Return) && !OptionPanel.activeSelf)
         {
@@ -67,7 +100,8 @@ public class Btn_Ctrol : MonoBehaviour
         }
         else
         {
-            SoundManager.instance.SFXPlay("Seleect", clip);
+            sm = SoundManager.instance;
+            sm.SFXPlay("Seleect", clip);
             TextMeshProUGUI text = buttons[currentIndex].GetComponentInChildren<TextMeshProUGUI>();
             text.fontSize = 30;
             text.color = new Color32(255, 255, 255, 255);
@@ -81,25 +115,33 @@ public class Btn_Ctrol : MonoBehaviour
         switch(index)
         {
             case 0:
-                DataManager dm = DataManager.instance.GetComponent<DataManager>();
                 Debug.Log("새 이야기 시작");
                 dm.DeleteJson();
-                dm.JsonLoad("Default");
+                dm.CreateJson();
                 fade.CallFadeIn();
                 loading_ui.DoLoading = true;
                 Invoke("GoInGame",4f);
                 break;
             case 1:
                 Debug.Log("이어서 시작");
-                fade.CallFadeIn();
-                loading_ui.DoLoading = true;
-                Invoke("GoInGame", 4f);
-                break;
+                if (!dm.findPlayerData())
+                {
+                    Debug.Log("데이터 없음");
+                    break;
+                }
+                else
+                {
+                    fade.CallFadeIn();
+                    loading_ui.DoLoading = true;
+                    Invoke("GoInGame", 4f);
+                    break;
+                }
             case 2:
                 OptionPanel.SetActive(true);
                 break;
             case 3:
                 Debug.Log("게임 종료");
+                Application.Quit();
                 break;
         }
     }

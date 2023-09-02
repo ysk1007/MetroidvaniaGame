@@ -1,9 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System.Diagnostics;
 
 public class Ui_Controller : MonoBehaviour
 {
@@ -33,7 +31,7 @@ public class Ui_Controller : MonoBehaviour
     public GameObject Status_screen;
     public GameObject WeaponSelect_screen;
     public GameObject DescriptionBox;
-    public StatisticsUi StatisticsUi;
+    public GameObject StatisticsUi;
     private bool openinven = false;
     public bool openMarket = false;
     public GameObject iconObject;
@@ -53,8 +51,8 @@ public class Ui_Controller : MonoBehaviour
 
     public bool isDown = false;
 
-    public float[] ExpValue = {10f,20f,30f}; // 1,2,3 스테이지 값
-    public float[] GoldValue = {50f,75f,90f}; // 1,2,3 스테이지 값
+    public float[] ExpValue = {8f,20f,35f}; // 1,2,3 스테이지 값
+    public float[] GoldValue = {50f,75f,100f}; // 1,2,3 스테이지 값
     private void Awake()
     {
 
@@ -193,10 +191,11 @@ public class Ui_Controller : MonoBehaviour
 
     public void GetGold(int stage)
     {
-        float value = GoldValue[stage - 1];
-        player.gold += value * player.GoldGet;
+        float randNum = Random.Range(0.5f, 1f);
+        float value = GoldValue[stage - 1] ;
+        player.gold += value * randNum * player.GoldGet;
         player.TotalGetGold += value * player.GoldGet;
-        GoldVelueUI.text = player.gold.ToString();
+        GoldVelueUI.text = player.gold.ToString("F0");
         MarketGoldText.text = player.gold.ToString();
     }
 
@@ -204,7 +203,7 @@ public class Ui_Controller : MonoBehaviour
     {
         player.gold += price * player.GoldGet;
         player.TotalGetGold += price * player.GoldGet;
-        GoldVelueUI.text = player.gold.ToString();
+        GoldVelueUI.text = player.gold.ToString("F0");
         MarketGoldText.text = player.gold.ToString();
     }
 
@@ -217,7 +216,7 @@ public class Ui_Controller : MonoBehaviour
         else
         {
             player.gold -= value;
-            GoldVelueUI.text = player.gold.ToString();
+            GoldVelueUI.text = player.gold.ToString("F0");
             MarketGoldText.text = player.gold.ToString();
             return true;
         }
@@ -233,7 +232,7 @@ public class Ui_Controller : MonoBehaviour
         PlayerCurrentHpText.text = PlayerHp.currentHp.ToString("F0");
 
         //인벤토리 갱신
-        AtkPowerValueText.text = (player.AtkPower + player.ATP + player.GridPower).ToString("F0");
+        AtkPowerValueText.text = (player.AtkPower + player.ATP + player.GridPower + player.VulcanPower).ToString("F0");
         DefValueText.text = player.Def.ToString();
         AtkSpeedValueText.text = player.ATS.ToString("F1");
         CriticalChanceText.text = (player.CriticalChance * 100f).ToString() + "%";
@@ -241,7 +240,7 @@ public class Ui_Controller : MonoBehaviour
         //레벨 골드 갱신
         PlayerLevel = player.level;
         LevelVelueUi.text = player.level.ToString();
-        GoldVelueUI.text = player.gold.ToString();
+        GoldVelueUI.text = player.gold.ToString("F0");
         MarketGoldText.text = player.gold.ToString();
 
         Status_screen.GetComponent<StatusScreen>().StatusUpdate(player);

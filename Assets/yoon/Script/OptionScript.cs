@@ -7,6 +7,9 @@ public class OptionScript : MonoBehaviour
 {
     public TextMeshProUGUI ScreenText;
     public TextMeshProUGUI ResolutionText;
+    public GameObject Loading_Screen;
+    public GameObject Check_Screen;
+    public Scene_Move sm;
     enum ScreenState
     {
         FullScreen,
@@ -41,14 +44,24 @@ public class OptionScript : MonoBehaviour
         this.gameObject.SetActive(true);
     }
 
+    public void CheckScreenOn()
+    {
+        Check_Screen.SetActive(true);
+    }
+
+    public void CheckScreenOff()
+    {
+        Check_Screen.SetActive(false);
+    }
+
     public void GameExit()
     {
-        DataManager.instance.JsonSave("PlayerData");
-        DataManager.instance.JsonSave("SliderData");
-        DataManager.instance.JsonSave("ItemData");
+        CheckScreenOff();
+        Loading_Screen.GetComponent<Loading>().Load();
         OptionManager.instance.Playing = false;
         OptionManager.instance.Timer.SetActive(false);
         OptionManager.instance.Stacks.SetActive(false);
-        Application.Quit();
+        sm.Wait_And_SceneLoader("Main_Scene");
+        this.gameObject.SetActive(false);
     }
 }

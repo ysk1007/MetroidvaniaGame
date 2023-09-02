@@ -7,15 +7,17 @@ using UnityEngine.SceneManagement; // 씬 이동 사용할때 참조
 public class Fade_img : MonoBehaviour
 {
     public GameObject img_obj; //효과 적용할 오브젝트를 담을 변수
-    private Image img;  //이미지 컴포넌트를 담을 이미지 변수
+    public Image img;  //이미지 컴포넌트를 담을 이미지 변수
     public GameObject LoadingImage;
     public float fadeSpeed = 0.5f; //Fade in/out 속도
 
     string currentSceneName; //현재 씬이름을 저장하는 변수
+    public SoundManager sm;
 
     // Start is called before the first frame update
     void Start()
     {
+        sm = SoundManager.instance;
         img = img_obj.GetComponent<Image>(); //img 변수에 효과 적용할 오브젝트의 Image 컴포넌트 가져옴
         currentSceneName = SceneManager.GetActiveScene().name; //현재 씬 이름을 불러옴
         CallFadeOut();
@@ -24,12 +26,13 @@ public class Fade_img : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void CallFadeIn() // Fade In 효과
     {
         img_obj.SetActive(true); //이미지를 SetActive 합니다 중복 클릭 방지
+        sm.Loading();
         StartCoroutine(FadeIn()); //Fade in 코루틴 시작
     }
 

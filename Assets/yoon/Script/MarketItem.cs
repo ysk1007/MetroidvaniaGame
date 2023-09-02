@@ -49,6 +49,7 @@ public class MarketItem : MonoBehaviour
             GameManager.Instance.GetComponent<Ui_Controller>().UiUpdate();
             if (randomitem.GetComponentInChildren<itemStatus>().data.itemNameEng == "HpPotion")
             {
+                Destroy(GameManager.Instance.GetComponent<Ui_Controller>().DescriptionBox);
                 GameManager.Instance.GetComponent<Ui_Controller>().Heal(Player.instance.GetComponent<Player>().MaxHp / 2);
                 Destroy(this.gameObject);
                 market.BuySoundPlay();
@@ -64,6 +65,7 @@ public class MarketItem : MonoBehaviour
                         dm.GetComponent<DataManager>().UnlockListUpdate(itemNumber);
                         Instantiate(randomitem, iv.inven_slots[i].transform);
                         GameManager.Instance.GetComponent<inven>().updateUi();
+                        Destroy(GameManager.Instance.GetComponent<Ui_Controller>().DescriptionBox);
                         Destroy(this.gameObject);
                         break;
                     }

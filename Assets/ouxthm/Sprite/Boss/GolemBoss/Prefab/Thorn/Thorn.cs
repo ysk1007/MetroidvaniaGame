@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class Thorn : MonoBehaviour
 {
-    public float Damage = 40f;
+    public float Damage = 50f;
+    public AudioClip thorn;
+    public AudioSource sfx;
+    public SoundManager sm;
 
     private void Start()
     {
+        sm = SoundManager.instance;
+        Invoke("thornSfxPlay", 1.2f);
         Destroy(gameObject, 1.8f);
     }
 
@@ -23,5 +28,10 @@ public class Thorn : MonoBehaviour
         {
             collision.GetComponent<Player>().Playerhurt(Damage, collision.transform.position);
         }
+    }
+
+    void thornSfxPlay()
+    {
+        sm.SFXPlay("thorn_sound",thorn);
     }
 }

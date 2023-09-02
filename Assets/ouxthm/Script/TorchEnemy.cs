@@ -7,8 +7,8 @@ public class TorchEnemy : Enemy
     public override void InitSetting()  // 적의 기본 정보를 설정하는 함수
     {
         Enemy_Mod = 7;  // 원거리 투사체 
-        Enemy_Power = 10f; //적의 공격력
-        Enemy_HP = 60f;  // 적의 체력
+        Enemy_Power = 40f; //적의 공격력
+        Enemy_HP = 350f;  // 적의 체력
         Enemy_Speed = 1.5f;    // 적의 이동속도
         Gap_Distance_X = 99f;  // Enemy와 Player의 X 거리차이
         Gap_Distance_Y = 99f;  // Enemy와 Player의 Y 거리차이
