@@ -185,7 +185,7 @@ public class Player : MonoBehaviour
         JumpCnt = JumpCount;    //시작시 점프 가능 횟수 적용
         SpeedChange = 5;  //시작시 기본 이동속도
         jumpPower = 15; //기본 점프높이
-        ATP = 20; // 기본 공격 대미지
+        ATP = 15; // 기본 공격 대미지
         audio = GetComponent<AudioSource>();
         Attackpos = transform.GetChild(0).GetComponentInChildren<Transform>(); //attackRange의 위치값을 pos에 저장
         Arrowpos = transform.GetChild(1).GetComponentInChildren<Transform>(); //Arrowpos의 위치값을 pos에 저장
@@ -204,7 +204,7 @@ public class Player : MonoBehaviour
         anim.SetFloat("AttackSpeed", ATS);
         OptionManager.instance.Playing = true;
         Invoke("HpRegen", 1f);
-        
+        AxePro2();
     }
 
     void Update()
@@ -290,6 +290,24 @@ public class Player : MonoBehaviour
         {
             rigid.velocity = Vector2.up * jumpPower;
             StartCoroutine(PadJump(1));
+        }
+
+        RaycastHit2D rayHitRight = Physics2D.Raycast(rigid.position, Vector3.right, 1.2f, LayerMask.GetMask("Tilemap"));
+        RaycastHit2D rayHitLeft = Physics2D.Raycast(rigid.position, Vector3.left, 1.2f, LayerMask.GetMask("Tilemap"));
+        if (isWall) // 벽점프
+        {
+            if (Input.GetKeyDown(KeyCode.Space) && rayHitLeft.collider != null && !isGround)
+            {
+                rigid.velocity = new Vector2(1, 2) * 10f;
+                spriteRenderer.flipX = true;
+                isWall = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Space) && rayHitRight.collider != null && !isGround)
+            {
+                rigid.velocity = new Vector2(-1, 2) * 10f;
+                spriteRenderer.flipX = false;
+                isWall = false;
+            }
         }
     }
     public void Player_Attack() //Player 공격모음
@@ -444,12 +462,6 @@ public class Player : MonoBehaviour
                 }
             }
         }
-
-        if (proLevel == 1 && proSelectWeapon == 1 && Axepro == true) // 도끼 숙련도 1일 때 발동
-        {
-            StartCoroutine(proSkill());
-            Axepro = false;
-        }
     }
 
     public void AttackDamage()// Player 공격시 적에게 대미지값 넘겨주기
@@ -483,6 +495,7 @@ public class Player : MonoBehaviour
     }
     IEnumerator Skill()//스킬 작동시 실행
     {
+        GameManager.GetComponent<WeaponSwap>().Skill();
         if (WeaponChage == 1) //sword 스킬
         {
             Transform SkillTransform = transform.GetChild(3);   //검 스킬 오브젝트 위치값 저장
@@ -510,6 +523,16 @@ public class Player : MonoBehaviour
             anim.SetTrigger("arrow_atk");   //애니메이션에 Bow_Attack 함수 실행이 들어가있음
         }
     }
+
+    void AxePro2()
+    {
+        if (proLevel > 0 && proSelectWeapon == 1 && Axepro == true) // 도끼 숙련도 1일 때 발동
+        {
+            StartCoroutine(proSkill());
+            Axepro = false;
+        }
+    }
+
     IEnumerator proSkill()
     {
         Vector3 Axepro = new Vector3(this.transform.position.x, this.transform.position.y);
@@ -537,6 +560,7 @@ public class Player : MonoBehaviour
             {
                 //Debug.Log(enemyColliders);
                 isMasterSkill = true;
+                GameManager.GetComponent<WeaponSwap>().Ult();
                 PlaySound("SwordMasterSkill");
                 yield return new WaitForSeconds(1f);
 
@@ -571,6 +595,7 @@ public class Player : MonoBehaviour
         if (WeaponChage == 2 && proSelectWeapon == 1 && Axe_MsTime <= 0)    //Axe 숙련도 스킬
         {
             isMasterSkill = true;
+            GameManager.GetComponent<WeaponSwap>().Ult();
             AxeCnt = 4;
             anim.SetFloat("Axe", AxeCnt); //숙련도 스킬은 Axe_atk3 길게 애니메이션으로 실행
             anim.SetTrigger("axe_atk");
@@ -584,6 +609,7 @@ public class Player : MonoBehaviour
         if (WeaponChage == 3 && proSelectWeapon == 2 && Bow_MsTime <= 0) //Bow 숙련도 스킬
         {
             isMasterSkill = true;
+            GameManager.GetComponent<WeaponSwap>().Ult();
             anim.SetTrigger("arrow_atk");
             yield return new WaitForSeconds(0.5f);
             PlaySound("BowMasterSkill");
@@ -594,38 +620,30 @@ public class Player : MonoBehaviour
     //Wall_Slide
     void OnCollisionStay2D(Collision2D collision)   // 벽 콜라이젼이 Player에 닿고 있으면 실행, 점프착지 시 콜라이젼 닿을 시 점프 해제
     {
-        RaycastHit2D rayHitDown = Physics2D.Raycast(rigid.position, Vector3.down, 1.5f, LayerMask.GetMask("Tilemap", "Pad", "Water"));
-        RaycastHit2D rayHitRight = Physics2D.Raycast(rigid.position, Vector3.right, 1.2f, LayerMask.GetMask("Tilemap"));
-        RaycastHit2D rayHitLeft = Physics2D.Raycast(rigid.position, Vector3.left, 1.2f, LayerMask.GetMask("Tilemap"));
-
-        if (collision.gameObject.tag == "Wall")
-        {
-            isWall = true;
-            anim.SetBool("Wall_slide", true);
-            rigid.drag = 10;
-            if (Input.GetKeyDown(KeyCode.Space) && rayHitLeft.collider != null && !isGround)
-            {
-                rigid.velocity = new Vector2(1, 2) * 10f;
-                spriteRenderer.flipX = true;
-                StartCoroutine(PadJump(0));
-            }
-            if (Input.GetKeyDown(KeyCode.Space) && rayHitRight.collider != null && !isGround)
-            {
-                rigid.velocity = new Vector2(-1, 2) * 10f;
-                spriteRenderer.flipX = false;
-                StartCoroutine(PadJump(0));
-            }
-        }
-        else if (rayHitDown.collider != null)
+        RaycastHit2D rayHitDown = Physics2D.Raycast(rigid.position, Vector3.down, 1.7f, LayerMask.GetMask("Tilemap", "Pad", "Water"));
+        Debug.DrawRay(rigid.position, Vector3.down * 1.7f, Color.red);
+        if (collision.gameObject.tag == "Wall" && rayHitDown.collider != null)
         {
             isWall = false;
             anim.SetBool("Wall_slide", false);
             rigid.drag = 0;
+            Debug.Log("1");
+            Debug.Log(rayHitDown.collider);
         }
+        else if (collision.gameObject.tag == "Wall" && rayHitDown.collider == null)
+        {
+            isWall = true;
+            anim.SetBool("Wall_slide", true);
+            rigid.drag = 10;
+            Debug.Log("2");
+            Debug.Log(rayHitDown.collider);
+        }
+
 
         if (collision.gameObject.tag == "Pad" || collision.gameObject.tag == "Tilemap" && !isGround)
         {
             anim.SetBool("Player_Jump", false);
+            isWall = false;
             isjump = false;
             isGround = true;
         }
@@ -808,13 +826,13 @@ public class Player : MonoBehaviour
 
         if (slideDir == 1)   //공격 방향별 Arrowpos 위치값 변경
         {
-            ArrowposTransform.localPosition = new Vector3(-0.1f, 0.3f);
-            Arrowpos2Transform.localPosition = new Vector3(-0.2f, -0.4f);
+            ArrowposTransform.localPosition = new Vector3(-0.1f, -0.4f);
+            Arrowpos2Transform.localPosition = new Vector3(-0.2f, -0.6f);
         }
         else
         {
-            ArrowposTransform.localPosition = new Vector3(-0.2f, 0.3f);
-            Arrowpos2Transform.localPosition = new Vector3(0, -0.4f);
+            ArrowposTransform.localPosition = new Vector3(-0.2f, -0.4f);
+            Arrowpos2Transform.localPosition = new Vector3(0, -0.6f);
         }
 
         if (isSkill)
@@ -1300,7 +1318,7 @@ public class Player : MonoBehaviour
         {
             px *= -1;
         }
-        Vector3 Pc = new Vector3(this.transform.position.x + px, this.transform.position.y + 7.7f);
+        Vector3 Pc = new Vector3(this.transform.position.x + px, this.transform.position.y + 3f);
         GameObject punch = Instantiate(AxeMasterEfc, transform.parent);
         punch.transform.position = Pc;
         SkillCount++;

@@ -698,7 +698,6 @@ MonoBehaviour:
   Loading_Screen: {fileID: 101756731}
   pause: 0
   sm: {fileID: 0}
-  Stage1_BossBGM: {fileID: 0}
   StageMove: 0
 --- !u!4 &431385038
 Transform:
@@ -2607,6 +2606,7 @@ MonoBehaviour:
   player: {fileID: 317697529}
   GoldVelueUI: {fileID: 2035524478}
   PlayerGold: 0
+  endCredit: {fileID: 0}
   inven_ui: {fileID: 1177314513}
   inven_screen: {fileID: 1898766380}
   equip_screen: {fileID: 959438240}

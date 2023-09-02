@@ -1742,6 +1742,10 @@ MonoBehaviour:
   orcWalkR: {fileID: 0}
   snailHit: {fileID: 0}
   snailDie: {fileID: 0}
+  golemLaser: {fileID: 0}
+  golemBreakdown: {fileID: 0}
+  golemHit: {fileID: 0}
+  golemDie: {fileID: 0}
 --- !u!1 &7998469741012119879
 GameObject:
   m_ObjectHideFlags: 0
@@ -4217,6 +4221,10 @@ MonoBehaviour:
   orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
   snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
   snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
+  golemLaser: {fileID: 0}
+  golemBreakdown: {fileID: 0}
+  golemHit: {fileID: 0}
+  golemDie: {fileID: 0}
 --- !u!1 &7998469741097972715
 GameObject:
   m_ObjectHideFlags: 0
@@ -4666,6 +4674,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee95583c29382ba4fbd769ce66277b67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  key: {fileID: 0}
 --- !u!1 &7998469741104457078
 GameObject:
   m_ObjectHideFlags: 0
@@ -14474,6 +14483,10 @@ MonoBehaviour:
   orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
   snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
   snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
+  golemLaser: {fileID: 0}
+  golemBreakdown: {fileID: 0}
+  golemHit: {fileID: 0}
+  golemDie: {fileID: 0}
 --- !u!1 &7998469741282018139
 GameObject:
   m_ObjectHideFlags: 0
@@ -15092,6 +15105,10 @@ MonoBehaviour:
   orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
   snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
   snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
+  golemLaser: {fileID: 0}
+  golemBreakdown: {fileID: 0}
+  golemHit: {fileID: 0}
+  golemDie: {fileID: 0}
 --- !u!1 &7998469741317455310
 GameObject:
   m_ObjectHideFlags: 0
@@ -17890,6 +17907,10 @@ MonoBehaviour:
   orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
   snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
   snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
+  golemLaser: {fileID: 0}
+  golemBreakdown: {fileID: 0}
+  golemHit: {fileID: 0}
+  golemDie: {fileID: 0}
 --- !u!1 &7998469741511083799
 GameObject:
   m_ObjectHideFlags: 0
@@ -20894,6 +20915,10 @@ MonoBehaviour:
   orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
   snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
   snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
+  golemLaser: {fileID: 0}
+  golemBreakdown: {fileID: 0}
+  golemHit: {fileID: 0}
+  golemDie: {fileID: 0}
 --- !u!1 &7998469741766737502
 GameObject:
   m_ObjectHideFlags: 0
@@ -21135,6 +21160,10 @@ MonoBehaviour:
   orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
   snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
   snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
+  golemLaser: {fileID: 0}
+  golemBreakdown: {fileID: 0}
+  golemHit: {fileID: 0}
+  golemDie: {fileID: 0}
 --- !u!1 &7998469741782637588
 GameObject:
   m_ObjectHideFlags: 0
@@ -25900,6 +25929,10 @@ MonoBehaviour:
   orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
   snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
   snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
+  golemLaser: {fileID: 0}
+  golemBreakdown: {fileID: 0}
+  golemHit: {fileID: 0}
+  golemDie: {fileID: 0}
 --- !u!1 &7998469741907891335
 GameObject:
   m_ObjectHideFlags: 0
@@ -31103,6 +31136,10 @@ MonoBehaviour:
   orcWalkR: {fileID: 0}
   snailHit: {fileID: 0}
   snailDie: {fileID: 0}
+  golemLaser: {fileID: 0}
+  golemBreakdown: {fileID: 0}
+  golemHit: {fileID: 0}
+  golemDie: {fileID: 0}
 --- !u!1 &7998469742036930989
 GameObject:
   m_ObjectHideFlags: 0
@@ -32258,6 +32295,10 @@ MonoBehaviour:
   orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
   snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
   snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
+  golemLaser: {fileID: 0}
+  golemBreakdown: {fileID: 0}
+  golemHit: {fileID: 0}
+  golemDie: {fileID: 0}
 --- !u!1 &7998469742129910095
 GameObject:
   m_ObjectHideFlags: 0
@@ -33690,6 +33731,10 @@ MonoBehaviour:
   orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
   snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
   snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
+  golemLaser: {fileID: 0}
+  golemBreakdown: {fileID: 0}
+  golemHit: {fileID: 0}
+  golemDie: {fileID: 0}
 --- !u!1 &7998469742206101605
 GameObject:
   m_ObjectHideFlags: 0
@@ -34071,6 +34116,10 @@ MonoBehaviour:
   orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
   snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
   snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
+  golemLaser: {fileID: 0}
+  golemBreakdown: {fileID: 0}
+  golemHit: {fileID: 0}
+  golemDie: {fileID: 0}
 --- !u!1 &7998469742225417344
 GameObject:
   m_ObjectHideFlags: 0
@@ -34363,6 +34412,10 @@ MonoBehaviour:
   orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
   snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
   snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
+  golemLaser: {fileID: 0}
+  golemBreakdown: {fileID: 0}
+  golemHit: {fileID: 0}
+  golemDie: {fileID: 0}
 --- !u!1 &7998469742236781114
 GameObject:
   m_ObjectHideFlags: 0
@@ -34676,6 +34729,10 @@ MonoBehaviour:
   orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
   snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
   snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
+  golemLaser: {fileID: 0}
+  golemBreakdown: {fileID: 0}
+  golemHit: {fileID: 0}
+  golemDie: {fileID: 0}
 --- !u!1 &7998469742250391114
 GameObject:
   m_ObjectHideFlags: 0
@@ -35138,6 +35195,10 @@ MonoBehaviour:
   orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
   snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
   snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
+  golemLaser: {fileID: 0}
+  golemBreakdown: {fileID: 0}
+  golemHit: {fileID: 0}
+  golemDie: {fileID: 0}
 --- !u!1 &7998469742289826527
 GameObject:
   m_ObjectHideFlags: 0
@@ -36830,6 +36891,10 @@ MonoBehaviour:
   orcWalkR: {fileID: 0}
   snailHit: {fileID: 0}
   snailDie: {fileID: 0}
+  golemLaser: {fileID: 0}
+  golemBreakdown: {fileID: 0}
+  golemHit: {fileID: 0}
+  golemDie: {fileID: 0}
 --- !u!1 &7998469742334764124
 GameObject:
   m_ObjectHideFlags: 0
@@ -37171,6 +37236,10 @@ MonoBehaviour:
   orcWalkR: {fileID: 0}
   snailHit: {fileID: 0}
   snailDie: {fileID: 0}
+  golemLaser: {fileID: 0}
+  golemBreakdown: {fileID: 0}
+  golemHit: {fileID: 0}
+  golemDie: {fileID: 0}
 --- !u!1 &7998469742357183729
 GameObject:
   m_ObjectHideFlags: 0
@@ -38639,6 +38708,10 @@ MonoBehaviour:
   orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
   snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
   snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
+  golemLaser: {fileID: 0}
+  golemBreakdown: {fileID: 0}
+  golemHit: {fileID: 0}
+  golemDie: {fileID: 0}
 --- !u!1 &7998469742436953491
 GameObject:
   m_ObjectHideFlags: 0
@@ -39435,6 +39508,10 @@ MonoBehaviour:
   orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
   snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
   snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
+  golemLaser: {fileID: 0}
+  golemBreakdown: {fileID: 0}
+  golemHit: {fileID: 0}
+  golemDie: {fileID: 0}
 --- !u!1 &7998469742487418192
 GameObject:
   m_ObjectHideFlags: 0
@@ -40322,6 +40399,10 @@ MonoBehaviour:
   orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
   snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
   snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
+  golemLaser: {fileID: 0}
+  golemBreakdown: {fileID: 0}
+  golemHit: {fileID: 0}
+  golemDie: {fileID: 0}
 --- !u!1 &7998469742556790298
 GameObject:
   m_ObjectHideFlags: 0
@@ -41939,6 +42020,10 @@ MonoBehaviour:
   orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
   snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
   snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
+  golemLaser: {fileID: 0}
+  golemBreakdown: {fileID: 0}
+  golemHit: {fileID: 0}
+  golemDie: {fileID: 0}
 --- !u!1 &7998469742664425462
 GameObject:
   m_ObjectHideFlags: 0
@@ -43335,6 +43420,10 @@ MonoBehaviour:
   orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
   snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
   snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
+  golemLaser: {fileID: 0}
+  golemBreakdown: {fileID: 0}
+  golemHit: {fileID: 0}
+  golemDie: {fileID: 0}
 --- !u!1 &7998469742775923986
 GameObject:
   m_ObjectHideFlags: 0
@@ -45042,6 +45131,10 @@ MonoBehaviour:
   orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
   snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
   snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
+  golemLaser: {fileID: 0}
+  golemBreakdown: {fileID: 0}
+  golemHit: {fileID: 0}
+  golemDie: {fileID: 0}
 --- !u!1 &7998469742864959321
 GameObject:
   m_ObjectHideFlags: 0
@@ -45648,6 +45741,10 @@ MonoBehaviour:
   orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
   snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
   snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
+  golemLaser: {fileID: 0}
+  golemBreakdown: {fileID: 0}
+  golemHit: {fileID: 0}
+  golemDie: {fileID: 0}
 --- !u!1 &7998469742923303924
 GameObject:
   m_ObjectHideFlags: 0

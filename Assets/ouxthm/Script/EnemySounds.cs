@@ -132,7 +132,9 @@ public class EnemySounds : MonoBehaviour
     public void NecDie()
     {
         Sounds("necDie");
+        BossClearPos.instance.function(2);
         Player.instance.SecondMaterial = true;
+        MapManager.instance.BossDie();
     }
     public void SlimeHit()
     {
@@ -228,7 +230,15 @@ public class EnemySounds : MonoBehaviour
     public void GolemDie()
     {
         Player.instance.ThirdMaterial = true;
+        BossClearPos.instance.function(3);
+        MapManager.instance.BossDie();
         Sounds("golemDie");
+        Invoke("GolemDestroy", 5.2f);
+    }
+
+    public void GolemDestroy()
+    {
+        Destroy(gameObject);
     }
 
     public void GolemHit()

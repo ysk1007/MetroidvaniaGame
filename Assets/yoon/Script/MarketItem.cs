@@ -84,4 +84,9 @@ public class MarketItem : MonoBehaviour
         ui.MarketTextBox.text = "\"∞ÒµÂ∞° ∫Œ¡∑«œ¿›æ∆!\"";
     }
     }
+
+    public void SelfDestroy()
+    {
+        Destroy(gameObject);
+    }
 }

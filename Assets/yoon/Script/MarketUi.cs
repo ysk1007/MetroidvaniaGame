@@ -17,4 +17,16 @@ public class MarketUi : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
+
+    public void ResetContent()
+    {
+        MarketItem[] GoList = item_list.GetComponentsInChildren<MarketItem>();
+        if (GoList != null)
+        {
+            for (int i = 0; i < GoList.Length; i++)
+            {
+                GoList[i].SelfDestroy();
+            }
+        }
+    }
 }

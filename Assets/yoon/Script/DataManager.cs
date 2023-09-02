@@ -761,6 +761,7 @@ public class DataManager : MonoBehaviour
         }
         jsonsave.LastChestItem = "";
         jsonsave.LastMarketList = new string[6];
+        MarketUi.instance.ResetContent();
         string Playerjson = JsonUtility.ToJson(jsonsave, true);
         File.WriteAllText(PlayerPath, Playerjson);
         JsonSave("ItemData");

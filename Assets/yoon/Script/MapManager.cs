@@ -9,7 +9,7 @@ public class MapManager : MonoBehaviour
 
     public int[] CurrentStage;
     public GameObject CurrentStagePrefab;
-    public GameObject[,] Stage_Prefabs = new GameObject[3,8];
+    public GameObject[,] Stage_Prefabs = new GameObject[3,9];
     public GameObject[] Stage1_Prefab;
     public GameObject[] Stage2_Prefab;
     public GameObject[] Stage3_Prefab;
@@ -63,23 +63,35 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    void nextStage()
+    public void nextStage()
     {
-        pause = true;
-        StageMove = false;
-        Loading_Screen.GetComponent<Loading>().Load();
-        if (EnemyAudioSource.instance != null)
+        if (CurrentStage[0] == 2 && CurrentStage[1] == 8)
         {
-            EnemyAudioSource.instance.SoundOff();
+            GameManager.Instance.GetComponent<Ui_Controller>().StatisticsUi.SetActive(true);
+            StatisticsUi st = GameManager.Instance.GetComponent<Ui_Controller>().StatisticsUi.GetComponent<StatisticsUi>();
+            st.isFalling = true;
+            st.GameClear = true;
+            StageMove = false;
+            pause = true;
         }
-        Invoke("PrefabLoad",2.4f);
-        Invoke("SoundUp", 3f);
+        else
+        {
+            pause = true;
+            StageMove = false;
+            Loading_Screen.GetComponent<Loading>().Load();
+            if (EnemyAudioSource.instance != null)
+            {
+                EnemyAudioSource.instance.SoundOff();
+            }
+            Invoke("PrefabLoad", 2.4f);
+            Invoke("SoundUp", 3f);
+        }
     }
 
     void PrefabLoad()
     {
         Destroy(CurrentStagePrefab);
-        if (CurrentStage[1] == 7)
+        if (CurrentStage[1] == 8)
         {
             CurrentStage[0]++;
             CurrentStage[1] = 0;
@@ -163,5 +175,10 @@ public class MapManager : MonoBehaviour
         {
             EnemyAudioSource.instance.SoundOn();
         }
+    }
+
+    public void BossDie()
+    {
+        Invoke("nextStage", 8f);
     }
 }

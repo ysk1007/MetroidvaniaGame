@@ -600,6 +600,8 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  axeUltHit: 0
+  giveReward: 0
   scaleX: 0
   weaponTag: 
   Swordlevel: 0
@@ -672,6 +674,7 @@ MonoBehaviour:
   - {fileID: 1156944508163698443}
   TargetFind: 0
   BossCenter: {fileID: 1156944509934178344}
+  watching: 0
 --- !u!82 &7951993800596998165
 AudioSource:
   m_ObjectHideFlags: 0

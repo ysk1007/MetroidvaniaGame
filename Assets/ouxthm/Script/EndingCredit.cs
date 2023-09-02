@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEditor.Timeline.Actions;
 
 public class EndingCredit : MonoBehaviour
 {
@@ -13,10 +14,9 @@ public class EndingCredit : MonoBehaviour
     [SerializeField] private Image balckScreen;
 
     [SerializeField] private AudioSource audioSource;
-
     public bool isEnding = false;       // 엔딩인지 확인하는 변수
     private bool isSkip = false;   // 스킵
-    private bool isShow = false;
+    public bool isShow = false;
     private bool volumDown = false;  // 볼륨 줄이기
     private float time = 0f;        // 맨 처음 페이드 아웃에 사용
     private float vtime = 0f;       // 볼륨 조절에 사용
@@ -30,6 +30,7 @@ public class EndingCredit : MonoBehaviour
     {
         if (isEnding)
         {
+            SoundManager.instance.bgSound.clip = null;
             StartCoroutine(FadeOut());  // 화면 페이드 아웃 
             credit.SetActive(true);     // 엔딩 크레딧 오브젝트 활성화
             playerUI.SetActive(false);  // 플레이어 UI 끄기

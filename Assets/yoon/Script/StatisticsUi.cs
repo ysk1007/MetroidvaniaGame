@@ -23,9 +23,10 @@ public class StatisticsUi : MonoBehaviour
     public float fallSpeed = 750f;
     public bool isFalling = false;
     public bool GameClear = false;
+    public bool Ending = false;
 
     private RectTransform rectTransform;
-    private Vector2 targetPosition;
+    public Vector2 targetPosition;
 
     public bool die = false;
 
@@ -40,8 +41,6 @@ public class StatisticsUi : MonoBehaviour
 
         // 목표 위치를 화면 중앙으로 설정
         targetPosition = new Vector2(0f, 0f);
-        Debug.Log(targetPosition);
-        isFalling = true;
     }
 
     private void Update()
@@ -60,10 +59,18 @@ public class StatisticsUi : MonoBehaviour
                 Setting();
             }
         }
-        if (Input.GetKeyUp(KeyCode.Return) && die)
+        if (Input.GetKeyUp(KeyCode.Return) && !Ending)
         {
-            Invoke("GoTitleScreen",1f);
-            //fade.CallFadeOut();
+            if (die)
+            {
+                Invoke("GoTitleScreen", 1f);
+            }
+            else if (GameClear)
+            {
+                Ending = true;
+                GameManager.Instance.GetComponent<Ui_Controller>().endCredit.isEnding = true;
+                fade.thisFade();
+            }
         }
     }
 
@@ -85,6 +92,10 @@ public class StatisticsUi : MonoBehaviour
         {
             TitleText.text = "게임 클리어!";
         }
+        else
+        {
+            die = true;
+        }
         List<GameObject> find = dm.finditem();
         GetItemText.text = (find.Count).ToString();
         for (int i = 0; i < find.Count; i++)
@@ -92,7 +103,6 @@ public class StatisticsUi : MonoBehaviour
             Instantiate(find[i], List.transform);
         }
         dm.DeleteJson();
-        die = true;
     }
 
     void GoTitleScreen()

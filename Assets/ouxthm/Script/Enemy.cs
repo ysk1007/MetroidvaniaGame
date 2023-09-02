@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using UnityEngine;
 using static System.Net.WebRequestMethods;
 
@@ -41,6 +42,7 @@ public abstract class Enemy : MonoBehaviour
     public bool Attacker;  // 비행 몬스터가 공격형인지 아닌지 구분짓는 변수
     public float endTime;   // 투사체 사라지는 시간
     public bool axeUltHit = false;  // 도끼 궁에 맞았는지 확인하는 변수
+    public bool giveReward = false;
 
     public float scaleX; // scale X 값(hit_eff가 스케일이 -되어있으면 반대방향으로 뜨기에 설정하기 위한 변수)
     public string weaponTag;    // 무기 태그 ("Sword"일 때만 출혈)
@@ -335,16 +337,23 @@ public abstract class Enemy : MonoBehaviour
         {
             Boxs = GetComponent<BoxCollider2D>();
             Bump();
-        }        
+        }
+        if (Enemy_Mod == 11 && collision.gameObject.CompareTag("Wall"))
+        {
+            if (Attacking)
+            {
+                StartCoroutine(StopRush());
+            }
+        }
     }
 
-    void OnCollisionStay2D(Collision2D collision)
+/*    void OnCollisionStay2D(Collision2D collision)
     {
         if (Enemy_Mod == 11 && collision.gameObject.CompareTag("Wall"))
         {
             StartCoroutine(StopRush());
         }
-    }
+    }*/
 
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -480,7 +489,7 @@ public abstract class Enemy : MonoBehaviour
 
     public void bleeding()  // 도트데미지 주는 함수
     {
-        if(bleedingTime > 0)
+        if (bleedingTime > 0)
         {
             if (selectWeapon == 0 && Swordlevel > 0 && Enemy_HP > 0)
             {
@@ -497,21 +506,26 @@ public abstract class Enemy : MonoBehaviour
                     Enemy_HP = 0f;
                 }
             }
+            if (Enemy_HP < 0)
+            {
+                StartCoroutine(Die());
+            }
         }
-        else if(bleedingTime < 0)
+        else if (bleedingTime < 0)
         {
             bleedLevel = 0;
         }
-        if(this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
+        if (this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
         {
             StartCoroutine(Die());
 
-            if(this.gameObject.layer == LayerMask.NameToLayer("Dieenemy"))
+            if (this.gameObject.layer == LayerMask.NameToLayer("Dieenemy"))
             {
                 return;
             }
         }
         Invoke("bleeding", 1f);
+
     }
 
     public void StackBleed()
@@ -527,7 +541,7 @@ public abstract class Enemy : MonoBehaviour
     }
     public IEnumerator Hit(float damage) // 피해 함수
     {
-        if(this.gameObject.layer == LayerMask.NameToLayer("Dieenemy"))
+        if (this.gameObject.layer == LayerMask.NameToLayer("Dieenemy") || this.gameObject.layer == LayerMask.NameToLayer("Effect"))
         {
             yield break;
         }
@@ -711,14 +725,21 @@ public abstract class Enemy : MonoBehaviour
         Ui_Controller ui = GameManager.Instance.GetComponent<Ui_Controller>(); //윤성권 추가함
         Proficiency_ui pro = GameManager.Instance.GetComponent<Proficiency_ui>(); // 숙련도 추가함
         if (Enemy_HP <= 0 && !watching)
-        {            
-            watching = true;
-            StopAllCoroutines();
-            StartCoroutine(Die());
-            pro.GetProExp(Stage);
-            ui.GetExp(Stage);
-            ui.GetGold(Stage);
-            player.EnemyKillCount++;
+        {
+            if (!Dying)
+            {
+                watching = true;
+                StopAllCoroutines();
+                StartCoroutine(Die());
+            }
+            if (!giveReward)
+            {
+                pro.GetProExp(Stage);
+                ui.GetExp(Stage);
+                ui.GetGold(Stage);
+                player.EnemyKillCount++;
+                giveReward = true;
+            }
         }
     }
 
@@ -1120,13 +1141,13 @@ public abstract class Enemy : MonoBehaviour
     public void canineSpawning()    // 보스가 몬스터를 던지는 함수
     {
         GameObject canine = Instantiate(CaninePb, PbSpawn.position, PbSpawn.rotation);
-        canine.transform.eulerAngles = new Vector3(0, 0, 10); // 발사각 정하기
+        canine.transform.eulerAngles = new Vector3(0, 0, 20); // 발사각 정하기
 
         GameObject canine1 = Instantiate(CaninePb, PbSpawn.position, PbSpawn.rotation);
-        canine1.transform.eulerAngles = new Vector3(0, 0, 15);
+        canine1.transform.eulerAngles = new Vector3(0, 0, 25);
 
         GameObject canine2 = Instantiate(CaninePb, PbSpawn.position, PbSpawn.rotation);
-        canine2.transform.eulerAngles = new Vector3(0, 0, 20);
+        canine2.transform.eulerAngles = new Vector3(0, 0, 30);
 
         CaninePb CPb = canine.GetComponent<CaninePb>();
         CaninePb CPb1 = canine1.GetComponent<CaninePb>();
@@ -1383,16 +1404,25 @@ public abstract class Enemy : MonoBehaviour
         Player player = Player.instance.GetComponent<Player>();
         Ui_Controller ui = GameManager.Instance.GetComponent<Ui_Controller>(); //윤성권 추가함
         Proficiency_ui pro = GameManager.Instance.GetComponent<Proficiency_ui>(); // 숙련도 추가함
-        if (Dying)
+        if (Enemy_HP <= 0)
         {
-            pro.GetProExp(Stage);
-            ui.GetExp(Stage);
-            ui.GetGold(Stage);
-            Player.instance.FirstMaterial = true;
-            BossSpriteBox.enabled = false;
-            rigid.isKinematic = true;
-            gameObject.transform.Translate(Vector2.down * Time.deltaTime * 5);
-            GameManager.Instance.GetComponent<BossHpController>().BossDead();
+            if (Dying)
+            {
+                Player.instance.FirstMaterial = true;
+                BossSpriteBox.enabled = false;
+                rigid.isKinematic = true;
+                gameObject.transform.Translate(Vector2.down * Time.deltaTime * 5);
+                GameManager.Instance.GetComponent<BossHpController>().BossDead();
+            }
+            if (!giveReward)
+            {
+                giveReward = true;
+                BossClearPos.instance.function(1);
+                MapManager.instance.BossDie();
+                pro.GetProExp(Stage);
+                ui.GetExp(Stage);
+                ui.GetGold(Stage);
+            }
         }
     }
 
@@ -1534,7 +1564,7 @@ public abstract class Enemy : MonoBehaviour
         bleedingDamage = player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
 
-        if (Enemy_HP < 600 && BossPage < 1)
+        if (Enemy_HP < 4000 && BossPage < 1)
         {
             BossPage++;
             bossBox.enabled = false;
@@ -1546,7 +1576,7 @@ public abstract class Enemy : MonoBehaviour
             bossMoving = true;
         }
 
-        if (Enemy_HP < 300 && BossPage < 2)
+        if (Enemy_HP < 2500 && BossPage < 2)
         {
             BossPage++;
             bossBox.enabled = false;
@@ -1656,6 +1686,7 @@ public abstract class Enemy : MonoBehaviour
             GameManager.Instance.GetComponent<BossHpController>().BossDead();
         }
     }
+
 
     void GolemAttack()    // 보스 공격 패턴
     {

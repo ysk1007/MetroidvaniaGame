@@ -13,6 +13,7 @@ public class Fade_img : MonoBehaviour
 
     string currentSceneName; //현재 씬이름을 저장하는 변수
     public SoundManager sm;
+    public bool END = false;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +21,10 @@ public class Fade_img : MonoBehaviour
         sm = SoundManager.instance;
         img = img_obj.GetComponent<Image>(); //img 변수에 효과 적용할 오브젝트의 Image 컴포넌트 가져옴
         currentSceneName = SceneManager.GetActiveScene().name; //현재 씬 이름을 불러옴
-        CallFadeOut();
+        if (!END)
+        {
+            CallFadeOut();
+        }
     }
 
     // Update is called once per frame
@@ -86,5 +90,33 @@ public class Fade_img : MonoBehaviour
         }
         gameObject.SetActive(false);
         img.color = new Color32(0, 0, 0, 255);
+    }
+
+    public void thisFade()
+    {
+        gameObject.SetActive(true);
+        StartCoroutine(ThisFadeIn()); //Fade in 코루틴 시작
+    }
+
+    IEnumerator ThisFadeIn() //Fade in 효과
+    {
+        img.color = new Color32(0, 0, 0, 0);
+        // 0.5초 기다렸다 시작
+        yield return new WaitForSeconds(0.5f);
+
+        // Fade in
+        float t = 0f; //0%
+        while (t < 1f) //100%까지
+        {
+            t += Time.deltaTime * fadeSpeed; //프레임 * 효과속도를 곱해서 % 진행상황에 더합니다
+            Color color = img.color; //현재 이미지의 색 컴포넌트를 가져옴
+
+            //이미지의 투명도a alpha 값을 선형보간 (1차함수의 시작값, 끝값, 얻고싶은값) 매개변수로 진행상황을 넣어 알파값을 계산함
+            color.a = Mathf.Lerp(0f, 1f, t);
+
+
+            img.color = color; // 적용
+            yield return null; //이게 없으면 순식간에 효과가 지나감
+        }
     }
 }

@@ -147,6 +147,7 @@ MonoBehaviour:
   Attacker: 0
   endTime: 0
   axeUltHit: 0
+  giveReward: 0
   scaleX: 0
   weaponTag: 
   Swordlevel: 0
@@ -204,6 +205,7 @@ MonoBehaviour:
   WaringArea: []
   TargetFind: 0
   BossCenter: {fileID: 0}
+  watching: 0
 --- !u!82 &-3371538010914478000
 AudioSource:
   m_ObjectHideFlags: 0
@@ -545,7 +547,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -6
   m_Sprite: {fileID: 1020173927, guid: 26d0987df33c68f4997aab21a47e0171, type: 3}
-  m_Color: {r: 0.5471698, g: 0.19787388, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -638,6 +640,10 @@ MonoBehaviour:
   orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
   snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
   snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
+  golemLaser: {fileID: 0}
+  golemBreakdown: {fileID: 0}
+  golemHit: {fileID: 0}
+  golemDie: {fileID: 0}
 --- !u!1001 &8526896144756556817
 PrefabInstance:
   m_ObjectHideFlags: 0

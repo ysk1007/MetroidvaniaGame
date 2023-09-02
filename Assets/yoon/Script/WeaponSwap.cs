@@ -153,18 +153,20 @@ public class WeaponSwap : MonoBehaviour
 
             StartCoroutine(FillSliderOverTime(img_Swap_coolTime, swapCool, "swap"));
         }
-        if (Input.GetKeyDown(KeyCode.S) && !Weapon_skilling[currentWeaponIndex])
-        {
-            Image i = SkillCools[currentWeaponIndex].GetComponent<Image>();
-            float cooltime = player.DeCoolTimeCarcul(player.SkillTime[currentWeaponIndex]);
-            StartCoroutine(FillSliderOverTime(i, cooltime, "skill"));
-        }
-        if (Input.GetKeyDown(KeyCode.D) && !ultting && currentWeaponIndex == player.proSelectWeapon && player.proLevel == 3)
-        {
-            float cooltime = player.DeCoolTimeCarcul(player.MasterSkillTime[currentWeaponIndex]);
-            StartCoroutine(FillSliderOverTime(img_Ult_coolTime, cooltime, "ult"));
-            Ult_onAnim.SetActive(false);
-        }
+    }
+
+    public void Skill()
+    {
+        Image i = SkillCools[currentWeaponIndex].GetComponent<Image>();
+        float cooltime = player.DeCoolTimeCarcul(player.SkillTime[currentWeaponIndex]);
+        StartCoroutine(FillSliderOverTime(i, cooltime, "skill"));
+    }
+
+    public void Ult()
+    {
+        float cooltime = player.DeCoolTimeCarcul(player.MasterSkillTime[currentWeaponIndex]);
+        StartCoroutine(FillSliderOverTime(img_Ult_coolTime, cooltime, "ult"));
+        Ult_onAnim.SetActive(false);
     }
 
     IEnumerator Ready(Image img, string type, int cur_index)

@@ -25,6 +25,8 @@ public class Ui_Controller : MonoBehaviour
     public TextMeshProUGUI GoldVelueUI;
     public int PlayerGold;
 
+    public EndingCredit endCredit;
+
     public GameObject inven_ui;
     public GameObject inven_screen;
     public GameObject equip_screen;
@@ -196,7 +198,7 @@ public class Ui_Controller : MonoBehaviour
         player.gold += value * randNum * player.GoldGet;
         player.TotalGetGold += value * player.GoldGet;
         GoldVelueUI.text = player.gold.ToString("F0");
-        MarketGoldText.text = player.gold.ToString();
+        MarketGoldText.text = player.gold.ToString("F0");
     }
 
     public void GetGold(float price)
@@ -204,7 +206,7 @@ public class Ui_Controller : MonoBehaviour
         player.gold += price * player.GoldGet;
         player.TotalGetGold += price * player.GoldGet;
         GoldVelueUI.text = player.gold.ToString("F0");
-        MarketGoldText.text = player.gold.ToString();
+        MarketGoldText.text = player.gold.ToString("F0");
     }
 
     public bool UseGold(int value)
@@ -217,7 +219,7 @@ public class Ui_Controller : MonoBehaviour
         {
             player.gold -= value;
             GoldVelueUI.text = player.gold.ToString("F0");
-            MarketGoldText.text = player.gold.ToString();
+            MarketGoldText.text = player.gold.ToString("F0");
             return true;
         }
     }
@@ -241,7 +243,7 @@ public class Ui_Controller : MonoBehaviour
         PlayerLevel = player.level;
         LevelVelueUi.text = player.level.ToString();
         GoldVelueUI.text = player.gold.ToString("F0");
-        MarketGoldText.text = player.gold.ToString();
+        MarketGoldText.text = player.gold.ToString("F0");
 
         Status_screen.GetComponent<StatusScreen>().StatusUpdate(player);
     }

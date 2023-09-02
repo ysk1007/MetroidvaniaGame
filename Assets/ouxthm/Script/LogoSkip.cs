@@ -9,6 +9,7 @@ public class LogoSkip : MonoBehaviour
 
     private bool isSkip = false;        // Enter 키가 눌렸는지 확인하는 변수
     private bool isShow = false;        // ShowSkipButton를 Update 문에서 한 번만 불러올 수 있도록 하는 변수
+    public bool story = false;
 
     void Update()
     {
@@ -22,7 +23,14 @@ public class LogoSkip : MonoBehaviour
         }
         if (isSkip) 
         {
-            SceneManager.LoadScene("Title_Scene");      // 타이틀 화면으로
+            if (story)
+            {
+                SceneManager.LoadScene("ingame_scene");      // 타이틀 화면으로
+            }
+            else
+            {
+                SceneManager.LoadScene("Title_Scene");      // 타이틀 화면으로
+            }
         }
     }
 

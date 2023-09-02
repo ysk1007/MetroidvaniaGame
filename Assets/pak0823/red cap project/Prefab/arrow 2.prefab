@@ -103,7 +103,7 @@ MonoBehaviour:
   enemy: {fileID: 0}
   islayer:
     serializedVersion: 2
-    m_Bits: 35968
+    m_Bits: 33928
   pos: {fileID: 0}
   Dmg: 0.3
   SkillDmg: 3
@@ -112,6 +112,7 @@ MonoBehaviour:
   box: {fileID: -8604415927066986594}
   spriteRenderer: {fileID: 9191525023929005868}
   collider: {fileID: -8604415927066986594}
+  hit: 0
 --- !u!61 &-8604415927066986594
 BoxCollider2D:
   m_ObjectHideFlags: 0

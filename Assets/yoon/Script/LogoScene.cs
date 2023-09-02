@@ -5,14 +5,27 @@ using UnityEngine;
 public class LogoScene : MonoBehaviour
 {
     public Scene_Move sc;
+    public bool story = false;
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("SceneMove", 13f);
+        if (story)
+        {
+            Invoke("ingameScene", 51f);
+        }
+        else
+        {
+            Invoke("SceneMove", 13f);
+        }
     }
 
     void SceneMove()
     {
         sc.SceneLoader("Title_Scene");
+    }
+
+    void ingameScene()
+    {
+        sc.SceneLoader("ingame_scene");
     }
 }

@@ -120,7 +120,7 @@ public class Btn_Ctrol : MonoBehaviour
                 dm.CreateJson();
                 fade.CallFadeIn();
                 loading_ui.DoLoading = true;
-                Invoke("GoInGame",4f);
+                Invoke("GoStory", 4f);
                 break;
             case 1:
                 Debug.Log("이어서 시작");
@@ -149,6 +149,11 @@ public class Btn_Ctrol : MonoBehaviour
     void GoInGame()
     {
         Scene_Move.SceneLoader("ingame_scene");
+    }
+
+    void GoStory()
+    {
+        Scene_Move.SceneLoader("Story_Scene");
     }
 
 }

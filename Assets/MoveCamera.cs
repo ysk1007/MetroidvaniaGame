@@ -9,13 +9,14 @@ public class MoveCamera : MonoBehaviour
     [SerializeField] private GameObject UI;     // InGameUI 
     public MapManager map;
     public Player player;
+    public Orc_Boss orcboss;
     public bool startFightBoss = false;   // 보스전 시작시 true 되었다가 false로 변환
     public int stage;   // 추후 추가되는 MapManager에서 변수 가져오면 됨.  큰 스테이지
     public int stageSmall;  // 작은 스테이지
     public bool watchBossname = false;  // 보스 이름 띄운 걸 봤는지 확인하는 변수
 
-    float changeX;
-    float changeY;
+    public float changeX;
+    public float changeY;
 
     public Transform target;
     public float speed;
@@ -33,7 +34,11 @@ public class MoveCamera : MonoBehaviour
     void Start()
     {
         player = Player.instance.GetComponent<Player>();
-        map = MapManager.instance.GetComponent<MapManager>();
+        if (Orc_Boss.instance != null)
+        {
+            orcboss = Orc_Boss.instance.GetComponent<Orc_Boss>();
+        }
+        map = MapManager.instance;
         height = Camera.main.orthographicSize;  // 카메라의 월드 공간에서의 세로 절반 사이즈
         width = height * Screen.width / Screen.height; // 카메라의 월드 공간에서의 가로 절반 사이즈
     }
@@ -43,11 +48,11 @@ public class MoveCamera : MonoBehaviour
         stage = map.CurrentStage[0];
         stageSmall = map.CurrentStage[1];
 
-        if(stageSmall == 7 && !startFightBoss && !watchBossname)
+        if (stageSmall == 7 && !startFightBoss && !watchBossname)
         {
             Invoke("OnStartBool", 1f);
         }
-        else if(stageSmall != 7)    // 작은 스테이지가 7 아닐 때
+        else if (stageSmall != 7)    // 작은 스테이지가 7 아닐 때
         {
             startFightBoss = false;
             watchBossname = false;
@@ -108,70 +113,77 @@ public class MoveCamera : MonoBehaviour
     {
         if (player.UseMirror)   //거울 아이템 장착중일 때
         {
-            if (stage == 2 && stageSmall <= 6) // 3스테이지
+            if (stage == 2 && stageSmall != 7) // 3스테이지
             {
                 center.x = 120;
                 center.y = 7;
                 size.x = 270;
                 size.y = 40;
             }
-            else if (stage == 2 && stageSmall > 6)   // 3스테이지 보스 
+            else if (stage == 2 && stageSmall == 7)   // 3스테이지 보스 
             {
                 center.x = 25;
                 center.y = 12;
                 size.x = 75;
                 size.y = 35;
             }
-            if ((stage == 0 || stage == 1) && stageSmall <= 6) // 1,2스테이지
+            if (stage < 2 && stageSmall != 7) // 1,2스테이지
             {
                 center.x = 120;
                 center.y = 7;
                 size.x = 270;
                 size.y = 25;
             }
-            else if (stage < 2 && stageSmall > 6)   // 1,2스테이지 보스
+            else if (stage == 0 && stageSmall == 7)   // 1스테이지 보스
+            {
+                center.x = 480;
+                center.y = 3;
+                size.x = 1000;
+                size.y = 20;
+            }
+            else if (stage == 1 && stageSmall == 7)   // 2스테이지 보스
             {
                 center.x = 20;
-                center.y = 4;
-                size.x = 55;
-                size.y = 20;
+                center.y = 5;
+                size.x = 58;
+                size.y = 25;
             }
         }
         else if (!player.UseMirror) //거울 아이템 장착중이 아닐 때
         {
-            if (stage == 2 && stageSmall <= 6) // 3스테이지
+            if (stage == 2 && stageSmall != 7) // 3스테이지
             {
                 center.x = 120;
                 center.y = 7;
                 size.x = 265;
                 size.y = 35;
             }
-            else if(stage == 2 && stageSmall > 6)   // 3스테이지 보스
+            else if (stage == 2 && stageSmall == 7)   // 3스테이지 보스
             {
                 center.x = 25;
                 center.y = 12;
                 size.x = 70;
                 size.y = 30;
             }
-            if (stage < 2 && stageSmall <= 6) // 1,2스테이지
+            if (stage < 2 && stageSmall != 7) // 1,2스테이지
             {
                 center.x = 120;
                 center.y = 7;
                 size.x = 265;
                 size.y = 20;
             }
-            else if(stage == 1 && stageSmall > 6)    // 2스테이지 보스
+            else if (stage == 1 && stageSmall == 7)    // 2스테이지 보스
             {
                 center.x = 20;
                 center.y = 6;
                 size.x = 50;
                 size.y = 20;
             }
-            else if(stage == 0 && stageSmall > 6) // 1스테이지 보스
+            else if (stage == 0 && stageSmall == 7) // 1스테이지 보스
             {
-                center.x = 480;
+                center.x = 15 + orcboss.transform.position.x;
                 center.y = 3;
-                size.x = 1000;
+                size.x = 40;
                 size.y = 20;
             }
         }
@@ -182,6 +194,7 @@ public class MoveCamera : MonoBehaviour
         float clampY = Mathf.Clamp(transform.position.y, -ly + center.y, ly + center.y);
 
         transform.position = new Vector3(clampX, clampY, -10f);
+
     }
 
     void WatchingBoss()     // 보스 비추는 카메라 함수 2023-09-01 수정
@@ -192,8 +205,8 @@ public class MoveCamera : MonoBehaviour
         {
             case 0: // Stage 1
                 Camera.main.orthographicSize = 5f;
-                changeX = 19f;
-                changeY = 0f;
+                changeX = 7f;
+                changeY = 4f;
                 break;
             case 1: // Stage 2
                 Camera.main.orthographicSize = 3f;
@@ -206,10 +219,9 @@ public class MoveCamera : MonoBehaviour
                 changeY = 10f;
                 break;
         }
-
         Vector3 vector3 = new Vector3(changeX, changeY, -10f);
         transform.position = Vector3.Lerp(transform.position, vector3, Time.deltaTime * speed);
-    }    
+    }
 
     private void OnDrawGizmos()
     {

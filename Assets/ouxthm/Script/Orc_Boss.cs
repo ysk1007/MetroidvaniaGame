@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Orc_Boss : Enemy
 {
+    public static Orc_Boss instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
     public override void InitSetting()  // 적의 기본 정보를 설정하는 함수
     {
         Stage = 1;

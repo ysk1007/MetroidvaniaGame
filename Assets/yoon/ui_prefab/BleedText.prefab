@@ -55,7 +55,7 @@ MonoBehaviour:
   speed: 0.6
   height: 1
   target: {x: 0, y: 0, z: 0}
-  startPosition: {x: 76.48396, y: -7.829105, z: 1.6506131}
+  startPosition: {x: 178.32956, y: -0.66905963, z: 0}
   sx: 1.3
   sy: 0.6
 --- !u!222 &6952896375259049866
@@ -86,7 +86,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 5
+  m_text: 10
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 145d2ff76d6bd4446a80bdeeffbeb217, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 20b5c951df716e845b76999e30e8509e, type: 2}
@@ -238,7 +238,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &3652773701857825246
 MonoBehaviour:
   m_ObjectHideFlags: 0
