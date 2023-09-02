@@ -316,7 +316,7 @@ public abstract class Enemy : MonoBehaviour
         bleeding();
     }
 
-    void OnCollisionStay2D(Collision2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.name == "Player")
         {
@@ -325,7 +325,7 @@ public abstract class Enemy : MonoBehaviour
         }        
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionStay2D(Collision2D collision)
     {
         if (Enemy_Mod == 11 && collision.gameObject.CompareTag("Wall"))
         {

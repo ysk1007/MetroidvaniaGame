@@ -6,6 +6,7 @@ public class Layser_Golem : Enemy
 {
     public override void InitSetting()  // 적의 기본 정보를 설정하는 함수
     {
+        Stage = 3;
         Enemy_Mod = 4;  // 투사체 X 원거리
         Enemy_Power = 10f; //적의 공격력
         Enemy_HP = 30f;  // 적의 체력

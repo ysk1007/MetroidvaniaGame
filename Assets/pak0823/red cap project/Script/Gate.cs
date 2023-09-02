@@ -15,7 +15,7 @@ public class Gate : MonoBehaviour
     }
     private void Start()
     {
-        player = Player.instance.GetComponent<Player>();
+        player = Player.instance;
         mapManager = MapManager.instance;
     }
 
@@ -55,8 +55,10 @@ public class Gate : MonoBehaviour
 
     IEnumerator Delay()
     {
+        player.isdelay = true;
         yield return new WaitForSeconds(2f);
-        player.transform.position = new Vector3(0, 0, 0);
         mapManager.StageMove = true;
+        player.transform.position = new Vector3(0, 0, 0);
+        player.isdelay = false;
     }
 }

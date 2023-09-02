@@ -12,6 +12,7 @@ public class Arrow : MonoBehaviour
     public float SkillDmg = 2;
     public float speed = 20f; // 화살 이동 속도
     public bool isSkill = false; // 스킬 사용 여부
+    public BoxCollider2D box;   // 화살 박스 콜라이더
     private Vector3 moveDirection = Vector3.right; // 화살이 나가는 방향
     private float detectRadius = 2.5f; // 화살이 감지할 수 있는 반경 (적이 있는지 없는지 확인)
     public SpriteRenderer spriteRenderer;
@@ -43,12 +44,20 @@ public class Arrow : MonoBehaviour
                 // 플레이어가 오른쪽을 바라보면 화살을 오른쪽으로 발사
                 moveDirection = Vector3.right;
                 spriteRenderer.flipX = false;
+                if(isSkill)
+                    box.offset = new Vector2(0.8f, 0);
+                else
+                    box.offset = new Vector2(0.4f, 0);
             }
             else
             {
                 // 플레이어가 왼쪽을 바라보면 화살을 왼쪽으로 발사
                 moveDirection = Vector3.left;
                 spriteRenderer.flipX = true;
+                if (isSkill)
+                    box.offset = new Vector2(-0.8f, 0);
+                else
+                    box.offset = new Vector2(-0.4f, 0);
             }
         }
     }
@@ -86,7 +95,7 @@ public class Arrow : MonoBehaviour
         else
         {
             Dmg = (player.ATP + player.AtkPower + player.GridPower) / 2;
-            if (closestCollider != null && closestCollider.tag != "Wall" && closestCollider.tag != "Pad" && closestCollider.tag != "Tilemap" && player.proSelectWeapon == 2) // 일정 거리 내에 적이 있으면 가장 가까운 적으로 이동
+            if (closestCollider != null && closestCollider.tag != "Wall" && closestCollider.tag != "Pad" && closestCollider.tag != "Tilemap") // 일정 거리 내에 적이 있으면 가장 가까운 적으로 이동
             {
                 if (hitColliders.Length > 0 && player.proLevel >= 1)
                 {
@@ -98,7 +107,6 @@ public class Arrow : MonoBehaviour
                     pos2D += speed * Time.deltaTime * direction;
                     pos.position = new Vector3(pos2D.x, pos2D.y, pos.rotation.z);
                 }
-
             }
             else
             {
@@ -122,6 +130,8 @@ public class Arrow : MonoBehaviour
         }
         if (collision.tag == "Wall" || collision.tag == "Tilemap") // 벽이나 땅에 맞으면 화살 사라짐 패드는 없는게 나은것 같아서 뺐음
         {
+            if (isSkill)
+                return;
             DestroyArrow();
         }
     }

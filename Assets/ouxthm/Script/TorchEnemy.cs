@@ -6,6 +6,7 @@ public class TorchEnemy : Enemy
 {
     public override void InitSetting()  // 적의 기본 정보를 설정하는 함수
     {
+        Stage = 3;
         Enemy_Mod = 7;  // 원거리 투사체 
         Enemy_Power = 10f; //적의 공격력
         Enemy_HP = 60f;  // 적의 체력

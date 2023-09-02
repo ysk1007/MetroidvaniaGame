@@ -6,6 +6,7 @@ public class Rat : Enemy
 {
     public override void InitSetting()  // 적의 기본 정보를 설정하는 함수
     {
+        Stage = 3;
         Enemy_Mod = 1;
         Enemy_HP = 10f;  // 적의 체력
         Enemy_Speed = 1.5f;    // 적의 이동속도

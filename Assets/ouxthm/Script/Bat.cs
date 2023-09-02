@@ -6,6 +6,7 @@ public class Bat : Enemy
 {
     public override void InitSetting()  // 적의 기본 정보를 설정하는 함수
     {
+        Stage = 3;
         Enemy_Mod = 3;  // 비행
         Bump_Power = 4; // 충돌 공격력
         Enemy_HP = 20f;  // 적의 체력
