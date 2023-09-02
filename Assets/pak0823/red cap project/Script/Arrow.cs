@@ -12,6 +12,7 @@ public class Arrow : MonoBehaviour
     public float SkillDmg = 2;
     public float speed = 20f; // 화살 이동 속도
     public bool isSkill = false; // 스킬 사용 여부
+    public BoxCollider2D box;   // 화살 박스 콜라이더
     private Vector3 moveDirection = Vector3.right; // 화살이 나가는 방향
     private float detectRadius = 2.5f; // 화살이 감지할 수 있는 반경 (적이 있는지 없는지 확인)
     public SpriteRenderer spriteRenderer;
@@ -45,12 +46,20 @@ public class Arrow : MonoBehaviour
                 // 플레이어가 오른쪽을 바라보면 화살을 오른쪽으로 발사
                 moveDirection = Vector3.right;
                 spriteRenderer.flipX = false;
+                if(isSkill)
+                    box.offset = new Vector2(0.8f, 0);
+                else
+                    box.offset = new Vector2(0.4f, 0);
             }
             else
             {
                 // 플레이어가 왼쪽을 바라보면 화살을 왼쪽으로 발사
                 moveDirection = Vector3.left;
                 spriteRenderer.flipX = true;
+                if (isSkill)
+                    box.offset = new Vector2(-0.8f, 0);
+                else
+                    box.offset = new Vector2(-0.4f, 0);
             }
         }
     }
@@ -99,7 +108,6 @@ public class Arrow : MonoBehaviour
                     pos2D += speed * Time.deltaTime * direction;
                     pos.position = new Vector3(pos2D.x, pos2D.y, pos.rotation.z);
                 }
-
             }
             else
             {

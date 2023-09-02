@@ -107,10 +107,7 @@ public class Effect : MonoBehaviour
                 }
             }
         }
-        if (collision.tag == "Wall")
-        {
-            Desrtory();
-        }
+        
     }
 
     IEnumerator MasterSkill()

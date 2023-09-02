@@ -1,5 +1,85 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7792324005262014766
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2749531864233311253}
+  - component: {fileID: 4334534423420339057}
+  - component: {fileID: 6016196844360596856}
+  m_Layer: 9
+  m_Name: attackRange
+  m_TagString: Sword
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2749531864233311253
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7792324005262014766}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7859401246129824559}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &4334534423420339057
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7792324005262014766}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!50 &6016196844360596856
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7792324005262014766}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 1
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &7859401244918661413
 GameObject:
   m_ObjectHideFlags: 0
@@ -838,86 +918,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &7859401245744835693
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7859401245744835695}
-  - component: {fileID: 7859401245744835694}
-  - component: {fileID: 7859401245744835688}
-  m_Layer: 9
-  m_Name: attackRange
-  m_TagString: Sword
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7859401245744835695
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7859401245744835693}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7859401246129824559}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &7859401245744835694
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7859401245744835693}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 1.5, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 3.5, y: 2.5}
-  m_EdgeRadius: 0
---- !u!50 &7859401245744835688
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7859401245744835693}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 1
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1 &7859401246035618786
 GameObject:
   m_ObjectHideFlags: 0
@@ -1058,7 +1058,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7859401245744835695}
+  - {fileID: 2749531864233311253}
   - {fileID: 7859401246527256616}
   - {fileID: 7859401244965306237}
   - {fileID: 7859401245609651441}
@@ -1193,6 +1193,7 @@ MonoBehaviour:
   isMasterSkill: 0
   isAttacking: 0
   isShield: 0
+  isWall: 0
   delayTime: 1
   WeaponChage: 1
   JumpCnt: 0
@@ -1293,7 +1294,7 @@ MonoBehaviour:
   selectCoolTimeLevel: 0
   GameManager: {fileID: 0}
   Ui: {fileID: 0}
-  attackRange: {fileID: 7859401245744835693}
+  attackRange: {fileID: 7792324005262014766}
   Arrow: {fileID: 6371477986873845597, guid: 8004db967f8b04a42a482e4f52827cd9, type: 3}
   Arrow2: {fileID: 6371477986873845597, guid: de8459e8763bbb64f96de00dd8d8c755, type: 3}
   Slash: {fileID: 6755171392198465549, guid: 8941430ca4a297042a39cb12a47caad1, type: 3}
@@ -1304,7 +1305,7 @@ MonoBehaviour:
   Axebuf: {fileID: 5013003718339506882, guid: 2a7faf6a9203d814a9200ba450612f91, type: 3}
   Arrowpos: {fileID: 7859401246527256616}
   Arrowpos2: {fileID: 7859401244965306237}
-  Attackpos: {fileID: 7859401245744835695}
+  Attackpos: {fileID: 2749531864233311253}
   Skillpos: {fileID: 7859401245609651441}
   SwordAtkSound: {fileID: 8300000, guid: 8bd18ee79d79043aebebadafe742f378, type: 3}
   SwordSkillSound: {fileID: 8300000, guid: 4a578695dfac4422d81299af3481ea10, type: 3}
@@ -1320,10 +1321,11 @@ MonoBehaviour:
   JumpSound: {fileID: 8300000, guid: 1a632fba9ef4cd44a8047888ce26f800, type: 3}
   SlideingSound: {fileID: 8300000, guid: c1cdb4f1837deb544a2ee04d8fc7b608, type: 3}
   DieSound: {fileID: 8300000, guid: e2d8f2d5198b00546aa378778b86ee4e, type: 3}
-  box: {fileID: 7859401245744835694}
+  box: {fileID: 4334534423420339057}
   Axebox: {fileID: 0}
   spriteRenderer: {fileID: 0}
   enemy: {fileID: 0}
+  movecamera: {fileID: 0}
   anim: {fileID: 0}
   UseGridSword: 0
   DivinePower: 0

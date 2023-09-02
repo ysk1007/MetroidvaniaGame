@@ -65,6 +65,7 @@ public class MoveCamera : MonoBehaviour
         else if (!startFightBoss)
         {
             WatchingPlayer();
+            CameraLimit();
         }
     }
     void bossNameOn()   // 보스 이름 텍스트 띄우는 함수
@@ -102,7 +103,78 @@ public class MoveCamera : MonoBehaviour
             Camera.main.orthographicSize = 9f;
         }
         transform.position = Vector3.Lerp(transform.position, target.position, Time.deltaTime * speed);
-
+    }
+    void CameraLimit()
+    {
+        if (player.UseMirror)   //거울 아이템 장착중일 때
+        {
+            if (stage == 2 && stageSmall <= 6) // 3스테이지
+            {
+                center.x = 120;
+                center.y = 7;
+                size.x = 270;
+                size.y = 40;
+            }
+            else if (stage == 2 && stageSmall > 6)   // 3스테이지 보스 
+            {
+                center.x = 25;
+                center.y = 12;
+                size.x = 75;
+                size.y = 35;
+            }
+            if ((stage == 0 || stage == 1) && stageSmall <= 6) // 1,2스테이지
+            {
+                center.x = 120;
+                center.y = 7;
+                size.x = 270;
+                size.y = 25;
+            }
+            else if (stage < 2 && stageSmall > 6)   // 1,2스테이지 보스
+            {
+                center.x = 20;
+                center.y = 4;
+                size.x = 55;
+                size.y = 20;
+            }
+        }
+        else if (!player.UseMirror) //거울 아이템 장착중이 아닐 때
+        {
+            if (stage == 2 && stageSmall <= 6) // 3스테이지
+            {
+                center.x = 120;
+                center.y = 7;
+                size.x = 265;
+                size.y = 35;
+            }
+            else if(stage == 2 && stageSmall > 6)   // 3스테이지 보스
+            {
+                center.x = 25;
+                center.y = 12;
+                size.x = 70;
+                size.y = 30;
+            }
+            if (stage < 2 && stageSmall <= 6) // 1,2스테이지
+            {
+                center.x = 120;
+                center.y = 7;
+                size.x = 265;
+                size.y = 20;
+            }
+            else if(stage == 1 && stageSmall > 6)    // 2스테이지 보스
+            {
+                center.x = 20;
+                center.y = 6;
+                size.x = 50;
+                size.y = 20;
+            }
+            else if(stage == 0 && stageSmall > 6) // 1스테이지 보스
+            {
+                center.x = 480;
+                center.y = 3;
+                size.x = 1000;
+                size.y = 20;
+            }
+        }
         float lx = size.x * 0.5f - width;
         float clampX = Mathf.Clamp(transform.position.x, -lx + center.x, lx + center.x);    //value 값이 min 과 max 사이면 value값을 반환, min보다 작으면 min, max보다 크면 max값을 반환
 
