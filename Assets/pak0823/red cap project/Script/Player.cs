@@ -553,7 +553,7 @@ public class Player : MonoBehaviour
             AxeCnt = 4;
             anim.SetFloat("Axe", AxeCnt); //숙련도 스킬은 Axe_atk3 길게 애니메이션으로 실행
             anim.SetTrigger("axe_atk");
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1.5f * delayTime);
             //PlaySound("AxeMasterSkill"); // 애니메이션에 실행 있음
             AxeMasterSkill();
             Axe_MsTime = DeCoolTimeCarcul(MasterSkillTime[1]);

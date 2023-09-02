@@ -596,6 +596,7 @@ public class DataManager : MonoBehaviour
         items.Add(new DMUlcokItem("TransmitterHammer", false));
         items.Add(new DMUlcokItem("SuspiciousMirror", false));
         items.Add(new DMUlcokItem("VulcanArmor", false));
+        items.Add(new DMUlcokItem("WorkGloves", false));
 
         // 데이터를 JSON 파일로 저장
         SaveToJson(items);

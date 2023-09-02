@@ -233,7 +233,7 @@ public class EnemySounds : MonoBehaviour
 
     public void GolemHit()
     {
-        Sounds("golemHit");
+        SoundManager.instance.SFXPlay("golemHitSound",golemHit);
     }
     public void Sounds(string sounds)
     {

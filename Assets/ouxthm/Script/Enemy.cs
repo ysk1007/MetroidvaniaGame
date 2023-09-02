@@ -514,6 +514,10 @@ public abstract class Enemy : MonoBehaviour
     }
     public IEnumerator Hit(float damage) // 피해 함수
     {
+        if (AmIBoss && Stage == 3)
+        {
+            gameObject.GetComponentInChildren<EnemySounds>().GolemHit();
+        }
         Player player = Player.instance.GetComponent<Player>();
         Ui_Controller ui = GameManager.Instance.GetComponent<Ui_Controller>(); //윤성권 추가함
         Proficiency_ui pro = GameManager.Instance.GetComponent<Proficiency_ui>(); // 숙련도 추가함

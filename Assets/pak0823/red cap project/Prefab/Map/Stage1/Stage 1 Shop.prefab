@@ -3848,6 +3848,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7244936447706940124, guid: ec8ae0515fbc70646b0b0607c40fdc45, type: 3}
   m_PrefabInstance: {fileID: 2057045626589451832}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8648942396504593642 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7244936447706940114, guid: ec8ae0515fbc70646b0b0607c40fdc45, type: 3}
+  m_PrefabInstance: {fileID: 2057045626589451832}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cc0b82b1849f1d45bfa672534e76106, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2865760242966986757
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3921,6 +3932,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Talk_canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4602492619225255915, guid: 04dae10b22253b942844520052302218, type: 3}
+      propertyPath: market
+      value: 
+      objectReference: {fileID: 8648942396504593642}
     - target: {fileID: 4602492619225255927, guid: 04dae10b22253b942844520052302218, type: 3}
       propertyPath: m_Pivot.x
       value: 0
