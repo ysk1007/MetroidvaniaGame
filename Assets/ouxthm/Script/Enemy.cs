@@ -313,7 +313,7 @@ public abstract class Enemy : MonoBehaviour
         Enemy_HPten = Enemy_HP * 0.1f;
         bleedingTime = 0f;
         bossMoving = false;
-        Invoke("OrcRandomAtk", 7f);
+        Invoke("OrcRandomAtk", 6f);
         bleeding();
     }
 

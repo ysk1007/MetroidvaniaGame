@@ -19,8 +19,6 @@ public class MapManager : MonoBehaviour
     public bool pause = false;
     public SoundManager sm;
 
-    public AudioClip Stage1_BossBGM;
-
     public bool StageMove = false;
 
     private void Awake()
@@ -46,6 +44,10 @@ public class MapManager : MonoBehaviour
         }
         CurrentStage = dm.CurrentStage;
         CurrentStagePrefab = Instantiate(Stage_Prefabs[CurrentStage[0], CurrentStage[1]], transform.parent);
+        if (CurrentStage[0] == 0 && CurrentStage[1] == 7)
+        {
+            Player.instance.transform.position = new Vector3(25, 5, 0);
+        }
         Invoke("Stage", 3f);
         Invoke("BossStage", 3f);
         Invoke("MarketStage", 3f);
@@ -92,7 +94,14 @@ public class MapManager : MonoBehaviour
         MarketStage();
         CurrentStagePrefab = Instantiate(Stage_Prefabs[CurrentStage[0], CurrentStage[1]], transform.parent);
         dm.NextStage();
-        Player.instance.transform.position = new Vector3(0, 0, 0);
+        if (CurrentStage[0] == 0 && CurrentStage[1] == 7)
+        {
+            Player.instance.transform.position = new Vector3(25, 5, 0);
+        }
+        else
+        {
+            Player.instance.transform.position = new Vector3(0, 0, 0);
+        }
         pause = false;
     }
 

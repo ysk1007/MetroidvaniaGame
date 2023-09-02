@@ -594,7 +594,7 @@ public class Player : MonoBehaviour
     //Wall_Slide
     void OnCollisionStay2D(Collision2D collision)   // 벽 콜라이젼이 Player에 닿고 있으면 실행, 점프착지 시 콜라이젼 닿을 시 점프 해제
     {
-        RaycastHit2D rayHitDown = Physics2D.Raycast(rigid.position, Vector3.down, 1.2f, LayerMask.GetMask("Tilemap", "Pad"));
+        RaycastHit2D rayHitDown = Physics2D.Raycast(rigid.position, Vector3.down, 1.5f, LayerMask.GetMask("Tilemap", "Pad", "Water"));
         RaycastHit2D rayHitRight = Physics2D.Raycast(rigid.position, Vector3.right, 1.2f, LayerMask.GetMask("Tilemap"));
         RaycastHit2D rayHitLeft = Physics2D.Raycast(rigid.position, Vector3.left, 1.2f, LayerMask.GetMask("Tilemap"));
 
@@ -616,7 +616,7 @@ public class Player : MonoBehaviour
                 StartCoroutine(PadJump(0));
             }
         }
-        else if(rayHitDown.collider != null)
+        else if (rayHitDown.collider != null)
         {
             isWall = false;
             anim.SetBool("Wall_slide", false);
