@@ -56,7 +56,7 @@ public class OwnerTalk : MonoBehaviour
 
     void Start() //8.22 À±¼º±Ç Ãß°¡
     {
-        dm = DataManager.instance;
+        dm = DataManager.instance.GetComponent<DataManager>();
         firstShow = dm.CanCenemaPlay();
         market = MarketScript.instance.GetComponent<MarketScript>();
         isDialogue = true;

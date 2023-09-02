@@ -43,11 +43,11 @@ public class MoveCamera : MonoBehaviour
         stage = map.CurrentStage[0];
         stageSmall = map.CurrentStage[1];
 
-        if(stageSmall == 5 && !startFightBoss && !watchBossname)
+        if(stageSmall == 7 && !startFightBoss && !watchBossname)
         {
             Invoke("OnStartBool", 1f);
         }
-        else if(stageSmall != 5)    // 작은 스테이지가 5 아닐 때
+        else if(stageSmall != 7)    // 작은 스테이지가 7 아닐 때
         {
             startFightBoss = false;
             watchBossname = false;
@@ -112,7 +112,7 @@ public class MoveCamera : MonoBehaviour
         transform.position = new Vector3(clampX, clampY, -10f);
     }
 
-    void WatchingBoss()     // 보스 비추는 카메라 함수
+    void WatchingBoss()     // 보스 비추는 카메라 함수 2023-09-01 수정
     {
         UI.SetActive(false);    // InGameUI Off
 
