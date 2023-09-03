@@ -146,11 +146,14 @@ MonoBehaviour:
   atkTime: 0
   Attacker: 0
   endTime: 0
+  axeUltHit: 0
+  giveReward: 0
   scaleX: 0
   weaponTag: 
   Swordlevel: 0
   selectWeapon: 0
   bleedLevel: 0
+  slashBleedLevel: 0
   bleedingDamage: 0
   bleedingTime: 0
   bloodBoomDmg: 0
@@ -202,6 +205,7 @@ MonoBehaviour:
   WaringArea: []
   TargetFind: 0
   BossCenter: {fileID: 0}
+  watching: 0
 --- !u!82 &3432740516863285194
 AudioSource:
   m_ObjectHideFlags: 0
@@ -222,10 +226,10 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 8
-  MaxDistance: 12
+  MinDistance: 4
+  MaxDistance: 20
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -258,7 +262,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -471,7 +475,6 @@ MonoBehaviour:
   slimeJump: {fileID: 8300000, guid: fc1164a4526496b4e97e6042b66cf928, type: 3}
   torchHit: {fileID: 8300000, guid: 1bdb143b287563f4e887a704d0235a63, type: 3}
   torchDie: {fileID: 8300000, guid: 5092b209323c0f24aab0d89dd8d5982b, type: 3}
-  torchThrow: {fileID: 0}
   wolfAtk: {fileID: 8300000, guid: 49fb94c96e3a35843b46866f097222a4, type: 3}
   wolfHit: {fileID: 8300000, guid: a574eeb5d05b3b24dab20549d419a806, type: 3}
   wolfDie: {fileID: 8300000, guid: 8c68419ddd1fb2848852f137c4c5bed4, type: 3}
@@ -486,6 +489,10 @@ MonoBehaviour:
   orcWalkR: {fileID: 8300000, guid: 7a2d4db864ba741479d48bcf031e6751, type: 3}
   snailHit: {fileID: 8300000, guid: 14edbb9cddc04db4683fccb4f719d551, type: 3}
   snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
+  golemLaser: {fileID: 0}
+  golemBreakdown: {fileID: 0}
+  golemHit: {fileID: 0}
+  golemDie: {fileID: 0}
 --- !u!1001 &3432740517349039853
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 
 public class Player : MonoBehaviour
@@ -32,6 +33,7 @@ public class Player : MonoBehaviour
     public bool isAttacking = false; //공격상태 확인
     public bool isShield = false;   //방어막 상태 확인
     public bool isWall = false;     // 벽에 붙어 있는지 확인
+    public bool isDie = false;  // 플레이어가 죽었는지 판단    2023-09-03 추가
     public float delayTime = 1f;    //공격 딜레이 기본 시간
     public int WeaponChage = 1;     //무기 변경 저장 변수
     public int JumpCnt, JumpCount = 2;  //2단점프의 수를 카운터 해주는 변수
@@ -661,11 +663,10 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)  // 함정 구멍에 떨어졌을 경우 다시 리스폰
+    private void OnTriggerEnter2D(Collider2D collision)  // 리스폰 포인트 저장
     {
         if (collision.gameObject.CompareTag("Respawn"))
         {
-            Debug.Log("박스와 붙음");
             spawnPoint = collision.transform.position;
         }
     }
@@ -751,7 +752,7 @@ public class Player : MonoBehaviour
 
     }
 
-    public void FallHurt()
+    public void FallHurt()  // 맵 밖으로 떨어질 시 실행
     {
         CurrentHp = CurrentHp - 10;
         PlaySound("Damaged");
