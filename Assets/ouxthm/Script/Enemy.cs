@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
 using UnityEngine;
-using static System.Net.WebRequestMethods;
+
 
 public abstract class Enemy : MonoBehaviour
 {
@@ -347,14 +346,6 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-/*    void OnCollisionStay2D(Collision2D collision)
-    {
-        if (Enemy_Mod == 11 && collision.gameObject.CompareTag("Wall"))
-        {
-            StartCoroutine(StopRush());
-        }
-    }*/
-
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision != null)
@@ -479,7 +470,7 @@ public abstract class Enemy : MonoBehaviour
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
 
         nextDirX *= -1;   // nextDirX에 -1을 곱해 방향전환
-        if (nextDirX == 1 && Gap_Distance_X > Enemy_Sensing_X)  // Gap_Distance > Enemy_Attack_Range를 추가하지 않으면 플레이어가 사거리 내에 있고 rayHit=null이라면 제자리 돌기함
+        if (nextDirX == 1 && Gap_Distance_X > Enemy_Sensing_X && !Dying)  // Gap_Distance > Enemy_Attack_Range를 추가하지 않으면 플레이어가 사거리 내에 있고 rayHit=null이라면 제자리 돌기함
         {
             spriteRenderer.flipX = true; // nextDirX 값이 1이면 x축을 flip함
         }
@@ -748,7 +739,7 @@ public abstract class Enemy : MonoBehaviour
     {
         rigid = this.GetComponent<Rigidbody2D>();
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
-        if (Gap_Distance_X <= Enemy_Sensing_X && Gap_Distance_Y <= Enemy_Sensing_Y)      // Enemy의 X축 사거리에 있을 때, Y축 사거리에 있을 때
+        if (Gap_Distance_X <= Enemy_Sensing_X && Gap_Distance_Y <= Enemy_Sensing_Y && !Dying)      // Enemy의 X축 사거리에 있을 때, Y축 사거리에 있을 때
         {
             if (transform.position.x < target.position.x)            // 오른쪽 방향
             {

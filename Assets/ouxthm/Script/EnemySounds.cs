@@ -35,7 +35,6 @@ public class EnemySounds : MonoBehaviour
 
     public AudioClip torchHit;
     public AudioClip torchDie;
-    public AudioClip torchThrow;
 
     public AudioClip wolfAtk;
     public AudioClip wolfHit;
@@ -155,10 +154,6 @@ public class EnemySounds : MonoBehaviour
     public void TorchDie()
     {
         Sounds("torchDie");
-    }
-    public void TorchThrow()
-    {
-        Sounds("torchThrow");
     }
     public void WolfAtk()
     {
@@ -314,9 +309,6 @@ public class EnemySounds : MonoBehaviour
                 break;
             case "torchDie":
                 audioSource.clip = torchDie;
-                break;
-            case "torchThrow":
-                audioSource.clip = torchThrow;
                 break;
             case "wolfAtk":
                 audioSource.clip = wolfAtk;

@@ -212,7 +212,7 @@ MonoBehaviour:
   mrHit: {fileID: 8300000, guid: c461dbabbc2663e4e9b4f1c7525ec1e8, type: 3}
   mrDie: {fileID: 8300000, guid: f4c1effe6cc04fa4b8a9f06b88fbf697, type: 3}
   mrAtk: {fileID: 8300000, guid: 8b3f676fe7b41044495a2964396b8ba3, type: 3}
-  necjump: {fileID: 8300000, guid: 478caf7388cb03c499075f90c3a2ec77, type: 3}
+  necjump: {fileID: 8300000, guid: 227b05972db7a58448edeed754289a6e, type: 3}
   necTeleport: {fileID: 8300000, guid: 97986e0a9e152b346ab8107d44e53700, type: 3}
   necBoom: {fileID: 8300000, guid: fd706038486fee041947a774223dc22e, type: 3}
   necHit: {fileID: 8300000, guid: 23dd87eef4241974c9973544a1d76fac, type: 3}
@@ -222,7 +222,6 @@ MonoBehaviour:
   slimeJump: {fileID: 8300000, guid: fc1164a4526496b4e97e6042b66cf928, type: 3}
   torchHit: {fileID: 8300000, guid: 1bdb143b287563f4e887a704d0235a63, type: 3}
   torchDie: {fileID: 8300000, guid: 5092b209323c0f24aab0d89dd8d5982b, type: 3}
-  torchThrow: {fileID: 0}
   wolfAtk: {fileID: 8300000, guid: 49fb94c96e3a35843b46866f097222a4, type: 3}
   wolfHit: {fileID: 8300000, guid: a574eeb5d05b3b24dab20549d419a806, type: 3}
   wolfDie: {fileID: 8300000, guid: 8c68419ddd1fb2848852f137c4c5bed4, type: 3}
@@ -239,6 +238,7 @@ MonoBehaviour:
   snailDie: {fileID: 8300000, guid: ce5f1300fca6a8644bece6c7652070f3, type: 3}
   golemLaser: {fileID: 0}
   golemBreakdown: {fileID: 0}
+  golemHit: {fileID: 0}
   golemDie: {fileID: 0}
 --- !u!1 &7227023883360115923
 GameObject:
@@ -387,6 +387,7 @@ MonoBehaviour:
   Attacker: 0
   endTime: 0
   axeUltHit: 0
+  giveReward: 0
   scaleX: 0
   weaponTag: 
   Swordlevel: 0
@@ -457,7 +458,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -7425439255117714164, guid: 6126956f554f0a046a85c7352ef91187, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 1
