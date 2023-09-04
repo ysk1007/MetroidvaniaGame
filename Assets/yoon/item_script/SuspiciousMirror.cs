@@ -14,11 +14,11 @@ public class SuspiciousMirror : itemStatus
         data.itemPrice = 2100;
         data.color = Color.magenta;
         data.Rating = "영웅";
-        data.itemExplanation = "경주마가 됩니다.";
-        data.itemStat = "시야가 좁아집니다.";
-        data.itemNumber = 38;
-        data.MaxHp = 50;
-        data.Def = 20;
+        data.itemExplanation = "빵! 바를까? 놀랐지?";
+        data.itemStat = "시야가 좁아집니다\n공격 속도 +25%\n치명타 확률 +25%";
+        data.itemNumber = 39;
+        data.AtkSpeed = 0.25f;
+        data.CriticalChance = 0.25f;
     }
 
     public override void SpecialPower()

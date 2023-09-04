@@ -16,7 +16,7 @@ public class BlackCard : itemStatus
         data.Rating = "고급";
         data.itemExplanation = "\"자 그럼 시작할까? \n이 세계의 운명을 건 카드놀이를 말이야..\"";
         data.itemStat = "최대 체력 +27\n 방어력 +27";
-        data.itemNumber = 25;
+        data.itemNumber = 26;
         data.MaxHp = 27;
         data.Def = 27;
     }

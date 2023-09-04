@@ -164,6 +164,7 @@ public class Player : MonoBehaviour
     public bool NoNockback = false;
     public bool UseMirror = false;
     public bool UseVulcanArmor = false;
+    public bool UsePickGloves = false;
     public Camera cam;
     public Animator TimeLoopAnim;
     public AudioSource TimeLoopSound;

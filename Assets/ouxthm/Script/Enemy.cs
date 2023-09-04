@@ -553,6 +553,10 @@ public abstract class Enemy : MonoBehaviour
         Ui_Controller ui = GameManager.Instance.GetComponent<Ui_Controller>(); //윤성권 추가함
         Proficiency_ui pro = GameManager.Instance.GetComponent<Proficiency_ui>(); // 숙련도 추가함
         damage = damage * player.DmgIncrease; //딜 증가 추가
+        if (player.UsePickGloves)
+        {
+            ui.GetGold(1f);
+        }
         if (player.UseRedCard)
         {
             float randNum = Random.Range(0.01f, 3.33f);
@@ -1406,12 +1410,13 @@ public abstract class Enemy : MonoBehaviour
         Proficiency_ui pro = GameManager.Instance.GetComponent<Proficiency_ui>(); // 숙련도 추가함
         if (Enemy_HP <= 0)
         {
+            gameObject.transform.Translate(Vector2.down * Time.deltaTime * 5);
             if (Dying)
             {
+                Dying = false;
                 Player.instance.FirstMaterial = true;
                 BossSpriteBox.enabled = false;
                 rigid.isKinematic = true;
-                gameObject.transform.Translate(Vector2.down * Time.deltaTime * 5);
                 GameManager.Instance.GetComponent<BossHpController>().BossDead();
             }
             if (!giveReward)

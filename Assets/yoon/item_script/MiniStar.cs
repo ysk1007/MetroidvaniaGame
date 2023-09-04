@@ -17,7 +17,7 @@ public class MiniStar : itemStatus
         data.Rating = "희귀";
         data.itemExplanation = "별은 바라보는 자에게 빛을 준다.";
         data.itemStat = "모든 능력치 +5";
-        data.itemNumber = 33;
+        data.itemNumber = 34;
         data.DmgIncrease = 0.05f;
         data.CriticalChance = 0.05f;
         data.CriDmgIncrease = 0.05f;
@@ -27,7 +27,7 @@ public class MiniStar : itemStatus
         data.Speed = 0.05f;
         data.MaxHp = 5;
         data.JumpPower = 0.75f;
-        data.lifeStill = 0.05f;
+        data.lifeStill = 0.005f;
         data.GoldGet = 0.05f;
         data.EXPGet = 0.05f;
         data.DecreaseCool = 0.05f;

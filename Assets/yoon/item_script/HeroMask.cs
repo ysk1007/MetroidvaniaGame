@@ -16,7 +16,7 @@ public class HeroMask : itemStatus
         data.Rating = "고급";
         data.itemExplanation = "성장형 주인공";
         data.itemStat = "최대 체력 +20\n방어력 +10\n경험치 획득량 +15%";
-        data.itemNumber = 34;
+        data.itemNumber = 35;
         data.Def = 10;
         data.MaxHp = 20;
         data.EXPGet = 0.15f;

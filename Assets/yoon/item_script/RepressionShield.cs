@@ -16,7 +16,7 @@ public class RepressionShield : itemStatus
         data.Rating = "영웅";
         data.itemExplanation = "\"FBI open up!!!\"";
         data.itemStat = "피해를 입고 밀려나지 않습니다.\n최대 체력 +50\n방어력 +20";
-        data.itemNumber = 35;
+        data.itemNumber = 36;
         data.MaxHp = 50;
         data.Def = 20;
     }

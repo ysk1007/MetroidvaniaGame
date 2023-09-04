@@ -16,7 +16,7 @@ public class BundleOfGifts : itemStatus
         data.Rating = "°í±Ş";
         data.itemExplanation = "\"¼±¹°À» ·¹ÀÌÀúÃ³·³ ½ğ´Ù°í ºÁ¾ßµÅ¿ä.\"";
         data.itemStat = "°ñµå È¹µæ·® +20%\n°æÇèÄ¡ È¹µæ·® +20%";
-        data.itemNumber = 30;
+        data.itemNumber = 31;
         data.GoldGet = 0.20f;
         data.EXPGet = 0.20f;
     }

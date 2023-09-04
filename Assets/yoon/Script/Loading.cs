@@ -81,7 +81,7 @@ public class Loading : MonoBehaviour
                     break;
             }
             TipText.text = text;
-            Invoke("UpdateTip", 2.5f) ;
+            Invoke("UpdateTip", 3f) ;
         }
     }
 

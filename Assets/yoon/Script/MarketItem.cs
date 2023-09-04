@@ -61,6 +61,7 @@ public class MarketItem : MonoBehaviour
                     if (iv.inven_slots[i].GetComponentInChildren<itemStatus>() == null)
                     {
                         int itemNumber = randomitem.GetComponentInChildren<itemStatus>().data.itemNumber;
+                        Debug.Log(randomitem.GetComponentInChildren<itemStatus>().data.itemName);
                         EmptySloatSearch = true;
                         dm.GetComponent<DataManager>().UnlockListUpdate(itemNumber);
                         Instantiate(randomitem, iv.inven_slots[i].transform);

@@ -15,7 +15,7 @@ public class WorkGloves : itemStatus
         data.color = Color.white;
         data.Rating = "일반";
         data.itemStat = "공격력 +2\n방어력 +3";
-        data.itemNumber = 40;
+        data.itemNumber = 41;
         data.AtkPower = 2;
         data.Def = 3;
     }

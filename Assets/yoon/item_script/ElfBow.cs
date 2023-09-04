@@ -16,7 +16,7 @@ public class ElfBow : itemStatus
         data.Rating = "영웅";
         data.itemExplanation = "";
         data.itemStat = "화살 사거리 +75%\n치명타 확률 +30%\n치명타 피해량 +20%";
-        data.itemNumber = 29;
+        data.itemNumber = 30;
         data.ArrowDis = 0.5625f;
         data.CriticalChance = 0.3f;
         data.CriDmgIncrease = 0.2f;
