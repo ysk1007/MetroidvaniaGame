@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class Loading : MonoBehaviour
 {
+    public static Loading instance;
     public SoundManager sm;
     public TextMeshProUGUI loadingText;
     public TextMeshProUGUI TipText;
@@ -17,6 +18,12 @@ public class Loading : MonoBehaviour
     public GameObject FadeImg;
     public Fade_img fade;
     // Update is called once per frame
+
+    void Awake()
+    {
+        instance = this;    
+    }
+
     void Start()
     {
         sm = SoundManager.instance;

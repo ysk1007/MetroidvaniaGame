@@ -7,6 +7,7 @@ using UnityEngine;
 public abstract class Enemy : MonoBehaviour
 {
     public Player player;
+    public Loading loading; 
     public string Enemy_Name; //윤성권 추가함
     public bool AmIBoss = false; //윤성권 추가함
     public int BossHpLine; //윤성권 추가함
@@ -43,6 +44,7 @@ public abstract class Enemy : MonoBehaviour
     public float endTime;   // 투사체 사라지는 시간
     public bool axeUltHit = false;  // 도끼 궁에 맞았는지 확인하는 변수
     public bool giveReward = false;
+    public bool playerGoNext;   // 플레이어가 다음 스테이지로 이동하는 것을 확인하는 변수
 
     public float scaleX; // scale X 값(hit_eff가 스케일이 -되어있으면 반대방향으로 뜨기에 설정하기 위한 변수)
     public string weaponTag;    // 무기 태그 ("Sword"일 때만 출혈)
@@ -136,58 +138,80 @@ public abstract class Enemy : MonoBehaviour
     public float TargetFind; //좌우 구별
     public GameObject BossCenter;
 
-    public bool watching = false;
+    public bool watching = false;   
 
     public abstract void InitSetting(); // 적의 기본 정보를 설정하는 함수(추상)
 
     public void Start()
     {
         player = Player.instance.GetComponent<Player>();
+        loading = Loading.instance.GetComponent<Loading>();
     }
 
     public virtual void Short_Monster(Transform target) 
-    { 
+    {
+        playerGoNext = loading.DoLoading;
         weaponTag = Player.playerTag;
         playerLoc = target.position.x;
         enemyLoc = this.gameObject.transform.position.x;
         Gap_Distance_X = Mathf.Abs(target.transform.position.x - transform.position.x); //X축 거리 계산
         Gap_Distance_Y = Mathf.Abs(target.transform.position.y - transform.position.y); //Y축 거리 계산
-        Sensing(target, rayHit);
-        Sensor();
+
+        if (!playerGoNext)  // 플레이어가 포탈을 타면 행동 멈추기
+        {
+            Sensing(target, rayHit);
+            Sensor();
+        }
+        else if(playerGoNext)
+        {
+            StopAllCoroutines();
+            return;
+        }
+
         Swordlevel = player.proLevel;
         selectWeapon = player.proSelectWeapon;
         bleedingDamage = player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
-        if (bleedingTime >= 0)
+
+        if (!playerGoNext)// 플레이어가 포탈을 타면 행동 멈추기
         {
-            bleedingTime -= Time.deltaTime;
-        }
-        if (nextDirX != 0)   // 특정 몬스터에만 Run 애니메이션이 있기 때문에 지정해줘야 함
-        {
-            animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
-            if (Enemy_Mod != 1 && Enemy_Mod != 3 && Enemy_Mod != 4)
+            if (bleedingTime >= 0)
             {
-                animator.SetBool("Run", true);
-                if (enemyHit)
+                bleedingTime -= Time.deltaTime;
+            }
+            if (nextDirX != 0)   // 특정 몬스터에만 Run 애니메이션이 있기 때문에 지정해줘야 함
+            {
+                animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
+                if (Enemy_Mod != 1 && Enemy_Mod != 3 && Enemy_Mod != 4)
                 {
-                    animator.SetBool("Run", false);
-                    if (!enemyHit)
+                    animator.SetBool("Run", true);
+                    if (enemyHit)
                     {
-                        animator.SetBool("Run", true);
+                        animator.SetBool("Run", false);
+                        if (!enemyHit)
+                        {
+                            animator.SetBool("Run", true);
+                        }
                     }
                 }
             }
-        }
-        else if(nextDirX == 0)
-        {
-            animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
-            if (Enemy_Mod != 1 && Enemy_Mod != 3 && Enemy_Mod != 4)
+            else if (nextDirX == 0)
             {
-                animator.SetBool("Run", false);
+                animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
+                if (Enemy_Mod != 1 && Enemy_Mod != 3 && Enemy_Mod != 4)
+                {
+                    animator.SetBool("Run", false);
+                }
             }
+            SamePosition();
+            watcihingHP();
         }
-        SamePosition();
-        watcihingHP();
+        else if (playerGoNext)
+        {
+            StopAllCoroutines();
+            return;
+        }
+        
     }
 
     public virtual void Boss(Transform target)  // boss용 Update문
@@ -253,11 +277,15 @@ public abstract class Enemy : MonoBehaviour
 
     public virtual void Boar(Transform target)  // boar용
     {
-        watcihingHP();
-        if (bleedingTime >= 0)
+        if (!playerGoNext)  // 플레이어가 포탈을 타면 행동 멈추기
         {
-            bleedingTime -= Time.deltaTime;
-        }
+            watcihingHP();
+            if (bleedingTime >= 0)
+            {
+                bleedingTime -= Time.deltaTime;
+            }
+        }  
+        
         weaponTag = Player.playerTag;
         playerLoc = target.position.x;
         boarLoc = this.gameObject.transform.position.x;
@@ -265,7 +293,11 @@ public abstract class Enemy : MonoBehaviour
         selectWeapon = player.proSelectWeapon;
         bleedingDamage = player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
-        StartCoroutine(boarMove());
+        if (!playerGoNext)
+        {
+            StartCoroutine(boarMove());
+        }
+           
     }
     
     public virtual void onetime()   // Awake에 적용

@@ -11,7 +11,7 @@ public class LogoSkip : MonoBehaviour
     private bool isSkip = false;        // Enter 키가 눌렸는지 확인하는 변수
     private bool isShow = false;        // ShowSkipButton를 Update 문에서 한 번만 불러올 수 있도록 하는 변수
     private float etime = 0f;       // blackScreen에 사용
-    private float E_Time = 20f;    // blackScreen에 사용
+    private float E_Time = 300f;    // blackScreen에 사용
     public bool story = false;
 
     void Update()
@@ -29,11 +29,11 @@ public class LogoSkip : MonoBehaviour
             StartCoroutine(Logo_FadeOut());
             if (story)
             {
-                Invoke("GO_Ingame_Scene", 1f);      // 인게임 씬으로 이동
+                Invoke("GO_Ingame_Scene", 1.5f);      // 인게임 씬으로 이동
             }
             else
             {
-                Invoke("GO_Title_Scene", 1f);      // 타이틀 씬으로 이동
+                Invoke("GO_Title_Scene", 1.5f);      // 타이틀 씬으로 이동
             }
         }
     }
