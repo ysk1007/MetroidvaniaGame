@@ -96,11 +96,10 @@ public class Arrow : MonoBehaviour
         }
         else
         {
-            if (closestCollider != null && closestCollider.tag != "Wall" && closestCollider.tag != "Pad" && closestCollider.tag != "Tilemap" && player.proLevel >= 1) // 일정 거리 내에 적이 있으면 가장 가까운 적으로 이동
+            if (player.proSelectWeapon == 2 && closestCollider != null && closestCollider.tag != "Wall" && closestCollider.tag != "Pad" && closestCollider.tag != "Tilemap" && player.proLevel >= 1) // 일정 거리 내에 적이 있으면 가장 가까운 적으로 이동
             {
                 if (hitColliders.Length > 0)
                 {
-                    //print(closestCollider);
                     Vector2 direction = (closestCollider.transform.position - transform.position).normalized;
                     Quaternion rotation = Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg); // 화살 각도 변경
                     Vector2 pos2D = new Vector2(pos.position.x, pos.position.y);
@@ -133,12 +132,15 @@ public class Arrow : MonoBehaviour
         }
         else if (collision.tag == "Wall" || collision.tag == "Tilemap") // 벽이나 땅에 맞으면 화살 사라짐 패드는 없는게 나은것 같아서 뺐음
         {
-            if (hit)
+            if(!isSkill)
             {
-                return;
+                if (hit)
+                {
+                    return;
+                }
+                Off();
+                Invoke("DestroyArrow", 3f);
             }
-            Off();
-            Invoke("DestroyArrow", 3f);
         }
     }
 

@@ -150,6 +150,7 @@ public class Player : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public Enemy enemy;
     public MoveCamera movecamera;
+    public Loading loading;
     Projective_Body PBody;
     Rigidbody2D rigid;
     public Animator anim;
@@ -172,8 +173,6 @@ public class Player : MonoBehaviour
 
     public GameObject AxeMasterEfc;
     public int SkillCount = 1;
-
-    Vector2 attacksize;
     void Awake()
     {
         instance = this; //추가함
@@ -198,6 +197,7 @@ public class Player : MonoBehaviour
     {
         movecamera = MoveCamera.instance.GetComponent<MoveCamera>();
         DataManager dm = DataManager.instance;
+        loading = Loading.instance; // 09-04 추가함
         map = MapManager.instance;
         dm.JsonLoad("PlayerData");
         dm.JsonLoad("ItemData");
@@ -228,7 +228,7 @@ public class Player : MonoBehaviour
     }
     void Player_Move() //Player 이동, 점프
     {
-        if (map.pause)
+        if (map.pause || loading.DoLoading)
         {
             return;
         }
@@ -382,7 +382,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKey(KeyCode.A) && !anim.GetBool("Sliding") && !isSkill && !isMasterSkill) // Axe 차징 공격
         {
-            if (WeaponChage == 2 && proLevel >= 0)
+            if (WeaponChage == 2 && proSelectWeapon == 1 && proLevel >= 1)
             {
                 if (!isCharging)
                 {
@@ -708,24 +708,23 @@ public class Player : MonoBehaviour
         {
             if (!isShield)    // 방어막이 없으면 피격됨
             {
-                Damage = DefDamgeCarculation(Damage); //방어력 계산식 추가
-                ishurt = true;
-                isSkill = false;
-                isMasterSkill = false;
-                CurrentHp = CurrentHp - Damage;
-                PlaySound("Damaged");
                 float x;
                 if (transform.position.x < pos.x)
                     x = -1;
                 else
                     x = 1;
 
+                Damage = DefDamgeCarculation(Damage); //방어력 계산식 추가
+                CurrentHp = CurrentHp - Damage;
+                ishurt = true;
+                PlaySound("Damaged");
+
                 if (CurrentHp <= 0)
                 {
                     if (!UsePastErase)
                     {
                         GameManager.GetComponent<Ui_Controller>().Damage(Damage);
-                        StartCoroutine(Die(x));
+                        StartCoroutine(Die());
                         GameManager.GetComponent<Ui_Controller>().StatisticsUi.SetActive(true);
                     }
                     else
@@ -737,10 +736,13 @@ public class Player : MonoBehaviour
                 {
                     anim.SetTrigger("hurt");
                     GameManager.GetComponent<Ui_Controller>().Damage(Damage);
-                    StartCoroutine(Knockback(x));
                     StartCoroutine(Routine());
+                    StartCoroutine(Knockback(x));
                     StartCoroutine(Blink());
+                    isSkill = false;
+                    isMasterSkill = false;
                 }
+
             }
             else
             {
@@ -874,19 +876,6 @@ public class Player : MonoBehaviour
         } 
     }
 
-    IEnumerator Dash() //일부 공격시 앞으로 대쉬 이동 - 애니메이션 특정 부분에서 실행되게 유니티에서 설정함
-    {
-        yield return null;
-        if (slideDir == -1)
-        {
-            rigid.velocity = new Vector2(transform.localScale.x - attackDash, Time.deltaTime);
-        }
-        else
-        {
-            rigid.velocity = new Vector2(transform.localScale.x + attackDash, Time.deltaTime);
-        }
-    }
-
     IEnumerator Knockback(float dir) //피해입을시 넉백
     {
         if (NoNockback)
@@ -950,35 +939,38 @@ public class Player : MonoBehaviour
         if (up == 1)
         {
             gameObject.layer = LayerMask.NameToLayer("Jump");
-            yield return new WaitForSeconds(0.6f);
+            yield return new WaitForSeconds(0.4f);
         }
         else if (up == 0)
         {
             gameObject.layer = LayerMask.NameToLayer("Jump");
             JumpCnt = JumpCount;
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.2f);
         }
         if (ishurt)
         {
             gameObject.layer = LayerMask.NameToLayer("Invincible");
         }
         else
+        {
             gameObject.layer = LayerMask.NameToLayer("Player");
+        }
+            
 
         this.transform.GetChild(5).gameObject.SetActive(false);
     } //발판 무시 관련
 
-    IEnumerator Die(float x) //Player 사망시 스프라이트 삭제
+    IEnumerator Die() //Player 사망시 스프라이트 삭제
     {
+        ishurt = false;
         if (EnemyAudioSource.instance != null)
         {
             EnemyAudioSource.instance.SoundOff();
         }
         SoundManager.instance.bgSound.clip = null;
         PlaySound("Die");
-        StartCoroutine(Knockback(x));
         anim.SetTrigger("Die");
-        yield return new WaitForSeconds(2.2f);
+        yield return null;
         this.transform.gameObject.SetActive(false);
     }
 
