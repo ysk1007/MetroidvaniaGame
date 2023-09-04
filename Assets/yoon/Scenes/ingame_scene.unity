@@ -939,7 +939,7 @@ MonoBehaviour:
   - {fileID: 437882360}
   - {fileID: 1204340016}
   - {fileID: 526503752}
-  UI: {fileID: 906326985}
+  UI: {fileID: 3743811801294174577}
   map: {fileID: 0}
   player: {fileID: 0}
   orcboss: {fileID: 0}
@@ -1161,11 +1161,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &906326985 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3743811800656704330, guid: 79b65ae68eb72e945a69695de9caebea, type: 3}
-  m_PrefabInstance: {fileID: 3743811801294174576}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &938048850
 GameObject:
   m_ObjectHideFlags: 0
@@ -3900,6 +3895,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3743811799928751493, guid: 79b65ae68eb72e945a69695de9caebea, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3743811799928751496, guid: 79b65ae68eb72e945a69695de9caebea, type: 3}
       propertyPath: LoadingImage
       value: 
@@ -4616,6 +4615,11 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 3743811800985770492, guid: 79b65ae68eb72e945a69695de9caebea, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 79b65ae68eb72e945a69695de9caebea, type: 3}
+--- !u!1 &3743811801294174577 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3045467393582537359, guid: 79b65ae68eb72e945a69695de9caebea, type: 3}
+  m_PrefabInstance: {fileID: 3743811801294174576}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7859401245817769684
 PrefabInstance:
   m_ObjectHideFlags: 0

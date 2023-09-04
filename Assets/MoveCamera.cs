@@ -34,10 +34,6 @@ public class MoveCamera : MonoBehaviour
     void Start()
     {
         player = Player.instance.GetComponent<Player>();
-        if (Orc_Boss.instance != null)
-        {
-            orcboss = Orc_Boss.instance.GetComponent<Orc_Boss>();
-        }
         map = MapManager.instance;
         height = Camera.main.orthographicSize;  // 카메라의 월드 공간에서의 세로 절반 사이즈
         width = height * Screen.width / Screen.height; // 카메라의 월드 공간에서의 가로 절반 사이즈
@@ -181,10 +177,14 @@ public class MoveCamera : MonoBehaviour
             }
             else if (stage == 0 && stageSmall == 7) // 1스테이지 보스
             {
-                center.x = 15 + orcboss.transform.position.x;
-                center.y = 3;
-                size.x = 40;
-                size.y = 20;
+                if (Orc_Boss.instance != null)
+                {
+                    orcboss = Orc_Boss.instance.GetComponent<Orc_Boss>();
+                    center.x = 15 + orcboss.transform.position.x;
+                    center.y = 3;
+                    size.x = 40;
+                    size.y = 20;
+                }
             }
         }
         float lx = size.x * 0.5f - width;

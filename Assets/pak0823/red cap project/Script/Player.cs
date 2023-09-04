@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
     public bool isAttacking = false; //공격상태 확인
     public bool isShield = false;   //방어막 상태 확인
     public bool isWall = false;     // 벽에 붙어 있는지 확인
+    public bool isDie = false;     // 벽에 붙어 있는지 확인
     public float delayTime = 1f;    //공격 딜레이 기본 시간
     public int WeaponChage = 1;     //무기 변경 저장 변수
     public int JumpCnt, JumpCount = 2;  //2단점프의 수를 카운터 해주는 변수
@@ -724,9 +725,13 @@ public class Player : MonoBehaviour
                 {
                     if (!UsePastErase)
                     {
+                        isDie = true;
+                        CurrentHp = 0;
                         GameManager.GetComponent<Ui_Controller>().Damage(Damage);
                         StartCoroutine(Die(x));
-                        GameManager.GetComponent<Ui_Controller>().StatisticsUi.SetActive(true);
+                        GameObject GO = GameManager.GetComponent<Ui_Controller>().StatisticsUi;
+                        GO.SetActive(true);
+                        GO.GetComponent<StatisticsUi>().isFalling = true;
                     }
                     else
                     {

@@ -166,7 +166,7 @@ Animator:
   m_GameObject: {fileID: 1663748614282093254}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8eb8e8f102b113a43b92bc04e0196f5a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 8a3c209a294373e409e4d51eaa56143f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -413,6 +413,12 @@ MonoBehaviour:
   Item: {fileID: 1663748614282093254}
   time: 1
   sfx: {fileID: -7637710796419038458}
+  goldChest: 0
+  coin: {fileID: 0}
+  potion: {fileID: 0}
+  forceStrength: 10
+  dir: 1
+  pos: {fileID: 0}
 --- !u!61 &1663748615049300111
 BoxCollider2D:
   m_ObjectHideFlags: 0
