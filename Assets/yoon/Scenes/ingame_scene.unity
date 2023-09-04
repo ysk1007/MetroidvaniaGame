@@ -3643,9 +3643,85 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 2223274206521105516, guid: cd151f802a833194b8b7133ae8a3f029, type: 3}
+      propertyPath: m_Name
+      value: Text BGM
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223274206521105518, guid: cd151f802a833194b8b7133ae8a3f029, type: 3}
+      propertyPath: m_text
+      value: "Background Music\n\nFight Of the Shadows ACT3 - alkakrab\n\nForest
+        Walk - Camille Berthome\n\nBattle Music RPG - Sean Phillips \n\n22G17 Obsidian003
+        PianoLoop - Szajna Workshop\n\n3 cave_theme_2 - Shononoki\n\n A Final Stand
+        ACT5 - alkakrab\n\n\uB290\uAE0B\uD55C \uAC8C\uC784\uC758 \uD0C0\uC774\uD2C0
+        \uD654\uBA74   - Nid\n\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223274206521105519, guid: cd151f802a833194b8b7133ae8a3f029, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223274206521105519, guid: cd151f802a833194b8b7133ae8a3f029, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223274206521105519, guid: cd151f802a833194b8b7133ae8a3f029, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -540
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223274206623776017, guid: cd151f802a833194b8b7133ae8a3f029, type: 3}
+      propertyPath: m_Name
+      value: Text UI_Design
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223274206656540814, guid: cd151f802a833194b8b7133ae8a3f029, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -1413
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223274206656540815, guid: cd151f802a833194b8b7133ae8a3f029, type: 3}
+      propertyPath: m_Name
+      value: Text Font
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223274206667060325, guid: cd151f802a833194b8b7133ae8a3f029, type: 3}
+      propertyPath: m_Name
+      value: Text Director
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223274206866902501, guid: cd151f802a833194b8b7133ae8a3f029, type: 3}
+      propertyPath: m_Name
+      value: Text Programer
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223274206981857276, guid: cd151f802a833194b8b7133ae8a3f029, type: 3}
+      propertyPath: m_Name
+      value: Text Tester
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223274206981857279, guid: cd151f802a833194b8b7133ae8a3f029, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -2542
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223274207187411198, guid: cd151f802a833194b8b7133ae8a3f029, type: 3}
+      propertyPath: m_Name
+      value: Text TYFP
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223274207406399386, guid: cd151f802a833194b8b7133ae8a3f029, type: 3}
+      propertyPath: m_Name
+      value: Text Player_Design
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223274207410193187, guid: cd151f802a833194b8b7133ae8a3f029, type: 3}
+      propertyPath: m_Name
+      value: Text Enemy_Design
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223274207465101163, guid: cd151f802a833194b8b7133ae8a3f029, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223274207639392292, guid: cd151f802a833194b8b7133ae8a3f029, type: 3}
+      propertyPath: m_Name
+      value: Text TKY
+      objectReference: {fileID: 0}
     - target: {fileID: 2223274208149978879, guid: cd151f802a833194b8b7133ae8a3f029, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223274208370142434, guid: cd151f802a833194b8b7133ae8a3f029, type: 3}
+      propertyPath: m_Name
+      value: Text Stage_Design
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd151f802a833194b8b7133ae8a3f029, type: 3}
@@ -4172,6 +4248,10 @@ PrefabInstance:
     - target: {fileID: 3743811800817755727, guid: 79b65ae68eb72e945a69695de9caebea, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -147.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3743811800830432251, guid: 79b65ae68eb72e945a69695de9caebea, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3743811800871810270, guid: 79b65ae68eb72e945a69695de9caebea, type: 3}
       propertyPath: m_AnchorMax.y

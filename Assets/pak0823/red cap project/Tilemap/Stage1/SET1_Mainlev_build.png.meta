@@ -388,12 +388,10 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 2}
       outline: []
       physicsShape:
-      - - {x: -22, y: -4.5}
-        - {x: -22, y: 0.5}
-        - {x: -22, y: 3.5}
-        - {x: 22, y: 3.5}
-        - {x: 22, y: -0.5}
-        - {x: 22, y: -4.5}
+      - - {x: -22, y: 1.5}
+        - {x: -22, y: 2.5}
+        - {x: 22, y: 2.5}
+        - {x: 22, y: 1.5}
       tessellationDetail: 0
       bones: []
       spriteID: 0eb93530969479c499379b72220e3c95
@@ -441,10 +439,10 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 3}
       outline: []
       physicsShape:
-      - - {x: -19, y: -8.5}
-        - {x: -19, y: 8.5}
-        - {x: 19, y: 8.5}
-        - {x: 19, y: -8.5}
+      - - {x: -19, y: 6.5}
+        - {x: -19, y: 5.5}
+        - {x: 19, y: 5.5}
+        - {x: 19, y: 6.5}
       tessellationDetail: 0
       bones: []
       spriteID: 91c6176af96194845b128eab2a7341b1
@@ -596,11 +594,10 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 3}
       outline: []
       physicsShape:
-      - - {x: -19, y: -8.5}
-        - {x: -19, y: 8.5}
-        - {x: 19, y: 8.5}
-        - {x: 19, y: 8.5}
-        - {x: 19, y: -8.5}
+      - - {x: -19, y: 5.5}
+        - {x: -19, y: 6.5}
+        - {x: 19, y: 6.5}
+        - {x: 19, y: 5.5}
       tessellationDetail: 0
       bones: []
       spriteID: b80932bdded39e3469d5bfd735050ae7
@@ -643,10 +640,10 @@ TextureImporter:
       border: {x: 0, y: 7, z: 0, w: 3}
       outline: []
       physicsShape:
-      - - {x: -40, y: -1.5}
+      - - {x: -40, y: 2.5}
         - {x: -40, y: 4.5}
         - {x: 40, y: 4.5}
-        - {x: 40, y: -1.5}
+        - {x: 40, y: 2.5}
       tessellationDetail: 0
       bones: []
       spriteID: 21f81cee9cc0d414fa1866feea4ff8a6
@@ -737,10 +734,8 @@ TextureImporter:
       physicsShape:
       - - {x: -45.5, y: -41}
         - {x: -45.5, y: -9}
-        - {x: -31.5, y: 10}
         - {x: -42.5, y: 40}
         - {x: 37.5, y: 41}
-        - {x: 26.5, y: 7}
         - {x: 44.5, y: -9}
         - {x: 45.5, y: -41}
       tessellationDetail: 0

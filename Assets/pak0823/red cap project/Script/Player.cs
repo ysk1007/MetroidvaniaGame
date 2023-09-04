@@ -951,7 +951,7 @@ public class Player : MonoBehaviour
         if (up == 1)
         {
             gameObject.layer = LayerMask.NameToLayer("Jump");
-            yield return new WaitForSeconds(0.6f);
+            yield return new WaitForSeconds(0.3f);
         }
         else if (up == 0)
         {

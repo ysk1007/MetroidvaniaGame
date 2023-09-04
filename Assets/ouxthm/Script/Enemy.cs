@@ -199,6 +199,7 @@ public abstract class Enemy : MonoBehaviour
         bloodBoomDmg = Player.bloodBoomDmg;
         playerLoc = target.position.x;
         bossLoc = this.gameObject.transform.position.x;
+        SamePosition();
         if (bleedingTime >= 0)
         {
             bleedingTime -= Time.deltaTime;
@@ -448,7 +449,7 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    void SamePosition()
+    void SamePosition() // Player와 Enemy가 동일한 위치에 있을 시 Enemy가 계속 플립할 수 없도록하는 함수
     {
         spriteRenderer = this.gameObject.transform.GetChild(1).GetComponent<SpriteRenderer>();
         if (Gap_Distance_X < 0.1f)
