@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -185,6 +186,7 @@ public abstract class Enemy : MonoBehaviour
                 animator.SetBool("Run", false);
             }
         }
+        SamePosition();
         watcihingHP();
     }
 
@@ -443,6 +445,19 @@ public abstract class Enemy : MonoBehaviour
         else if (nextDirX == 1)
         {
             spriteRenderer.flipX = true;
+        }
+    }
+
+    void SamePosition()
+    {
+        spriteRenderer = this.gameObject.transform.GetChild(1).GetComponent<SpriteRenderer>();
+        if (Gap_Distance_X < 0.1f)
+        {
+            spriteRenderer.flipX = true;
+        }
+        else
+        {
+            return;
         }
     }
 
