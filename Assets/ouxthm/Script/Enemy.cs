@@ -37,6 +37,7 @@ public abstract class Enemy : MonoBehaviour
     public float atkFlipx; // 공격 콜라이더의 x값(늑대 용)
     public float atkY;  // 공격 콜라이더의 y값
     public bool enemyHit = false;   // 적이 피해입은 상태인지 확인하는 변수
+    public bool alreadyRun = false;     // boar이 뛰는지 확인하는 변수
     public float old_Speed;     // 속도 값 변하기 전 속도 값
     public float dTime;
     public float atkTime;   // 공격 모션 시간
@@ -295,7 +296,7 @@ public abstract class Enemy : MonoBehaviour
         bloodBoomDmg = Player.bloodBoomDmg;
         if (!playerGoNext)
         {
-            StartCoroutine(boarMove());
+            boarMove();
         }
            
     }
@@ -376,7 +377,7 @@ public abstract class Enemy : MonoBehaviour
         {
             if (Attacking)
             {
-                StartCoroutine(StopRush());
+                StopRush();
             }
         }
     }
@@ -626,7 +627,10 @@ public abstract class Enemy : MonoBehaviour
         if(Enemy_Mod == 11)
         {
             Hit_Set = true;
-            StartCoroutine(Rush());
+            if (!alreadyRun)
+            {
+                StartCoroutine(Rush());
+            }
         }
 
         if (Enemy_HP > 0) // Enemy의 체력이 0 이상일 때
@@ -1538,7 +1542,7 @@ public abstract class Enemy : MonoBehaviour
     }
 
 
-    IEnumerator boarMove()
+    void boarMove()
     {
         if (Hit_Set == true)    // 플레이어에게 맞았다면
         {
@@ -1553,11 +1557,11 @@ public abstract class Enemy : MonoBehaviour
                 spriteRenderer.flipX = true;
             }
         }
-        yield return null;
     }
 
     IEnumerator Rush()   // 돌진 코루틴.
     {
+        alreadyRun = true;
         if (playerLoc < boarLoc) // 플레이어가 왼쪽에 있다면.
         {
             Enemy_Left = true;
@@ -1574,13 +1578,15 @@ public abstract class Enemy : MonoBehaviour
         Enemy_Speed = 10f;        //  속도 10 설정.
 
         yield return new WaitForSeconds(4f);
-        StartCoroutine(StopRush());
+        StopRush();
+
     }
 
-    IEnumerator StopRush()
+    void StopRush()
     {
         animator.SetBool("Rush", false);
         animator.SetTrigger("Hit");
+        alreadyRun = false;
         Attacking = false;  // 공격 중 끄기
         if (Enemy_Left == true)
         {
@@ -1590,7 +1596,7 @@ public abstract class Enemy : MonoBehaviour
         {
             Enemy_Left = true;
         }
-        yield return null; 
+
         Hit_Set = false;
     }
 
