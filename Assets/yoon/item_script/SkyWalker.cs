@@ -15,10 +15,10 @@ public class SkyWalker : itemStatus
         data.color = Color.green;
         data.Rating = "고급";
         data.itemExplanation = "착용자의 신체가 가벼워진다";
-        data.itemStat = "이동속도 +30% \n공격속도 +30% \n점프 횟수 +1";
+        data.itemStat = "이동속도 +5% \n공격속도 +5% \n점프 횟수 +1";
         data.itemNumber = 1;
-        data.Speed = 0.3f;
-        data.AtkSpeed = 0.3f;
+        data.Speed = 0.25f;
+        data.AtkSpeed = 0.05f;
     }
 
     public override void SpecialPower()

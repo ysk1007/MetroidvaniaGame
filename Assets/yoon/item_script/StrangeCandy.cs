@@ -15,9 +15,9 @@ public class StrangeCandy : itemStatus
         data.color = Color.red;
         data.Rating = "Àü¼³";
         data.itemExplanation = "... ¿ÀÀ×!?";
-        data.itemStat = "°æÇèÄ¡ È¹µæ·® +80%";
+        data.itemStat = "°æÇèÄ¡ È¹µæ·® +100%";
         data.itemNumber = 12;
-        data.EXPGet = 0.8f;
+        data.EXPGet = 1.0f;
     }
 
     public override void SpecialPower()

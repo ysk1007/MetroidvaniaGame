@@ -11,14 +11,14 @@ public class ClownPants : itemStatus
         data.itemimg = this.GetComponent<Image>();
         data.itemName = "광기어린 광대의 바지";
         data.itemNameEng = "ClownPants";
-        data.itemPrice = 1600;
+        data.itemPrice = 2300;
         data.color = Color.magenta;
         data.Rating = "영웅";
         data.itemExplanation = "";
-        data.itemStat = "공격속도 +30% \n치명타 확률 +20%";
+        data.itemStat = "치명타 확률 +10%\n데미지 +20%";
         data.itemNumber = 7;
-        data.AtkSpeed = 0.3f;
-        data.CriticalChance = 0.2f;
+        data.CriticalChance = 0.1f;
+        data.DmgIncrease = 0.2f;
     }
 
     public override void SpecialPower()

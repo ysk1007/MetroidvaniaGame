@@ -599,6 +599,7 @@ public class DataManager : MonoBehaviour
         items.Add(new DMUlcokItem("WorkGloves", false));
         items.Add(new DMUlcokItem("Ocarina", false));
         items.Add(new DMUlcokItem("PickpocketGloves", false));
+        items.Add(new DMUlcokItem("RingOfLife", false));
         items.Add(new DMUlcokItem("ElunsHat", false));
         items.Add(new DMUlcokItem("ElunsRobe", false));
         items.Add(new DMUlcokItem("ElunsWand", false));

@@ -15,9 +15,9 @@ public class BundleOfGifts : itemStatus
         data.color = Color.green;
         data.Rating = "°í±Ş";
         data.itemExplanation = "\"¼±¹°À» ·¹ÀÌÀúÃ³·³ ½ğ´Ù°í ºÁ¾ßµÅ¿ä.\"";
-        data.itemStat = "°ñµå È¹µæ·® +20%\n°æÇèÄ¡ È¹µæ·® +20%";
+        data.itemStat = "°ñµå È¹µæ·® +25%\n°æÇèÄ¡ È¹µæ·® +20%";
         data.itemNumber = 31;
-        data.GoldGet = 0.20f;
+        data.GoldGet = 0.25f;
         data.EXPGet = 0.20f;
     }
 

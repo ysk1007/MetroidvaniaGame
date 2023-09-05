@@ -15,9 +15,9 @@ public class ReproductionOfMassacre : itemStatus
         data.color = Color.yellow;
         data.Rating = "신화";
         data.itemExplanation = "\"그의 눈동자에는 무력과 살기가 가득하고,\n인간성을 퇴색시키는 모습이었다.\"";
-        data.itemStat = "플레이어가 지속적으로 피해를 입습니다.\n생명력 흡수 +4%\n공격력 +44\n데미지 +44%";
+        data.itemStat = "플레이어가 지속적으로 피해를 입습니다.\n생명력 흡수 +4%\n공격력 +44\n공격 속도 +44%";
         data.itemNumber = 21;
-        data.DmgIncrease = 0.44f;
+        data.AtkSpeed = 0.44f;
         data.AtkPower = 44;
         data.lifeStill = 0.04f;
     }

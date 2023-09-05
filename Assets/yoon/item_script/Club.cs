@@ -15,7 +15,7 @@ public class Club : itemStatus
         data.color = Color.white;
         data.Rating = "일반";
         data.itemExplanation = "훌륭한 대화수단";
-        data.itemStat = "공격력 +5 \n최대체력 +10";
+        data.itemStat = "공격력 +3 \n최대체력 +10";
         data.itemNumber = 2;
         data.AtkPower = 5;
         data.MaxHp = 10;

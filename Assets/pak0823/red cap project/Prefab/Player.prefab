@@ -1036,7 +1036,7 @@ GameObject:
   - component: {fileID: 7859401246129824558}
   - component: {fileID: 7859401246129824557}
   - component: {fileID: 7859401246129824556}
-  - component: {fileID: 7859401246129824547}
+  - component: {fileID: 1185818354070215267}
   - component: {fileID: 7859401246129824546}
   - component: {fileID: 7859401246129824545}
   m_Layer: 9
@@ -1194,6 +1194,7 @@ MonoBehaviour:
   isAttacking: 0
   isShield: 0
   isWall: 0
+  isDie: 0
   delayTime: 1
   WeaponChage: 1
   JumpCnt: 0
@@ -1262,8 +1263,8 @@ MonoBehaviour:
   - 0.2
   selectLifeStillValue:
   - 0.01
+  - 0.02
   - 0.03
-  - 0.09
   selectDefValue:
   - 10
   - 20
@@ -1327,6 +1328,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 0}
   enemy: {fileID: 0}
   movecamera: {fileID: 0}
+  loading: {fileID: 0}
   anim: {fileID: 0}
   UseGridSword: 0
   DivinePower: 0
@@ -1335,6 +1337,7 @@ MonoBehaviour:
   NoNockback: 0
   UseMirror: 0
   UseVulcanArmor: 0
+  UsePickGloves: 0
   cam: {fileID: 0}
   TimeLoopAnim: {fileID: 7859401245638558401}
   TimeLoopSound: {fileID: 7859401245638558406}
@@ -1364,8 +1367,8 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!61 &7859401246129824547
-BoxCollider2D:
+--- !u!70 &1185818354070215267
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1377,19 +1380,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.07, y: -0.55}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.5, y: 3}
-    newSize: {x: 1, y: 1.9375}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 1
-  serializedVersion: 2
-  m_Size: {x: 1.12, y: 1.9}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0, y: -0.5}
+  m_Size: {x: 1.2, y: 2}
+  m_Direction: 0
 --- !u!50 &7859401246129824546
 Rigidbody2D:
   serializedVersion: 4

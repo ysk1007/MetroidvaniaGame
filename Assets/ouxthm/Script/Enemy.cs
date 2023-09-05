@@ -158,7 +158,7 @@ public abstract class Enemy : MonoBehaviour
         Gap_Distance_X = Mathf.Abs(target.transform.position.x - transform.position.x); //X축 거리 계산
         Gap_Distance_Y = Mathf.Abs(target.transform.position.y - transform.position.y); //Y축 거리 계산
 
-        if (!playerGoNext)  // 플레이어가 포탈을 타면 행동 멈추기
+        if (!playerGoNext || !Dying)  // 플레이어가 포탈을 타면 행동 멈추기
         {
             Sensing(target, rayHit);
             Sensor();
@@ -595,7 +595,7 @@ public abstract class Enemy : MonoBehaviour
         damage = damage * player.DmgIncrease; //딜 증가 추가
         if (player.UsePickGloves)
         {
-            ui.GetGold(1f);
+            ui.GetGold(2f);
         }
         if (player.UseRedCard)
         {
@@ -948,7 +948,7 @@ public abstract class Enemy : MonoBehaviour
             // Enemy의 한 칸 앞의 값을 얻기 위해 자기 자신의 위치 값에 (x)에 + nextDirX값을 더하고 1.2f를 곱한다.
             Vector2 frontVec = new Vector2(rigid.position.x + nextDirX * 1.2f, rigid.position.y);
 
-            Debug.DrawRay(frontVec, Vector3.down * 1.2f, new Color(0, 1, 0));
+            Debug.DrawRay(frontVec, Vector3.down * 3f, new Color(0, 1, 0));
 
             // 레이저를 아래로 쏘아서 실질적인 레이저 생성(물리기반), LayMask.GetMask("")는 해당하는 레이어만 스캔함
             rayHit = Physics2D.Raycast(frontVec, Vector3.down, 2, LayerMask.GetMask("Tilemap", "Pad", "wall"));
@@ -956,7 +956,7 @@ public abstract class Enemy : MonoBehaviour
             {
                 Turn();
             }
-            else if (rayHit.collider == null && Enemy_HP <= 0 && Dying)
+            else if (rayHit.collider == null && Enemy_HP < 0 && !Dying)
             {
                 StartCoroutine(Die());
             }

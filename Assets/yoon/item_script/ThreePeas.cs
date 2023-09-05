@@ -11,11 +11,11 @@ public class ThreePeas : itemStatus
         data.itemimg = this.GetComponent<Image>();
         data.itemName = "완두콩";
         data.itemNameEng = "ThreePeas";
-        data.itemPrice = 150;
+        data.itemPrice = 200;
         data.color = Color.white;
         data.Rating = "일반";
-        data.itemExplanation = "가성비가 좋다";
-        data.itemStat = "체력 재생 +1";
+        data.itemExplanation = "가성비가 좋다.";
+        data.itemStat = "체력 재생 +0.3";
         data.itemNumber = 37;
     }
 
@@ -23,11 +23,11 @@ public class ThreePeas : itemStatus
     {
         if (!data.SpecialPower)
         {
-            Player.instance.LifeRegen -= 1;
+            Player.instance.LifeRegen -= 0.3f;
         }
         if (data.SpecialPower)
         {
-            Player.instance.LifeRegen += 1;
+            Player.instance.LifeRegen += 0.3f;
         }
     }
 

@@ -11,14 +11,14 @@ public class ElfBow : itemStatus
         data.itemimg = this.GetComponent<Image>();
         data.itemName = "엘프 궁수의 활";
         data.itemNameEng = "ElfBow";
-        data.itemPrice = 2700;
+        data.itemPrice = 2500;
         data.color = Color.magenta;
         data.Rating = "영웅";
         data.itemExplanation = "";
-        data.itemStat = "화살 사거리 +75%\n치명타 확률 +30%\n치명타 피해량 +20%";
+        data.itemStat = "화살 사거리 +50%\n치명타 확률 +10%\n치명타 피해량 +20%";
         data.itemNumber = 30;
-        data.ArrowDis = 0.5625f;
-        data.CriticalChance = 0.3f;
+        data.ArrowDis = 0.375f;
+        data.CriticalChance = 0.1f;
         data.CriDmgIncrease = 0.2f;
     }
 

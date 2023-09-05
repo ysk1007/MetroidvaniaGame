@@ -19,11 +19,16 @@ public class MouseOnItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     void Update()
     {
+        if (Input.GetKey(KeyCode.E))
+        {
+            MouseOn = false;    
+        }
         if (Input.GetMouseButtonUp(1) && MouseOn)
         {
             if (slot_type == "inven")
             {
-                if (GameManager.Instance.GetComponent<Ui_Controller>().openMarket)
+
+                if (MarketScript.instance != null && MarketScript.instance.MarketOpen)
                 {
                     Debug.Log("판매");
                     GameManager.Instance.GetComponent<inven>().sell_item();
@@ -92,6 +97,13 @@ public class MouseOnItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             vc.x = -380;
             vc.y = 60;
             tiptext = "우클릭 하여 장착";
+            if (MarketScript.instance != null)
+            {
+                if (MarketScript.instance.MarketOpen)
+                {
+                    tiptext = "우클릭 하여 판매";
+                }
+            }
             pricetext = "판매가 : ";
             isSell = true;
         }

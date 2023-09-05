@@ -11,14 +11,16 @@ public class DoubleEdgedAxe : itemStatus
         data.itemimg = this.GetComponent<Image>();
         data.itemName = "È²±Ý ¾ç³¯ µµ³¢";
         data.itemNameEng = "DoubleEdgedAxe";
-        data.itemPrice = 2700;
+        data.itemPrice = 2500;
         data.color = Color.magenta;
         data.Rating = "¿µ¿õ";
         data.itemExplanation = "";
-        data.itemStat = "µµ³¢ Â÷Â¡¼Óµµ +50%\n°ø°Ý·Â +20\nÁ¡ÇÁ·Â -5%";
+        data.itemStat = "µµ³¢ Â÷Â¡¼Óµµ +50%\n°ø°Ý·Â +10\n°ñµå È¹µæ·® +20%";
         data.itemNumber = 29;
         data.ChargingTime = 1f;
-        data.AtkPower = 20;
+        data.AtkPower = 10;
+        data.GoldGet = 0.2f;
+        data.Speed = -0.25f;
         data.JumpPower = -0.75f;
     }
 

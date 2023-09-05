@@ -11,14 +11,14 @@ public class Cookie : itemStatus
         data.itemimg = this.GetComponent<Image>();
         data.itemName = "달콤한 초코 쿠키";
         data.itemNameEng = "Cookie";
-        data.itemPrice = 300;
+        data.itemPrice = 150;
         data.color = Color.white;
         data.Rating = "일반";
         data.itemExplanation = "내가 만든 쿠키~";
-        data.itemStat = "최대 체력 +30\n 방어력 +10";
+        data.itemStat = "최대 체력 +5\n 방어력 +3";
         data.itemNumber = 14;
-        data.MaxHp = 30;
-        data.Def = 10;
+        data.MaxHp = 5;
+        data.Def = 3;
     }
 
     public override void SpecialPower()

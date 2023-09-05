@@ -11,18 +11,18 @@ public class PoisonMushroom : itemStatus
         data.itemimg = this.GetComponent<Image>();
         data.itemName = "환각 버섯";
         data.itemNameEng = "PoisonMushroom";
-        data.itemPrice = 2100;
+        data.itemPrice = 2350;
         data.color = Color.magenta;
         data.Rating = "영웅";
         data.itemExplanation = "주의 : 섭취시 몬스터가 될 수 있다.";
-        data.itemStat = "공격력 +20, 공격속도 +35%\n이동속도 +50%, 점프력 +20%\n최대 체력 -50, 방어력 -30";
+        data.itemStat = "공격력 +10, 공격속도 +35%\n이동속도 +5%, 점프력 +5%\n최대 체력 -15, 방어력 -5";
         data.itemNumber = 15;
-        data.AtkPower = 20;
+        data.AtkPower = 10;
         data.AtkSpeed = 0.35f;
-        data.Speed = 0.5f;
-        data.JumpPower = 3f;
-        data.MaxHp = -50;
-        data.Def = -30;
+        data.Speed = 0.25f;
+        data.JumpPower = 0.75f;
+        data.MaxHp = -15;
+        data.Def = -5;
     }
 
     public override void SpecialPower()

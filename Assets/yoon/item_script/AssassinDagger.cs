@@ -11,15 +11,15 @@ public class AssassinDagger : itemStatus
         data.itemimg = this.GetComponent<Image>();
         data.itemName = "황금 단검";
         data.itemNameEng = "AssassinDagger";
-        data.itemPrice = 2700;
+        data.itemPrice = 2500;
         data.color = Color.magenta;
         data.Rating = "영웅";
         data.itemExplanation = "";
-        data.itemStat = "출혈 데미지 +100%\n공격속도 +40%\n방어력 -15";
+        data.itemStat = "출혈 데미지 +50%\n공격 속도 +30%\n골드 획득량 +20%";
         data.itemNumber = 28;
-        data.BleedDmg = +3f;
-        data.AtkSpeed = 0.4f;
-        data.Def = -15;
+        data.BleedDmg = +5f;
+        data.AtkSpeed = 0.3f;
+        data.GoldGet = 0.2f;
     }
 
     public override void SpecialPower()

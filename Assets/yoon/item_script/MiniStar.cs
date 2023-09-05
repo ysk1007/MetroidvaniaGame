@@ -11,26 +11,25 @@ public class MiniStar : itemStatus
         data.itemimg = this.GetComponent<Image>();
         data.itemName = "작은 별";
         data.itemNameEng = "MiniStar";
-        data.itemPrice = 2222;
+        data.itemPrice = 2000;
         Color color = new Color32(93, 141, 255, 255);
         data.color = color;
         data.Rating = "희귀";
         data.itemExplanation = "별은 바라보는 자에게 빛을 준다.";
-        data.itemStat = "모든 능력치 +5";
+        data.itemStat = "모든 능력치 +3";
         data.itemNumber = 34;
-        data.DmgIncrease = 0.05f;
-        data.CriticalChance = 0.05f;
-        data.CriDmgIncrease = 0.05f;
-        data.AtkPower = 5;
-        data.Def = 5;
-        data.AtkSpeed = 0.05f;
-        data.Speed = 0.05f;
-        data.MaxHp = 5;
-        data.JumpPower = 0.75f;
-        data.lifeStill = 0.005f;
-        data.GoldGet = 0.05f;
-        data.EXPGet = 0.05f;
-        data.DecreaseCool = 0.05f;
+        data.DmgIncrease = 0.03f;
+        data.CriticalChance = 0.03f;
+        data.CriDmgIncrease = 0.03f;
+        data.AtkPower = 3;
+        data.Def = 3;
+        data.AtkSpeed = 0.03f;
+        data.Speed = 0.15f;
+        data.MaxHp = 3;
+        data.lifeStill = 0.003f;
+        data.GoldGet = 0.03f;
+        data.EXPGet = 0.03f;
+        data.DecreaseCool = 0.03f;
     }
 
     public override void SpecialPower()

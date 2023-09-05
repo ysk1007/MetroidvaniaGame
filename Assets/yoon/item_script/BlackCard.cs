@@ -1,4 +1,4 @@
-using System.Collections;
+    using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -11,14 +11,15 @@ public class BlackCard : itemStatus
         data.itemimg = this.GetComponent<Image>();
         data.itemName = "검정 트럼프 카드";
         data.itemNameEng = "BlackCard";
-        data.itemPrice = 1248;
+        data.itemPrice = 700;
         data.color = Color.green;
         data.Rating = "고급";
         data.itemExplanation = "\"자 그럼 시작할까? \n이 세계의 운명을 건 카드놀이를 말이야..\"";
-        data.itemStat = "최대 체력 +27\n 방어력 +27";
+        data.itemStat = "치명타 확률 +5%\n쿨타임 감소 +10%\n이동 속도 +5%";
         data.itemNumber = 26;
-        data.MaxHp = 27;
-        data.Def = 27;
+        data.CriticalChance = 0.05f;
+        data.DecreaseCool = 0.1f;
+        data.Speed = 0.25f;
     }
 
     public override void SpecialPower()

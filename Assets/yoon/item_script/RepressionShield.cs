@@ -11,14 +11,14 @@ public class RepressionShield : itemStatus
         data.itemimg = this.GetComponent<Image>();
         data.itemName = "진압 방패";
         data.itemNameEng = "RepressionShield";
-        data.itemPrice = 2500;
+        data.itemPrice = 2150;
         data.color = Color.magenta;
         data.Rating = "영웅";
         data.itemExplanation = "\"FBI open up!!!\"";
-        data.itemStat = "피해를 입고 밀려나지 않습니다.\n최대 체력 +50\n방어력 +20";
+        data.itemStat = "피해를 입고 밀려나지 않습니다.\n최대 체력 +10\n방어력 +15";
         data.itemNumber = 36;
-        data.MaxHp = 50;
-        data.Def = 20;
+        data.MaxHp = 15;
+        data.Def = 15;
     }
 
     public override void SpecialPower()

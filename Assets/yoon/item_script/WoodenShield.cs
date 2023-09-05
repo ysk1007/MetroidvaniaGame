@@ -11,13 +11,12 @@ public class WoodenShield : itemStatus
         data.itemimg = this.GetComponent<Image>();
         data.itemName = "나무 방패";
         data.itemNameEng = "WoodenShield";
-        data.itemPrice = 400;
+        data.itemPrice = 300;
         data.color = Color.white;
         data.Rating = "일반";
-        data.itemStat = "최대 체력 +5\n방어력 +5";
+        data.itemStat = "방어력 +5";
         data.itemExplanation = "";
         data.itemNumber = 50;
-        data.MaxHp = 5;
         data.Def = 5;
     }
 

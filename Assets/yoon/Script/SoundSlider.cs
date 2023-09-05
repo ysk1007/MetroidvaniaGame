@@ -11,11 +11,10 @@ public class SoundSlider : MonoBehaviour
     public Slider bgm_slider;
     public Slider sfx_slider;
     public Slider master_slider;
+
     void Start()
     {
         instance = this;
-        DataManager.instance.JsonSliderLoad();
-        setting();
     }
 
     private void FixedUpdate()
@@ -41,7 +40,15 @@ public class SoundSlider : MonoBehaviour
         mixer.SetFloat("SFX", Mathf.Log10(sliderValue) * 20);
     }
 
-    void setting()
+    public void setting(float Master,float Bgm, float Sfx)
+    {
+        master_slider.value = Master;
+        bgm_slider.value = Bgm;
+        sfx_slider.value = Sfx;
+        gameObject.SetActive(false);
+    }
+
+    public void SetMixer()
     {
         SetMasterVolume(master_slider.value);
         SetBgmVolume(bgm_slider.value);

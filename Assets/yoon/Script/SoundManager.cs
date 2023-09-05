@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using UnityEngine.Timeline;
 
 public class SoundManager : MonoBehaviour
 {
@@ -36,9 +37,9 @@ public class SoundManager : MonoBehaviour
     {
         List<float> Volumes = new List<float>();
         Volumes = DataManager.instance.getVolume();
-        mixer.SetFloat("Master", Mathf.Log10(Volumes[0]) * 20);
-        mixer.SetFloat("SFX", Mathf.Log10(Volumes[1]) * 20);
-        mixer.SetFloat("BGM", Mathf.Log10(Volumes[2]) * 20);
+        SoundSlider ss = SoundSlider.instance;
+        ss.setting(Volumes[0], Volumes[1], Volumes[2]);
+        ss.SetMixer();
     }
 
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
@@ -73,7 +74,6 @@ public class SoundManager : MonoBehaviour
         bgSound.outputAudioMixerGroup = mixer.FindMatchingGroups("BGM")[0];
         bgSound.clip = clip;
         bgSound.loop = true;
-        bgSound.volume = 0.05f;
         bgSound.Play();
     }
 
@@ -82,7 +82,6 @@ public class SoundManager : MonoBehaviour
         bgSound.outputAudioMixerGroup = mixer.FindMatchingGroups("BGM")[0];
         bgSound.clip = BossBglist[stage - 1];
         bgSound.loop = true;
-        bgSound.volume = 0.05f;
     }
 
     public void MarketStage()
@@ -90,7 +89,6 @@ public class SoundManager : MonoBehaviour
         bgSound.outputAudioMixerGroup = mixer.FindMatchingGroups("BGM")[0];
         bgSound.clip = marketBGM;
         bgSound.loop = true;
-        bgSound.volume = 0.05f;
     }
 
     public void Loading()
@@ -108,6 +106,5 @@ public class SoundManager : MonoBehaviour
         bgSound.outputAudioMixerGroup = mixer.FindMatchingGroups("BGM")[0];
         bgSound.clip = StageBglist[stage - 1];
         bgSound.loop = true;
-        bgSound.volume = 0.05f;
     }
 }

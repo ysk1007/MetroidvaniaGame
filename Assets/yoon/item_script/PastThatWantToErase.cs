@@ -16,7 +16,7 @@ public class PastThatWantToErase : itemStatus
         data.itemimg = this.GetComponent<Image>();
         data.itemName = "지우고 싶은 과거";
         data.itemNameEng = "PastThatWantToErase";
-        data.itemPrice = 4330;
+        data.itemPrice = 4823;
         data.color = Color.yellow;
         data.Rating = "신화";
         data.itemExplanation = "과거로 돌아갈 수 있다면 자신에게 어떤 조언을 하시겠습니까.";

@@ -13,12 +13,12 @@ public class ClownHat : itemStatus
         data.itemNameEng = "ClownHat";
         data.color = Color.magenta;
         data.Rating = "영웅";
-        data.itemPrice = 1900;
+        data.itemPrice = 2400;
         data.itemExplanation = "\"나의 죽음이 나의 삶보다 가치있기를.\"";
-        data.itemStat = "공격력 +2 \n치명타 확률 +20%";
+        data.itemStat = "공격력 +5 \n치명타 확률 +10%";
         data.itemNumber = 5;
-        data.AtkPower = 2;
-        data.CriticalChance = 0.2f;
+        data.AtkPower = 5;
+        data.CriticalChance = 0.1f;
     }
 
     public override void SpecialPower()

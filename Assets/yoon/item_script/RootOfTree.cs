@@ -11,15 +11,15 @@ public class RootOfTree : itemStatus
         data.itemimg = this.GetComponent<Image>();
         data.itemName = "세계수의 뿌리";
         data.itemNameEng = "RootOfTree";
-        data.itemPrice = 3100;
+        data.itemPrice = 3200;
         data.color = Color.red;
         data.Rating = "전설";
         data.itemExplanation = "모든 지병을 낫게 해준다는 전설의 약초";
-        data.itemStat = "최대 체력 +111\n 방어력 +33\n 이동속도 -30%";
+        data.itemStat = "최대 체력 +50\n방어력 +20\n이동 속도 -5%";
         data.itemNumber = 16;
-        data.MaxHp = 111;
-        data.Def = 33;
-        data.Speed = -1.2f;
+        data.MaxHp = 50;
+        data.Def = 20;
+        data.Speed = -0.25f;
     }
 
     public override void SpecialPower()

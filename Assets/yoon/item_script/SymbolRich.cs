@@ -11,7 +11,7 @@ public class SymbolRich : itemStatus
         data.itemimg = this.GetComponent<Image>();
         data.itemName = "ºÎÀÚÀÇ »óÂ¡";
         data.itemNameEng = "SymbolRich";
-        data.itemPrice = 1000;
+        data.itemPrice = 1400;
         Color color = new Color32(93,141,255,255);
         data.color = color;
         data.Rating = "Èñ±Í";

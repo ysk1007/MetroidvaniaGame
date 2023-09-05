@@ -11,15 +11,15 @@ public class OrcHorn : itemStatus
         data.itemimg = this.GetComponent<Image>();
         data.itemName = "오크의 뿔피리";
         data.itemNameEng = "OrcHorn";
-        data.itemPrice = 700;
+        data.itemPrice = 800;
         data.color = Color.green;
         data.Rating = "고급";
-        data.itemStat = "공격력 +3\n최대 체력 +10\n방어력 +2";
+        data.itemStat = "공격력 +5\n공격 속도 +5%\n치명타 피해량 +5%";
         data.itemExplanation = "\'뿌우-\'";
         data.itemNumber = 49;
-        data.AtkPower = 3;
-        data.MaxHp = 10;
-        data.Def = 2;
+        data.AtkPower = 5;
+        data.AtkSpeed = 0.05f;
+        data.CriDmgIncrease = 0.05f;
     }
 
     public override void SpecialPower()

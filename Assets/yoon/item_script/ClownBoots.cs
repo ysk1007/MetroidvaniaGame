@@ -9,15 +9,17 @@ public class ClownBoots : itemStatus
     public override void InitSetting()
     {
         data.itemimg = this.GetComponent<Image>();
-        data.itemName = "광기어린 광대의 튜닉";
+        data.itemName = "광기어린 광대의 신발";
         data.itemNameEng = "ClownBoots";
-        data.itemPrice = 1700;
+        data.itemPrice = 2400;
         data.color = Color.magenta;
+        data.Rating = "영웅";
         data.itemExplanation = "";
-        data.itemStat = "공격력 +3 \n치명타 확률 +20%";
+        data.itemStat = "치명타 확률 +10%\n쿨타임 감소 +10%\n이동속도 +5%";
         data.itemNumber = 8;
-        data.AtkPower = 3;
-        data.CriticalChance = 0.2f;
+        data.CriticalChance = 0.1f;
+        data.DecreaseCool = 0.1f;
+        data.Speed = 0.25f;
     }
 
     public override void SpecialPower()

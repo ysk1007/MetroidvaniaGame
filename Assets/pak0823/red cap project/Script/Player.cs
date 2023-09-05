@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     public bool isSlide = false;     //슬라이딩 체크
     public bool isGround = true;    //Player가 땅인지 아닌지 체크
     public bool isjump = false;     //점프중인지 체크
+    public bool isWallJump = false;
     public bool isSkill = false;    //스킬 확인
     public bool isMasterSkill = false;  //숙련도 스킬 확인
     public bool isAttacking = false; //공격상태 확인
@@ -96,7 +97,7 @@ public class Player : MonoBehaviour
     public float[] selectAtkValue = { 0.1f, 0.2f, 0.3f };
     public float[] selectATSValue = { 0.15f, 0.3f, 0.4f };
     public float[] selectCCValue = { 0.05f, 0.1f, 0.2f };
-    public float[] selectLifeStillValue = { 0.01f, 0.03f, 0.09f };
+    public float[] selectLifeStillValue = { 0.01f, 0.02f, 0.03f };
     public float[] selectDefValue = { 10f, 20f, 30f };
     public float[] selectHpValue = { 30f, 60f, 90f };
     public float[] selectGoldValue = { 0.3f, 0.6f, 1.0f };
@@ -230,6 +231,7 @@ public class Player : MonoBehaviour
         {
             PlayerReposition();
         }
+        AxePro2();
     }
     void OnDrawGizmos()
     {
@@ -302,17 +304,23 @@ public class Player : MonoBehaviour
         RaycastHit2D rayHitLeft = Physics2D.Raycast(rigid.position, Vector3.left, 1.2f, LayerMask.GetMask("Tilemap"));
         if (isWall) // 벽점프
         {
-            if (Input.GetKeyDown(KeyCode.Space) && rayHitLeft.collider != null && !isGround)
+            if (Input.GetKeyDown(KeyCode.Space) && rayHitLeft.collider != null && !isGround && !isWallJump)
             {
-                rigid.velocity = new Vector2(1, 2) * 10f;
+                isjump = true;
+                isWallJump = true;
+                rigid.velocity = new Vector2(1, 2) * 9f;
                 spriteRenderer.flipX = true;
                 isWall = false;
+                slideDir = 1;
             }
-            if (Input.GetKeyDown(KeyCode.Space) && rayHitRight.collider != null && !isGround)
+            else if (Input.GetKeyDown(KeyCode.Space) && rayHitRight.collider != null && !isGround && !isWallJump)
             {
-                rigid.velocity = new Vector2(-1, 2) * 10f;
+                isjump = true;
+                isWallJump = true;
+                rigid.velocity = new Vector2(-1, 2) * 9f;
                 spriteRenderer.flipX = false;
                 isWall = false;
+                slideDir = -1;
             }
         }
     }
@@ -532,9 +540,10 @@ public class Player : MonoBehaviour
 
     void AxePro2()
     {
-        if (proLevel > 0 && proSelectWeapon == 1 && Axepro == true) // 도끼 숙련도 1일 때 발동
+        if (proLevel > 1 && proSelectWeapon == 1 && Axepro == true) // 도끼 숙련도 1일 때 발동
         {
             StartCoroutine(proSkill());
+            SpeedChange -= 0.25f;
             Axepro = false;
         }
     }
@@ -554,7 +563,6 @@ public class Player : MonoBehaviour
         MaxHp += 50;
         CurrentHp += 50;
         Def += 20;
-        SpeedChange = 3;
         slideSpeed = 10;
         Destroy(Axe);
     }
@@ -626,8 +634,7 @@ public class Player : MonoBehaviour
     //Wall_Slide
     void OnCollisionStay2D(Collision2D collision)   // 벽 콜라이젼이 Player에 닿고 있으면 실행, 점프착지 시 콜라이젼 닿을 시 점프 해제
     {
-        RaycastHit2D rayHitDown = Physics2D.Raycast(rigid.position, Vector3.down, 1.7f, LayerMask.GetMask("Tilemap", "Pad", "Water"));
-        Debug.DrawRay(rigid.position, Vector3.down * 1.7f, Color.red);
+        RaycastHit2D rayHitDown = Physics2D.Raycast(rigid.position, Vector3.down, 2f, LayerMask.GetMask("Tilemap", "Pad", "Water"));
         if (collision.gameObject.tag == "Wall" && rayHitDown.collider != null)
         {
             isWall = false;
@@ -646,12 +653,16 @@ public class Player : MonoBehaviour
         }
 
 
-        if (collision.gameObject.tag == "Pad" || collision.gameObject.tag == "Tilemap" && !isGround)
+        if ((collision.gameObject.tag == "Pad" || collision.gameObject.tag == "Tilemap") && !isGround)
         {
-            anim.SetBool("Player_Jump", false);
-            isWall = false;
-            isjump = false;
-            isGround = true;
+            if (rayHitDown.collider != null)
+            {
+                anim.SetBool("Player_Jump", false);
+                isWall = false;
+                isjump = false;
+                isWallJump = false;
+                isGround = true;
+            }
         }
         if (rayHitDown.collider != null && !anim.GetBool("Sliding"))
         {
@@ -679,6 +690,7 @@ public class Player : MonoBehaviour
         GameManager.GetComponent<Ui_Controller>().Sliding();
         Transform SlideTransform = transform.GetChild(4);
         Speed = 0;
+        chargeTimer = 0;
         isSlide = true;
         gameObject.tag = "Sliding";
         gameObject.layer = LayerMask.NameToLayer("Sliding");
@@ -731,7 +743,7 @@ public class Player : MonoBehaviour
                         isDie = true;
                         CurrentHp = 0;
                         GameManager.GetComponent<Ui_Controller>().Damage(Damage);
-                        StartCoroutine(Die(x));
+                        StartCoroutine(Die());
                         GameObject GO = GameManager.GetComponent<Ui_Controller>().StatisticsUi;
                         GO.SetActive(true);
                         GO.GetComponent<StatisticsUi>().isFalling = true;
@@ -954,7 +966,7 @@ public class Player : MonoBehaviour
         {
             gameObject.layer = LayerMask.NameToLayer("Jump");
             JumpCnt = JumpCount;
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.3f);
         }
         if (ishurt)
         {
@@ -1062,7 +1074,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            NewDmg = damage + (damage / (-0.05f * Def));
+            NewDmg = damage + (damage * (-0.05f * Def));
             return NewDmg;
         }
     }
@@ -1233,7 +1245,7 @@ public class Player : MonoBehaviour
     //아이템 특수효과 함수
     public void GridsSword()
     {
-        GridPower = (gold / 777) * 7;
+        GridPower = (gold / 777) * 0.77f;
         if (!UseGridSword)
         {
             GameManager.GetComponent<Ui_Controller>().UiUpdate();
@@ -1243,7 +1255,7 @@ public class Player : MonoBehaviour
 
     public void VulcanArmor()
     {
-        VulcanPower = (Def / 10) * 10;
+        VulcanPower = (Def / 10) * 5;
         if (!UseVulcanArmor)
         {
             GameManager.GetComponent<Ui_Controller>().UiUpdate();

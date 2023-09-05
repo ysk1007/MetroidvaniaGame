@@ -15,10 +15,11 @@ public class ClownCloth : itemStatus
         data.color = Color.magenta;
         data.Rating = "영웅";
         data.itemExplanation = "\"Why so serious?\"";
-        data.itemStat = "공격력 +5 \n치명타 확률 +20%";
+        data.itemStat = "치명타 확률 +10%\n치명타 피해량 +10%";
         data.itemNumber = 4;
-        data.AtkPower = 5;
-        data.CriticalChance = 0.2f;
+        data.CriticalChance = 0.1f;
+        data.CriDmgIncrease = 0.1f;
+
     }
 
     public override void SpecialPower()

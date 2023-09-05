@@ -11,14 +11,15 @@ public class BattleBookBeginner : itemStatus
         data.itemimg = this.GetComponent<Image>();
         data.itemName = "전투의 정석 [기본편]";
         data.itemNameEng = "BattleBook";
-        data.itemPrice = 600;
+        data.itemPrice = 500;
         data.color = Color.white;
         data.Rating = "일반";
-        data.itemStat = "공격력 +5 \n공격속도 +12%\n이동속도 +13%";
+        data.itemStat = "공격력 +2\n공격 속도 +2%\n최대 체력 +2\n방어력 +2";
         data.itemNumber = 11;
-        data.AtkPower = 5;
-        data.AtkSpeed = 0.12f;
-        data.Speed = 0.13f;
+        data.AtkPower = 2;
+        data.AtkSpeed = 0.02f;
+        data.Def = 2;
+        data.MaxHp = 2;
     }
 
     public override void SpecialPower()

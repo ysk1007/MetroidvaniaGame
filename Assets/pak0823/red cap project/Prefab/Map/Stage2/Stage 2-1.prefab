@@ -192,6 +192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  loading: {fileID: 0}
   Enemy_Name: 
   AmIBoss: 0
   BossHpLine: 0
@@ -220,6 +221,7 @@ MonoBehaviour:
   atkFlipx: 0
   atkY: 0
   enemyHit: 0
+  alreadyRun: 0
   old_Speed: 0
   dTime: 0
   atkTime: 0
@@ -227,6 +229,7 @@ MonoBehaviour:
   endTime: 0
   axeUltHit: 0
   giveReward: 0
+  playerGoNext: 0
   scaleX: 0
   weaponTag: 
   Swordlevel: 0
@@ -2550,6 +2553,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  loading: {fileID: 0}
   Enemy_Name: 
   AmIBoss: 0
   BossHpLine: 0
@@ -2578,6 +2582,7 @@ MonoBehaviour:
   atkFlipx: 0
   atkY: 0
   enemyHit: 0
+  alreadyRun: 0
   old_Speed: 0
   dTime: 0
   atkTime: 0
@@ -2585,6 +2590,7 @@ MonoBehaviour:
   endTime: 0
   axeUltHit: 0
   giveReward: 0
+  playerGoNext: 0
   scaleX: 0
   weaponTag: 
   Swordlevel: 0
@@ -3711,6 +3717,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  loading: {fileID: 0}
   Enemy_Name: 
   AmIBoss: 0
   BossHpLine: 0
@@ -3739,6 +3746,7 @@ MonoBehaviour:
   atkFlipx: 0
   atkY: 0
   enemyHit: 0
+  alreadyRun: 0
   old_Speed: 0
   dTime: 0
   atkTime: 0
@@ -3746,6 +3754,7 @@ MonoBehaviour:
   endTime: 0
   axeUltHit: 0
   giveReward: 0
+  playerGoNext: 0
   scaleX: 0
   weaponTag: 
   Swordlevel: 0
@@ -4341,6 +4350,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  loading: {fileID: 0}
   Enemy_Name: 
   AmIBoss: 0
   BossHpLine: 0
@@ -4369,6 +4379,7 @@ MonoBehaviour:
   atkFlipx: 0
   atkY: 0
   enemyHit: 0
+  alreadyRun: 0
   old_Speed: 0
   dTime: 0
   atkTime: 0
@@ -4376,6 +4387,7 @@ MonoBehaviour:
   endTime: 0
   axeUltHit: 0
   giveReward: 0
+  playerGoNext: 0
   scaleX: 0
   weaponTag: 
   Swordlevel: 0
@@ -4677,6 +4689,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: {fileID: 0}
+  goingNextStage: 0
+  boolLock: 1
 --- !u!1 &7998469741104457078
 GameObject:
   m_ObjectHideFlags: 0
@@ -5410,6 +5424,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  loading: {fileID: 0}
   Enemy_Name: 
   AmIBoss: 0
   BossHpLine: 0
@@ -5438,6 +5453,7 @@ MonoBehaviour:
   atkFlipx: 0
   atkY: 0
   enemyHit: 0
+  alreadyRun: 0
   old_Speed: 0
   dTime: 0
   atkTime: 0
@@ -5445,6 +5461,7 @@ MonoBehaviour:
   endTime: 0
   axeUltHit: 0
   giveReward: 0
+  playerGoNext: 0
   scaleX: 0
   weaponTag: 
   Swordlevel: 0
@@ -14678,6 +14695,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  loading: {fileID: 0}
   Enemy_Name: 
   AmIBoss: 0
   BossHpLine: 0
@@ -14706,6 +14724,7 @@ MonoBehaviour:
   atkFlipx: 0
   atkY: 0
   enemyHit: 0
+  alreadyRun: 0
   old_Speed: 0
   dTime: 0
   atkTime: 0
@@ -14713,6 +14732,7 @@ MonoBehaviour:
   endTime: 0
   axeUltHit: 0
   giveReward: 0
+  playerGoNext: 0
   scaleX: 0
   weaponTag: 
   Swordlevel: 0
@@ -17205,6 +17225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  loading: {fileID: 0}
   Enemy_Name: 
   AmIBoss: 0
   BossHpLine: 0
@@ -17233,6 +17254,7 @@ MonoBehaviour:
   atkFlipx: 0
   atkY: 0
   enemyHit: 0
+  alreadyRun: 0
   old_Speed: 0
   dTime: 0
   atkTime: 0
@@ -17240,6 +17262,7 @@ MonoBehaviour:
   endTime: 0
   axeUltHit: 0
   giveReward: 0
+  playerGoNext: 0
   scaleX: 0
   weaponTag: 
   Swordlevel: 0
@@ -19829,6 +19852,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  loading: {fileID: 0}
   Enemy_Name: 
   AmIBoss: 0
   BossHpLine: 0
@@ -19857,6 +19881,7 @@ MonoBehaviour:
   atkFlipx: 0
   atkY: 0
   enemyHit: 0
+  alreadyRun: 0
   old_Speed: 0
   dTime: 0
   atkTime: 0
@@ -19864,6 +19889,7 @@ MonoBehaviour:
   endTime: 0
   axeUltHit: 0
   giveReward: 0
+  playerGoNext: 0
   scaleX: 0
   weaponTag: 
   Swordlevel: 0
@@ -20445,6 +20471,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  loading: {fileID: 0}
   Enemy_Name: 
   AmIBoss: 0
   BossHpLine: 0
@@ -20473,6 +20500,7 @@ MonoBehaviour:
   atkFlipx: 0
   atkY: 0
   enemyHit: 0
+  alreadyRun: 0
   old_Speed: 0
   dTime: 0
   atkTime: 0
@@ -20480,6 +20508,7 @@ MonoBehaviour:
   endTime: 0
   axeUltHit: 0
   giveReward: 0
+  playerGoNext: 0
   scaleX: 0
   weaponTag: 
   Swordlevel: 0
@@ -21359,6 +21388,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  loading: {fileID: 0}
   Enemy_Name: 
   AmIBoss: 0
   BossHpLine: 0
@@ -21387,6 +21417,7 @@ MonoBehaviour:
   atkFlipx: 0
   atkY: 0
   enemyHit: 0
+  alreadyRun: 0
   old_Speed: 0
   dTime: 0
   atkTime: 0
@@ -21394,6 +21425,7 @@ MonoBehaviour:
   endTime: 0
   axeUltHit: 0
   giveReward: 0
+  playerGoNext: 0
   scaleX: 0
   weaponTag: 
   Swordlevel: 0
@@ -21739,6 +21771,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  loading: {fileID: 0}
   Enemy_Name: 
   AmIBoss: 0
   BossHpLine: 0
@@ -21767,6 +21800,7 @@ MonoBehaviour:
   atkFlipx: 0
   atkY: 0
   enemyHit: 0
+  alreadyRun: 0
   old_Speed: 0
   dTime: 0
   atkTime: 0
@@ -21774,6 +21808,7 @@ MonoBehaviour:
   endTime: 0
   axeUltHit: 0
   giveReward: 0
+  playerGoNext: 0
   scaleX: 0
   weaponTag: 
   Swordlevel: 0
@@ -26436,6 +26471,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  loading: {fileID: 0}
   Enemy_Name: 
   AmIBoss: 0
   BossHpLine: 0
@@ -26464,6 +26500,7 @@ MonoBehaviour:
   atkFlipx: 0
   atkY: 0
   enemyHit: 0
+  alreadyRun: 0
   old_Speed: 0
   dTime: 0
   atkTime: 0
@@ -26471,6 +26508,7 @@ MonoBehaviour:
   endTime: 0
   axeUltHit: 0
   giveReward: 0
+  playerGoNext: 0
   scaleX: 0
   weaponTag: 
   Swordlevel: 0
@@ -26988,6 +27026,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  loading: {fileID: 0}
   Enemy_Name: 
   AmIBoss: 0
   BossHpLine: 0
@@ -27016,6 +27055,7 @@ MonoBehaviour:
   atkFlipx: 0
   atkY: 0
   enemyHit: 0
+  alreadyRun: 0
   old_Speed: 0
   dTime: 0
   atkTime: 0
@@ -27023,6 +27063,7 @@ MonoBehaviour:
   endTime: 0
   axeUltHit: 0
   giveReward: 0
+  playerGoNext: 0
   scaleX: 0
   weaponTag: 
   Swordlevel: 0
@@ -32696,6 +32737,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  loading: {fileID: 0}
   Enemy_Name: 
   AmIBoss: 0
   BossHpLine: 0
@@ -32724,6 +32766,7 @@ MonoBehaviour:
   atkFlipx: 0
   atkY: 0
   enemyHit: 0
+  alreadyRun: 0
   old_Speed: 0
   dTime: 0
   atkTime: 0
@@ -32731,6 +32774,7 @@ MonoBehaviour:
   endTime: 0
   axeUltHit: 0
   giveReward: 0
+  playerGoNext: 0
   scaleX: 0
   weaponTag: 
   Swordlevel: 0
@@ -33293,6 +33337,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  loading: {fileID: 0}
   Enemy_Name: 
   AmIBoss: 0
   BossHpLine: 0
@@ -33321,6 +33366,7 @@ MonoBehaviour:
   atkFlipx: 0
   atkY: 0
   enemyHit: 0
+  alreadyRun: 0
   old_Speed: 0
   dTime: 0
   atkTime: 0
@@ -33328,6 +33374,7 @@ MonoBehaviour:
   endTime: 0
   axeUltHit: 0
   giveReward: 0
+  playerGoNext: 0
   scaleX: 0
   weaponTag: 
   Swordlevel: 0
@@ -35439,6 +35486,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  loading: {fileID: 0}
   Enemy_Name: 
   AmIBoss: 0
   BossHpLine: 0
@@ -35467,6 +35515,7 @@ MonoBehaviour:
   atkFlipx: 0
   atkY: 0
   enemyHit: 0
+  alreadyRun: 0
   old_Speed: 0
   dTime: 0
   atkTime: 0
@@ -35474,6 +35523,7 @@ MonoBehaviour:
   endTime: 0
   axeUltHit: 0
   giveReward: 0
+  playerGoNext: 0
   scaleX: 0
   weaponTag: 
   Swordlevel: 0
@@ -36253,6 +36303,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  loading: {fileID: 0}
   Enemy_Name: 
   AmIBoss: 0
   BossHpLine: 0
@@ -36281,6 +36332,7 @@ MonoBehaviour:
   atkFlipx: 0
   atkY: 0
   enemyHit: 0
+  alreadyRun: 0
   old_Speed: 0
   dTime: 0
   atkTime: 0
@@ -36288,6 +36340,7 @@ MonoBehaviour:
   endTime: 0
   axeUltHit: 0
   giveReward: 0
+  playerGoNext: 0
   scaleX: 0
   weaponTag: 
   Swordlevel: 0
@@ -41160,66 +41213,6 @@ Tilemap:
   m_GameObject: {fileID: 7998469742629045588}
   m_Enabled: 1
   m_Tiles:
-  - first: {x: 121, y: 0, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 7
-      m_TileSpriteIndex: 7
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
-  - first: {x: 123, y: 0, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 7
-      m_TileSpriteIndex: 7
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
-  - first: {x: 125, y: 0, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 7
-      m_TileSpriteIndex: 7
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
-  - first: {x: 121, y: 2, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 7
-      m_TileSpriteIndex: 7
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
-  - first: {x: 123, y: 2, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 7
-      m_TileSpriteIndex: 7
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
-  - first: {x: 125, y: 2, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 7
-      m_TileSpriteIndex: 7
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
   - first: {x: -6, y: 4, z: 0}
     second:
       serializedVersion: 2
@@ -41235,36 +41228,6 @@ Tilemap:
       serializedVersion: 2
       m_TileIndex: 9
       m_TileSpriteIndex: 9
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
-  - first: {x: 121, y: 4, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 7
-      m_TileSpriteIndex: 7
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
-  - first: {x: 123, y: 4, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 7
-      m_TileSpriteIndex: 7
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
-  - first: {x: 125, y: 4, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 7
-      m_TileSpriteIndex: 7
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -41416,7 +41379,7 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 658e40063fd271e4f8d02da6c6e092ea, type: 2}
   - m_RefCount: 3
     m_Data: {fileID: 11400000, guid: 0d169a7a11889914b96be361e576f93a, type: 2}
-  - m_RefCount: 12
+  - m_RefCount: 3
     m_Data: {fileID: 11400000, guid: 29021fe1c255c434c8560670e651538d, type: 2}
   - m_RefCount: 0
     m_Data: {fileID: 0}
@@ -41437,14 +41400,14 @@ Tilemap:
     m_Data: {fileID: -1253695126, guid: 4809fca604ed2bf49a34e0a16410c6cc, type: 3}
   - m_RefCount: 3
     m_Data: {fileID: -622744351, guid: 4809fca604ed2bf49a34e0a16410c6cc, type: 3}
-  - m_RefCount: 12
+  - m_RefCount: 3
     m_Data: {fileID: -1187118143, guid: 4809fca604ed2bf49a34e0a16410c6cc, type: 3}
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 5
     m_Data: {fileID: 21300000, guid: 1afc38aa87086a544b3702e607aa0287, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 24
+  - m_RefCount: 15
     m_Data:
       e00: 1
       e01: 0
@@ -41463,7 +41426,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 24
+  - m_RefCount: 15
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -42936,6 +42899,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  loading: {fileID: 0}
   Enemy_Name: 
   AmIBoss: 0
   BossHpLine: 0
@@ -42964,6 +42928,7 @@ MonoBehaviour:
   atkFlipx: 0
   atkY: 0
   enemyHit: 0
+  alreadyRun: 0
   old_Speed: 0
   dTime: 0
   atkTime: 0
@@ -42971,6 +42936,7 @@ MonoBehaviour:
   endTime: 0
   axeUltHit: 0
   giveReward: 0
+  playerGoNext: 0
   scaleX: 0
   weaponTag: 
   Swordlevel: 0
@@ -44123,6 +44089,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  loading: {fileID: 0}
   Enemy_Name: 
   AmIBoss: 0
   BossHpLine: 0
@@ -44151,6 +44118,7 @@ MonoBehaviour:
   atkFlipx: 0
   atkY: 0
   enemyHit: 0
+  alreadyRun: 0
   old_Speed: 0
   dTime: 0
   atkTime: 0
@@ -44158,6 +44126,7 @@ MonoBehaviour:
   endTime: 0
   axeUltHit: 0
   giveReward: 0
+  playerGoNext: 0
   scaleX: 0
   weaponTag: 
   Swordlevel: 0
@@ -45379,6 +45348,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  loading: {fileID: 0}
   Enemy_Name: 
   AmIBoss: 0
   BossHpLine: 0
@@ -45407,6 +45377,7 @@ MonoBehaviour:
   atkFlipx: 0
   atkY: 0
   enemyHit: 0
+  alreadyRun: 0
   old_Speed: 0
   dTime: 0
   atkTime: 0
@@ -45414,6 +45385,7 @@ MonoBehaviour:
   endTime: 0
   axeUltHit: 0
   giveReward: 0
+  playerGoNext: 0
   scaleX: 0
   weaponTag: 
   Swordlevel: 0

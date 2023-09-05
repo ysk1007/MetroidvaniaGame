@@ -11,14 +11,14 @@ public class ClownGloves : itemStatus
         data.itemimg = this.GetComponent<Image>();
         data.itemName = "광기어린 광대의 장갑";
         data.itemNameEng = "ClownGloves";
-        data.itemPrice = 1200;
+        data.itemPrice = 2200;
         data.color = Color.magenta;
         data.Rating = "영웅";
         data.itemExplanation = "\"똑똑\"";
-        data.itemStat = "공격력 +3 \n치명타 확률 +20%";
+        data.itemStat = "치명타 확률 +10%\n공격 속도 +25%";
         data.itemNumber = 6;
-        data.AtkPower = 3;
-        data.CriticalChance = 0.2f;
+        data.AtkSpeed = 0.25f;
+        data.CriticalChance = 0.1f;
     }
 
     public override void SpecialPower()

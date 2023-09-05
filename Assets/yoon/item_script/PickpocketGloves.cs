@@ -11,14 +11,15 @@ public class PickpocketGloves : itemStatus
         data.itemimg = this.GetComponent<Image>();
         data.itemName = "소매치기 장갑";
         data.itemNameEng = "PickpocketGloves";
-        data.itemPrice = 2100;
+        data.itemPrice = 2400;
         data.color = Color.magenta;
         data.Rating = "영웅";
-        data.itemStat = "적을 공격할 때 마다 1골드 획득\n공격 속도 +20%\n이동속도 +20%";
+        data.itemStat = "적을 공격할 때 마다 2골드 획득\n공격 속도 +20%\n이동 속도 +5%\n경험치 획득량 -20%";
         data.itemExplanation = "손은 눈보다 빠르다";
         data.itemNumber = 43;
         data.AtkSpeed = 0.2f;
-        data.Speed = 0.2f;
+        data.Speed = 0.25f;
+        data.EXPGet = -0.2f;
     }
 
     public override void SpecialPower()

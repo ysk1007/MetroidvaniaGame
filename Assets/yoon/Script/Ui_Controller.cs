@@ -240,7 +240,7 @@ public class Ui_Controller : MonoBehaviour
         AtkPowerValueText.text = (player.AtkPower + player.ATP + player.GridPower + player.VulcanPower).ToString("F0");
         DefValueText.text = player.Def.ToString();
         AtkSpeedValueText.text = player.ATS.ToString("F1");
-        CriticalChanceText.text = (player.CriticalChance * 100f).ToString() + "%";
+        CriticalChanceText.text = (player.CriticalChance * 100f).ToString("F0") + "%";
 
         //레벨 골드 갱신
         PlayerLevel = player.level;

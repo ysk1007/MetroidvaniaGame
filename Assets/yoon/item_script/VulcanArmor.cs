@@ -11,14 +11,14 @@ public class VulcanArmor : itemStatus
         data.itemimg = this.GetComponent<Image>();
         data.itemName = "불카누스의 갑옷";
         data.itemNameEng = "VulcanArmor";
-        data.itemPrice = 3150;
+        data.itemPrice = 3400;
         data.color = Color.red;
         data.Rating = "전설";
         data.itemExplanation = "최선의 방어는 공격이다";
-        data.itemStat = "최대 체력 +30\n방어력 +30\n보유한 방어력 10당, 공격력이 10 증가합니다.";
+        data.itemStat = "최대 체력 +20\n방어력 +15\n보유한 방어력 10당, 공격력이 5 증가합니다.";
         data.itemNumber = 40;
-        data.MaxHp = 30;
-        data.Def = 30;
+        data.MaxHp = 20;
+        data.Def = 15;
     }
 
     public override void SpecialPower()

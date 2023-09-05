@@ -14,21 +14,21 @@ public class RingOfLife : itemStatus
         data.itemPrice = 1000;
         data.color = Color.green;
         data.Rating = "고급";
-        data.itemStat = "최대 체력 +30\n체력 재생 +2";
-        data.itemExplanation = "";
+        data.itemStat = "최대 체력 +10\n체력 재생 +0.5";
+        data.itemExplanation = "생명이 깃든 반지";
         data.itemNumber = 44;
-        data.MaxHp = 30;
+        data.MaxHp = 10;
     }
 
     public override void SpecialPower()
     {
         if (!data.SpecialPower)
         {
-            Player.instance.LifeRegen -= 2;
+            Player.instance.LifeRegen -= 0.5f;
         }
         if (data.SpecialPower)
         {
-            Player.instance.LifeRegen += 2;
+            Player.instance.LifeRegen += 0.5f;
         }
     }
 

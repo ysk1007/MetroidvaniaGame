@@ -15,9 +15,9 @@ public class TransmitterHammer : itemStatus
         data.color = Color.white;
         data.Rating = "일반";
         data.itemExplanation = "\"말뚝 언제 다 박냐\"";
-        data.itemStat = "공격력 +5\n도끼 차징속도 +15% ";
+        data.itemStat = "공격력 +3\n도끼 차징속도 +15% ";
         data.itemNumber = 38;
-        data.AtkPower = 5;
+        data.AtkPower = 3;
         data.ChargingTime = 0.3f;
     }
 

@@ -11,14 +11,14 @@ public class ElunsRobe : itemStatus
         data.itemimg = this.GetComponent<Image>();
         data.itemName = "엘룬의 로브";
         data.itemNameEng = "ElunsRobe";
-        data.itemPrice = 1300;
+        data.itemPrice = 1400;
         Color32 color = new Color32(93, 141, 255, 255);
         data.color = color;
         data.Rating = "희귀";
-        data.itemStat = "최대 체력 -35\n방어력 +20\n쿨타임 감소 +15%";
+        data.itemStat = "최대 체력 -25\n방어력 +10\n쿨타임 감소 +15%";
         data.DecreaseCool = 0.15f;
-        data.MaxHp = -35;
-        data.Def = 20;
+        data.MaxHp = -25;
+        data.Def = 10;
         data.itemExplanation = "내가 없어져 볼게";
         data.itemNumber = 46;
     }

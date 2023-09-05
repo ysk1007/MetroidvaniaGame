@@ -11,7 +11,7 @@ public class DivinePower : itemStatus
         data.itemimg = this.GetComponent<Image>();
         data.itemName = "신성 권한";
         data.itemNameEng = "DivinePower";
-        data.itemPrice = 4999;
+        data.itemPrice = 4007;
         data.color = Color.yellow;
         data.Rating = "신화";
         data.itemExplanation = "빛의 힘이여, 나를 이끌어라!";

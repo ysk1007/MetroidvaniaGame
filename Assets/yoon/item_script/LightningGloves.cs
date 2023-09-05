@@ -11,13 +11,14 @@ public class LightningGloves : itemStatus
         data.itemimg = this.GetComponent<Image>();
         data.itemName = "번개 장갑";
         data.itemNameEng = "LightningGloves";
-        data.itemPrice = 900;
-        data.color = Color.green;
-        data.Rating = "고급";
-        data.itemStat = "공격속도 +75% \n데미지 -15%";
+        data.itemPrice = 1500;
+        Color color = new Color32(93, 141, 255, 255);
+        data.color = color;
+        data.Rating = "희귀";
+        data.itemStat = "공격속도 +45% \n데미지 -15%";
         data.itemNumber = 10;
         data.DmgIncrease = -0.15f;
-        data.AtkSpeed = 0.75f;
+        data.AtkSpeed = 0.45f;
     }
 
     public override void SpecialPower()

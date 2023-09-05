@@ -25,8 +25,7 @@ public class NightofCountingtheStars : itemStatus
         data.AtkSpeed = 0.17f;
         data.Speed = 0.17f;
         data.MaxHp = 17;
-        data.JumpPower = 2.55f;
-        data.lifeStill = 0.17f;
+        data.lifeStill = 0.017f;
         data.GoldGet = 0.17f;
         data.EXPGet = 0.17f;
         data.DecreaseCool = 0.17f;

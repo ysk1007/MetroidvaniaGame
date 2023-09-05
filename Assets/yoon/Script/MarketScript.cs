@@ -37,7 +37,7 @@ public class MarketScript : MonoBehaviour
     public GameObject marketItem;
     public GameObject marketUi;
     public GameObject KeyUi;
-    private bool MarketOpen = false;
+    public bool MarketOpen = false;
     public bool PlayerVisit = false;    // 2023-08-15 private -> public º¯°æ
     public bool Remain;
     public List<int> RandomList;

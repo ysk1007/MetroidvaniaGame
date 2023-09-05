@@ -159,13 +159,13 @@ public class Proficiency_ui : MonoBehaviour
                 if (proLevel >= 1)
                 {
                     Pro1SkillName.text = "붉은 낙인";
-                    Pro1SkillText.text = "적 공격시 일정확률로 출혈을 부여 합니다. 최대 8번 중첩 됩니다";
+                    Pro1SkillText.text = "적 공격시 출혈을 부여 합니다. 최대 6번 중첩 됩니다";
                     TextAligmentTopLeft(Pro1SkillText);
                 }
                 if (proLevel >= 2)
                 {
                     Pro2SkillName.text = "핏빛 선고";
-                    Pro2SkillText.text = "체력 20% 이하의 적을 즉시 처형 합니다.";
+                    Pro2SkillText.text = "체력 10% 이하의 적을 즉시 처형 합니다.";
                     TextAligmentTopLeft(Pro2SkillText);
                 }
                 if (proLevel >= 3)
@@ -211,7 +211,7 @@ public class Proficiency_ui : MonoBehaviour
                 if (proLevel >= 3)
                 {
                     Pro3SkillName.text = "오의 : 이그드라실의 씨앗";
-                    Pro3SkillText.text = "적에게 이그드라실의 씨앗을 심습니다. 몸에 나무가 자라 적을 휘감고, 뿌리가 몸을 관통합니다.";
+                    Pro3SkillText.text = "나무가 자라나 적을 휘감고, 뿌리가 몸을 관통합니다.";
                     TextAligmentTopLeft(Pro3SkillText);
                 }
                 break;
