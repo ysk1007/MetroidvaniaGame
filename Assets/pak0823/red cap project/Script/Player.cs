@@ -212,8 +212,15 @@ public class Player : MonoBehaviour
     void Update()
     {
         playerTag = this.gameObject.transform.GetChild(0).tag;
-        Player_Move();  //Player의 이동, 점프, 속도 함수
-        Player_Attack();    //Player의 공격 함수
+        if (map.pause || isDie)
+        {
+            return;
+        }
+        else
+        {
+            Player_Move();  //Player의 이동, 점프, 속도 함수
+            Player_Attack();    //Player의 공격 함수
+        }
         if (UseGridSword) //추가함
         {
             GridsSword();
@@ -230,10 +237,6 @@ public class Player : MonoBehaviour
     }
     void Player_Move() //Player 이동, 점프
     {
-        if (map.pause)
-        {
-            return;
-        }
         //Move
         Direction = Input.GetAxisRaw("Horizontal");   // 좌우 방향값을 정수로 가져오기
         if (!isdelay && Direction != 0 && gameObject.CompareTag("Player") && !isSkill && !isMasterSkill && movecamera.startFightBoss == false)    //공격 딜레이중일시 이동 불가능
