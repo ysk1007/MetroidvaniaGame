@@ -15,10 +15,13 @@ public class InfiniteTile: MonoBehaviour
 
     private void Update()
     {
-        // 배경이 설정된 범위를 벗어나면 위치 재설정
-        if (target.transform.position.x >= transform.position.x + scrollAmount) // 플레이어가 앞으로 갈 때
+        if (target != null)
         {
-            transform.position = background.position + moveDirection * scrollAmount;
+            // 배경이 설정된 범위를 벗어나면 위치 재설정
+            if (target.transform.position.x >= transform.position.x + scrollAmount) // 플레이어가 앞으로 갈 때
+            {
+                transform.position = background.position + moveDirection * scrollAmount;
+            }
         }
     }
 }

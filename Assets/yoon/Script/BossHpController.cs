@@ -76,13 +76,21 @@ public class BossHpController : MonoBehaviour
         BossName.text = boss.Enemy_Name;
         BossTotalHp = boss.Enemy_HP;
         BossHpLine = boss.BossHpLine;
-        BossStart();
         TotalBar.SetActive(true);
+        BossStart();
         StartCoroutine(BossHpUi_Up());
     }
 
     public void BossDead()
     {
+        CameraShake();
+        Time.timeScale = 0.5f;
+        Invoke("BossHpUiDown", 3f);
+    }
+
+    void BossHpUiDown()
+    {
+        CancelInvoke();
         StartCoroutine(BossHpUi_Down());
     }
 
@@ -93,9 +101,7 @@ public class BossHpController : MonoBehaviour
         overDamageCarcul();
         if (HpSliders[0].currentHp <= 0)
         {
-            Invoke("BossDead", 2f);
-            CameraShake();
-            Time.timeScale = 0.5f;
+            BossDead();
         }
     }
 
@@ -162,6 +168,7 @@ public class BossHpController : MonoBehaviour
 
             yield return null;
         }
+        ShakeObject.transform.position = startPosition; //처음 지정했던 곳으로 ui 원위치
         for (int i = 0; i < 5; i++)
         {
             if (HpSliders[i] != null)

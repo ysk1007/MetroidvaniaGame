@@ -16,7 +16,7 @@ public class RedCard : itemStatus
         data.Rating = "전설";
         data.itemExplanation = "\"인생이란 원래 자기 생각대로 되지 않는 법이란다\"";
         data.itemStat = "공격 시 원래 피해의 1~333%의 피해를 입힙니다.\n 공격속도 +33%";
-        data.itemNumber = 26;
+        data.itemNumber = 27;
         data.AtkSpeed = 0.33f;
     }
 

@@ -16,7 +16,7 @@ public class DoubleEdgedAxe : itemStatus
         data.Rating = "¿µ¿õ";
         data.itemExplanation = "";
         data.itemStat = "µµ³¢ Â÷Â¡¼Óµµ +50%\n°ø°Ý·Â +20\nÁ¡ÇÁ·Â -5%";
-        data.itemNumber = 28;
+        data.itemNumber = 29;
         data.ChargingTime = 1f;
         data.AtkPower = 20;
         data.JumpPower = -0.75f;

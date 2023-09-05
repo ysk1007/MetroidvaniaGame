@@ -16,7 +16,7 @@ public class AttackClaw : itemStatus
         data.Rating = "일반";
         data.itemExplanation = "먼저 때리기!";
         data.itemStat = "공격속도 +50%";
-        data.itemNumber = 24;
+        data.itemNumber = 25;
         data.AtkSpeed = 0.5f;
     }
 

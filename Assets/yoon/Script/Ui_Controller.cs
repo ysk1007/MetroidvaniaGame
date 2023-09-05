@@ -70,7 +70,7 @@ public class Ui_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        AtkPowerValueText.text = (player.AtkPower + player.ATP + player.GridPower).ToString("F0");
+        AtkPowerValueText.text = (player.AtkPower + player.ATP + player.GridPower + player.VulcanPower).ToString("F0");
         if (Input.GetKeyDown(KeyCode.I))
         {
             if (openpro)
@@ -162,7 +162,7 @@ public class Ui_Controller : MonoBehaviour
     {
         StartCoroutine("ShowBloodScreen"); //피격 화면효과 코루틴
         PlayerHp.Dmg(damage);
-        if (PlayerHp.currentHp <= 0)
+        if (player.isDie)
         {
             PlayerCurrentHpText.text = "0";
         }
@@ -172,17 +172,20 @@ public class Ui_Controller : MonoBehaviour
 
     public void Heal(float value)
     {
-        if (player.CurrentHp + value <= 0)
+        if (!player.isDie)
         {
-            PlayerHp.currentHp = 1;
-            PlayerCurrentHpText.text = 1.ToString("F0");
-            player.CurrentHp = int.Parse(PlayerCurrentHpText.text);
-        }
-        else
-        {
-            PlayerHp.Heal(value);
-            PlayerCurrentHpText.text = PlayerHp.currentHp.ToString("F0");
-            player.CurrentHp = int.Parse(PlayerCurrentHpText.text);
+            if (player.CurrentHp + value <= 0)
+            {
+                PlayerHp.currentHp = 1;
+                PlayerCurrentHpText.text = 1.ToString("F0");
+                player.CurrentHp = int.Parse(PlayerCurrentHpText.text);
+            }
+            else
+            {
+                PlayerHp.Heal(value);
+                PlayerCurrentHpText.text = PlayerHp.currentHp.ToString("F0");
+                player.CurrentHp = int.Parse(PlayerCurrentHpText.text);
+            }
         }
     }
 

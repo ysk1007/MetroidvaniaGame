@@ -28,7 +28,10 @@ public class EnemyAudioSource : MonoBehaviour
     {
         for (int i = 0; i < EnemyAudio.Length; i++)
         {
-            EnemyAudio[i].mute = true;
+            if (EnemyAudio[i] != null)
+            {
+                EnemyAudio[i].mute = true;
+            }
         }
     }
 
@@ -36,7 +39,10 @@ public class EnemyAudioSource : MonoBehaviour
     {
         for (int i = 0; i < EnemyAudio.Length; i++)
         {
-            EnemyAudio[i].mute = false;
+            if (EnemyAudio[i] != null)
+            {
+                EnemyAudio[i].mute = false;
+            }
         }
     }
 }

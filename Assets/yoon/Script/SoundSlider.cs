@@ -15,6 +15,7 @@ public class SoundSlider : MonoBehaviour
     {
         instance = this;
         DataManager.instance.JsonSliderLoad();
+        setting();
     }
 
     private void FixedUpdate()
@@ -38,6 +39,13 @@ public class SoundSlider : MonoBehaviour
     public void SetSfxVolume(float sliderValue)
     {
         mixer.SetFloat("SFX", Mathf.Log10(sliderValue) * 20);
+    }
+
+    void setting()
+    {
+        SetMasterVolume(master_slider.value);
+        SetBgmVolume(bgm_slider.value);
+        SetSfxVolume(sfx_slider.value);
     }
 }
 

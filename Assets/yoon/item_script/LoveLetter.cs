@@ -17,7 +17,7 @@ public class LoveLetter : itemStatus
         data.Rating = "희귀";
         data.itemExplanation = "고백으로 혼내주자!";
         data.itemStat = "공격력 +20\n공격속도 +50%";
-        data.itemNumber = 32;
+        data.itemNumber = 33;
         data.AtkPower = 20;
         data.AtkSpeed = 0.5f;
     }

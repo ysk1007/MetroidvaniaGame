@@ -597,7 +597,14 @@ public class DataManager : MonoBehaviour
         items.Add(new DMUlcokItem("SuspiciousMirror", false));
         items.Add(new DMUlcokItem("VulcanArmor", false));
         items.Add(new DMUlcokItem("WorkGloves", false));
-
+        items.Add(new DMUlcokItem("Ocarina", false));
+        items.Add(new DMUlcokItem("PickpocketGloves", false));
+        items.Add(new DMUlcokItem("ElunsHat", false));
+        items.Add(new DMUlcokItem("ElunsRobe", false));
+        items.Add(new DMUlcokItem("ElunsWand", false));
+        items.Add(new DMUlcokItem("FairyFanFlute", false));
+        items.Add(new DMUlcokItem("OrcHorn", false));
+        items.Add(new DMUlcokItem("WoodenShield", false));
         // 데이터를 JSON 파일로 저장
         SaveToJson(items);
     }

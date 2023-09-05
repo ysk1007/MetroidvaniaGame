@@ -17,7 +17,7 @@ public class EscapeRope : itemStatus
         data.Rating = "희귀";
         data.itemExplanation = "동굴에서 탈출할 때 요긴하게 쓰인다";
         data.itemStat = "대쉬 쿨타임 감소 25%\n이동속도 +50%\n점프력 +20%";
-        data.itemNumber = 30;
+        data.itemNumber = 31;
         data.Speed = 2.0f;
         data.JumpPower = 3f;
     }

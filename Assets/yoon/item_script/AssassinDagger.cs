@@ -16,7 +16,7 @@ public class AssassinDagger : itemStatus
         data.Rating = "영웅";
         data.itemExplanation = "";
         data.itemStat = "출혈 데미지 +100%\n공격속도 +40%\n방어력 -15";
-        data.itemNumber = 27;
+        data.itemNumber = 28;
         data.BleedDmg = +3f;
         data.AtkSpeed = 0.4f;
         data.Def = -15;
