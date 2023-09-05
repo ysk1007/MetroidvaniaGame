@@ -115,10 +115,21 @@ public class MoveCamera : MonoBehaviour
         {
             if (stage == 2 && stageSmall != 7) // 3스테이지
             {
-                center.x = 120;
-                center.y = 7;
-                size.x = 270;
-                size.y = 40;
+                if (stageSmall == 1 || stageSmall == 3 || stageSmall == 6 || stageSmall == 8)    // 상점 및 보상 스테이지일 때 카메라 제한
+                {
+                    center.x = 15;
+                    center.y = 6;
+                    size.x = 60;
+                    size.y = 22;
+                }
+                else
+                {
+                    center.x = 120;
+                    center.y = 7;
+                    size.x = 270;
+                    size.y = 40;
+                }
+                
             }
             else if (stage == 2 && stageSmall == 7)   // 3스테이지 보스 
             {
@@ -129,10 +140,27 @@ public class MoveCamera : MonoBehaviour
             }
             if (stage < 2 && stageSmall != 7) // 1,2스테이지
             {
-                center.x = 120;
-                center.y = 7;
-                size.x = 270;
-                size.y = 25;
+                if(stage == 0 && (stageSmall == 1 || stageSmall == 3 || stageSmall == 6 || stageSmall == 8))    // 1스테이지 상점 및 보상 스테이지일 때 카메라 제한
+                {
+                    center.x = 20;
+                    center.y = 8;
+                    size.x = 70;
+                    size.y = 25;
+                }
+                else if (stage == 1 && (stageSmall == 1 || stageSmall == 3 || stageSmall == 6 || stageSmall == 8))    // 2스테이지 상점 및 보상 스테이지일 때 카메라 제한
+                {
+                    center.x = 20;
+                    center.y = 8;
+                    size.x = 58;
+                    size.y = 25;
+                }
+                else
+                {
+                    center.x = 120;
+                    center.y = 7;
+                    size.x = 270;
+                    size.y = 25;
+                }
             }
             else if (stage == 0 && stageSmall == 7)   // 1스테이지 보스
             {
@@ -153,10 +181,21 @@ public class MoveCamera : MonoBehaviour
         {
             if (stage == 2 && stageSmall != 7) // 3스테이지
             {
-                center.x = 120;
-                center.y = 7;
-                size.x = 265;
-                size.y = 35;
+                if (stageSmall == 1 || stageSmall == 3 || stageSmall == 6 || stageSmall == 8)   // 상점 및 보상 스테이지일 때 카메라 제한
+                {
+                    center.x = 15;
+                    center.y = 6;
+                    size.x = 60;
+                    size.y = 20;
+                }
+                else
+                {
+                    center.x = 120;
+                    center.y = 7;
+                    size.x = 265;
+                    size.y = 35;
+                }
+                
             }
             else if (stage == 2 && stageSmall == 7)   // 3스테이지 보스
             {
@@ -167,10 +206,27 @@ public class MoveCamera : MonoBehaviour
             }
             if (stage < 2 && stageSmall != 7) // 1,2스테이지
             {
-                center.x = 120;
-                center.y = 7;
-                size.x = 265;
-                size.y = 20;
+                if (stage == 0 && (stageSmall == 1 || stageSmall == 3 || stageSmall == 6 || stageSmall == 8))   // 1스테이지 상점 및 보상 스테이지일 때 카메라 제한
+                {
+                    center.x = 20;
+                    center.y = 7;
+                    size.x = 65;
+                    size.y = 20;
+                }
+                else if (stage == 1 && (stageSmall == 1 || stageSmall == 3 || stageSmall == 6 || stageSmall == 8))   // 2스테이지 상점 및 보상 스테이지일 때 카메라 제한
+                {
+                    center.x = 20;
+                    center.y = 7;
+                    size.x = 50;
+                    size.y = 20;
+                }
+                else
+                {
+                    center.x = 120;
+                    center.y = 7;
+                    size.x = 265;
+                    size.y = 20;
+                }
             }
             else if (stage == 1 && stageSmall == 7)    // 2스테이지 보스
             {

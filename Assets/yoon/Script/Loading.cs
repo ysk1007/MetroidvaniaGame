@@ -18,7 +18,7 @@ public class Loading : MonoBehaviour
     public GameObject FadeImg;
     public Fade_img fade;
     // Update is called once per frame
-    private void Awake()
+    void Awake()
     {
         instance = this;// 09-04 Ãß°¡ÇÔ
     }

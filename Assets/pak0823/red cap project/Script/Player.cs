@@ -221,7 +221,7 @@ public class Player : MonoBehaviour
             PlayerReposition();
         }
     }
-    private void OnDrawGizmos()
+    void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(Attackpos.position, box.size);
@@ -652,7 +652,7 @@ public class Player : MonoBehaviour
             JumpCnt = JumpCount;
         }
     }
-    private void OnCollisionExit2D(Collision2D collision)   //Player가 벽에 닿지 않을때
+    void OnCollisionExit2D(Collision2D collision)   //Player가 벽에 닿지 않을때
     {
         if (collision.gameObject.tag == "Wall") //벽에 붙어서 내려갈 때
         {
@@ -661,7 +661,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)  // 함정 구멍에 떨어졌을 경우 다시 리스폰
+    void OnTriggerEnter2D(Collider2D collision)  // 함정 구멍에 떨어졌을 경우 다시 리스폰
     {
         if (collision.gameObject.CompareTag("Respawn"))
         {
@@ -669,7 +669,7 @@ public class Player : MonoBehaviour
             spawnPoint = collision.transform.position;
         }
     }
-    private IEnumerator Sliding() //슬라이딩 실행
+    IEnumerator Sliding() //슬라이딩 실행
     {
         GameManager.GetComponent<Ui_Controller>().Sliding();
         Transform SlideTransform = transform.GetChild(4);
