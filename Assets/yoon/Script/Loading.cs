@@ -70,7 +70,7 @@ public class Loading : MonoBehaviour
         if (TipText != null) // TipText가 null이 아닌지 확인
         {
             string text = "#팁 : ";
-            int randNum = Random.Range(0, 4);
+            int randNum = Random.Range(0, 7);
             Debug.Log(randNum);
             switch (randNum)
             {
@@ -85,6 +85,15 @@ public class Loading : MonoBehaviour
                     break;
                 case 3:
                     text += "한 번 획득한 아이템은 다시 등장하지 않습니다.";
+                    break;
+                case 4:
+                    text += "선택한 숙련도 무기는 변경할 수 없습니다.";
+                    break;
+                case 5:
+                    text += "상점 주인은 돈이 많습니다.";
+                    break;
+                case 6:
+                    text += "한 대도 맞지 않고 엔딩을 본다면... 무슨 일이 일어날지도 모릅니다.";
                     break;
             }
             TipText.text = text;
