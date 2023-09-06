@@ -12,18 +12,19 @@ public class FadeEffect_Text : MonoBehaviour
     Scene_Move scene_Move;
     public AudioClip clip;
     public TextMeshProUGUI Text; //텍스트 컴포넌트를 담을 변수
-    bool SceneChange = false; //현재 씬을 전환중인가? 변수
+    public bool SceneChange = true; //현재 씬을 전환중인가? 변수
     public Fade_img fade;
     SoundManager sm;
     void Start()
     {
         scene_Move = GetComponent<Scene_Move>();
         StartCoroutine(FadeInOut()); //코루틴 시작
+        Invoke("FadeEnd", 2f);
     }
 
     void Update()
     {
-        if (Input.anyKeyDown && !SceneChange) //아무키나입력 받았을때, 현재 타이틀 화면일때, 씬 전환중이 아닐때
+        if (Input.anyKeyDown && !SceneChange && !SceneChange) //아무키나입력 받았을때, 현재 타이틀 화면일때, 씬 전환중이 아닐때
         {
             SceneChange = true; //씬 전환중 (중복으로 호출하는것을 방지)
             fade.CallFadeIn(); //Fade_img 스크립트의 CallFadeIn()함수를 호출함
@@ -81,5 +82,10 @@ public class FadeEffect_Text : MonoBehaviour
         sm.SFXPlay("PTB", clip);
         fadeSpeed = 6f;
         startDelay = 0.05f;
+    }
+
+    public void FadeEnd()
+    {
+        SceneChange = false;
     }
 }

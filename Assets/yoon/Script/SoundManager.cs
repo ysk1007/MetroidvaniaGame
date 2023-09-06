@@ -38,8 +38,11 @@ public class SoundManager : MonoBehaviour
         List<float> Volumes = new List<float>();
         Volumes = DataManager.instance.getVolume();
         SoundSlider ss = SoundSlider.instance;
-        ss.setting(Volumes[0], Volumes[1], Volumes[2]);
-        ss.SetMixer();
+        if (ss != null)
+        {
+            ss.setting(Volumes[0], Volumes[1], Volumes[2]);
+            ss.SetMixer();
+        }
     }
 
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)

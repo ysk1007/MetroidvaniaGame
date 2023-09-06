@@ -198,14 +198,14 @@ public class Proficiency_ui : MonoBehaviour
             case 2:
                 if (proLevel >= 1)
                 {
-                    Pro1SkillName.text = "일타이피";
-                    Pro1SkillText.text = "기본공격의 투사체가 1개 추가됩니다.";
+                    Pro1SkillName.text = "사냥꾼의 감각";
+                    Pro1SkillText.text = "기본공격이 적을 향해 추적해 날아갑니다. 지형관통 불가";
                     TextAligmentTopLeft(Pro1SkillText);
                 }
                 if (proLevel >= 2)
                 {
-                    Pro2SkillName.text = "사냥꾼의 감각";
-                    Pro2SkillText.text = "기본공격이 적을 향해 추적해 날아갑니다. 지형관통 불가";
+                    Pro2SkillName.text = "일타이피";
+                    Pro2SkillText.text = "기본공격의 투사체가 1개 추가됩니다.";
                     TextAligmentTopLeft(Pro2SkillText);
                 }
                 if (proLevel >= 3)
