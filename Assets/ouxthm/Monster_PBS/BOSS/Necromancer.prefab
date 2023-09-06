@@ -733,6 +733,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2108605223584269305}
     m_Modifications:
+    - target: {fileID: 5344230674285173720, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7166585527212770930, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -829,9 +833,21 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7166585528206624363, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
+      propertyPath: m_SortingOrder
+      value: -7
+      objectReference: {fileID: 0}
     - target: {fileID: 7166585528206624367, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
       propertyPath: m_Name
       value: Enemy_Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7993897850853330707, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1.076
+      objectReference: {fileID: 0}
+    - target: {fileID: 7993897850853330707, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 3.64
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}

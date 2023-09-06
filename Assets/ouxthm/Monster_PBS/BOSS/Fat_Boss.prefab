@@ -455,6 +455,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  loading: {fileID: 0}
   Enemy_Name: 
   AmIBoss: 0
   BossHpLine: 0
@@ -483,6 +484,7 @@ MonoBehaviour:
   atkFlipx: 0
   atkY: 0
   enemyHit: 0
+  alreadyRun: 0
   old_Speed: 0
   dTime: 0
   atkTime: 0
@@ -490,6 +492,7 @@ MonoBehaviour:
   endTime: 0
   axeUltHit: 0
   giveReward: 0
+  playerGoNext: 0
   scaleX: 0
   weaponTag: 
   Swordlevel: 0
@@ -715,13 +718,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6880025174734153314}
     m_Modifications:
+    - target: {fileID: 5344230674285173720, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7166585527212770930, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
       propertyPath: m_Layer
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7166585527212770930, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7166585527212770931, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 7.49
       objectReference: {fileID: 0}
     - target: {fileID: 7166585527562671008, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
       propertyPath: m_LocalScale.x
@@ -831,6 +842,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7166585528206624363, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
+      propertyPath: m_SortingOrder
+      value: -8
+      objectReference: {fileID: 0}
     - target: {fileID: 7166585528206624367, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
       propertyPath: m_Name
       value: Enemy_Canvas
@@ -842,6 +857,10 @@ PrefabInstance:
     - target: {fileID: 7166585528630806324, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
       propertyPath: m_Layer
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7993897850853330707, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 12.0966
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 888662e0b8d4b1949a4ece128f13ea35, type: 3}
