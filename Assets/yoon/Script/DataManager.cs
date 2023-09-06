@@ -48,9 +48,9 @@ public class OptionData
     public bool ViewCnema2 = false;
     public bool ViewCnema3 = false;
     public bool ViewCnema4 = false;
-   
+
     public List<float> getVolume()
-    { 
+    {
         List<float> Volumes = new List<float>();
         Volumes.Add(MasterVolume);
         Volumes.Add(BGMVolume);
@@ -155,7 +155,7 @@ public class DataManager : MonoBehaviour
 
     void Start()
     {
-        PlayerPath = Path.Combine(Application.dataPath+ "/Resources", "PlayerData.json");
+        PlayerPath = Path.Combine(Application.dataPath + "/Resources", "PlayerData.json");
         ItemPath = Path.Combine(Application.dataPath + "/Resources", "ItemData.json");
         SelectPath = Path.Combine(Application.dataPath + "/Resources", "UnlockSelectList.txt");
         ItemUlockPath = Path.Combine(Application.dataPath + "/Resources", "UnlockItemList.txt");
@@ -170,7 +170,7 @@ public class DataManager : MonoBehaviour
         {
             //Debug.Log("디버그 : 사용자 데이터 없음");
         }
-        else 
+        else
         {
             //Debug.Log("디버그 : 사용자 데이터 불러오는 중");
             PlayerloadJson = File.ReadAllText(PlayerPath);
@@ -288,7 +288,7 @@ public class DataManager : MonoBehaviour
                         }
                         break;
                     case "ProData":
-                        if(Proficiency_ui.instance != null)
+                        if (Proficiency_ui.instance != null)
                         {
                             //Debug.Log("프로 데이터 불러옴");
                             Proficiency_ui.instance.proWeaponIndex = saveData.proWeaponSellect;
@@ -411,13 +411,13 @@ public class DataManager : MonoBehaviour
         //Debug.Log("디버그 : 모든 데이터를 성공적으로 저장하였습니다");
     }
 
-    public void JsonSliderSave()
+    public void JsonSliderSave(float master, float bgm, float sfx)
     {
         OptionLoadJson = File.ReadAllText(OptionPath);
         OptionData optionSave = JsonUtility.FromJson<OptionData>(OptionLoadJson);
-        optionSave.MasterVolume = SoundSlider.instance.master_slider.value;
-        optionSave.BGMVolume = SoundSlider.instance.bgm_slider.value;
-        optionSave.SFXVolume = SoundSlider.instance.sfx_slider.value;
+        optionSave.MasterVolume = master;
+        optionSave.BGMVolume = bgm;
+        optionSave.SFXVolume = sfx;
         string optionJson = JsonUtility.ToJson(optionSave, true);
         File.WriteAllText(OptionPath, optionJson);
     }

@@ -1189,6 +1189,7 @@ MonoBehaviour:
   isSlide: 0
   isGround: 1
   isjump: 0
+  isWallJump: 0
   isSkill: 0
   isMasterSkill: 0
   isAttacking: 0
@@ -1262,9 +1263,9 @@ MonoBehaviour:
   - 0.1
   - 0.2
   selectLifeStillValue:
+  - 0.005
+  - 0.007
   - 0.01
-  - 0.02
-  - 0.03
   selectDefValue:
   - 10
   - 20

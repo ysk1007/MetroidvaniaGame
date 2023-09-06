@@ -56,6 +56,10 @@ public class MouseOnItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             }
             else
             {
+                if (MarketScript.instance != null && MarketScript.instance.MarketOpen)
+                {
+                    return;
+                }
                 Debug.Log("«ÿ¡¶");
                 GameManager.Instance.GetComponent<inven>().select_equip_slot();
                 MouseOn = false;

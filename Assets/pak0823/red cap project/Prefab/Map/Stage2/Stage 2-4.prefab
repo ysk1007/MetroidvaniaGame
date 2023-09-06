@@ -4072,7 +4072,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -9
+  m_SortingOrder: -5
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 2.78125, y: 1, z: 0}
   m_MaxChunkCount: 16
@@ -7772,7 +7772,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1663748615049300107, guid: 70087816558c0cf4fbbc7f71080a8bfa, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.2752317
+      value: -1.96
       objectReference: {fileID: 0}
     - target: {fileID: 1663748615049300107, guid: 70087816558c0cf4fbbc7f71080a8bfa, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8630,6 +8630,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8100478949914887139}
     m_Modifications:
+    - target: {fileID: -958463174240483420, guid: b9d307f16d2687449951db5795013bf6, type: 3}
+      propertyPath: Pos
+      value: 
+      objectReference: {fileID: 9156335694911161158}
     - target: {fileID: 1115617698149325403, guid: b9d307f16d2687449951db5795013bf6, type: 3}
       propertyPath: m_Name
       value: blackBoar (1)
@@ -8692,6 +8696,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8100478949914887139}
     m_Modifications:
+    - target: {fileID: -958463174240483420, guid: b9d307f16d2687449951db5795013bf6, type: 3}
+      propertyPath: Pos
+      value: 
+      objectReference: {fileID: 9156335694870645445}
     - target: {fileID: 1115617698149325403, guid: b9d307f16d2687449951db5795013bf6, type: 3}
       propertyPath: m_Name
       value: blackBoar

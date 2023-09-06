@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Missile : MonoBehaviour
 {
-    public float moveSpeed = 10f;
-    public float Damage = 20f;
+    public float moveSpeed = 25f;
+    public float Damage = 30f;
 
     private void Start()
     {

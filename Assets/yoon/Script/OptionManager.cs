@@ -50,6 +50,13 @@ public class OptionManager : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Escape))
             {
+                if (Loading.instance != null)
+                {
+                    if (Loading.instance.DoLoading)
+                    {
+                        return; 
+                    }
+                }
                 if (!open_option)
                 {
                     option_panel.SetActive(true);

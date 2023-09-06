@@ -102,6 +102,7 @@ public class StatisticsUi : MonoBehaviour
         {
             Instantiate(find[i], List.transform);
         }
+        OptionManager.instance.Playing = false;
         dm.DeleteJson();
     }
 

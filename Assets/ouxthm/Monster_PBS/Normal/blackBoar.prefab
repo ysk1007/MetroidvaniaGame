@@ -203,8 +203,8 @@ GameObject:
   - component: {fileID: 1115617698149325406}
   - component: {fileID: 1115617698149325407}
   - component: {fileID: 1115617698149325400}
-  - component: {fileID: 1115617698149325401}
   - component: {fileID: 1115617698149325402}
+  - component: {fileID: -958463174240483420}
   m_Layer: 10
   m_Name: blackBoar
   m_TagString: Enemy
@@ -289,114 +289,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eb73bd1845574e498d560ec58b9966b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monster: {fileID: 1115617698149325401}
+  monster: {fileID: -958463174240483420}
   target: {fileID: 0}
---- !u!114 &1115617698149325401
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1115617698149325403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90331d9158faad740b4453cc939e831e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  Enemy_Name: 
-  AmIBoss: 0
-  BossHpLine: 0
-  Stage: 0
-  Enemy_Mod: 0
-  Enemy_HP: 0
-  Enemy_HPten: 0
-  Enemy_Power: 0
-  Enemy_Speed: 0
-  Enemy_Atk_Speed: 0
-  Attacking: 0
-  Gap_Distance_X: 0
-  Gap_Distance_Y: 0
-  Enemy_Sensing_X: 0
-  Enemy_Sensing_Y: 0
-  Enemy_Range_X: 0
-  Enemy_Range_Y: 0
-  Pdamage: 0
-  Bump_Power: 0
-  atkDelay: 0
-  nextDirX: 0
-  nextDirY: 0
-  Dying: 0
-  Enemy_Dying_anim_Time: 0
-  atkX: 0
-  atkFlipx: 0
-  atkY: 0
-  enemyHit: 0
-  old_Speed: 0
-  dTime: 0
-  atkTime: 0
-  Attacker: 0
-  endTime: 0
-  axeUltHit: 0
-  giveReward: 0
-  scaleX: 0
-  weaponTag: 
-  Swordlevel: 0
-  selectWeapon: 0
-  bleedLevel: 0
-  slashBleedLevel: 0
-  bleedingDamage: 0
-  bleedingTime: 0
-  bloodBoomDmg: 0
-  turning: 0
-  atkPattern: 0
-  playerLoc: 0
-  enemyLoc: 0
-  bossLoc: 0
-  myLocY: 0
-  bossMoving: 0
-  Enemy_Left: 0
-  Hit_Set: 0
-  boarLoc: 0
-  hiteff: {fileID: 5284812379320055701, guid: 575e99c42061c9642b56a8dafa63c14e, type: 3}
-  blood: {fileID: 7614696593688231732, guid: 2da69be80ef7a1344bde5bf47d8105db, type: 3}
-  SoulFloor: {fileID: 0}
-  Rock: {fileID: 0}
-  CaninePb: {fileID: 0}
-  Split_Slime: {fileID: 0}
-  fire: {fileID: 0}
-  ProObject: {fileID: 0}
-  PObject: {fileID: 0}
-  Pos: {fileID: 1115617698149325405}
-  arrow: {fileID: 0}
-  slash: {fileID: 0}
-  BossPage: 0
-  GolemPattern: 010000000200000003000000040000000500000006000000
-  Pattern: 
-  LastPattern: 0
-  TeleportPos: []
-  ThornPos: []
-  LaserPos: []
-  CircleMissilePB: {fileID: 0}
-  MissilePB: {fileID: 0}
-  ThornPB: {fileID: 0}
-  LaserPB: {fileID: 0}
-  MagicArrowPB: {fileID: 0}
-  PunchEfc: {fileID: 0}
-  TeleportEfc: {fileID: 0}
-  MissileCount: 0
-  CircleMissileCount: 0
-  ThornCount: 0
-  CircleMissileShoot: 0
-  PunchCount: 1
-  MagicArrowCount: 0
-  PunchCharge: {fileID: 0}
-  Thunder: {fileID: 0}
-  PageAnimators: []
-  WaringArea: []
-  TargetFind: 0
-  BossCenter: {fileID: 0}
-  watching: 0
 --- !u!82 &1115617698149325402
 AudioSource:
   m_ObjectHideFlags: 0
@@ -493,6 +387,115 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-958463174240483420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1115617698149325403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95102c61fc6384544b986494df714d2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  loading: {fileID: 0}
+  Enemy_Name: 
+  AmIBoss: 0
+  BossHpLine: 0
+  Stage: 0
+  Enemy_Mod: 0
+  Enemy_HP: 0
+  Enemy_HPten: 0
+  Enemy_Power: 0
+  Enemy_Speed: 0
+  Enemy_Atk_Speed: 0
+  Attacking: 0
+  Gap_Distance_X: 0
+  Gap_Distance_Y: 0
+  Enemy_Sensing_X: 0
+  Enemy_Sensing_Y: 0
+  Enemy_Range_X: 0
+  Enemy_Range_Y: 0
+  Pdamage: 0
+  Bump_Power: 0
+  atkDelay: 0
+  nextDirX: 0
+  nextDirY: 0
+  Dying: 0
+  Enemy_Dying_anim_Time: 0
+  atkX: 0
+  atkFlipx: 0
+  atkY: 0
+  enemyHit: 0
+  alreadyRun: 0
+  old_Speed: 0
+  dTime: 0
+  atkTime: 0
+  Attacker: 0
+  endTime: 0
+  axeUltHit: 0
+  giveReward: 0
+  playerGoNext: 0
+  scaleX: 0
+  weaponTag: 
+  Swordlevel: 0
+  selectWeapon: 0
+  bleedLevel: 0
+  slashBleedLevel: 0
+  bleedingDamage: 0
+  bleedingTime: 0
+  bloodBoomDmg: 0
+  turning: 0
+  atkPattern: 0
+  playerLoc: 0
+  enemyLoc: 0
+  bossLoc: 0
+  myLocY: 0
+  bossMoving: 0
+  Enemy_Left: 0
+  Hit_Set: 0
+  boarLoc: 0
+  hiteff: {fileID: 0}
+  blood: {fileID: 0}
+  SoulFloor: {fileID: 0}
+  Rock: {fileID: 0}
+  CaninePb: {fileID: 0}
+  Split_Slime: {fileID: 0}
+  fire: {fileID: 0}
+  ProObject: {fileID: 0}
+  PObject: {fileID: 0}
+  Pos: {fileID: 0}
+  arrow: {fileID: 0}
+  slash: {fileID: 0}
+  BossPage: 0
+  GolemPattern: 010000000200000003000000040000000500000006000000
+  Pattern: 
+  LastPattern: 1
+  TeleportPos: []
+  ThornPos: []
+  LaserPos: []
+  CircleMissilePB: {fileID: 0}
+  MissilePB: {fileID: 0}
+  ThornPB: {fileID: 0}
+  LaserPB: {fileID: 0}
+  MagicArrowPB: {fileID: 0}
+  PunchEfc: {fileID: 0}
+  TeleportEfc: {fileID: 0}
+  MissileCount: 0
+  CircleMissileCount: 0
+  ThornCount: 0
+  CircleMissileShoot: 0
+  PunchCount: 1
+  MagicArrowCount: 0
+  PunchCharge: {fileID: 0}
+  Thunder: {fileID: 0}
+  PageAnimators: []
+  WaringArea: []
+  TargetFind: 0
+  BossCenter: {fileID: 0}
+  watching: 0
 --- !u!1001 &1115617698694057802
 PrefabInstance:
   m_ObjectHideFlags: 0

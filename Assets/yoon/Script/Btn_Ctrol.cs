@@ -42,7 +42,7 @@ public class Btn_Ctrol : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.DownArrow)&& !OptionPanel.activeSelf)
+        if (Input.GetKeyUp(KeyCode.DownArrow)&& !OptionManager.instance.option_panel.activeSelf)
         {
             if (currentIndex == buttons.Length - 1)
             {
@@ -60,7 +60,7 @@ public class Btn_Ctrol : MonoBehaviour
                 }
             }
         }
-        else if (Input.GetKeyUp(KeyCode.UpArrow) && !OptionPanel.activeSelf)
+        else if (Input.GetKeyUp(KeyCode.UpArrow) && !OptionManager.instance.option_panel.activeSelf )
         {
             if (currentIndex == 0)
             {
@@ -78,7 +78,7 @@ public class Btn_Ctrol : MonoBehaviour
                 }
             }
         }
-        else if (Input.GetKeyUp(KeyCode.Return) && !OptionPanel.activeSelf)
+        else if (Input.GetKeyUp(KeyCode.Return) && !OptionManager.instance.option_panel.activeSelf )
         {
             BtnFunction(currentIndex);
         }

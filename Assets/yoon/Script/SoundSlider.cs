@@ -22,7 +22,7 @@ public class SoundSlider : MonoBehaviour
         SetMasterVolume(master_slider.value);
         SetBgmVolume(bgm_slider.value);
         SetSfxVolume(sfx_slider.value);
-        DataManager.instance.JsonSliderSave();
+        DataManager.instance.JsonSliderSave(master_slider.value, bgm_slider.value, sfx_slider.value);
     }
 
     public void SetMasterVolume(float sliderValue)
@@ -40,7 +40,7 @@ public class SoundSlider : MonoBehaviour
         mixer.SetFloat("SFX", Mathf.Log10(sliderValue) * 20);
     }
 
-    public void setting(float Master,float Bgm, float Sfx)
+    public void setting(float Master, float Bgm, float Sfx)
     {
         master_slider.value = Master;
         bgm_slider.value = Bgm;
@@ -55,4 +55,3 @@ public class SoundSlider : MonoBehaviour
         SetSfxVolume(sfx_slider.value);
     }
 }
-

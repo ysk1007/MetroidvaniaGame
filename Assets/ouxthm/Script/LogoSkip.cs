@@ -31,10 +31,10 @@ public class LogoSkip : MonoBehaviour
             {
                 Invoke("GO_Ingame_Scene", 1.5f);      // 인게임 씬으로 이동
             }
-            else
+            /*else
             {
                 Invoke("GO_Title_Scene", 1.5f);      // 타이틀 씬으로 이동
-            }
+            }*/
         }
     }
 

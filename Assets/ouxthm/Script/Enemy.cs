@@ -1230,7 +1230,7 @@ public abstract class Enemy : MonoBehaviour
         SoulEff Se = Soul.GetComponent<SoulEff>();
 
         Se.Time = endTime;
-        Se.Power = 40f;
+        Se.Power = 50f;
         Se.Dir = nextDirX;
        
     }
@@ -1240,7 +1240,7 @@ public abstract class Enemy : MonoBehaviour
         SoulEff Se1 = Soul1.GetComponent<SoulEff>();
 
         Se1.Time = endTime;
-        Se1.Power = 40f;
+        Se1.Power = 50f;
         Se1.Dir = nextDirX;
     }
 
@@ -1250,7 +1250,7 @@ public abstract class Enemy : MonoBehaviour
         SoulEff Se2 = Soul2.GetComponent<SoulEff>();
 
         Se2.Time = endTime;
-        Se2.Power = 40f;
+        Se2.Power = 50f;
         Se2.Dir = nextDirX;
         turning = true;
     }
@@ -1626,7 +1626,7 @@ public abstract class Enemy : MonoBehaviour
         bleedingDamage = player.bleedDamage;
         bloodBoomDmg = Player.bloodBoomDmg;
 
-        if (Enemy_HP < 4000 && BossPage < 1)
+        if (Enemy_HP < 5000 && BossPage < 1)
         {
             BossPage++;
             bossBox.enabled = false;
@@ -1638,7 +1638,7 @@ public abstract class Enemy : MonoBehaviour
             bossMoving = true;
         }
 
-        if (Enemy_HP < 2500 && BossPage < 2)
+        if (Enemy_HP < 2000 && BossPage < 2)
         {
             BossPage++;
             bossBox.enabled = false;
