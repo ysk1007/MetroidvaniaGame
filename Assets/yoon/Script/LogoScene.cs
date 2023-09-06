@@ -16,6 +16,7 @@ public class LogoScene : MonoBehaviour
         else
         {
             Invoke("SceneMove", 13f);
+            DataManager.instance.CreateOptionJson();
         }
     }
 

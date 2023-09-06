@@ -19,6 +19,7 @@ public class SoundSlider : MonoBehaviour
 
     private void Start()
     {
+        //DataManager.instance.CreateOptionJson();
         List<float> Volumes = new List<float>();
         Volumes = DataManager.instance.getVolume();
         setting(Volumes[0], Volumes[1], Volumes[2]);
