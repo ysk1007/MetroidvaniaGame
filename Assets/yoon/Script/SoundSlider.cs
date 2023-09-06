@@ -12,7 +12,7 @@ public class SoundSlider : MonoBehaviour
     public Slider sfx_slider;
     public Slider master_slider;
 
-    void Start()
+    void Awake()
     {
         instance = this;
     }

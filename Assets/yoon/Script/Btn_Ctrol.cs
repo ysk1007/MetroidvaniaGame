@@ -137,7 +137,10 @@ public class Btn_Ctrol : MonoBehaviour
                     break;
                 }
             case 2:
-                OptionPanel.SetActive(true);
+                if (OptionManager.instance != null)
+                {
+                    OptionManager.instance.option_panel.SetActive(true);
+                }
                 break;
             case 3:
                 Debug.Log("게임 종료");

@@ -17,7 +17,7 @@ public class Club : itemStatus
         data.itemExplanation = "훌륭한 대화수단";
         data.itemStat = "공격력 +3 \n최대체력 +10";
         data.itemNumber = 2;
-        data.AtkPower = 5;
+        data.AtkPower = 3;
         data.MaxHp = 10;
     }
 

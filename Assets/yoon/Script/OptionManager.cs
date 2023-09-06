@@ -21,7 +21,15 @@ public class OptionManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(instance);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
 
@@ -36,6 +44,7 @@ public class OptionManager : MonoBehaviour
     {
         if (Playing)
         {
+            Timer.SetActive(true);
             TotalPlayTime += Time.deltaTime;
             UpdateTimerText();
 
@@ -53,6 +62,10 @@ public class OptionManager : MonoBehaviour
                     open_option = false;
                 }
             }
+        }
+        else
+        {
+            Timer.SetActive(false);
         }
     }
 

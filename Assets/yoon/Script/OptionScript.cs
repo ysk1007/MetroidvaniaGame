@@ -57,7 +57,10 @@ public class OptionScript : MonoBehaviour
     public void GameExit()
     {
         CheckScreenOff();
-        Loading_Screen.GetComponent<Loading>().Load();
+        if (Loading.instance != null)
+        {
+            Loading.instance.Load();
+        }
         OptionManager.instance.Playing = false;
         OptionManager.instance.Timer.SetActive(false);
         OptionManager.instance.Stacks.SetActive(false);

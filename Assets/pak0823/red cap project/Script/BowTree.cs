@@ -25,7 +25,7 @@ public class BowTree : MonoBehaviour
 
     public void Start()
     {
-        Dmg = Dmg + (player.AtkPower + player.GridPower) * 0.5f;
+        Dmg = Dmg + (player.AtkPower + player.GridPower + player.VulcanPower) * 0.5f;
     }
     void Update()
     {
@@ -58,9 +58,8 @@ public class BowTree : MonoBehaviour
 
     void TreeDamage()
     {
-        Debug.Log("g");
         enemiesInRange = enemyColliders
-            .Where(x => x != null && x.tag == "Enemy") // 존재하면서 "Enemy" 태그인 게임오브젝트를 추출
+            .Where(x => x != null && x.tag == "Enemy" || x.tag == "Boss") // 존재하면서 "Enemy" 및 "Boss" 태그인 게임오브젝트를 추출
             .Select(x => x.GetComponent<Enemy>()) // 추출된 게임오브젝트에서 Enemy 스크립트 컴포넌트를 가져와 리스트에 저장
             .Distinct() // 중복된 Enemy 컴포넌트 제거
             .ToList();

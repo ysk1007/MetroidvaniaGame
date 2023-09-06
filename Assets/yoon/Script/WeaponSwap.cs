@@ -6,6 +6,7 @@ using TMPro;
 
 public class WeaponSwap : MonoBehaviour
 {
+    public static WeaponSwap instance;
     public Player player;
     public GameObject WeaponUi;
     public Image[] images;
@@ -32,13 +33,11 @@ public class WeaponSwap : MonoBehaviour
     public float SwapremainTime = 0f;
     public float UltremainTime = 0f;
 
+    public bool DoSwap = false;
     public bool swaping = false;
     public bool skilling = false;
     public bool[] Weapon_skilling = { false,false,false };
     public bool ultting = false;
-
-    public bool ableExe = false;
-    public bool ableBow = false;
 
     public Image img_Swap_coolTime;
     public Image Sword_Skill_coolTime;
@@ -57,7 +56,7 @@ public class WeaponSwap : MonoBehaviour
     float _upSizeTime = 0.1f;
     private void Awake()
     {
-        if (!ableExe && !ableBow) Tab_key.enabled = false;
+        instance = this;
         images = WeaponUi.GetComponentsInChildren<Image>();
         images[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = true;
         skills[currentWeaponIndex].SetActive(true);
@@ -84,27 +83,11 @@ public class WeaponSwap : MonoBehaviour
             LockImage.SetActive(false);
             Ult_onAnim.SetActive(true);
         }
-        if (ableExe || ableBow) 
-            Tab_key.enabled = true;
-        if (!ableExe && !ableBow)
+        if (DoSwap && !swaping && !player.isCharging && !player.isSkill && !player.isMasterSkill)
         {
-            Tab_key.enabled = false;
-            images[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = false;
-            skills[currentWeaponIndex].SetActive(false);
-            UltSkills[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = false;
-            currentWeaponIndex = 0;
-            images[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = true;
-            skills[currentWeaponIndex].SetActive(true);
-            UltSkills[currentWeaponIndex].gameObject.GetComponent<Image>().enabled = true;
-        }
-        if (Input.GetKeyDown(KeyCode.Tab) && !swaping && ableExe && !player.isCharging && !player.isSkill && !player.isMasterSkill)
-        {
+            DoSwap = false;
             currentWeaponIndex++;
 
-            if (currentWeaponIndex == 2 && !ableBow)
-            {
-                currentWeaponIndex = 0;
-            }
             // 인덱스 값이 이미지 개수를 초과하면 처음 이미지로 돌아갑니다.
             if (currentWeaponIndex >= images.Length)
             {

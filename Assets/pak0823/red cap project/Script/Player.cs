@@ -474,6 +474,7 @@ public class Player : MonoBehaviour
                     WeaponChage = 1;
                     this.transform.GetChild(0).gameObject.SetActive(true);
                 }
+                WeaponSwap.instance.DoSwap = true;
             }
         }
     }
