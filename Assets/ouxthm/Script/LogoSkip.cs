@@ -29,7 +29,7 @@ public class LogoSkip : MonoBehaviour
             StartCoroutine(Logo_FadeOut());
             if (story)
             {
-                Invoke("GO_Ingame_Scene", 3f);      // 인게임 씬으로 이동
+                Invoke("GO_Ingame_Scene", 4f);      // 인게임 씬으로 이동
             }
             /*else
             {

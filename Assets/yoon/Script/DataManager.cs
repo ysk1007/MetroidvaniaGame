@@ -500,22 +500,30 @@ public class DataManager : MonoBehaviour
 
     public void CreateOptionJson()
     {
-        OptionData optionData = new OptionData();
+        string filePath = Path.Combine(Application.dataPath + "/Resources", "OptionData.txt");
+        if (File.Exists(filePath))
+        {
+            return;
+        }
+        else
+        {
+            OptionData optionData = new OptionData();
 
-        //Debug.Log("디버그 : 사운드 데이터 생성 중");
-        optionData.MasterVolume = 0.5f;
-        optionData.BGMVolume = 0.5f;
-        optionData.SFXVolume = 0.5f;
-        //Debug.Log("디버그 : 사운드 데이터 생성 완료");
+            //Debug.Log("디버그 : 사운드 데이터 생성 중");
+            optionData.MasterVolume = 0.5f;
+            optionData.BGMVolume = 0.5f;
+            optionData.SFXVolume = 0.5f;
+            //Debug.Log("디버그 : 사운드 데이터 생성 완료");
 
-        optionData.ViewMarketCnema = false;
-        optionData.ViewCnema1 = false;
-        optionData.ViewCnema2 = false;
-        optionData.ViewCnema3 = false;
-        optionData.ViewCnema4 = false;
+            optionData.ViewMarketCnema = false;
+            optionData.ViewCnema1 = false;
+            optionData.ViewCnema2 = false;
+            optionData.ViewCnema3 = false;
+            optionData.ViewCnema4 = false;
 
-        string OptionJson = JsonUtility.ToJson(optionData, true);
-        File.WriteAllText(OptionPath, OptionJson);
+            string OptionJson = JsonUtility.ToJson(optionData, true);
+            File.WriteAllText(OptionPath, OptionJson);
+        }
     }
 
     public void CreateSelectJson()
