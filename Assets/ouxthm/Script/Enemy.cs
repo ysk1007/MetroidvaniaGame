@@ -307,7 +307,7 @@ public abstract class Enemy : MonoBehaviour
         bleedingTime = 0f;
         hit_bloodTrans = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
         Pos = GetComponent<Transform>();
-        Think();
+        StartCoroutine(Think());
         if(Enemy_Mod == 7)
         {
             PObject = this.gameObject.transform.GetChild(0).GetComponent<Transform>();
@@ -495,10 +495,9 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    void Think() // 자동으로 다음 방향을 정하는 코루틴
+    IEnumerator Think() // 자동으로 다음 방향을 정하는 코루틴
     {
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
-
         nextDirX = Random.Range(-1, 2);     // 적의 X방향 랜덤( -1 ~ 1)
         if(Enemy_Mod == 3)
         {
@@ -510,21 +509,25 @@ public abstract class Enemy : MonoBehaviour
             spriteRenderer.flipX = true;       // nextDirX의 값이 1이면 x축을 flip함
         }
         // 재귀
-        float nextThinkTime = Random.Range(2f, 5f);
-        Invoke("Think", nextThinkTime);
+        float nextThinkTime = Random.Range(3f, 6f);
+        yield return new WaitForSeconds(nextThinkTime);
+        StartCoroutine(Think());
     }
 
     void Turn() // 이미지를 뒤집는 코루틴
     {
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
-
+        if (Dying)
+        {
+            return;
+        }
         nextDirX *= -1;   // nextDirX에 -1을 곱해 방향전환
         if (nextDirX == 1 && Gap_Distance_X > Enemy_Sensing_X && !Dying)  // Gap_Distance > Enemy_Attack_Range를 추가하지 않으면 플레이어가 사거리 내에 있고 rayHit=null이라면 제자리 돌기함
         {
             spriteRenderer.flipX = true; // nextDirX 값이 1이면 x축을 flip함
         }
         StopAllCoroutines();
-        Think();
+        StartCoroutine(Think());
     }
 
     public void bleeding()  // 도트데미지 주는 함수
@@ -546,16 +549,17 @@ public abstract class Enemy : MonoBehaviour
                     Enemy_HP = 0f;
                 }
             }
-            if (Enemy_HP < 0)
+            if (Enemy_HP < 0 && !Dying)
             {
-                StartCoroutine(Die());
+                return;
+                //StartCoroutine(Die());
             }
         }
         else if (bleedingTime < 0)
         {
             bleedLevel = 0;
         }
-        if (this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
+        /*if (this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
         {
             StartCoroutine(Die());
 
@@ -563,7 +567,7 @@ public abstract class Enemy : MonoBehaviour
             {
                 return;
             }
-        }
+        }*/
         Invoke("bleeding", 1f);
 
     }
@@ -585,7 +589,15 @@ public abstract class Enemy : MonoBehaviour
         {
             yield break;
         }
-        if (AmIBoss && Stage == 3)
+        if(AmIBoss && Stage == 1)
+        {
+            gameObject.GetComponentInChildren<EnemySounds>().OrcHit(); 
+        }
+        else if(AmIBoss && Stage == 2)
+        {
+            gameObject.GetComponentInChildren<EnemySounds>().NecHit();
+        }
+        else if (AmIBoss && Stage == 3)
         {
             gameObject.GetComponentInChildren<EnemySounds>().GolemHit();
         }
@@ -849,7 +861,7 @@ public abstract class Enemy : MonoBehaviour
                     spriteRenderer.flipX = true;
                     if (Attacker)
                     {
-                        Vector2 resHeight = new Vector2(-1.5f, 1f);
+                        Vector2 resHeight = new Vector2(-1.5f, 0.7f);
                         Vector2 playerPoint = (Vector2)target.transform.position + resHeight;   // 플레이어와 겹쳐서 공격하는 것을 방지하기 위해 새로운 지점을 정의함
                         transform.position = Vector2.MoveTowards(transform.position, playerPoint, Enemy_Speed * Time.deltaTime);   // resHeight를 더해주어 플레이어의 아래에서 공격하지 않도록 했음
                         if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && target.position.y + 1 <= transform.position.y)
@@ -915,7 +927,7 @@ public abstract class Enemy : MonoBehaviour
                     spriteRenderer.flipX = false;
                     if (Attacker)
                     {
-                        Vector2 resHeight = new Vector2(1.5f, 1f);
+                        Vector2 resHeight = new Vector2(1.5f, 0.7f);
                         Vector2 playerPoint = (Vector2)target.transform.position + resHeight;       // 플레이어와 겹쳐서 공격하는 것을 방지하기 위해 새로운 지점을 정의함(Vector2를 정의하여 +를 쓸 때 Vector2인지 3인지 모호하지 않게 함)
                         transform.position = Vector2.MoveTowards(transform.position, playerPoint, Enemy_Speed * Time.deltaTime);
                         if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false && target.position.y + 1 <= transform.position.y) // 타겟의 위치에 2.5f를 더해서 Bee가 플레이어의 아래쪽에서 공격하는 것을 방지
@@ -948,18 +960,18 @@ public abstract class Enemy : MonoBehaviour
             // Enemy의 한 칸 앞의 값을 얻기 위해 자기 자신의 위치 값에 (x)에 + nextDirX값을 더하고 1.2f를 곱한다.
             Vector2 frontVec = new Vector2(rigid.position.x + nextDirX * 1.2f, rigid.position.y);
 
-            Debug.DrawRay(frontVec, Vector3.down * 3f, new Color(0, 1, 0));
+            Debug.DrawRay(frontVec, Vector3.down * 2.5f, new Color(0, 1, 0));
 
             // 레이저를 아래로 쏘아서 실질적인 레이저 생성(물리기반), LayMask.GetMask("")는 해당하는 레이어만 스캔함
-            rayHit = Physics2D.Raycast(frontVec, Vector3.down, 2, LayerMask.GetMask("Tilemap", "Pad", "wall"));
-            if (rayHit.collider == null && Enemy_HP >= 0 && !Dying)
+            rayHit = Physics2D.Raycast(frontVec, Vector3.down, 2.5f, LayerMask.GetMask("Tilemap", "Pad", "wall"));
+            if (rayHit.collider == null && Enemy_HP >= 0)
             {
                 Turn();
             }
-            else if (rayHit.collider == null && Enemy_HP < 0 && !Dying)
+            /*else if (rayHit.collider == null && Enemy_HP < 0 && !Dying)
             {
                 StartCoroutine(Die());
-            }
+            }*/
         }
     }
 
