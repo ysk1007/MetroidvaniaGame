@@ -256,7 +256,6 @@ public class DataManager : MonoBehaviour
                             SoundSlider.instance.master_slider.value = optionData.MasterVolume;
                             SoundSlider.instance.bgm_slider.value = optionData.BGMVolume;
                             SoundSlider.instance.sfx_slider.value = optionData.SFXVolume;
-                            SoundManager.instance.SliderSetting();
                             //Debug.Log("디버그 : 사운드 데이터 로드 완료");
                         }
                         break;
@@ -433,7 +432,6 @@ public class DataManager : MonoBehaviour
             SoundSlider.instance.master_slider.value = optionData.MasterVolume;
             SoundSlider.instance.bgm_slider.value = optionData.BGMVolume;
             SoundSlider.instance.sfx_slider.value = optionData.SFXVolume;
-            SoundManager.instance.SliderSetting();
             //Debug.Log("디버그 : 사운드 데이터 로드 완료");
         }
     }
@@ -505,9 +503,9 @@ public class DataManager : MonoBehaviour
         OptionData optionData = new OptionData();
 
         //Debug.Log("디버그 : 사운드 데이터 생성 중");
-        optionData.MasterVolume = 1.0f;
-        optionData.BGMVolume = 1.0f;
-        optionData.SFXVolume = 1.0f;
+        optionData.MasterVolume = 0.5f;
+        optionData.BGMVolume = 0.5f;
+        optionData.SFXVolume = 0.5f;
         //Debug.Log("디버그 : 사운드 데이터 생성 완료");
 
         optionData.ViewMarketCnema = false;

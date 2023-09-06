@@ -19,11 +19,11 @@ public class Player : MonoBehaviour
     public float jumpPower; //Jump 높이 저장 변수
     public float SpeedChange; // Move 속도변경 저장 변수
     public float curTime, coolTime = 2;  // 연속공격이 가능한 시간
-    public float[] MasterSkillTime = { 60, 120, 90 };   //무기별 숙련도 스킬 쿨타임
+    public float[] MasterSkillTime = { 40, 90, 45 };   //무기별 숙련도 스킬 쿨타임
     public float Sword_MsTime, Axe_MsTime, Bow_MsTime;  // 무기별 숙련도 스킬 쿨타임 적용
-    public float[] SkillTime = { 20, 30, 15 }; // 무기별 기본스킬 쿨타임
+    public float[] SkillTime = { 12, 20, 10 }; // 무기별 기본스킬 쿨타임
     public float Sword_SkTime, Axe_SkTime, Bow_SkTime;  // 무기별 기본스킬 쿨타임 적용
-    public float[] WeaponsDmg = { 1, 1.2f, 0.5f }; //무기별 공격력 비례 칼, 도끼, 활
+    public float[] WeaponsDmg = { 0.65f, 1.2f, 0.8f }; //무기별 공격력 비례 칼, 도끼, 활
     public bool isdelay = false;    //공격 딜레이 체크
     public bool isSlide = false;     //슬라이딩 체크
     public bool isGround = true;    //Player가 땅인지 아닌지 체크
@@ -188,7 +188,7 @@ public class Player : MonoBehaviour
         JumpCnt = JumpCount;    //시작시 점프 가능 횟수 적용
         SpeedChange = 5;  //시작시 기본 이동속도
         jumpPower = 15; //기본 점프높이
-        ATP = 15; // 기본 공격 대미지
+        ATP = 10; // 기본 공격 대미지
         audio = GetComponent<AudioSource>();
         Attackpos = transform.GetChild(0).GetComponentInChildren<Transform>(); //attackRange의 위치값을 pos에 저장
         Arrowpos = transform.GetChild(1).GetComponentInChildren<Transform>(); //Arrowpos의 위치값을 pos에 저장

@@ -17,6 +17,15 @@ public class SoundSlider : MonoBehaviour
         instance = this;
     }
 
+    private void Start()
+    {
+        List<float> Volumes = new List<float>();
+        Volumes = DataManager.instance.getVolume();
+        setting(Volumes[0], Volumes[1], Volumes[2]);
+        SetMixer();
+        gameObject.SetActive(false);
+    }
+
     private void FixedUpdate()
     {
         SetMasterVolume(master_slider.value);
@@ -45,7 +54,6 @@ public class SoundSlider : MonoBehaviour
         master_slider.value = Master;
         bgm_slider.value = Bgm;
         sfx_slider.value = Sfx;
-        gameObject.SetActive(false);
     }
 
     public void SetMixer()
