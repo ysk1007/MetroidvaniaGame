@@ -273,7 +273,16 @@ public abstract class Enemy : MonoBehaviour
             animator.SetBool("Idle", true);
             Enemy_Speed = 0f;
         }
-        orcDie();
+        
+        if(Enemy_HP <= 0 && !Dying)
+        {
+            Dying = true;
+            orcDie();
+        }
+        if (Dying)
+        {
+            gameObject.transform.Translate(Vector2.down * Time.deltaTime * 5);
+        }
     }
 
     public virtual void Boar(Transform target)  // boar용
@@ -379,6 +388,14 @@ public abstract class Enemy : MonoBehaviour
             {
                 StopRush();
             }
+        }
+
+    }
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            Turn();
         }
     }
 
@@ -509,7 +526,7 @@ public abstract class Enemy : MonoBehaviour
             spriteRenderer.flipX = true;       // nextDirX의 값이 1이면 x축을 flip함
         }
         // 재귀
-        float nextThinkTime = Random.Range(3f, 6f);
+        float nextThinkTime = Random.Range(3f, 5f);
         yield return new WaitForSeconds(nextThinkTime);
         StartCoroutine(Think());
     }
@@ -1465,10 +1482,8 @@ public abstract class Enemy : MonoBehaviour
         Proficiency_ui pro = GameManager.Instance.GetComponent<Proficiency_ui>(); // 숙련도 추가함
         if (Enemy_HP <= 0)
         {
-            gameObject.transform.Translate(Vector2.down * Time.deltaTime * 5);
             if (Dying)
             {
-                Dying = false;
                 Player.instance.FirstMaterial = true;
                 BossSpriteBox.enabled = false;
                 rigid.isKinematic = true;
@@ -1488,6 +1503,10 @@ public abstract class Enemy : MonoBehaviour
 
     void OrcAttack()    // orc 보스의 공격 패턴
     {
+        if (Dying)
+        {
+            return;
+        }
         switch (atkPattern)
         {
             case 1:
