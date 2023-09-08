@@ -18,9 +18,9 @@ public class LoveLetter : itemStatus
         data.itemExplanation = "고백으로 혼내주자!";
         data.itemStat = "공격력 +4\n데미지 +8%\n공격속도 +6%";
         data.itemNumber = 33;
-        data.AtkPower = 10;
-        data.DmgIncrease = 0.1f;
-        data.AtkSpeed = 0.1f;
+        data.AtkPower = 4;
+        data.DmgIncrease = 0.08f;
+        data.AtkSpeed = 0.06f;
     }
 
     public override void SpecialPower()
