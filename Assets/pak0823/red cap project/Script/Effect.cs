@@ -29,7 +29,7 @@ public class Effect : MonoBehaviour
 
     private void Awake()
     {
-        player = Player.instance.GetComponent<Player>();
+        player = Player.instance;
         Dmg = (player.ATP + player.AtkPower + player.GridPower + player.VulcanPower) * 2.5f;
     }
 
@@ -62,7 +62,6 @@ public class Effect : MonoBehaviour
 
             }
 
-
             if (player.isSkill == true)
                 isSkill = true;
             else
@@ -94,9 +93,7 @@ public class Effect : MonoBehaviour
                     StartCoroutine(MasterSkill());
                 }
             }
-            if (PlayerWeapon == 3)
-                Desrtory();
-
+                
             if (player.proSelectWeapon == 0 && player.proLevel >= 2)  // 출혈이 있는 몬스터를 리스트에 저장
             {
                 player.enemy = collision.GetComponent<Enemy>();

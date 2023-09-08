@@ -20,7 +20,6 @@ public class BowTree : MonoBehaviour
     {
         player = Player.instance;
         audio = GetComponent<AudioSource>();
-        player = Player.instance;
     }
 
     public void Start()
@@ -63,9 +62,10 @@ public class BowTree : MonoBehaviour
             .Select(x => x.GetComponent<Enemy>()) // 추출된 게임오브젝트에서 Enemy 스크립트 컴포넌트를 가져와 리스트에 저장
             .Distinct() // 중복된 Enemy 컴포넌트 제거
             .ToList();
-
+        
         foreach (Enemy enemy in enemiesInRange) // 감지된 모든 적에게 데미지 입힘
         {
+            Debug.Log(enemy);
             StartCoroutine(enemy.Hit(Dmg));
         }
         delay = 0.5f;

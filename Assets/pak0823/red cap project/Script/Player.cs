@@ -368,9 +368,9 @@ public class Player : MonoBehaviour
             }
             if (WeaponChage == 3 && Bow_SkTime <= 0)    //Bow
             {
+                isSkill = true;
                 StartCoroutine(Skill());
                 Bow_SkTime = DeCoolTimeCarcul(SkillTime[2]); //스킬쿨 수정함
-                isSkill = true;
             }
         }
         if (Sword_SkTime >= 0)   //Sword 스킬 쿨타임 
@@ -573,11 +573,10 @@ public class Player : MonoBehaviour
         {
             if (enemyColliders != null)
             {
-                //Debug.Log(enemyColliders);
                 isMasterSkill = true;
                 GameManager.GetComponent<WeaponSwap>().Ult();
                 PlaySound("SwordMasterSkill");
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(0.7f);
 
                 enemyCheck = enemyColliders
                     .Where(x => x != null && (x.tag == "Enemy" || x.tag == "Boss") && x.GetComponent<Enemy>() != null && x.GetComponent<BoxCollider2D>() != null) // 존재하면서 "Enemy" 또는 "Boss" 태그인 게임오브젝트를 추출
@@ -756,13 +755,14 @@ public class Player : MonoBehaviour
                 }
                 else
                 {
-                    anim.SetTrigger("hurt");
+                    if(!isMasterSkill && !isSkill)
+                    {
+                        anim.SetTrigger("hurt");
+                    }
                     GameManager.GetComponent<Ui_Controller>().Damage(Damage);
                     StartCoroutine(Routine());
                     StartCoroutine(Knockback(x));
                     StartCoroutine(Blink());
-                    isSkill = false;
-                    isMasterSkill = false;
                 }
 
             }
@@ -845,6 +845,7 @@ public class Player : MonoBehaviour
     }
     IEnumerator Bow_attack() //화살 일반공격 및 스킬 - 애니메이션 특정 부분에서 실행되게 유니티에서 설정함
     {
+        yield return null;
         Transform ArrowposTransform = transform.GetChild(1);  // 기본 화살
         Transform Arrowpos2Transform = transform.GetChild(2); // 증가 화살
 
@@ -863,6 +864,7 @@ public class Player : MonoBehaviour
         {
             Instantiate(BowSkill, Arrowpos.position, transform.rotation);   //스킬 이펙트 화살 생성
             PlaySound("BowSkill");
+            isSkill = false;
         }
         else if (isMasterSkill && proLevel >= 3 && proSelectWeapon == 2)
         {
@@ -879,23 +881,19 @@ public class Player : MonoBehaviour
         if (slideDir == 1)  //플레이어가 바라보는 방향 왼쪽
         {
             if (!isSkill)
-                rigid.velocity = new Vector2(transform.localScale.x - 5f, Time.deltaTime); // 활 공격시 약간의 뒤로 밀림
+                rigid.velocity = new Vector2(transform.localScale.x - 3f, Time.deltaTime); // 활 공격시 약간의 뒤로 밀림
             else
-                rigid.velocity = new Vector2(transform.localScale.x - 10f, Time.deltaTime);
+                rigid.velocity = new Vector2(transform.localScale.x - 5f, Time.deltaTime);
         }
         else  //플레이어가 바라보는 방향 오른쪽
         {
             if (!isSkill)
-                rigid.velocity = new Vector2(transform.localScale.x + 5f, Time.deltaTime);
+                rigid.velocity = new Vector2(transform.localScale.x + 3f, Time.deltaTime);
             else
-                rigid.velocity = new Vector2(transform.localScale.x + 10f, Time.deltaTime);
+                rigid.velocity = new Vector2(transform.localScale.x + 5f, Time.deltaTime);
         }
-        yield return new WaitForSeconds(0.4f);
-        if(isSkill == true || isMasterSkill == true)
-        {
-            isSkill = false;
-            isMasterSkill = false;
-        } 
+        yield return new WaitForSeconds(0.1f);
+        isMasterSkill = false;
     }
 
     IEnumerator Knockback(float dir) //피해입을시 넉백

@@ -41,6 +41,7 @@ public class SelectUi : MonoBehaviour
                     ui.Select_ui.SetActive(false);
                     ui.Select_error_text.SetActive(false);
                     DestroyList();
+                    ui.UiUpdate();
                     Time.timeScale = 1f;
                     ui.openSelect = false;
                     break;
