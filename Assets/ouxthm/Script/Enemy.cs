@@ -1624,7 +1624,6 @@ public abstract class Enemy : MonoBehaviour
         }
         else if (!alreadyRun)
         {
-            Debug.Log("∏ÿ√„");
             StopAllCoroutines();
         }
 
@@ -1646,6 +1645,7 @@ public abstract class Enemy : MonoBehaviour
         }
 
         Hit_Set = false;
+        StopAllCoroutines();
     }
 
 
