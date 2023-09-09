@@ -7,7 +7,7 @@ using UnityEngine;
 public abstract class Enemy : MonoBehaviour
 {
     public Player player;
-    public Loading loading; 
+    public Loading loading;
     public string Enemy_Name; //윤성권 추가함
     public bool AmIBoss = false; //윤성권 추가함
     public int BossHpLine; //윤성권 추가함
@@ -72,7 +72,7 @@ public abstract class Enemy : MonoBehaviour
     public GameObject hiteff;  // 히트 이펙트 
     public GameObject blood;   // 출혈 폭발 이펙트
     Transform hit_bloodTrans; // 히트/출혈폭발 이펙트 위치
-    
+
     Transform soulSpawn;    // 보스 바닥 터뜨리기 생성 위치
     Transform soulSpawn1;   // 보스 바닥 터뜨리기 생성 위치
     Transform soulSpawn2;   // 보스 바닥 터뜨리기 생성 위치
@@ -109,7 +109,7 @@ public abstract class Enemy : MonoBehaviour
     public Effect slash;
 
     public int BossPage;
-    public List<int> GolemPattern = new List<int>{ 1, 2, 3, 4, 5, 6 };
+    public List<int> GolemPattern = new List<int> { 1, 2, 3, 4, 5, 6 };
     public List<int> Pattern = new List<int>(6);
     public int LastPattern = 1;
     public Transform[] TeleportPos;
@@ -125,7 +125,7 @@ public abstract class Enemy : MonoBehaviour
     float[] angles0 = { -135f, -112.5f, -90f, -67.5f, -45f };
     float[] angles1 = { -123.75f, -101.25f, -78.75f, -56.25f };
     float[] CircleAngles = { 0f, 15f, 30f, 45f, 60f, 75f, 90f, 105f, 120f, 135f, 150f, 165f, 180f, 195f, 210f, 225f, 240f, 255f, 270f, 285f, 300f, 315f, 330f, 345f };
-    float[] MagicArrowAngles = { 0f, 30f, 60f, 90f, 120f, 150f, 180f, 210f, 240f, 270f, 300f, 330f};
+    float[] MagicArrowAngles = { 0f, 30f, 60f, 90f, 120f, 150f, 180f, 210f, 240f, 270f, 300f, 330f };
     public int MissileCount;
     public int CircleMissileCount = 0;
     public int ThornCount = 0;
@@ -139,7 +139,7 @@ public abstract class Enemy : MonoBehaviour
     public float TargetFind; //좌우 구별
     public GameObject BossCenter;
 
-    public bool watching = false;   
+    public bool watching = false;
 
     public abstract void InitSetting(); // 적의 기본 정보를 설정하는 함수(추상)
 
@@ -149,7 +149,7 @@ public abstract class Enemy : MonoBehaviour
         loading = Loading.instance.GetComponent<Loading>();
     }
 
-    public virtual void Short_Monster(Transform target) 
+    public virtual void Short_Monster(Transform target)
     {
         playerGoNext = loading.DoLoading;
         weaponTag = Player.playerTag;
@@ -163,7 +163,7 @@ public abstract class Enemy : MonoBehaviour
             Sensing(target, rayHit);
             Sensor();
         }
-        else if(playerGoNext)
+        else if (playerGoNext)
         {
             StopAllCoroutines();
             return;
@@ -212,7 +212,7 @@ public abstract class Enemy : MonoBehaviour
             StopAllCoroutines();
             return;
         }
-        
+
     }
 
     public virtual void Boss(Transform target)  // boss용 Update문
@@ -265,16 +265,16 @@ public abstract class Enemy : MonoBehaviour
             {
                 orcMove();
             }
-            
+
             OrcAttack();
         }
-        else if(this.gameObject.layer == LayerMask.NameToLayer("Dieenemy"))
+        else if (this.gameObject.layer == LayerMask.NameToLayer("Dieenemy"))
         {
             animator.SetBool("Idle", true);
             Enemy_Speed = 0f;
         }
-        
-        if(Enemy_HP <= 0 && !Dying)
+
+        if (Enemy_HP <= 0 && !Dying)
         {
             Dying = true;
             orcDie();
@@ -294,8 +294,8 @@ public abstract class Enemy : MonoBehaviour
             {
                 bleedingTime -= Time.deltaTime;
             }
-        }  
-        
+        }
+
         weaponTag = Player.playerTag;
         playerLoc = target.position.x;
         boarLoc = this.gameObject.transform.position.x;
@@ -307,9 +307,9 @@ public abstract class Enemy : MonoBehaviour
         {
             boarMove();
         }
-           
+
     }
-    
+
     public virtual void onetime()   // Awake에 적용
     {
         Enemy_HPten = Enemy_HP * 0.15f;
@@ -317,7 +317,7 @@ public abstract class Enemy : MonoBehaviour
         hit_bloodTrans = this.gameObject.transform.GetChild(1).GetComponent<Transform>();
         Pos = GetComponent<Transform>();
         StartCoroutine(Think());
-        if(Enemy_Mod == 7)
+        if (Enemy_Mod == 7)
         {
             PObject = this.gameObject.transform.GetChild(0).GetComponent<Transform>();
         }
@@ -388,12 +388,16 @@ public abstract class Enemy : MonoBehaviour
             {
                 StopRush();
             }
+            else if (!Attacking)
+            {
+                return;
+            }
         }
 
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Wall"))
+        if (collision.gameObject.CompareTag("Wall") && Enemy_Mod != 11)
         {
             Turn();
         }
@@ -412,7 +416,7 @@ public abstract class Enemy : MonoBehaviour
                     StartCoroutine(Hit(Pdamage));
                 }
             }
-            else if(collision.tag == "Skill_arrow")
+            else if (collision.tag == "Skill_arrow")
             {
                 arrow = collision.GetComponent<Arrow>();
                 if (arrow != null)
@@ -452,7 +456,7 @@ public abstract class Enemy : MonoBehaviour
                 Box.offset = offset;
             }
         }
-        if(Enemy_Mod == 2 || Enemy_Mod == 3)
+        if (Enemy_Mod == 2 || Enemy_Mod == 3)
         {
             Bcollider = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();    // 본인 오브젝트의 첫번째 자식 오브젝트에 포함된 BoxCollider2D를 가져옴.
             spriteRenderer = this.gameObject.transform.GetChild(1).GetComponent<SpriteRenderer>();
@@ -481,7 +485,7 @@ public abstract class Enemy : MonoBehaviour
                 }
             }
         }
-        
+
 
     }
     void Move() // 이동
@@ -516,11 +520,11 @@ public abstract class Enemy : MonoBehaviour
     {
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
         nextDirX = Random.Range(-1, 2);     // 적의 X방향 랜덤( -1 ~ 1)
-        if(Enemy_Mod == 3)
+        if (Enemy_Mod == 3)
         {
-        nextDirY = Random.Range(-1, 2);     // 적의 Y방향 랜덤( -1 ~ 1)
+            nextDirY = Random.Range(-1, 2);     // 적의 Y방향 랜덤( -1 ~ 1)
         }
-        
+
         if (nextDirX == 1 && Gap_Distance_X > Enemy_Sensing_X)    // Gap_Distance > Enemy_Attack_Range를 추가하지 않으면 플레이어가 사거리 내에 있고 rayHit=null이라면 제자리 돌기함
         {
             spriteRenderer.flipX = true;       // nextDirX의 값이 1이면 x축을 flip함
@@ -606,11 +610,11 @@ public abstract class Enemy : MonoBehaviour
         {
             yield break;
         }
-        if(AmIBoss && Stage == 1)
+        if (AmIBoss && Stage == 1)
         {
-            gameObject.GetComponentInChildren<EnemySounds>().OrcHit(); 
+            gameObject.GetComponentInChildren<EnemySounds>().OrcHit();
         }
-        else if(AmIBoss && Stage == 2)
+        else if (AmIBoss && Stage == 2)
         {
             gameObject.GetComponentInChildren<EnemySounds>().NecHit();
         }
@@ -656,8 +660,8 @@ public abstract class Enemy : MonoBehaviour
         {
             GameManager.Instance.GetComponent<BossHpController>().BossHit(damage);
         }
-        this.GetComponentInChildren<EnemyUi>().ShowDamgeText(damage,cc); //딜 폰트
-        if(Enemy_Mod == 11)
+        this.GetComponentInChildren<EnemyUi>().ShowDamgeText(damage, cc); //딜 폰트
+        if (Enemy_Mod == 11)
         {
             Hit_Set = true;
             if (!alreadyRun)
@@ -834,7 +838,7 @@ public abstract class Enemy : MonoBehaviour
                     if (nextDirX == 1 && rayHit.collider != null)  // nextDirX가 1일 때 그리고 레이캐스트 값이 null이 아닐 때
                     {
                         spriteRenderer.flipX = true;
-                        if(Enemy_Mod == 5)  // 자폭 몬스터가 자폭할 때 제자리에 있기 위한 코드
+                        if (Enemy_Mod == 5)  // 자폭 몬스터가 자폭할 때 제자리에 있기 위한 코드
                         {
                             Enemy_Speed = 5f;
                             if (Attacking == true)
@@ -843,7 +847,7 @@ public abstract class Enemy : MonoBehaviour
                             }
                         }
                         transform.Translate(new Vector2(1, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
-                        if(Enemy_Mod != 1)
+                        if (Enemy_Mod != 1)
                         {
                             if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false)
                             {
@@ -863,7 +867,7 @@ public abstract class Enemy : MonoBehaviour
                     else if (nextDirX == 1 && rayHit.collider == null)
                     {
                         transform.Translate(new Vector2(0, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (0,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
-                        if(Enemy_Mod != 1)
+                        if (Enemy_Mod != 1)
                         {
                             if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false)
                             {
@@ -887,8 +891,8 @@ public abstract class Enemy : MonoBehaviour
                             Invoke("Attack", atkDelay); // 공격 쿨타임 적용
                         }
                     }
-                    else if (!Attacker) 
-                    { 
+                    else if (!Attacker)
+                    {
                         transform.position = Vector2.MoveTowards(transform.position, target.transform.position, Enemy_Speed * Time.deltaTime);
                     }
                 }
@@ -910,7 +914,7 @@ public abstract class Enemy : MonoBehaviour
                             }
                         }
                         transform.Translate(new Vector2(-1, 0).normalized * Time.deltaTime * Enemy_Speed);   //Enemy의 벡터 값을 (1,0)에서 speed에 저장된 값을 곱한 위치로 이동, Translate는 위치로 부드럽게 이동시킴
-                        if(Enemy_Mod != 1)
+                        if (Enemy_Mod != 1)
                         {
                             if (Gap_Distance_X < Enemy_Range_X && Gap_Distance_Y < Enemy_Range_Y && Attacking == false)
                             {
@@ -1016,7 +1020,7 @@ public abstract class Enemy : MonoBehaviour
                 onAttack();
                 Invoke("ProjectiveBody", 0.5f);
             }
-            else if(Enemy_Mod == 2)
+            else if (Enemy_Mod == 2)
             {
                 switchCollider();
                 onAttack();
@@ -1028,22 +1032,22 @@ public abstract class Enemy : MonoBehaviour
                 Invoke("offAttkack", atkTime);
             }
         }
-        else if(!Dying && Enemy_Mod == 5)
+        else if (!Dying && Enemy_Mod == 5)
         {
             StartCoroutine(Boom());
-        }         
+        }
     }
 
     public void onAttack()
     {
         animator = this.gameObject.transform.GetChild(1).GetComponent<Animator>();
         animator.SetTrigger("Attacking");
-        animator.SetBool("Run", false); 
+        animator.SetBool("Run", false);
         this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
     }
     public void offAttkack() // 공격 종료 함수
     {
-        if(Enemy_Mod == 3)
+        if (Enemy_Mod == 3)
         {
             Bcollider = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();    // 본인 오브젝트의 첫번째 자식 오브젝트에 포함된 BoxCollider2D를 가져옴. 
             animator.SetBool("Attacking", false);
@@ -1051,12 +1055,12 @@ public abstract class Enemy : MonoBehaviour
             Bcollider.enabled = false;
             Attacking = false;
         }
-        else if(Enemy_Mod != 3 && Enemy_Mod !=7 )
+        else if (Enemy_Mod != 3 && Enemy_Mod != 7)
         {
             this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
             Attacking = false;
         }
-        else if(Enemy_Mod == 7)
+        else if (Enemy_Mod == 7)
         {
             Attacking = false;
         }
@@ -1066,9 +1070,9 @@ public abstract class Enemy : MonoBehaviour
     {
         transformPosition = this.gameObject.transform.GetChild(0).GetComponent<Transform>();
         BoxCollider2DSize = this.gameObject.transform.GetChild(0).GetComponent<BoxCollider2D>();
-       
+
         Collider2D[] collider2D = Physics2D.OverlapBoxAll(transformPosition.position, BoxCollider2DSize.size, 0);
-        
+
         foreach (Collider2D collider in collider2D)
         {
             if (collider.tag == "Player")
@@ -1079,12 +1083,12 @@ public abstract class Enemy : MonoBehaviour
     }
     public void Bump()      // 충돌 데미지 함수
     {
-        if(this.gameObject.layer == LayerMask.NameToLayer("Dieenemy"))
+        if (this.gameObject.layer == LayerMask.NameToLayer("Dieenemy"))
         {
             return;
         }
         Vector3 vector3;
-        if(Enemy_Mod == 6)
+        if (Enemy_Mod == 6)
         {
             vector3 = new Vector3(2f, 0.8f);
         }
@@ -1112,7 +1116,7 @@ public abstract class Enemy : MonoBehaviour
             Gizmos.color = Color.red;
             Gizmos.DrawWireCube(Pos.position + vector3, Boxs.size);
         }
-        else if(Enemy_Mod != 6)
+        else if (Enemy_Mod != 6)
         {
             vector3 = new Vector2(0f, 0f);
             Gizmos.color = Color.red;
@@ -1133,7 +1137,7 @@ public abstract class Enemy : MonoBehaviour
         enemyDestroy();
     }
 
-    void  Split()  // 슬라임 분열 함수
+    void Split()  // 슬라임 분열 함수
     {
         spawn = this.gameObject.transform.GetChild(2).GetComponent<Transform>();
         spawn2 = this.gameObject.transform.GetChild(3).GetComponent<Transform>();
@@ -1158,7 +1162,7 @@ public abstract class Enemy : MonoBehaviour
     public void ProjectiveBody()    // 투사체 생성 (위치 저장)
     {
         Rigidbody2D rigid = PObject.GetComponent<Rigidbody2D>();
-        if(Enemy_Mod != 2)
+        if (Enemy_Mod != 2)
         {
             if (nextDirX == 1)
             {
@@ -1169,18 +1173,18 @@ public abstract class Enemy : MonoBehaviour
                 PObject.localPosition = new Vector2(0.8f, 0);
             }
         }
-        else if(Enemy_Mod == 2)
+        else if (Enemy_Mod == 2)
         {
-            if(nextDirX == 1)
+            if (nextDirX == 1)
             {
                 PObject.localPosition = new Vector2(3f, 0.15f);
-            } 
-            else if(nextDirX == -1)
+            }
+            else if (nextDirX == -1)
             {
                 PObject.localPosition = new Vector2(-3f, 0.15f);
             }
         }
-        
+
         ProObject = Instantiate(fire, PObject.position, PObject.rotation);
 
         Projective_Body Pb = ProObject.GetComponent<Projective_Body>();
@@ -1228,7 +1232,7 @@ public abstract class Enemy : MonoBehaviour
         CaninePb CPb = canine.GetComponent<CaninePb>();
         CaninePb CPb1 = canine1.GetComponent<CaninePb>();
         CaninePb CPb2 = canine2.GetComponent<CaninePb>();
-        
+
         CPb.Power = Enemy_Power;
         CPb.Dir = nextDirX;
         CPb.Time = 7f;
@@ -1249,7 +1253,7 @@ public abstract class Enemy : MonoBehaviour
         Se.Time = endTime;
         Se.Power = 50f;
         Se.Dir = nextDirX;
-       
+
     }
     public void soulSpawning1()
     {
@@ -1351,12 +1355,12 @@ public abstract class Enemy : MonoBehaviour
                 break;
         }
     }
- 
+
     public void bossMove()  // boss의 움직이도록 하는 함수
     {
         if (bossMoving)
         {
-            gameObject.transform.Translate(new Vector2(nextDirX, 0) * Time.deltaTime * Enemy_Speed);   
+            gameObject.transform.Translate(new Vector2(nextDirX, 0) * Time.deltaTime * Enemy_Speed);
         }
     }
     public void randomAtk() // 공격 패턴 랜덤으로 정하기
@@ -1388,14 +1392,14 @@ public abstract class Enemy : MonoBehaviour
         animator.SetTrigger("Run");
         bossMoving = true;
         Invoke("offFloor", 2f);
-        
+
     }
 
     public void offFloor()  // 보스 바닥 터뜨리는 공격 마무리 함수
     {
         myLocY = this.gameObject.transform.position.y;
         onSpriteNec();
-        if (playerLoc < bossLoc) 
+        if (playerLoc < bossLoc)
         {
             this.gameObject.transform.localPosition = new Vector2(playerLoc + 3f, myLocY);
             sprite.transform.transform.localPosition = new Vector2(-8, 0.2f);
@@ -1410,20 +1414,20 @@ public abstract class Enemy : MonoBehaviour
         bossMoving = false;
         turning = false;
         Invoke("locBox", 0.9f);
-        if(this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
+        if (this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
         {
             Invoke("soulSpawning", 1f);
             Invoke("soulSpawning1", 1.3f);
-            Invoke("soulSpawning2", 1.6f);    
+            Invoke("soulSpawning2", 1.6f);
         }
     }
     public void locBox() // 보스 공격 콜라이더 위치함수
     {
-        if(spriteRenderer.flipX == true)
+        if (spriteRenderer.flipX == true)
         {
             bossBox.transform.localPosition = new Vector2(-1.71f, 0);
         }
-        else if(spriteRenderer.flipX == false)
+        else if (spriteRenderer.flipX == false)
         {
             bossBox.transform.localPosition = new Vector2(1.71f, 0);
         }
@@ -1449,7 +1453,7 @@ public abstract class Enemy : MonoBehaviour
     }
     void onSprite() // orc용
     {
-        if(atkPattern < 5)
+        if (atkPattern < 5)
         {
             orcWaringmark.enabled = true;
         }
@@ -1463,9 +1467,9 @@ public abstract class Enemy : MonoBehaviour
     {
         bossMoving = true;
         int randNum;
-        randNum = Random.Range(4, 5); 
+        randNum = Random.Range(4, 5);
         atkPattern = Random.Range(1, 7);     // 패턴 번호를 1 ~ 6까지 랜덤으로 뽑음.
-        if(this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
+        if (this.gameObject.layer != LayerMask.NameToLayer("Dieenemy"))
         {
             Invoke("OrcRandomAtk", randNum);
         }
@@ -1614,7 +1618,15 @@ public abstract class Enemy : MonoBehaviour
         Enemy_Speed = 10f;        //  속도 10 설정.
 
         yield return new WaitForSeconds(4f);
-        StopRush();
+        if (alreadyRun)
+        {
+            StopRush();
+        }
+        else if (!alreadyRun)
+        {
+            Debug.Log("멈춤");
+            StopAllCoroutines();
+        }
 
     }
 
@@ -1733,15 +1745,15 @@ public abstract class Enemy : MonoBehaviour
         int randNum;
         if (BossPage < 1)
         {
-            Pattern = new List<int> { 1, 2, 3};
+            Pattern = new List<int> { 1, 2, 3 };
         }
         else if (BossPage == 1)
         {
-            Pattern = new List<int> { 1, 2, 3, 4};
+            Pattern = new List<int> { 1, 2, 3, 4 };
         }
         else if (BossPage > 1)
         {
-            Pattern = new List<int> { 1, 2, 3, 4, 5 ,6};
+            Pattern = new List<int> { 1, 2, 3, 4, 5, 6 };
         }
         Pattern.RemoveAt(LastPattern - 1);
         randNum = Random.Range(4, 5);
@@ -1754,7 +1766,7 @@ public abstract class Enemy : MonoBehaviour
 
     void GolemMove()  // 골렘의 오른쪽으로 움직이는 함수
     {
-        
+
     }
     void GolemDie()   // 골렘의 죽는 애니메이션
     {
@@ -1944,7 +1956,7 @@ public abstract class Enemy : MonoBehaviour
     void CircleMissileCreate()
     {
         float circleRadius = 2f;
-        
+
         float angle = CircleMissileCount * (360f / CircleAngles.Length); // 각도 계산
         Vector3 spawnPosition = BossCenter.transform.position + Quaternion.Euler(0f, 0f, angle) * Vector3.right * circleRadius; // 원의 둘레 위의 위치 계산
 
@@ -2013,11 +2025,11 @@ public abstract class Enemy : MonoBehaviour
         GameObject newLaser;
         for (int i = 0; i < 2; i++)
         {
-            WaringArea[1+i].enabled = false;
+            WaringArea[1 + i].enabled = false;
             CreatePos = LaserPos[i];
             NewPos = new Vector3(CreatePos.transform.position.x, CreatePos.transform.position.y, CreatePos.transform.position.z);
             newLaser = Instantiate(LaserPB, NewPos, Quaternion.Euler(0f, 0f, 0f));
-            if (i>0)
+            if (i > 0)
             {
                 newLaser.GetComponent<Laser>().Dir = -1;
             }
