@@ -289,8 +289,6 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.DownArrow) && !anim.GetBool("Sliding") && !anim.GetBool("Wall_slide")) //발판에서 밑으로 점프시 내려가기
         {
-            RaycastHit2D rayHitDown = Physics2D.Raycast(rigid.position, Vector3.down, 1.5f, LayerMask.GetMask("Pad"));
-            //Debug.DrawRay(rigid.position, Vector3.down * 1.5f, Color.red);
             if (Input.GetKeyDown(KeyCode.Space))
                 StartCoroutine(PadJump(0));
         }
@@ -755,10 +753,6 @@ public class Player : MonoBehaviour
                 }
                 else
                 {
-                    if(!isMasterSkill && !isSkill)
-                    {
-                        anim.SetTrigger("hurt");
-                    }
                     GameManager.GetComponent<Ui_Controller>().Damage(Damage);
                     StartCoroutine(Routine());
                     StartCoroutine(Knockback(x));
@@ -775,15 +769,6 @@ public class Player : MonoBehaviour
 
     }
 
-    public void FallHurt()  // 맵 밖으로 떨어질 시 실행
-    {
-        CurrentHp = CurrentHp - 10;
-        PlaySound("Damaged");
-        anim.SetTrigger("hurt");
-        GameManager.GetComponent<Ui_Controller>().Damage(10);
-        StartCoroutine(Routine());
-        StartCoroutine(Blink());
-    }
     IEnumerator Attack_delay() //기본공격 딜레이
     {
         yield return new WaitForSeconds(delayTime);
@@ -816,7 +801,7 @@ public class Player : MonoBehaviour
         {
             Dmg = (ATP + AtkPower + GridPower + VulcanPower + 5) * WeaponsDmg[1];
         }
-        box.size = new Vector2(4f, 2.5f);
+        box.size = new Vector2(2.5f, 2.5f);
         if (slideDir == 1)   //공격 방향별 box.offset값을 다르게 적용
             box.offset = new Vector2(2, 0);
         else
@@ -951,7 +936,7 @@ public class Player : MonoBehaviour
 
     IEnumerator PadJump(int up)
     {
-        PlaySound("Jump");
+         PlaySound("Jump");
         if (JumpCnt >= 0 && up == 1)
             this.transform.GetChild(5).gameObject.SetActive(true);
         isjump = true;
@@ -963,6 +948,7 @@ public class Player : MonoBehaviour
         }
         else if (up == 0)
         {
+          
             gameObject.layer = LayerMask.NameToLayer("Jump");
             JumpCnt = JumpCount;
             yield return new WaitForSeconds(0.3f);
@@ -996,7 +982,7 @@ public class Player : MonoBehaviour
 
     void PlayerReposition() // 리스폰 위치 지정 2023-09-02 추가
     {
-        FallHurt();
+        Playerhurt(10, transform.position);
         transform.position = spawnPoint;
     }
 
