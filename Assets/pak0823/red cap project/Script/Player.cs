@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     public float Sword_MsTime, Axe_MsTime, Bow_MsTime;  // 무기별 숙련도 스킬 쿨타임 적용
     public float[] SkillTime = { 12, 20, 10 }; // 무기별 기본스킬 쿨타임
     public float Sword_SkTime, Axe_SkTime, Bow_SkTime;  // 무기별 기본스킬 쿨타임 적용
-    public float[] WeaponsDmg = { 0.65f, 1.2f, 0.8f }; //무기별 공격력 비례 칼, 도끼, 활
+    public float[] WeaponsDmg = { 0.6f, 1.3f, 0.8f }; //무기별 공격력 비례 칼, 도끼, 활
     public bool isdelay = false;    //공격 딜레이 체크
     public bool isSlide = false;     //슬라이딩 체크
     public bool isGround = true;    //Player가 땅인지 아닌지 체크
@@ -633,21 +633,18 @@ public class Player : MonoBehaviour
     void OnCollisionStay2D(Collision2D collision)   // 벽 콜라이젼이 Player에 닿고 있으면 실행, 점프착지 시 콜라이젼 닿을 시 점프 해제
     {
         RaycastHit2D rayHitDown = Physics2D.Raycast(rigid.position, Vector3.down, 2f, LayerMask.GetMask("Tilemap", "Pad", "Water"));
+        
         if (collision.gameObject.tag == "Wall" && rayHitDown.collider != null)
         {
             isWall = false;
             anim.SetBool("Wall_slide", false);
             rigid.drag = 0;
-            Debug.Log("1");
-            Debug.Log(rayHitDown.collider);
         }
         else if (collision.gameObject.tag == "Wall" && rayHitDown.collider == null)
         {
             isWall = true;
             anim.SetBool("Wall_slide", true);
             rigid.drag = 10;
-            Debug.Log("2");
-            Debug.Log(rayHitDown.collider);
         }
 
 
@@ -893,7 +890,7 @@ public class Player : MonoBehaviour
         while (ctime < 0.4f) //넉백 지속시간
         {
             Vector2 vector2 = new Vector2(dir, 1);
-            transform.Translate(vector2.normalized * Speed * 2 * Time.deltaTime);
+            transform.Translate(vector2.normalized * Speed * 1 * Time.deltaTime);
             ctime += Time.deltaTime;
             yield return null;
         }
@@ -909,6 +906,8 @@ public class Player : MonoBehaviour
 
     IEnumerator Blink() // 무적시간동안 투명 효과
     {
+        RaycastHit2D rayHitDown = Physics2D.Raycast(rigid.position, Vector3.down, 0.7f, LayerMask.GetMask("Bumpenemy"));
+        
         while (ishurt)
         {
             spriteRenderer.color = new Color(1, 1, 1, 0.5f);
@@ -927,8 +926,9 @@ public class Player : MonoBehaviour
                 yield return new WaitForSeconds(0.1f);
             }
             this.transform.GetChild(6).gameObject.SetActive(false);
+            gameObject.layer = LayerMask.NameToLayer("Invincible");
             yield return new WaitForSeconds(0.2f);
-            isShield = false;
+            isShield = false; 
         }
         spriteRenderer.color = new Color(1, 1, 1, 1f);
         gameObject.layer = LayerMask.NameToLayer("Player");
