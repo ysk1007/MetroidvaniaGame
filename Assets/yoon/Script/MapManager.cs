@@ -7,6 +7,7 @@ public class MapManager : MonoBehaviour
 {
     public static MapManager instance; //Ãß°¡ÇÔ
 
+    public Map_ui map_ui;
     public int[] CurrentStage;
     public int Difficulty;
     public GameObject CurrentStagePrefab;
@@ -50,6 +51,7 @@ public class MapManager : MonoBehaviour
         {
             Player.instance.transform.position = new Vector3(25, 5, 0);
         }
+        map_ui.Setting();
         Invoke("Stage", 3f);
         Invoke("BossStage", 3f);
         Invoke("MarketStage", 3f);
@@ -108,6 +110,7 @@ public class MapManager : MonoBehaviour
         MarketStage();
         CurrentStagePrefab = Instantiate(Stage_Prefabs[CurrentStage[0], CurrentStage[1]], transform.parent);
         dm.NextStage();
+        map_ui.Setting();
         if (CurrentStage[0] == 0 && CurrentStage[1] == 7)
         {
             Player.instance.transform.position = new Vector3(25, 5, 0);

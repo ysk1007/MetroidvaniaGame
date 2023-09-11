@@ -716,7 +716,7 @@ public class Player : MonoBehaviour
 
     public void Playerhurt(float Damage, Vector2 pos) // Player가 공격받을 시
     {
-        if (!ishurt)
+        if (!ishurt && !isDie)
         {
             if (!isShield)    // 방어막이 없으면 피격됨
             {
