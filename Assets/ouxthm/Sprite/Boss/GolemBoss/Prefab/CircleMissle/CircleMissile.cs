@@ -10,6 +10,8 @@ public class CircleMissile : MonoBehaviour
     public bool isShoot;
     private void Start()
     {
+        float[] stats = { 0.8f, 1f, 1.2f };
+        Damage = Damage * stats[MapManager.instance.Difficulty];
         Destroy(gameObject, 3f);
     }
 

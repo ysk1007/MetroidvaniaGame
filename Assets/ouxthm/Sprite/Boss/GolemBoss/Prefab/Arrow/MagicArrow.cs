@@ -16,6 +16,8 @@ public class MagicArrow : MonoBehaviour
     public AudioSource sfx;
     private void Start()
     {
+        float[] stats = { 0.8f, 1f, 1.2f };
+        Damage = Damage* stats[MapManager.instance.Difficulty];
         player = Player.instance;
         Invoke("Shoot", 2f);
         Destroy(gameObject, 5.5f);

@@ -12,7 +12,7 @@ public class Golem_Controller : MonoBehaviour
     void Start()
     {
         player = Player.instance;
-        monster.InitSetting();
+        monster.InitSetting(MapManager.instance.Difficulty);
         monster.GolemBossOneTime();
     }
 

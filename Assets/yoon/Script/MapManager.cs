@@ -8,6 +8,7 @@ public class MapManager : MonoBehaviour
     public static MapManager instance; //Ãß°¡ÇÔ
 
     public int[] CurrentStage;
+    public int Difficulty;
     public GameObject CurrentStagePrefab;
     public GameObject[,] Stage_Prefabs = new GameObject[3,9];
     public GameObject[] Stage1_Prefab;
@@ -31,6 +32,7 @@ public class MapManager : MonoBehaviour
     {
         dm = DataManager.instance;
         sm = SoundManager.instance;
+        Difficulty = dm.returnDifficulty();
         mapList.Add(Stage1_Prefab);
         mapList.Add(Stage2_Prefab);
         mapList.Add(Stage3_Prefab);

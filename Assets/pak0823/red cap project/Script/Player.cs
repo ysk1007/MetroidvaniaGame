@@ -741,7 +741,7 @@ public class Player : MonoBehaviour
                         StartCoroutine(Die());
                         GameObject GO = GameManager.GetComponent<Ui_Controller>().StatisticsUi;
                         GO.SetActive(true);
-                        GO.GetComponent<StatisticsUi>().isFalling = true;
+                        GO.GetComponent<StatisticsUi>().invokefall();
                     }
                     else
                     {
@@ -977,7 +977,7 @@ public class Player : MonoBehaviour
         PlaySound("Die");
         anim.SetTrigger("Die");
         yield return null;
-        this.transform.gameObject.SetActive(false);
+        //this.transform.gameObject.SetActive(false);
     }
 
     void PlayerReposition() // 리스폰 위치 지정 2023-09-02 추가

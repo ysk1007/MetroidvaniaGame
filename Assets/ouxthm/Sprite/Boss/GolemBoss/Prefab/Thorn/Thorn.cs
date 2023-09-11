@@ -11,6 +11,8 @@ public class Thorn : MonoBehaviour
 
     private void Start()
     {
+        float[] stats = { 0.8f, 1f, 1.2f };
+        Damage = Damage * stats[MapManager.instance.Difficulty];
         sm = SoundManager.instance;
         Invoke("thornSfxPlay", 1.2f);
         Destroy(gameObject, 1.8f);
