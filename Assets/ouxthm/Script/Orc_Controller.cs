@@ -12,7 +12,7 @@ public class Orc_Controller : MonoBehaviour
     void Start()
     {
         target = Player.instance.gameObject.transform;
-        monster.InitSetting();
+        monster.InitSetting(MapManager.instance.Difficulty);
         monster.orcbossOnetime();
     }
 

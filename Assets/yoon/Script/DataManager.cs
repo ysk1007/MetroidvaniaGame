@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using System.Runtime.InteropServices;
+using UnityEngine.Timeline;
 
 [System.Serializable]
 public class SaveData
@@ -30,6 +31,7 @@ public class SaveData
     public string[] LastMarketList;
     public string LastChestItem;
 
+    public int Difficulty = 0;
     public bool FristMaterial;
     public bool SecondMaterial;
     public bool ThirdMaterial;
@@ -48,6 +50,10 @@ public class OptionData
     public bool ViewCnema2 = false;
     public bool ViewCnema3 = false;
     public bool ViewCnema4 = false;
+
+    public bool NormalGameClear = false;
+    public bool HardGameClear = false;
+    public bool HellGameClear = false;
 
     public List<float> getVolume()
     {
@@ -436,11 +442,11 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    public void CreateJson()
+    public void CreateJson(int Difficulty)
     {
         //Debug.Log("디버그 : 데이터 생성 하는중..");
-        CreatePlayerJson();
-        CreateItemJson();
+        CreatePlayerJson(Difficulty);
+        CreateItemJson(Difficulty);
         CreateSelectJson();
         CreateUnlockItemJson();
         string filePath = Path.Combine(Application.dataPath + "/Resources", "OptionData.txt");
@@ -456,7 +462,7 @@ public class DataManager : MonoBehaviour
         successCreateJson = true;
     }
 
-    public void CreatePlayerJson()
+    public void CreatePlayerJson(int Difficulty)
     {
         SaveData saveData = new SaveData();
         //Debug.Log("디버그 : 플레이어 데이터 생성 중");
@@ -479,6 +485,7 @@ public class DataManager : MonoBehaviour
         //Debug.Log("디버그 : 숙련도 데이터 생성 완료");
         saveData.LastMarketList = new string[6];
         saveData.LastChestItem = null;
+        saveData.Difficulty = Difficulty;
         saveData.FristMaterial = false;
         saveData.SecondMaterial = false;
         saveData.ThirdMaterial = false;
@@ -487,13 +494,17 @@ public class DataManager : MonoBehaviour
         File.WriteAllText(PlayerPath, Playerjson);
     }
 
-    public void CreateItemJson()
+    public void CreateItemJson(int Difficulty)
     {
         //Debug.Log("디버그 : 아이템 데이터 생성 중");
         Item itemData = new Item();
         itemData.itemEquip = new string[6];
         itemData.itemInven = new string[12];
         //Debug.Log("디버그 : 아이템 데이터 생성 완료");
+        if (Difficulty < 2)
+        {
+            itemData.itemEquip[0] = "GrandmaNecklace";
+        }
         string itemjson = JsonUtility.ToJson(itemData, true);
         File.WriteAllText(ItemPath, itemjson);
     }
@@ -521,6 +532,9 @@ public class DataManager : MonoBehaviour
             optionData.ViewCnema3 = false;
             optionData.ViewCnema4 = false;
 
+            optionData.NormalGameClear = false;
+            optionData.HardGameClear = false;
+            optionData.HellGameClear = false;
             string OptionJson = JsonUtility.ToJson(optionData, true);
             File.WriteAllText(OptionPath, OptionJson);
         }
@@ -773,6 +787,7 @@ public class DataManager : MonoBehaviour
         {
             jsonsave.Stage = MapManager.instance.CurrentStage;
         }
+        jsonsave.PlayerGold = Player.instance.gold;
         jsonsave.LastChestItem = "";
         jsonsave.LastMarketList = new string[6];
         MarketUi.instance.ResetContent();
@@ -842,5 +857,45 @@ public class DataManager : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public int returnDifficulty()
+    {
+        SaveData saveData = new SaveData();
+        PlayerloadJson = File.ReadAllText(PlayerPath);
+        saveData = JsonUtility.FromJson<SaveData>(PlayerloadJson);
+        return saveData.Difficulty;
+    }
+
+    public List<bool> returnClear()
+    {
+        OptionData optionData = new OptionData();
+        OptionLoadJson = File.ReadAllText(OptionPath);
+        optionData = JsonUtility.FromJson<OptionData>(OptionLoadJson);
+        List<bool> returnList = new List<bool> { };
+        returnList.Add(optionData.NormalGameClear);
+        returnList.Add(optionData.HardGameClear);
+        returnList.Add(optionData.HellGameClear);
+        return returnList;
+    }
+
+    public void GameClear(int Level)
+    {
+        OptionLoadJson = File.ReadAllText(OptionPath);
+        OptionData optionSave = JsonUtility.FromJson<OptionData>(OptionLoadJson);
+        switch (Level)
+        {
+            case 0:
+                optionSave.NormalGameClear = true;
+                break;
+            case 1:
+                optionSave.HardGameClear = true;
+                break;
+            case 2:
+                optionSave.HellGameClear = true;
+                break;
+        }
+        string optionJson = JsonUtility.ToJson(optionSave, true);
+        File.WriteAllText(OptionPath, optionJson);
     }
 }

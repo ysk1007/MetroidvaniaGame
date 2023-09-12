@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Snail : Enemy
 {
-    public override void InitSetting()  // 적의 기본 정보를 설정하는 함수
+    public override void InitSetting(int Difficulty)  // 적의 기본 정보를 설정하는 함수
     {
         Stage = 1; //추가함
         Enemy_Mod = 1;
-        Enemy_HP = 50f;  // 적의 체력
+        Enemy_HP = 50f * stats[Difficulty]; // 적의 체력
         Enemy_Speed = 1.5f;    // 적의 이동속도
         Gap_Distance_X = 99f;  // Enemy와 Player의 X 거리차이
         Gap_Distance_Y = 99f;  // Enemy와 Player의 Y 거리차이
@@ -16,7 +16,7 @@ public class Snail : Enemy
         Enemy_Dying_anim_Time = 1.1f;   // 죽는 애니메이션 실행 시간
         Enemy_Sensing_X = 10f; // 플레이어 인지 X값
         Enemy_Sensing_Y = 5f;  // 플레이어 인지 Y값
-        Bump_Power = 10f; // 충돌 시 줄 데미지
+        Bump_Power = 10f * stats[Difficulty]; // 충돌 시 줄 데미지
         bleedLevel = 0; // 받은 출혈량
         AmIBoss = false;    // 보스가 아님
     }

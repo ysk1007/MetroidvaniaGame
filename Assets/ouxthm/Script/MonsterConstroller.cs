@@ -14,7 +14,7 @@ public class MonsterConstroller : MonoBehaviour
     void Start()
     {
         target = Player.instance.gameObject.transform;
-        monster.InitSetting();
+        monster.InitSetting(MapManager.instance.Difficulty);
         monster.onetime();
     }
 

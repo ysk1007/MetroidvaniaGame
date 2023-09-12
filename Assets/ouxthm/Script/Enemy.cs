@@ -12,6 +12,7 @@ public abstract class Enemy : MonoBehaviour
     public bool AmIBoss = false; //윤성권 추가함
     public int BossHpLine; //윤성권 추가함
     public int Stage;
+    public float[] stats = { 0.8f, 1f, 1.2f };
 
     public int Enemy_Mod;   // 1: 달팽이, 2: 근접공격 가능 몬스터, 3:비행몬스터, 4:제라스, 5: 자폭, 7: 투사체 원거리, 9: 분열, 11: 돌진하여 충돌
     public float Enemy_HP;  // 적의 체력
@@ -141,7 +142,7 @@ public abstract class Enemy : MonoBehaviour
 
     public bool watching = false;
 
-    public abstract void InitSetting(); // 적의 기본 정보를 설정하는 함수(추상)
+    public abstract void InitSetting(int Difficulty); // 적의 기본 정보를 설정하는 함수(추상)
 
     public void Start()
     {

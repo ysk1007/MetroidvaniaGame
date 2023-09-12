@@ -9,6 +9,8 @@ public class Missile : MonoBehaviour
 
     private void Start()
     {
+        float[] stats = { 0.8f, 1f, 1.2f };
+        Damage = Damage * stats[MapManager.instance.Difficulty];
         Destroy(gameObject, 1f);
     }
 

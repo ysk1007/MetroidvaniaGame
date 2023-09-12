@@ -14,7 +14,7 @@ public class BoarController : MonoBehaviour
     void Start()
     {
         target = Player.instance.gameObject.transform;
-        monster.InitSetting();
+        monster.InitSetting(MapManager.instance.Difficulty);
         monster.boarOntime();
     }
 

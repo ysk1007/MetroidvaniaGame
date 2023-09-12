@@ -7,6 +7,7 @@ using TMPro;
 public class StatisticsUi : MonoBehaviour
 {
     public DataManager dm;
+    public MapManager mp;
     public Scene_Move sm;
     public Fade_img fade;
     public Player p;
@@ -84,6 +85,7 @@ public class StatisticsUi : MonoBehaviour
         p = Player.instance;
         op = OptionManager.instance;
         dm = DataManager.instance;
+        mp = MapManager.instance;
         KillCountText.text = p.EnemyKillCount.ToString();
         GetGoldText.text = p.TotalGetGold.ToString("F0")+" G";
         TotalDmageText.text = p.TotalDamaged.ToString("F0");
@@ -91,6 +93,7 @@ public class StatisticsUi : MonoBehaviour
         if (GameClear)
         {
             TitleText.text = "게임 클리어!";
+            dm.GameClear(mp.Difficulty);
         }
         else
         {
@@ -104,10 +107,21 @@ public class StatisticsUi : MonoBehaviour
         }
         OptionManager.instance.Playing = false;
         dm.DeleteJson();
+        dm.finditemList.Clear();
     }
 
     void GoTitleScreen()
     {
         sm.SceneLoader("Title_Scene");
+    }
+
+    public void invokefall()
+    {
+        Invoke("fall",1f);
+    }
+
+    public void fall()
+    {
+        isFalling = true;
     }
 }
