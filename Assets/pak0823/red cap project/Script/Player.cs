@@ -85,9 +85,9 @@ public class Player : MonoBehaviour
     public bool ThirdMaterial = false;
     public float enemyPower;
     public int stackbleed;  // 몬스터에 쌓인 출혈 스택
-    public int slashBleedStack; 
-    public static float BleedingTime = 8f;  // 2023-07-31 추가(출혈 지속 시간)
-    public float bleedDamage = 10f; // 2023-08-01 출혈 데미지
+    public int slashBleedStack;
+    public static float BleedingTime = 6f;  // 2023-07-31 추가(출혈 지속 시간)
+    public float bleedDamage = 6f; // 2023-08-01 출혈 데미지
     public static float bloodBoomDmg = 66f;  // 출혈스택 터뜨리는 데미지
     public static string playerTag;    // 2023-08-11 추가 (플레이어 무기 태그)
     public List<Collider2D> enemyColliders = new List<Collider2D>();   //공격 몬스터 체크
@@ -180,7 +180,7 @@ public class Player : MonoBehaviour
     void Awake()
     {
         instance = this; //추가함
-        
+
         attackRange = transform.GetChild(0).gameObject; // 플레이어의 0번째 오브젝트인 attackRange를 저장
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -227,11 +227,15 @@ public class Player : MonoBehaviour
         {
             GridsSword();
         }
-        if(this.gameObject.transform.position.y < -30)
+        if (this.gameObject.transform.position.y < -30)
         {
             PlayerReposition();
         }
         AxePro2();
+        if (anim.GetFloat("AttackSpeed") >= 2.75f)
+        {
+            anim.SetFloat("AttackSpeed", 2.75f);
+        }
     }
     void OnDrawGizmos()
     {
@@ -433,7 +437,7 @@ public class Player : MonoBehaviour
                 if (WeaponChage == 1)    //Sword 공격
                 {
                     Sword_attack();
-                }    
+                }
                 if (WeaponChage == 2)    //Axe 공격
                 {
                     Axe_attack();
@@ -633,7 +637,7 @@ public class Player : MonoBehaviour
     void OnCollisionStay2D(Collision2D collision)   // 벽 콜라이젼이 Player에 닿고 있으면 실행, 점프착지 시 콜라이젼 닿을 시 점프 해제
     {
         RaycastHit2D rayHitDown = Physics2D.Raycast(rigid.position, Vector3.down, 2f, LayerMask.GetMask("Tilemap", "Pad", "Water"));
-        
+
         if (collision.gameObject.tag == "Wall" && rayHitDown.collider != null)
         {
             isWall = false;
@@ -808,14 +812,14 @@ public class Player : MonoBehaviour
 
         anim.SetFloat("Axe", AxeCnt); //Blend를 이용해 연속공격의 애니메이션 순차적 실행
         anim.SetTrigger("axe_atk");
-        
+
 
         curTime = coolTime;  // 콤보 공격 제한시간
 
         if (AxeCnt > 1)     //연속공격이 끝난후 다시 첫번째 공격값으로 변경
             AxeCnt = 1;
 
-        
+
     }
 
     void Axe_chargeing()  //Axe 차징 스킬 관련
@@ -911,7 +915,7 @@ public class Player : MonoBehaviour
     IEnumerator Blink() // 무적시간동안 투명 효과
     {
         RaycastHit2D rayHitDown = Physics2D.Raycast(rigid.position, Vector3.down, 0.7f, LayerMask.GetMask("Bumpenemy"));
-        
+
         while (ishurt)
         {
             spriteRenderer.color = new Color(1, 1, 1, 0.5f);
@@ -932,7 +936,7 @@ public class Player : MonoBehaviour
             this.transform.GetChild(6).gameObject.SetActive(false);
             gameObject.layer = LayerMask.NameToLayer("Invincible");
             yield return new WaitForSeconds(0.2f);
-            isShield = false; 
+            isShield = false;
         }
         spriteRenderer.color = new Color(1, 1, 1, 1f);
         gameObject.layer = LayerMask.NameToLayer("Player");
@@ -940,7 +944,7 @@ public class Player : MonoBehaviour
 
     IEnumerator PadJump(int up)
     {
-         PlaySound("Jump");
+        PlaySound("Jump");
         if (JumpCnt >= 0 && up == 1)
             this.transform.GetChild(5).gameObject.SetActive(true);
         isjump = true;
@@ -952,7 +956,7 @@ public class Player : MonoBehaviour
         }
         else if (up == 0)
         {
-          
+
             gameObject.layer = LayerMask.NameToLayer("Jump");
             JumpCnt = JumpCount;
             yield return new WaitForSeconds(0.3f);
@@ -965,7 +969,7 @@ public class Player : MonoBehaviour
         {
             gameObject.layer = LayerMask.NameToLayer("Player");
         }
-            
+
 
         this.transform.GetChild(5).gameObject.SetActive(false);
     } //발판 무시 관련
@@ -1325,4 +1329,5 @@ public class Player : MonoBehaviour
         punch.transform.position = Pc;
         SkillCount++;
     }
+
 }

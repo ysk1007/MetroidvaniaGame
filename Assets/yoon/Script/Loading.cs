@@ -70,7 +70,7 @@ public class Loading : MonoBehaviour
         if (TipText != null) // TipText가 null이 아닌지 확인
         {
             string text = "#팁 : ";
-            int randNum = Random.Range(0, 7);
+            int randNum = Random.Range(0, 8);
             Debug.Log(randNum);
             switch (randNum)
             {
@@ -94,6 +94,9 @@ public class Loading : MonoBehaviour
                     break;
                 case 6:
                     text += "한 대도 맞지 않고 엔딩을 본다면... 무슨 일이 일어날지도 모릅니다.";
+                    break;
+                case 7:
+                    text += "공격 속도는 2.75가 최대 입니다.";
                     break;
             }
             TipText.text = text;

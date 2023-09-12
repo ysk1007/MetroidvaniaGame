@@ -725,14 +725,6 @@ public class DataManager : MonoBehaviour
                 break;
             }
         }
-    }
-
-    public void SelectListSave()
-    {
-        string path = Application.dataPath + "/Resources";
-        string fromJsonData = File.ReadAllText(path + "/UnlockSelectList.txt");
-        SelectList = JsonUtility.FromJson<SelectList>(fromJsonData);
-
         SelectList Select = new SelectList();
         Select.Selects = SelectList.Selects;
 
@@ -802,7 +794,6 @@ public class DataManager : MonoBehaviour
         string Playerjson = JsonUtility.ToJson(jsonsave, true);
         File.WriteAllText(PlayerPath, Playerjson);
         JsonSave("ItemData");
-        SelectListSave();
     }
 
     public bool CanCenemaPlay()
