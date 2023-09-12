@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     public float Sword_MsTime, Axe_MsTime, Bow_MsTime;  // 무기별 숙련도 스킬 쿨타임 적용
     public float[] SkillTime = { 12, 20, 10 }; // 무기별 기본스킬 쿨타임
     public float Sword_SkTime, Axe_SkTime, Bow_SkTime;  // 무기별 기본스킬 쿨타임 적용
-    public float[] WeaponsDmg = { 0.6f, 1.3f, 0.8f }; //무기별 공격력 비례 칼, 도끼, 활
+    public float[] WeaponsDmg = { 0.5f, 1.5f, 0.8f }; //무기별 공격력 비례 칼, 도끼, 활
     public bool isdelay = false;    //공격 딜레이 체크
     public bool isSlide = false;     //슬라이딩 체크
     public bool isGround = true;    //Player가 땅인지 아닌지 체크
@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
     public bool isShield = false;   //방어막 상태 확인
     public bool isWall = false;     // 벽에 붙어 있는지 확인
     public bool isDie = false;  // 플레이어가 죽었는지 판단    2023-09-03 추가
-    public float delayTime = 1f;    //공격 딜레이 기본 시간
+    public float delayTime = 0.8f;    //공격 딜레이 기본 시간
     public int WeaponChage = 1;     //무기 변경 저장 변수
     public int JumpCnt, JumpCount = 2;  //2단점프의 수를 카운터 해주는 변수
     public int SwdCnt, AxeCnt;  //공격모션의 순서
@@ -426,14 +426,14 @@ public class Player : MonoBehaviour
 
         }
 
-        if (Input.GetKeyUp(KeyCode.A) && !anim.GetBool("Sliding") && !isSkill && !isMasterSkill)    //기본 공격
+        if (Input.GetKeyDown(KeyCode.A) && !anim.GetBool("Sliding") && !isSkill && !isMasterSkill)    //기본 공격
         {
             if (!isdelay)   //딜레이가 false일때 공격 가능
             {
                 if (WeaponChage == 1)    //Sword 공격
                 {
                     Sword_attack();
-                }
+                }    
                 if (WeaponChage == 2)    //Axe 공격
                 {
                     Axe_attack();
@@ -785,6 +785,7 @@ public class Player : MonoBehaviour
     void Axe_attack()   //Axe 공격 관련 정보
     {
         isdelay = true;
+
         if (curTime > 0)    //첫번째 공격후 쿨타임 내에 공격시 강공격 발동
             AxeCnt++;
         else
@@ -807,11 +808,14 @@ public class Player : MonoBehaviour
 
         anim.SetFloat("Axe", AxeCnt); //Blend를 이용해 연속공격의 애니메이션 순차적 실행
         anim.SetTrigger("axe_atk");
+        
+
+        curTime = coolTime;  // 콤보 공격 제한시간
 
         if (AxeCnt > 1)     //연속공격이 끝난후 다시 첫번째 공격값으로 변경
-            AxeCnt = 0;
+            AxeCnt = 1;
 
-        curTime = coolTime + 0.5f;  // 콤보 공격 제한시간
+        
     }
 
     void Axe_chargeing()  //Axe 차징 스킬 관련

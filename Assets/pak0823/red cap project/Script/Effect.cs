@@ -31,6 +31,18 @@ public class Effect : MonoBehaviour
     {
         player = Player.instance;
         Dmg = (player.ATP + player.AtkPower + player.GridPower + player.VulcanPower) * 2.5f;
+        if(player != null)
+        {
+            if (player.isMasterSkill == true)
+            {
+                isMasterSkill = true; // 마스터스킬 사용중이면 true로 설정
+            }
+            else
+            {
+                isMasterSkill = false; // 마스터스킬 사용 중이 아니면 isMasterSkill 변수를 false로 설정
+            }
+        }
+        
     }
 
     private void Start()
@@ -50,16 +62,6 @@ public class Effect : MonoBehaviour
                 // 플레이어가 왼쪽을 바라보면 왼쪽으로 발사
                 Direction = Vector3.left;
                 spriteRenderer.flipX = true;
-            }
-
-            if (player.isMasterSkill == true)
-            {
-                isMasterSkill = true; // 마스터스킬 사용중이면 true로 설정
-            }
-            else
-            {
-                isMasterSkill = false; // 마스터스킬 사용 중이 아니면 isMasterSkill 변수를 false로 설정
-
             }
 
             if (player.isSkill == true)
@@ -85,12 +87,14 @@ public class Effect : MonoBehaviour
             enemy = collision.GetComponent<Enemy>();
             if (enemy != null)
             {
+                Debug.Log("1");
                 if (isMasterSkill)
                 {
                     isMasterSkill = false;
                     TreePos = pos.position;
                     TreePos.Set(TreePos.x, 0f, TreePos.z);    // 나무의 y값 위치를 고정
                     StartCoroutine(MasterSkill());
+                    Debug.Log("2");
                 }
             }
                 
@@ -110,6 +114,7 @@ public class Effect : MonoBehaviour
     IEnumerator MasterSkill()
     {
         ParticleEfc();
+        Debug.Log("3");
         if (TreeCnt == 1)
         {
             Particle.startColor = new Color(0.827f, 0.447f, 0.518f, 1);  //나무별 파티클 색상 변경
@@ -138,9 +143,11 @@ public class Effect : MonoBehaviour
             GameObject BowTree = Instantiate(BowTree4, TreePos, transform.rotation);
             GameObject particle = Instantiate(ParticlePrefab, part.position, part.rotation);
         }
-
+        //spriteRenderer.enabled = false;
+        Debug.Log("4");
+        yield return new WaitForSeconds(0.5f);
         Desrtory();
-        yield return null;
+        Debug.Log("5");
     }
 
     void ParticleEfc()  //파티클 위치 지정
