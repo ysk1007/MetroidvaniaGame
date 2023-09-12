@@ -36,7 +36,6 @@ public class SelectUi : MonoBehaviour
                 {
                     DoSelect = false;
                     SelectPrefab Prefab = SelectList[i].GetComponent<SelectPrefab>();
-                    Debug.Log(Prefab.Name);
                     DataManager.instance.GetComponent<DataManager>().SelectListUpdate(Prefab.Name);
                     ui.Select_ui.SetActive(false);
                     ui.Select_error_text.SetActive(false);

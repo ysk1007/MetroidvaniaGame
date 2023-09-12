@@ -16,8 +16,8 @@ public class Bee : Enemy
         nextDirX = 1;  // X축 방향을 숫자로 표현
         nextDirY = 0;   // Y축 방향을 숫자로 표현
         Enemy_Dying_anim_Time = 0.1f;   // 죽는 애니메이션 실행 시간
-        Enemy_Sensing_X = 10f; // 플레이어 인지 X값
-        Enemy_Sensing_Y = 10f;  // 플레이어 인지 Y값
+        Enemy_Sensing_X = 15f; // 플레이어 인지 X값
+        Enemy_Sensing_Y = 15f;  // 플레이어 인지 Y값
         Enemy_Range_X = 2f; //적의 X축 공격 사거리
         Enemy_Range_Y = 1.2f; //적의 Y축 공격 사거리
         atkDelay = 1f; // 공격 딜레이

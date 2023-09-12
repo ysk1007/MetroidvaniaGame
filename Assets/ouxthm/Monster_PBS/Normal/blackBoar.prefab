@@ -405,6 +405,10 @@ MonoBehaviour:
   AmIBoss: 0
   BossHpLine: 0
   Stage: 0
+  stats:
+  - 0.8
+  - 1
+  - 1.2
   Enemy_Mod: 0
   Enemy_HP: 0
   Enemy_HPten: 0
@@ -457,8 +461,8 @@ MonoBehaviour:
   Enemy_Left: 0
   Hit_Set: 0
   boarLoc: 0
-  hiteff: {fileID: 0}
-  blood: {fileID: 0}
+  hiteff: {fileID: 5284812379320055701, guid: 575e99c42061c9642b56a8dafa63c14e, type: 3}
+  blood: {fileID: 7614696593688231732, guid: 2da69be80ef7a1344bde5bf47d8105db, type: 3}
   SoulFloor: {fileID: 0}
   Rock: {fileID: 0}
   CaninePb: {fileID: 0}
@@ -466,7 +470,7 @@ MonoBehaviour:
   fire: {fileID: 0}
   ProObject: {fileID: 0}
   PObject: {fileID: 0}
-  Pos: {fileID: 0}
+  Pos: {fileID: 1115617698149325405}
   arrow: {fileID: 0}
   slash: {fileID: 0}
   BossPage: 0

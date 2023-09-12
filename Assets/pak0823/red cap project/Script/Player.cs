@@ -155,7 +155,7 @@ public class Player : MonoBehaviour
     public MoveCamera movecamera;
     public Loading loading;
     Projective_Body PBody;
-    Rigidbody2D rigid;
+    public Rigidbody2D rigid;
     public Animator anim;
     new AudioSource audio;
 

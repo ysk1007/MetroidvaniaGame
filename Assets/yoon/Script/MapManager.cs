@@ -87,6 +87,9 @@ public class MapManager : MonoBehaviour
             {
                 EnemyAudioSource.instance.SoundOff();
             }
+            Player.instance.rigid.bodyType = RigidbodyType2D.Static;
+            Player.instance.spawnPoint = new Vector3(0, 0, 0);
+
             Invoke("PrefabLoad", 2.4f);
             Invoke("SoundUp", 3f);
         }
@@ -111,15 +114,17 @@ public class MapManager : MonoBehaviour
         CurrentStagePrefab = Instantiate(Stage_Prefabs[CurrentStage[0], CurrentStage[1]], transform.parent);
         dm.NextStage();
         map_ui.Setting();
+        Player p = Player.instance;
         if (CurrentStage[0] == 0 && CurrentStage[1] == 7)
         {
-            Player.instance.transform.position = new Vector3(25, 5, 0);
+            p.transform.position = new Vector3(25, 5, 0);
         }
         else
         {
-            Player.instance.transform.position = new Vector3(0, 0, 0);
+            p.transform.position = new Vector3(0, 0, 0);
         }
         pause = false;
+        Player.instance.rigid.bodyType = RigidbodyType2D.Dynamic;
     }
 
     void MarketStage()

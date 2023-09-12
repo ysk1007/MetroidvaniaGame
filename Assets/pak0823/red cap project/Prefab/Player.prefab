@@ -1034,6 +1034,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7859401246129824559}
   - component: {fileID: 7859401246129824558}
+  - component: {fileID: -6698207223858158361}
   - component: {fileID: 7859401246129824557}
   - component: {fileID: 7859401246129824556}
   - component: {fileID: 1185818354070215267}
@@ -1122,6 +1123,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-6698207223858158361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7859401246129824544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e9132801382b0248b55206d640e444e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Active: 0
+  SlideEA: 5
+  SlideTime: 0.1
+  RedMin: 0
+  RedMax: 0
+  GreenMin: 0
+  GreenMax: 0
+  BlueMin: 0
+  BlueMax: 0
 --- !u!114 &7859401246129824557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1330,6 +1352,7 @@ MonoBehaviour:
   enemy: {fileID: 0}
   movecamera: {fileID: 0}
   loading: {fileID: 0}
+  rigid: {fileID: 0}
   anim: {fileID: 0}
   UseGridSword: 0
   DivinePower: 0

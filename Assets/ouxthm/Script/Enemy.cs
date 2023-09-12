@@ -531,7 +531,7 @@ public abstract class Enemy : MonoBehaviour
             spriteRenderer.flipX = true;       // nextDirX의 값이 1이면 x축을 flip함
         }
         // 재귀
-        float nextThinkTime = Random.Range(3f, 5f);
+        float nextThinkTime = Random.Range(3f, 4f);
         yield return new WaitForSeconds(nextThinkTime);
         StartCoroutine(Think());
     }
@@ -548,8 +548,6 @@ public abstract class Enemy : MonoBehaviour
         {
             spriteRenderer.flipX = true; // nextDirX 값이 1이면 x축을 flip함
         }
-        StopAllCoroutines();
-        StartCoroutine(Think());
     }
 
     public void bleeding()  // 도트데미지 주는 함수
@@ -985,7 +983,7 @@ public abstract class Enemy : MonoBehaviour
             Debug.DrawRay(frontVec, Vector3.down * 2.5f, new Color(0, 1, 0));
 
             // 레이저를 아래로 쏘아서 실질적인 레이저 생성(물리기반), LayMask.GetMask("")는 해당하는 레이어만 스캔함
-            rayHit = Physics2D.Raycast(frontVec, Vector3.down, 2.5f, LayerMask.GetMask("Tilemap", "Pad", "wall"));
+            rayHit = Physics2D.Raycast(frontVec, Vector3.down, 2.5f, LayerMask.GetMask("Tilemap", "Pad"));
             if (rayHit.collider == null && Enemy_HP >= 0)
             {
                 Turn();
@@ -1502,6 +1500,7 @@ public abstract class Enemy : MonoBehaviour
                 pro.GetProExp(Stage);
                 ui.GetExp(Stage);
                 ui.GetGold(Stage);
+                Invoke("enemyDestroy", 1.5f);
             }
         }
     }
