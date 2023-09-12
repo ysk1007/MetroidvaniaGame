@@ -236,6 +236,10 @@ public class Player : MonoBehaviour
         {
             anim.SetFloat("AttackSpeed", 2.75f);
         }
+        if (delayTime <= 0.3f)
+        {
+            delayTime = 0.3f;
+        }
     }
     void OnDrawGizmos()
     {
